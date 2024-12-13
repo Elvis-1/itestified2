@@ -1,0 +1,232 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:itestified/src/config/theme/app_color.dart';
+import 'package:itestified/src/core/utils/app_const/app_icons.dart';
+import 'package:itestified/src/core/widgets/app_bar.dart';
+import 'package:itestified/src/core/widgets/text_widget.dart';
+import 'package:itestified/src/features/category/presentation/screens/video_written_test_screen.dart';
+import 'package:itestified/src/features/category/presentation/widgets/text_testimony_container.dart';
+import 'package:itestified/src/features/category/presentation/widgets/video_testimonies_container.dart';
+import 'package:itestified/src/features/home/widget/quotes_container.dart';
+import 'package:itestified/src/features/inspirational_qoutes.dart/presentation/screens/inspirational_quotes.dart';
+import 'package:itestified/src/features/notifications/presentation/screens/no_notifications_screen.dart';
+import 'package:itestified/src/features/search/presentation/screens/search_screen.dart';
+
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
+
+  static const routeName = 'home-screen';
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  gotoSearchPage() {
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+      return const SearchScreen();
+    }));
+  }
+
+  gotoNotificationsPage() {
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+      return const NoNotificationsScreen();
+    }));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: AppColors.backgroundColor,
+      body: Container(
+        margin: EdgeInsets.only(top: 5.h, bottom: 5.h, left: 15.w, right: 15.w),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              height: 60.h,
+            ),
+            // app bar
+            appBar(gotoSearchPage, gotoNotificationsPage),
+            SizedBox(
+              height: 10.h,
+            ),
+            textWidget('Scripture of the day', fontSize: 18.sp),
+            SizedBox(
+              height: 10.h,
+            ),
+
+            // scripture of the day container
+            Container(
+              height: 120.h,
+              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: AssetImage(AppImages.scriptureImage)),
+                  borderRadius: BorderRadius.circular(15.sp),
+                  color: AppColors.darkPurple),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      textWidget("Jeremaih", fontSize: 18),
+                      textWidget('kjv', fontSize: 10)
+                    ],
+                  ),
+                  SizedBox(
+                    height: 5.h,
+                  ),
+                  SizedBox(
+                    width: 400.w,
+                    child: textWidget(
+                        "\"For I know the thoughts that I think towards you, saith the Lord, thoughts of peace and not of evil, to give you an expected end\"",
+                        fontSize: 14.sp,
+                        maxLines: 3,
+                        overflow: TextOverflow.ellipsis,
+                        color: AppColors.textColor),
+                  ),
+                  SizedBox(
+                    height: 5.h,
+                  ),
+                  textWidget(
+                      textAlign: TextAlign.left,
+                      "Prayers: Lord guide me according to your will and plan",
+                      fontSize: 14.sp,
+                      color: AppColors.textColor)
+                ],
+              ),
+            ),
+
+            Expanded(
+              child: ListView(
+                shrinkWrap: true,
+                physics: const BouncingScrollPhysics(),
+                children: [
+                  // video testimonies
+
+                  SizedBox(
+                    height: 20.h,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        textWidget("Video testimonies", fontSize: 18.sp),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.pushNamed(context,
+                                VideoAndWrittenTestimonieScreen.routeName);
+                          },
+                          child: textWidget("See all",
+                              fontSize: 15.sp, color: AppColors.darkPurple),
+                        )
+                      ],
+                    ),
+                  ),
+
+                  SizedBox(
+                    height: 10.h,
+                  ),
+                  // videos
+                  SizedBox(
+                      height: 150.h,
+                      child: ListView.builder(
+                          shrinkWrap: true,
+                          physics: const BouncingScrollPhysics(),
+                          scrollDirection: Axis.horizontal,
+                          itemCount: 5,
+                          itemBuilder: (context, i) {
+                            return videoTestimoniesContainer2(context,
+                                playArrowLeftPosition: 150,
+                                playArrowTopPosition: 30,
+                                itestifyIconLeftPosition: 2,
+                                itestifyIconTopPosition: 100);
+                          })),
+
+                  // written testimonies
+
+                  SizedBox(
+                    height: 20.h,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        textWidget("Written Testimonies", fontSize: 18.sp),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.of(context)
+                                .push(MaterialPageRoute(builder: (context) {
+                              return const InspirationalQuotes();
+                            }));
+                          },
+                          child: textWidget("See all",
+                              fontSize: 15.sp, color: AppColors.darkPurple),
+                        )
+                      ],
+                    ),
+                  ),
+
+                  SizedBox(
+                    height: 10.h,
+                  ),
+
+                  SizedBox(
+                      height: 150.h,
+                      child: ListView.builder(
+                          shrinkWrap: true,
+                          physics: const BouncingScrollPhysics(),
+                          scrollDirection: Axis.horizontal,
+                          itemCount: 5,
+                          itemBuilder: (context, int) {
+                            return textTestimonyContainer();
+                          })),
+                  SizedBox(
+                    height: 10.h,
+                  ),
+                  SizedBox(
+                    height: 20.h,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        textWidget("Inspirational Quotes", fontSize: 18.sp),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.of(context)
+                                .push(MaterialPageRoute(builder: (context) {
+                              return const InspirationalQuotes();
+                            }));
+                          },
+                          child: textWidget("See all",
+                              fontSize: 15.sp, color: AppColors.darkPurple),
+                        )
+                      ],
+                    ),
+                  ),
+
+                  SizedBox(
+                    height: 10.h,
+                  ),
+
+                  SizedBox(
+                      height: 150.h,
+                      child: ListView.builder(
+                          shrinkWrap: true,
+                          physics: const BouncingScrollPhysics(),
+                          scrollDirection: Axis.horizontal,
+                          itemCount: 5,
+                          itemBuilder: (context, int) {
+                            return quoteContainer(context,
+                                containerHeight: 120);
+                          })),
+                ],
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}

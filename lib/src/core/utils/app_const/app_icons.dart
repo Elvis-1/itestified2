@@ -9,13 +9,47 @@ class AppIcons {
 // DARK MODE
 
   static String appLogoDarkIcon = "assets/icons/app_logo_dark.png";
+  static String logoIcon = "assets/icons/logoIcon.png";
   static String appleIcon = "assets/icons/apple_icon.png";
   static String filterIcon = "assets/icons/filter_icon.png";
+  static String facebookIcon = "assets/icons/facebook.png";
+  static String twitterIcon = "assets/icons/twitter.png";
+  static String editIcon = "assets/icons/edit.png";
+  static String instagramIcon = "assets/icons/instagram.png";
+  static String youtubeIcon = "assets/icons/youtube.png";
+  static String deleteIcon = "assets/icons/delete.png";
+  static String commentIcon = "assets/icons/comment.png";
   static String googleIcon = "assets/icons/google_icon.png";
   static String notificationIcon = "assets/icons/notification_icon.png";
-  static String ratingIcon = "assets/icons/apple_icon.png";
+  static String notification1Icon = "assets/icons/notification1.png";
+  static String passwordIcon = "assets/icons/password.png";
+  static String ratingIcon = "assets/icons/rating.png";
   static String searchIcon = "assets/icons/search_icon.png";
-  static String userIcon = "assets/icons/user_icon.png";
+  static String userIcon = "assets/icons/user_pic.png";
+  static String camIcon = "assets/icons/cam.png";
+  static String unlikeIcon = "assets/icons/unlike.png";
+  static String sendBtnIcon = "assets/icons/send_btn.png";
+  static String favoriteIcon = "assets/icons/favorite.png";
+  static String itestifyIcon = "assets/icons/itestify_icon.png";
+  static String backIcon = "assets/icons/back.png";
+  static String textIcon = "assets/icons/text_icon.png";
+  static String videoIcon = "assets/icons/video_icon.png";
+  static String likeIcon = "assets/icons/like.png";
+  static String likeIcon2 = "assets/icons/like2.png";
+  static String shareIcon = "assets/icons/share.png";
+  static String articleIcon = "assets/icons/article.png";
+  static String displayIcon = "assets/icons/display.png";
+  static String givingIcon = "assets/icons/giving.png";
+  static String nextIcon = "assets/icons/next.png";
+  static String aboutIcon = "assets/icons/about.png";
+  static String rateIcon = "assets/icons/rate.png";
+  static String helpIcon = "assets/icons/help.png";
+
+  static String profileIcon = "assets/icons/profile.png";
+  static String catIcon = "assets/icons/category.png";
+  static String homeIcon = "assets/icons/home.png";
+  static String videoQualityIcon = "assets/icons/video_quality.png";
+  static String videoPlaybackIcon = "assets/icons/video_playback.png";
 }
 
 class AppImages {
@@ -23,4 +57,10 @@ class AppImages {
   static String onboardingImage1 = "assets/images/onboarding1.png";
   static String onboardingImage2 = "assets/images/onboarding2.png";
   static String onboardingImage3 = "assets/images/onboarding3.png";
+  static String popularPrayingVideoImage = "assets/images/apst_selman.png";
+  static String recentTestimonyImage = "assets/images/recent_testimony.png";
+  static String successImage = "assets/images/success.png";
+  static String favoriteImage = "assets/images/favorite_image.png";
+  static String quotesImage = "assets/images/quote.png";
+  static String scriptureImage = "assets/images/scripture_frame.png";
 }

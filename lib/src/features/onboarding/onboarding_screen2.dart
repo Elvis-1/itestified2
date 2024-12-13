@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:itestified/src/config/theme/app_color.dart';
@@ -11,8 +12,10 @@ import 'package:itestified/src/core/widgets/text_widget.dart';
 import 'package:itestified/src/features/onboarding/widgets/onboarding_text.dart';
 
 class OnboardingScreen2 extends StatefulWidget {
-  OnboardingScreen2({super.key, required this.index});
+  OnboardingScreen2(
+      {super.key, required this.index, required this.pageController});
   int index;
+  PageController pageController = PageController();
 
   @override
   State<OnboardingScreen2> createState() => _OnboardingScreen2State();
@@ -49,7 +52,15 @@ class _OnboardingScreen2State extends State<OnboardingScreen2> {
             SizedBox(
               height: 70.h,
             ),
-            btnAndText(containerWidth: double.infinity, verticalPadding: 15),
+            GestureDetector(
+                onTap: () {
+                  if (widget.index < 3) {
+                    widget.pageController.animateToPage(widget.index + 1,
+                        duration: Duration(seconds: 1), curve: Curves.easeIn);
+                  }
+                },
+                child: btnAndText(
+                    containerWidth: double.infinity, verticalPadding: 15)),
             SizedBox(
               height: 10.h,
             ),

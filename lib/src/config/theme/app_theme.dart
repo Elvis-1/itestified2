@@ -1,52 +1,43 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:itestified/src/config/theme/app_color.dart';
 
-abstract class AppTheme {
-  static ThemeData lightTheme(BuildContext context) => ThemeData(
-        scaffoldBackgroundColor: AppColors.backgroundColor,
-        splashColor: Colors.transparent,
-        highlightColor: Colors.transparent,
-        hoverColor: Colors.transparent,
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: AppColors.primaryColor,
-          background: AppColors.backgroundColor,
-        ),
-        textTheme:
-            GoogleFonts.leagueSpartanTextTheme(Theme.of(context).textTheme),
-        fontFamily: GoogleFonts.leagueSpartan().fontFamily,
-        iconButtonTheme: IconButtonThemeData(
-          style: ButtonStyle(
-            overlayColor: MaterialStateProperty.all(Colors.transparent),
-            shadowColor: MaterialStateProperty.all(Colors.transparent),
-          ),
-        ),
-        appBarTheme: AppBarTheme(
-          centerTitle: true,
-          backgroundColor: AppColors.white,
-          elevation: 0,
-          scrolledUnderElevation: 0,
-          iconTheme: IconThemeData(
-            color: AppColors.textColor,
-          ),
-        ),
-        elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all(AppColors.primaryColor),
-            overlayColor: MaterialStateProperty.all(Colors.transparent),
-            elevation: MaterialStateProperty.all(0),
-            shape: MaterialStatePropertyAll(
-              RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20),
-              ),
-            ),
-          ),
-        ),
-        textButtonTheme: TextButtonThemeData(
-          style: ButtonStyle(
-            overlayColor: MaterialStateProperty.all(Colors.transparent),
-          ),
-        ),
-        useMaterial3: true,
-      );
+class AppThemes {
+  static ThemeData lightTheme = ThemeData(
+      primaryColor: AppColors.primaryColor,
+      backgroundColor: AppColors.white,
+      colorScheme: ColorScheme.fromSeed(
+        seedColor: AppColors.primaryColor,
+        background: AppColors.white,
+        brightness: Brightness.light,
+        tertiary: AppColors.blackColor,
+        onTertiary: AppColors.blackColor,
+        onBackground: AppColors.white,
+      ),
+      scaffoldBackgroundColor: AppColors.white,
+      buttonTheme: ButtonThemeData(
+        buttonColor: AppColors.btnColor,
+      ),
+      appBarTheme: const AppBarTheme(
+        backgroundColor: AppColors.white,
+      ));
+
+  static ThemeData darkTheme = ThemeData(
+    primaryColor: AppColors.primaryColor,
+    colorScheme: ColorScheme.fromSeed(
+      tertiary: AppColors.textColor,
+      onTertiary: AppColors.white,
+      seedColor: AppColors.white, //AppColors.primaryColor,
+      background: AppColors.backgroundColor,
+      onBackground: AppColors.lightBlack,
+      brightness: Brightness.dark,
+    ),
+    scaffoldBackgroundColor: AppColors.backgroundColor,
+    textTheme: const TextTheme(
+      bodySmall: TextStyle(color: AppColors.textColor),
+      bodyMedium: TextStyle(color: AppColors.white),
+    ),
+    buttonTheme: const ButtonThemeData(
+      buttonColor: AppColors.btnColor,
+    ),
+  );
 }

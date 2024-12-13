@@ -1,5 +1,6 @@
 import 'package:get_it/get_it.dart';
 import 'package:itestified/src/config/network/api_client.dart';
+import 'package:itestified/src/features/app_theme/theme_viewmodel.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -22,6 +23,7 @@ Future<void> setupLocator() async {
 
 void _registerViewModels() {
   // sl.registerFactory(() => RegisterViewModel(sl()));
+  sl.registerFactory(() => ThemeViewmodel(sl()));
 }
 
 void _registerDataSources() {

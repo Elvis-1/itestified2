@@ -38,16 +38,12 @@ class _MainOnboardingState extends State<MainOnboarding> {
             onPageChange(index);
           },
           children: [
-            // page(1, context, 'Next', 'Title', 'Subtitle', 'image-path',
-            //     pageController),
-            // page(2, context, 'Keep', 'Title', 'Subtitle', 'image-path',
-            //     pageController),
-            // page(3, context, 'Left', 'Title', 'Subtitle', 'image-path',
-            //     pageController),
             OnboardingScreen1(
+              pageController: pageController,
               index: pageValue,
             ),
             OnboardingScreen2(
+              pageController: pageController,
               index: pageValue,
             ),
             OnboardingScreen3(

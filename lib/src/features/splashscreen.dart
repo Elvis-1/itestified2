@@ -1,16 +1,14 @@
 import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:itestified/src/config/theme/app_color.dart';
 import 'package:itestified/src/core/utils/app_const/app_icons.dart';
 import 'package:itestified/src/features/onboarding/main_onboarding.dart';
-import 'package:itestified/src/features/onboarding/onboarding_screen3.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
-
+  static const routeName = '/splash-screen';
   @override
   State<SplashScreen> createState() => _SplashScreenState();
 }
