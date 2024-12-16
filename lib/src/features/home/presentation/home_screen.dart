@@ -133,7 +133,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   // videos
                   SizedBox(
-                      height: 150.h,
+                      height: 180.h,
                       child: ListView.builder(
                           shrinkWrap: true,
                           physics: const BouncingScrollPhysics(),
@@ -144,7 +144,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                 playArrowLeftPosition: 150,
                                 playArrowTopPosition: 30,
                                 itestifyIconLeftPosition: 2,
-                                itestifyIconTopPosition: 100);
+                                fix: BoxFit.cover,
+                                imageHeight: 150,
+                                itestifyIconTopPosition: 140);
                           })),
 
                   // written testimonies
@@ -174,14 +176,14 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
 
                   SizedBox(
-                      height: 150.h,
+                      height: 160.h,
                       child: ListView.builder(
                           shrinkWrap: true,
                           physics: const BouncingScrollPhysics(),
                           scrollDirection: Axis.horizontal,
                           itemCount: 5,
                           itemBuilder: (context, int) {
-                            return textTestimonyContainer();
+                            return TextTestimonyContainer();
                           })),
                   SizedBox(
                     height: 10.h,

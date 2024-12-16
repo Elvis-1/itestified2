@@ -4,13 +4,10 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:itestified/src/config/theme/app_color.dart';
 import 'package:itestified/src/core/utils/app_const/app_icons.dart';
-import 'package:itestified/src/core/widgets/custom_textfield.dart';
-import 'package:itestified/src/core/widgets/icon_and_text.dart';
 import 'package:itestified/src/core/widgets/line_widget.dart';
 import 'package:itestified/src/core/widgets/modals.dart';
 import 'package:itestified/src/core/widgets/normal_text_style.dart';
 import 'package:itestified/src/core/widgets/text_widget.dart';
-import 'package:itestified/src/features/home/widget/recent_testimonies_container.dart';
 import 'package:itestified/src/features/video/presentation/widgets/likeOrShare.dart';
 import 'package:itestified/src/features/video/presentation/widgets/related_video_container.dart';
 import 'package:itestified/src/features/video/presentation/widgets/video_container.dart';
@@ -107,38 +104,46 @@ class VideoScreen extends StatelessWidget {
                           await showModalBottomSheet(
                               context: context,
                               builder: (context) {
-                                return Expanded(
-                                  child: ListView(
-                                    shrinkWrap: true,
-                                    children: [
-                                      Container(
-                                          //  height: 70.h,
-                                          padding: EdgeInsets.symmetric(
-                                              vertical: 30.h),
-                                          color: AppColors.backgroundColor,
-                                          //  height: 50,
-                                          child: Align(
-                                            alignment: Alignment.center,
-                                            child: textWidget('Comments',
-                                                color: AppColors.white,
-                                                fontSize: 20.sp),
-                                          )),
-                                      SizedBox(
-                                          height: 400.h,
-                                          child: commentListModal(context)),
-                                    ],
-                                  ),
+                                return ListView(
+                                  shrinkWrap: true,
+                                  children: [
+                                    Container(
+                                        //  height: 70.h,
+                                        padding: EdgeInsets.symmetric(
+                                            vertical: 30.h),
+                                        color: AppColors.backgroundColor,
+                                        //  height: 50,
+                                        child: Align(
+                                          alignment: Alignment.center,
+                                          child: textWidget('Comments',
+                                              color: AppColors.white,
+                                              fontSize: 20.sp),
+                                        )),
+                                    SizedBox(
+                                        height: 400.h,
+                                        child: commentListModal(context)),
+                                  ],
                                 );
                               });
                         },
                         child: SizedBox(
-                          width: 250.w,
-                          child: Text(
-                            "Our God is indeed a good God, he knows all and ... see more",
-                            textAlign: TextAlign.left,
-                            style: normalTextStyle(textColor: AppColors.white),
-                          ),
-                        ),
+                            width: 250.w,
+                            child: RichText(
+                                text: TextSpan(
+                                    text: 'Our God is indeed good to me',
+                                    children: [
+                                  TextSpan(
+                                      text: ' ... See more',
+                                      style: normalTextStyle(
+                                          textColor: AppColors.primaryColor)),
+                                ]))
+
+                            // Text(
+                            //   "Our God is indeed a good God, he knows all and ... see more",
+                            //   textAlign: TextAlign.left,
+                            //   style: normalTextStyle(textColor: AppColors.white),
+                            // ),
+                            ),
                       ),
                       textWidget("2 days Ago",
                           fontSize: 12.sp, color: AppColors.textColor)

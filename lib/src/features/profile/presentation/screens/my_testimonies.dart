@@ -33,7 +33,9 @@ class MyTestimoniesScreen extends StatelessWidget {
                         onTap: () {
                           Navigator.of(context)
                               .push(MaterialPageRoute(builder: (context) {
-                            return const MyTestimoniesDetailsScreen();
+                            return const MyTestimoniesDetailsScreen(
+                              isFromProfile: true,
+                            );
                           }));
                         },
                         child: myTestimonyContainer());

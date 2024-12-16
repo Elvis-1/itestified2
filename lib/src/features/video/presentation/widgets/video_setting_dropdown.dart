@@ -36,7 +36,7 @@ class _VideoSettingsDropdownState extends State<VideoSettingsDropdown> {
   void openDropdown(Widget dropD) {
     if (_overlayEntry == null) {
       _overlayEntry = _createOverlayEntry(dropD);
-      Overlay.of(context)?.insert(_overlayEntry!);
+      Overlay.of(context).insert(_overlayEntry!);
     }
     setState(() {
       isOpen = true;

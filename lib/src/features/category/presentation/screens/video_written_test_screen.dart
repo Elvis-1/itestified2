@@ -102,10 +102,11 @@ class _VideoAndWrittenTestimonieScreenState
                                     videoContainerHeight: 230,
                                     videoContainerWidth: 400,
                                     imageHeight: 200))
-                            : textTestimonyContainer(),
-                        lineWidget(
-                            width: double.infinity,
-                            color: AppColors.opaqueBlack),
+                            : const TextTestimonyContainer(
+                                containerWidth: double.infinity),
+                        // lineWidget(
+                        //     width: double.infinity,
+                        //     color: AppColors.opaqueBlack),
                       ],
                     );
                   }),

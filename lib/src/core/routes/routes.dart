@@ -6,6 +6,7 @@ import 'package:itestified/src/features/auth/presentation/screens/signup_screen.
 import 'package:itestified/src/features/category/presentation/screens/categories_screen.dart';
 import 'package:itestified/src/features/category/presentation/screens/video_written_test_screen.dart';
 import 'package:itestified/src/features/home/presentation/home_screen.dart';
+import 'package:itestified/src/features/profile/presentation/screens/my_testimonies_details.dart';
 import 'package:itestified/src/features/splashscreen.dart';
 import 'package:itestified/src/features/video/presentation/screens/video_screen.dart';
 
@@ -52,6 +53,12 @@ Route onGenerateRoute(RouteSettings settings) {
     CategoriesListScreen.routeName => MaterialPageRoute(
         builder: (_) => const CategoriesListScreen(),
         settings: const RouteSettings(name: CategoriesListScreen.routeName),
+      ),
+    // TESTIMONY DETAILS SCREEN
+    MyTestimoniesDetailsScreen.routeName => MaterialPageRoute(
+        builder: (_) => const MyTestimoniesDetailsScreen(),
+        settings:
+            const RouteSettings(name: MyTestimoniesDetailsScreen.routeName),
       ),
     _ => MaterialPageRoute(
         builder: (_) => const SplashScreen(),

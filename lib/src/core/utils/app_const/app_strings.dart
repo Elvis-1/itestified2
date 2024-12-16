@@ -1,4 +1,6 @@
 class AppStrings {
+  static const CLEAR_FAVORITES = 'Clear All Favorites';
+
   // exceptions messages
   static const kInternetConnectionError = 'No internet connection, try again.';
   static const kTimeOutError = 'Please check your internet connection.';

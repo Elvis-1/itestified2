@@ -4,17 +4,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:itestified/src/config/theme/app_color.dart';
-import 'package:itestified/src/core/utils/app_const/app_icons.dart';
-import 'package:itestified/src/core/widgets/app_bar.dart';
-import 'package:itestified/src/core/widgets/appbar2.dart';
-import 'package:itestified/src/core/widgets/icon_and_text.dart';
+import 'package:itestified/src/core/utils/app_const/app_strings.dart';
 import 'package:itestified/src/core/widgets/normal_text_style.dart';
 import 'package:itestified/src/core/widgets/popupmenu_btn.dart';
 import 'package:itestified/src/core/widgets/text_widget.dart';
 import 'package:itestified/src/features/category/presentation/widgets/text_testimony_container.dart';
 import 'package:itestified/src/features/category/presentation/widgets/video_testimonies_container.dart';
-import 'package:itestified/src/features/favorites/presentation/screens/no_favorite_screen.dart';
-import 'package:itestified/src/features/favorites/presentation/widgets/favorite_video_container.dart';
+import 'package:itestified/src/features/favorites/presentation/widgets/clear_favorites_drpdown.dart';
 import 'package:itestified/src/features/home/widget/quotes_container.dart';
 
 class FavoritesScreen extends StatefulWidget {
@@ -25,6 +21,8 @@ class FavoritesScreen extends StatefulWidget {
 }
 
 class _FavoritesScreenState extends State<FavoritesScreen> {
+  List<Widget> clearFav = <Widget>[Text(AppStrings.CLEAR_FAVORITES)];
+
   bool vidoes = true;
   bool text = false;
   @override
@@ -45,48 +43,28 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
               children: [
                 Container(),
                 textWidget("Favorites", fontSize: 25.sp),
-                popUpMenuBtn(context,
-                    PopupMenuItem(child: Text('Clear all favorites')), 1),
+                Container(
+                    //  width: 150,
+                    color: AppColors.backgroundColor,
+                    child: ClearFavoritesDropDown<Widget>(
+                      options: clearFav,
+                    )
+                    // popUpMenuBtn(
+                    //     context,
+                    //     PopupMenuItem(
+                    //         height: 10,
+                    //         child: Container(
+                    //           width: double.infinity,
+                    //           color: AppColors.backgroundColor,
+                    //           child: Text(
+                    //             'Clear all favorites',
+                    //             style: normalTextStyle(),
+                    //           ),
+                    //         )),
+                    //     1),
+                    ),
               ],
             ),
-
-            // video and text row
-            // Container(
-            //   decoration: BoxDecoration(
-            //       border:
-            //           Border(bottom: BorderSide(color: AppColors.opaqueBlack))),
-            //   child: Row(
-            //     mainAxisAlignment: MainAxisAlignment.spaceAround,
-            //     children: [
-            //       GestureDetector(
-            //           onTap: () {
-            //             setState(() {
-            //               vidoes = true;
-            //               text = false;
-            //             });
-            //           },
-            //           child: iconAndText(
-            //               "Videos",
-            //               AppIcons.videoIcon,
-            //               vidoes == true
-            //                   ? AppColors.primaryColor
-            //                   : AppColors.backgroundColor)),
-            //       GestureDetector(
-            //           onTap: () {
-            //             setState(() {
-            //               vidoes = false;
-            //               text = true;
-            //             });
-            //           },
-            //           child: iconAndText(
-            //               "Text",
-            //               AppIcons.textIcon,
-            //               text == true
-            //                   ? AppColors.primaryColor
-            //                   : AppColors.backgroundColor))
-            //     ],
-            //   ),
-            // ),
 
             SizedBox(
               height: 10.h,
@@ -97,10 +75,14 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                 child: ListView(
               padding: EdgeInsets.fromViewPadding(ViewPadding.zero, 1),
               children: [
-                videoTestimoniesContainer(context),
+                videoTestimoniesContainer(context,
+                    videoContainerHeight: 220,
+                    videoContainerWidth: double.infinity,
+                    fix: BoxFit.cover,
+                    imageHeight: 200),
                 Container(
-                    margin: EdgeInsets.only(left: 5.w, right: 5.w),
-                    child: textTestimonyContainer()),
+                    // margin: EdgeInsets.only(left: 5.w, right: 5.w),
+                    child: const TextTestimonyContainer()),
                 SizedBox(
                   height: 15.h,
                 ),

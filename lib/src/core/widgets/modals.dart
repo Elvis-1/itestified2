@@ -8,6 +8,7 @@ import 'package:itestified/src/core/widgets/dialog.dart';
 import 'package:itestified/src/core/widgets/line_widget.dart';
 import 'package:itestified/src/core/widgets/normal_text_style.dart';
 import 'package:itestified/src/core/widgets/text_widget.dart';
+import 'package:itestified/src/features/video/presentation/widgets/comment_container.dart';
 import 'package:itestified/src/features/video/presentation/widgets/likeOrShare.dart';
 
 Widget commentListModal(BuildContext context) {
@@ -121,7 +122,12 @@ Widget commentListModal(BuildContext context) {
             left: 5.w,
             right: 5.w,
             bottom: MediaQuery.of(context).viewInsets.bottom),
-        margin: EdgeInsets.symmetric(horizontal: 10.w, vertical: 15.h),
+        margin: EdgeInsets.only(
+          left: 10.w,
+          right: 10.w,
+          top: 5.h,
+          bottom: 25,
+        ),
         child: Row(
           children: [
             Image.asset(AppIcons.userIcon),
@@ -154,67 +160,19 @@ Widget singleCommentModal(BuildContext context) {
       body: ListView.builder(
           itemCount: 1,
           itemBuilder: (context, index) {
-            return Container(
-                decoration:
-                    BoxDecoration(borderRadius: BorderRadius.circular(15.w)),
-                margin: EdgeInsets.only(bottom: 10.h),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Image.asset(AppIcons.userIcon),
-                    SizedBox(
-                      width: 10.w,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                textWidget("Chika Amaka", fontSize: 15.sp),
-                                SizedBox(
-                                  height: 5.h,
-                                ),
-                                SizedBox(
-                                  width: 250.w,
-                                  child: Text(
-                                    "Our God is indeed a good God, he knows all, Our God is indeed a good God, he knows all Our God is indeed a good God, he knows all Our God is indeed a good God, he knows all Our God is indeed a good God, he knows all",
-                                    textAlign: TextAlign.left,
-                                    style: normalTextStyle(
-                                        textColor: AppColors.white),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            likeOrShare(AppIcons.likeIcon, '2'),
-                            likeOrShare(AppIcons.unlikeIcon, '2')
-                          ],
-                        ),
-                        Align(
-                          alignment: Alignment.bottomLeft,
-                          child: textWidget('Reply',
-                              color: AppColors.primaryColor, fontSize: 13.sp),
-                        )
-                      ],
-                    ),
-                    textWidget("2 days Ago",
-                        fontSize: 12.sp, color: AppColors.textColor)
-                  ],
-                ));
+            return const CommentAndResponse();
           }),
       bottomNavigationBar: Container(
         padding: EdgeInsets.only(
             left: 5.w,
             right: 5.w,
             bottom: MediaQuery.of(context).viewInsets.bottom),
-        margin: EdgeInsets.symmetric(horizontal: 10.w, vertical: 15.h),
+        margin: EdgeInsets.only(
+          left: 10.w,
+          right: 10.w,
+          top: 5.h,
+          bottom: 40,
+        ),
         child: Row(
           children: [
             Image.asset(AppIcons.userIcon),

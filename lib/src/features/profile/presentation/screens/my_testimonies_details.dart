@@ -11,7 +11,11 @@ import 'package:itestified/src/core/widgets/text_widget.dart';
 import 'package:itestified/src/features/video/presentation/widgets/likeOrShare.dart';
 
 class MyTestimoniesDetailsScreen extends StatelessWidget {
-  const MyTestimoniesDetailsScreen({super.key});
+  const MyTestimoniesDetailsScreen({super.key, this.isFromProfile = false});
+
+  final bool isFromProfile;
+
+  static const routeName = '/my-testimony-details';
 
   @override
   Widget build(BuildContext context) {
@@ -26,18 +30,34 @@ class MyTestimoniesDetailsScreen extends StatelessWidget {
             },
             child: Image.asset(AppIcons.backIcon)),
         actions: [
-          IconButton(
-              onPressed: () async {
-                await showModalBottomSheet(
-                    context: context,
-                    builder: (context) {
-                      return editDeleteShareModal(context);
-                    });
-              },
-              icon: const Icon(
-                Icons.more_vert,
-                color: AppColors.white,
-              ))
+          if (isFromProfile) ...[
+            IconButton(
+                onPressed: () async {
+                  await showModalBottomSheet(
+                      context: context,
+                      builder: (context) {
+                        return editDeleteShareModal(context);
+                      });
+                },
+                icon: const Icon(
+                  Icons.more_vert,
+                  color: AppColors.white,
+                ))
+          ],
+          if (!isFromProfile) ...[
+            Container(
+              margin: EdgeInsets.only(right: 10),
+              color: Colors.black.withOpacity(0.5),
+              child: CircleAvatar(
+                radius: 10,
+                backgroundColor: AppColors.opaqueBlack,
+                child: Image.asset(
+                  width: 12,
+                  AppIcons.favoriteIcon,
+                ),
+              ),
+            )
+          ],
         ],
       ),
       body: SingleChildScrollView(
