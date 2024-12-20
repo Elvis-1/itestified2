@@ -139,7 +139,15 @@ Widget videoContainer(BuildContext context, void Function() unpressed) {
                     textWidget("14/4/2024",
                         fontSize: 12.sp, color: AppColors.textColor),
                     SizedBox(
-                      width: 15.w,
+                      width: 10.w,
+                    ),
+                    Container(
+                      height: 5,
+                      width: 5,
+                      color: AppColors.textColor,
+                    ),
+                    SizedBox(
+                      width: 10.w,
                     ),
                     GestureDetector(
                       onTap: unpressed,

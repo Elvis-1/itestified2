@@ -14,6 +14,8 @@ import 'package:itestified/src/features/home/widget/quotes_container.dart';
 import 'package:itestified/src/features/inspirational_qoutes.dart/presentation/screens/inspirational_quotes.dart';
 import 'package:itestified/src/features/notifications/presentation/screens/no_notifications_screen.dart';
 import 'package:itestified/src/features/search/presentation/screens/search_screen.dart';
+import 'package:itestified/src/features/video/presentation/screens/video_list_screen.dart';
+import 'package:itestified/src/features/written_testimonies.dart/presentation/screens/written_testimonies.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -118,8 +120,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         textWidget("Video testimonies", fontSize: 18.sp),
                         GestureDetector(
                           onTap: () {
-                            Navigator.pushNamed(context,
-                                VideoAndWrittenTestimonieScreen.routeName);
+                            Navigator.pushNamed(
+                                context, VideoListScreen.routeName);
                           },
                           child: textWidget("See all",
                               fontSize: 15.sp, color: AppColors.darkPurple),
@@ -133,7 +135,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   // videos
                   SizedBox(
-                      height: 180.h,
+                      height: 195.h,
                       child: ListView.builder(
                           shrinkWrap: true,
                           physics: const BouncingScrollPhysics(),
@@ -142,7 +144,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           itemBuilder: (context, i) {
                             return videoTestimoniesContainer2(context,
                                 playArrowLeftPosition: 150,
-                                playArrowTopPosition: 30,
+                                playArrowTopPosition: 50,
                                 itestifyIconLeftPosition: 2,
                                 fix: BoxFit.cover,
                                 imageHeight: 150,
@@ -160,9 +162,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         GestureDetector(
                           onTap: () {
                             Navigator.of(context)
-                                .push(MaterialPageRoute(builder: (context) {
-                              return const InspirationalQuotes();
-                            }));
+                                .pushNamed(WrittenTestimonies.routeName);
                           },
                           child: textWidget("See all",
                               fontSize: 15.sp, color: AppColors.darkPurple),
@@ -176,14 +176,14 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
 
                   SizedBox(
-                      height: 160.h,
+                      height: 170.h,
                       child: ListView.builder(
                           shrinkWrap: true,
                           physics: const BouncingScrollPhysics(),
                           scrollDirection: Axis.horizontal,
                           itemCount: 5,
                           itemBuilder: (context, int) {
-                            return TextTestimonyContainer();
+                            return const TextTestimonyContainer();
                           })),
                   SizedBox(
                     height: 10.h,

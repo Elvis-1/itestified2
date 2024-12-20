@@ -27,7 +27,9 @@ class EditProfileScreen extends StatelessWidget {
             SizedBox(
               height: 50.h,
             ),
-            appbar2("Edit Profile", context),
+            const appbar2(
+              "Edit Profile",
+            ),
             SizedBox(
               height: 20.h,
             ),

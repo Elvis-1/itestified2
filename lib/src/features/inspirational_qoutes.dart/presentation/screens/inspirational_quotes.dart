@@ -19,7 +19,9 @@ class InspirationalQuotes extends StatelessWidget {
             SizedBox(
               height: 50.h,
             ),
-            appbar2('Inspirational Quotes', context),
+            const appbar2(
+              'Inspirational Quotes',
+            ),
             Expanded(child: ListView.builder(itemBuilder: (context, index) {
               return Container(
                 margin: EdgeInsets.only(bottom: 20),

@@ -32,8 +32,8 @@ class MyTestimoniesDetailsScreen extends StatelessWidget {
         actions: [
           if (isFromProfile) ...[
             IconButton(
-                onPressed: () async {
-                  await showModalBottomSheet(
+                onPressed: () {
+                  showModalBottomSheet(
                       context: context,
                       builder: (context) {
                         return editDeleteShareModal(context);

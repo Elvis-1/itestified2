@@ -4,7 +4,6 @@ class AppIcons {
   //////////
 
   //png dark
-  static String moneyswappLogo = 'assets/images/logo.png';
 
 // DARK MODE
 
@@ -44,6 +43,7 @@ class AppIcons {
   static String aboutIcon = "assets/icons/about.png";
   static String rateIcon = "assets/icons/rate.png";
   static String helpIcon = "assets/icons/help.png";
+  static String browseFilesIcon = "assets/icons/browse.png";
 
   static String profileIcon = "assets/icons/profile.png";
   static String catIcon = "assets/icons/category.png";

@@ -31,7 +31,9 @@ class _HelpDeskState extends State<HelpDesk> {
             SizedBox(
               height: 50.h,
             ),
-            appbar2("Help", context),
+            const appbar2(
+              "Help",
+            ),
             SizedBox(
               height: 20.h,
             ),

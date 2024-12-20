@@ -20,7 +20,9 @@ class SearchScreen extends StatelessWidget {
             SizedBox(
               height: 50.h,
             ),
-            appbar2("Search", context),
+            appbar2(
+              "Search",
+            ),
             SizedBox(
               height: 50.h,
             ),

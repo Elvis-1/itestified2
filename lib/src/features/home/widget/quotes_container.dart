@@ -40,13 +40,16 @@ Widget quoteContainer(BuildContext context,
                 children: [
                   Row(
                     children: [
-                      Spacer(),
-                      Container(
-                        color: Colors.black.withOpacity(0.5),
+                      const Spacer(),
+                      CircleAvatar(
+                        backgroundColor: AppColors.transparent,
+                        radius: 10,
                         child: Image.asset(
+                          color: AppColors.primaryColor,
+                          //  width: 12,
                           AppIcons.favoriteIcon,
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ],

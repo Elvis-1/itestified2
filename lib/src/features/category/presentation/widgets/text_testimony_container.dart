@@ -21,7 +21,8 @@ class TextTestimonyContainer extends StatelessWidget {
         Navigator.pushNamed(context, MyTestimoniesDetailsScreen.routeName);
       },
       child: Container(
-        padding: const EdgeInsets.only(top: 10, right: 20, left: 20),
+        padding:
+            const EdgeInsets.only(top: 10, right: 20, left: 20, bottom: 10),
 
         decoration: BoxDecoration(
             color: AppColors.opaqueBlack2,
@@ -44,13 +45,20 @@ class TextTestimonyContainer extends StatelessWidget {
                     ))
               ],
             ),
-            Text(
-              "For years, I lived with the pain and limitations of having the sickle cell genotype. Countless hospitals visits and painful crises became a part of my life in ... see more",
-              overflow: TextOverflow.ellipsis,
-              maxLines: 4,
-              textAlign: TextAlign.left,
-              style: normalTextStyle(textColor: AppColors.textColor),
+            SizedBox(
+              height: 10.h,
             ),
+            RichText(
+                text: TextSpan(
+                    text:
+                        'For years, I lived with the pain and limitations of having the sickle cell genotype. Countless hospitals visits and painful crises became a part of my life in',
+                    style: normalTextStyle(textColor: AppColors.textColor),
+                    children: [
+                  TextSpan(
+                      text: ' ... See more',
+                      style:
+                          normalTextStyle(textColor: AppColors.primaryColor)),
+                ])),
             SizedBox(
               height: 10.h,
             ),
@@ -91,26 +99,11 @@ class TextTestimonyContainer extends StatelessWidget {
                     ),
                   ],
                 ),
-                // Row(
-                //   children: [
-                //     Image.asset(AppIcons.likeIcon),
-                //     SizedBox(
-                //       width: 5,
-                //     ),
-                //     textWidget('30', fontSize: 10)
-                //   ],
-                // ),
               ],
             ),
           ],
         ),
       ),
     );
-    ;
   }
 }
-
-// Widget textTestimonyContainer(
-//   BuildContext context, {
-//   double containerWidth = 300,
-// }) {}

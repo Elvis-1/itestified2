@@ -38,7 +38,9 @@ class _VideoAndWrittenTestimonieScreenState
             ),
 
             // appbar
-            appbar2("Healing Testimonies", context),
+            const appbar2(
+              "Healing Testimonies",
+            ),
             // video and text row
             SizedBox(
               height: 50.h,

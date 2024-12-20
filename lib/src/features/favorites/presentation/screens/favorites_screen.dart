@@ -75,7 +75,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                 child: ListView(
               padding: EdgeInsets.fromViewPadding(ViewPadding.zero, 1),
               children: [
-                videoTestimoniesContainer(context,
+                videoTestimoniesContainer2(context,
                     videoContainerHeight: 220,
                     videoContainerWidth: double.infinity,
                     fix: BoxFit.cover,

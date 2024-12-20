@@ -21,7 +21,9 @@ class FollowItestify extends StatelessWidget {
             SizedBox(
               height: 50.h,
             ),
-            appbar2("Follow iTestified", context),
+            const appbar2(
+              "Follow iTestified",
+            ),
             SizedBox(
               height: 20.h,
             ),

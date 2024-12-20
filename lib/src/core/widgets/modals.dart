@@ -1,13 +1,16 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:itestified/src/config/theme/app_color.dart';
 import 'package:itestified/src/core/utils/app_const/app_icons.dart';
+import 'package:itestified/src/core/utils/app_const/enum.dart';
 import 'package:itestified/src/core/widgets/custom_textfield.dart';
 import 'package:itestified/src/core/widgets/dialog.dart';
 import 'package:itestified/src/core/widgets/line_widget.dart';
 import 'package:itestified/src/core/widgets/normal_text_style.dart';
 import 'package:itestified/src/core/widgets/text_widget.dart';
+import 'package:itestified/src/features/add_testimony/presentation/screens/add_testimony.dart';
 import 'package:itestified/src/features/video/presentation/widgets/comment_container.dart';
 import 'package:itestified/src/features/video/presentation/widgets/likeOrShare.dart';
 
@@ -97,7 +100,7 @@ Widget commentListModal(BuildContext context) {
                                           Container()
                                         ],
                                       )),
-                                  Container(
+                                  SizedBox(
                                       height: 400.h,
                                       child: singleCommentModal(context)),
                                 ],
@@ -210,12 +213,18 @@ Widget editDeleteShareModal(BuildContext context) {
         SizedBox(
           height: 15.h,
         ),
-        likeOrShare(AppIcons.editIcon, "Edit Post",
-            containerColor: AppColors.lightBlack, width: 15),
+        InkWell(
+          onTap: () {
+            Navigator.pushNamed(context, AddTestimonyScreen.routeName,
+                arguments: TestimonyAction.Edit);
+          },
+          child: likeOrShare(AppIcons.editIcon, "Edit Post",
+              containerColor: AppColors.lightBlack, width: 15),
+        ),
         lineWidget(width: double.infinity, color: AppColors.opaqueBlack),
         GestureDetector(
-          onTap: () async {
-            await showDeleteDialogOverlay(context, "Delete Post");
+          onTap: () {
+            showDeleteDialogOverlay(context, "Delete Post");
           },
           child: likeOrShare(AppIcons.deleteIcon, "Delete Post",
               containerColor: AppColors.lightBlack, width: 15),

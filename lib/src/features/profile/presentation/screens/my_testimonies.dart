@@ -20,13 +20,15 @@ class MyTestimoniesScreen extends StatelessWidget {
           SizedBox(
             height: 50.h,
           ),
-          appbar2("My Testimonies", context),
+          const appbar2(
+            "My Testimonies",
+          ),
           SizedBox(
             height: 10.h,
           ),
           Expanded(
               child: ListView.builder(
-                  //  padding: EdgeInsets.fromViewPadding(ViewPadding.zero, devicePixelRatio),
+                  padding: EdgeInsets.fromViewPadding(ViewPadding.zero, 0.2),
                   itemCount: 3,
                   itemBuilder: (context, index) {
                     return GestureDetector(
@@ -38,7 +40,7 @@ class MyTestimoniesScreen extends StatelessWidget {
                             );
                           }));
                         },
-                        child: myTestimonyContainer());
+                        child: myTestimonyContainer(context));
                   }))
         ],
       ),

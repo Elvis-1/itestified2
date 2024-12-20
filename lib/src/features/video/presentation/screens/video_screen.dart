@@ -8,6 +8,7 @@ import 'package:itestified/src/core/widgets/line_widget.dart';
 import 'package:itestified/src/core/widgets/modals.dart';
 import 'package:itestified/src/core/widgets/normal_text_style.dart';
 import 'package:itestified/src/core/widgets/text_widget.dart';
+import 'package:itestified/src/features/category/presentation/widgets/video_testimonies_container.dart';
 import 'package:itestified/src/features/video/presentation/widgets/likeOrShare.dart';
 import 'package:itestified/src/features/video/presentation/widgets/related_video_container.dart';
 import 'package:itestified/src/features/video/presentation/widgets/video_container.dart';
@@ -136,14 +137,7 @@ class VideoScreen extends StatelessWidget {
                                       text: ' ... See more',
                                       style: normalTextStyle(
                                           textColor: AppColors.primaryColor)),
-                                ]))
-
-                            // Text(
-                            //   "Our God is indeed a good God, he knows all and ... see more",
-                            //   textAlign: TextAlign.left,
-                            //   style: normalTextStyle(textColor: AppColors.white),
-                            // ),
-                            ),
+                                ]))),
                       ),
                       textWidget("2 days Ago",
                           fontSize: 12.sp, color: AppColors.textColor)
@@ -163,13 +157,18 @@ class VideoScreen extends StatelessWidget {
           ),
           SizedBox(height: 10.h),
           Container(
-              height: 250.h,
+              height: 195.h,
               child: ListView.builder(
                   shrinkWrap: true,
                   itemCount: 4,
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, index) {
-                    return relatedVideoContainer();
+                    return videoTestimoniesContainer2(context,
+                        fix: BoxFit.cover,
+                        imageHeight: 150,
+                        playArrowLeftPosition: 130,
+                        playArrowTopPosition: 50,
+                        itestifyIconTopPosition: 140);
                   }))
         ],
       ),

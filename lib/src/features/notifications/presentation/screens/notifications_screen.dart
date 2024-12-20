@@ -25,15 +25,15 @@ class NotificationsScreen extends StatelessWidget {
             SizedBox(
               height: 50.h,
             ),
-            appbar2("Notifications", context),
-            SizedBox(
-              height: 50.h,
+            const appbar2(
+              "Notifications",
             ),
-            customTextField(context,
-                prefixIc: const Icon(Icons.search), hintText: "Search"),
             SizedBox(
               height: 20.h,
             ),
+            // customTextField(context,
+            //     prefixIc: const Icon(Icons.search), hintText: "Search"),
+
             SingleChildScrollView(
               // physics: NeverScrollableScrollPhysics(),
               child: Column(

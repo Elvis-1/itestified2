@@ -27,7 +27,9 @@ class RateItestified extends StatelessWidget {
               SizedBox(
                 height: 50.h,
               ),
-              appbar2("Rate iTestified", context),
+              const appbar2(
+                "Rate iTestified",
+              ),
               SizedBox(
                 height: 20.h,
               ),

@@ -17,6 +17,7 @@ class DisplayScreen extends StatelessWidget {
       backgroundColor: themeProvider
           .themeData.colorScheme.background, //  AppColors.background,
       //  backgroundColor: themeProvider.themeData.scaffoldBackgroundColor,
+
       body: Container(
         padding: EdgeInsets.symmetric(horizontal: 15.w),
         child: Column(
@@ -24,23 +25,24 @@ class DisplayScreen extends StatelessWidget {
             SizedBox(
               height: 50.h,
             ),
-            appbar2("Display", context),
+            const appbar2(
+              "Display",
+            ),
             SizedBox(
               height: 20.h,
             ),
             textWidget(
                 "Select your preferred theme for the best experience with iTestified",
                 fontSize: 13.sp,
-                color: AppColors.textColor),
+                color: themeProvider.themeData.colorScheme.tertiary),
             // checkboxes
 
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                textWidget(
-                  "Dark Mode",
-                  fontSize: 14.sp,
-                ),
+                textWidget("Dark Mode",
+                    fontSize: 14.sp,
+                    color: themeProvider.themeData.colorScheme.tertiary),
                 Radio(
                     value: true,
                     groupValue: themeProvider.status,
@@ -53,10 +55,9 @@ class DisplayScreen extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                textWidget(
-                  "Light Mode",
-                  fontSize: 14.sp,
-                ),
+                textWidget("Light Mode",
+                    fontSize: 14.sp,
+                    color: themeProvider.themeData.colorScheme.tertiary),
                 Radio(
                     value: false,
                     groupValue: themeProvider.status,

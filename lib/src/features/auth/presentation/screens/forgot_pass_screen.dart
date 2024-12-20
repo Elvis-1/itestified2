@@ -9,15 +9,19 @@ import 'package:itestified/src/core/widgets/btn_and_text.dart';
 import 'package:itestified/src/core/widgets/custom_textfield.dart';
 import 'package:itestified/src/core/widgets/normal_text_style.dart';
 import 'package:itestified/src/core/widgets/text_widget.dart';
+import 'package:itestified/src/features/app_theme/theme_viewmodel.dart';
 import 'package:itestified/src/features/auth/presentation/screens/login_screen.dart';
 import 'package:itestified/src/features/auth/presentation/screens/otp_screen.dart';
 import 'package:itestified/src/features/nav/navbar.dart';
+import 'package:provider/provider.dart';
 
 class ForgotPasswordScreen extends StatelessWidget {
   const ForgotPasswordScreen({super.key});
   static const routeName = '/forgot-password';
   @override
   Widget build(BuildContext context) {
+    var themeProvider = Provider.of<ThemeViewmodel>(context);
+
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
       body: Container(
@@ -32,7 +36,9 @@ class ForgotPasswordScreen extends StatelessWidget {
                   SizedBox(
                     height: 45.h,
                   ),
-                  appbar2("Forgot Password", context),
+                  const appbar2(
+                    "Forgot Password",
+                  ),
                   SizedBox(
                     height: 30.h,
                   ),

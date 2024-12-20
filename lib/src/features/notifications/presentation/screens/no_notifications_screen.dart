@@ -23,7 +23,9 @@ class NoNotificationsScreen extends StatelessWidget {
             SizedBox(
               height: 50.h,
             ),
-            appbar2("Notifications", context),
+            appbar2(
+              "Notifications",
+            ),
             Column(
               //              mainAxisAlignment: MainAxisAlignment.center,
               children: [

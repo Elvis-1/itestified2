@@ -3,169 +3,189 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:itestified/src/config/theme/app_color.dart';
 import 'package:itestified/src/core/utils/app_const/app_icons.dart';
+import 'package:itestified/src/core/widgets/appbar2.dart';
 import 'package:itestified/src/core/widgets/btn_and_text.dart';
 import 'package:itestified/src/core/widgets/dialog.dart';
 import 'package:itestified/src/core/widgets/line_widget.dart';
 import 'package:itestified/src/core/widgets/text_widget.dart';
+import 'package:itestified/src/features/app_theme/theme_viewmodel.dart';
 import 'package:itestified/src/features/notifications/presentation/screens/notifications_screen.dart';
 import 'package:itestified/src/features/profile/presentation/screens/about.dart';
 import 'package:itestified/src/features/profile/presentation/screens/change_password.dart';
+import 'package:itestified/src/features/profile/presentation/screens/delete_account.dart';
 import 'package:itestified/src/features/profile/presentation/screens/display_screen.dart';
 import 'package:itestified/src/features/profile/presentation/screens/edit_profile.dart';
 import 'package:itestified/src/features/profile/presentation/screens/follow_itestify.dart';
-import 'package:itestified/src/features/profile/presentation/screens/giving_screen.dart';
+import 'package:itestified/src/features/profile/presentation/screens/donation_screen.dart';
 import 'package:itestified/src/features/profile/presentation/screens/help_desk.dart';
 import 'package:itestified/src/features/profile/presentation/screens/my_testimonies.dart';
 import 'package:itestified/src/features/profile/presentation/screens/rate_itestified.dart';
 import 'package:itestified/src/features/profile/presentation/widgets/icon_and_text_row.dart';
+import 'package:provider/provider.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    var themeProvider = Provider.of<ThemeViewmodel>(context);
+
     return Scaffold(
-      backgroundColor: AppColors.backgroundColor,
+      backgroundColor: themeProvider.themeData.colorScheme.background,
+      appBar: AppBar(
+        backgroundColor: themeProvider.themeData.colorScheme.background,
+        automaticallyImplyLeading: false,
+        centerTitle: true,
+        title: textWidget(
+          "Profile",
+          fontSize: 25.sp,
+          color: themeProvider.themeData.colorScheme.onTertiary,
+        ),
+      ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10),
-        child: Column(
-          children: [
-            SizedBox(
-              height: 50.h,
-            ),
-            textWidget("Profile", fontSize: 25.sp),
-            SizedBox(
-              height: 20.h,
-            ),
-            Container(
-              width: 100,
-              height: 100,
-              decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  image: DecorationImage(
-                      image: AssetImage(
-                        AppIcons.userIcon,
-                      ),
-                      fit: BoxFit.cover)),
-            ),
-            textWidget("Chika Amaka", fontSize: 23.sp),
-            textWidget("chikaamaka200@gmail.com",
-                fontSize: 17.sp, color: AppColors.textColor),
-            SizedBox(
-              height: 10.h,
-            ),
-            GestureDetector(
-              onTap: () {
-                Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (context) {
-                  return const EditProfileScreen();
-                }));
-              },
-              child: btnAndText(
-                  text: "Edit Profile",
-                  containerWidth: 110.w,
-                  fontSize: 15.sp,
-                  verticalPadding: 8.h),
-            ),
-            SizedBox(
-              height: 30.h,
-            ),
-            GestureDetector(
-              onTap: () {
-                Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (context) {
-                  return const MyTestimoniesScreen();
-                }));
-              },
-              child: iconAndTextRow(
-                  AppIcons.articleIcon, "My Testimonies", AppIcons.nextIcon),
-            ),
-            GestureDetector(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              SizedBox(
+                height: 10.h,
+              ),
+              Container(
+                width: 100,
+                height: 100,
+                decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    image: DecorationImage(
+                        image: AssetImage(
+                          AppIcons.userIcon,
+                        ),
+                        fit: BoxFit.cover)),
+              ),
+              textWidget("Chika Amaka", fontSize: 23.sp),
+              textWidget("chikaamaka200@gmail.com",
+                  fontSize: 17.sp, color: AppColors.textColor),
+              SizedBox(
+                height: 10.h,
+              ),
+              GestureDetector(
                 onTap: () {
                   Navigator.of(context)
                       .push(MaterialPageRoute(builder: (context) {
-                    return DisplayScreen();
+                    return const EditProfileScreen();
                   }));
                 },
-                child: iconAndTextRow(
-                    AppIcons.displayIcon, "Display", AppIcons.nextIcon)),
-            GestureDetector(
+                child: btnAndText(
+                    text: "Edit Profile",
+                    containerWidth: 110.w,
+                    fontSize: 15.sp,
+                    verticalPadding: 8.h),
+              ),
+              SizedBox(
+                height: 30.h,
+              ),
+              GestureDetector(
                 onTap: () {
                   Navigator.of(context)
                       .push(MaterialPageRoute(builder: (context) {
-                    return const GivingScreen();
+                    return const MyTestimoniesScreen();
                   }));
                 },
                 child: iconAndTextRow(
-                    AppIcons.givingIcon, "Giving", AppIcons.nextIcon)),
-            lineWidget(width: double.infinity, color: AppColors.opaqueBlack),
-            GestureDetector(
-              onTap: () {
-                Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (context) {
-                  return const NotificationsScreen();
-                }));
-              },
-              child: iconAndTextRow(AppIcons.notification1Icon, "Notifications",
-                  AppIcons.nextIcon),
-            ),
-            GestureDetector(
-              onTap: () {
-                Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (context) {
-                  return const ChangePasswordScreen();
-                }));
-              },
-              child: iconAndTextRow(AppIcons.passwordIcon, "Change My Password",
-                  AppIcons.nextIcon),
-            ),
-            GestureDetector(
-              onTap: () {
-                Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (context) {
-                  return const FollowItestify();
-                }));
-              },
-              child: iconAndTextRow(
-                  AppIcons.givingIcon, "Follow @iTestified", AppIcons.nextIcon),
-            ),
-            lineWidget(width: double.infinity, color: AppColors.opaqueBlack),
-            GestureDetector(
+                    AppIcons.articleIcon, "My Testimonies", AppIcons.nextIcon),
+              ),
+              GestureDetector(
+                  onTap: () {
+                    Navigator.of(context)
+                        .push(MaterialPageRoute(builder: (context) {
+                      return DisplayScreen();
+                    }));
+                  },
+                  child: iconAndTextRow(
+                      AppIcons.displayIcon, "Display", AppIcons.nextIcon)),
+              GestureDetector(
+                  onTap: () {
+                    Navigator.of(context)
+                        .push(MaterialPageRoute(builder: (context) {
+                      return const DonationScreen();
+                    }));
+                  },
+                  child: iconAndTextRow(
+                      AppIcons.givingIcon, "Donations", AppIcons.nextIcon)),
+              lineWidget(width: double.infinity, color: AppColors.opaqueBlack),
+              GestureDetector(
                 onTap: () {
                   Navigator.of(context)
                       .push(MaterialPageRoute(builder: (context) {
-                    return const About();
+                    return const NotificationsScreen();
                   }));
                 },
-                child: iconAndTextRow(
-                    AppIcons.aboutIcon, "About", AppIcons.nextIcon)),
-            GestureDetector(
-              onTap: () {
-                Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (context) {
-                  return const RateItestified();
-                }));
-              },
-              child: iconAndTextRow(
-                  AppIcons.rateIcon, "Rate iTestified", AppIcons.nextIcon),
-            ),
-            GestureDetector(
+                child: iconAndTextRow(AppIcons.notification1Icon,
+                    "Notifications", AppIcons.nextIcon),
+              ),
+              GestureDetector(
                 onTap: () {
                   Navigator.of(context)
                       .push(MaterialPageRoute(builder: (context) {
-                    return const HelpDesk();
+                    return const ChangePasswordScreen();
+                  }));
+                },
+                child: iconAndTextRow(AppIcons.passwordIcon,
+                    "Change My Password", AppIcons.nextIcon),
+              ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) {
+                    return const FollowItestify();
+                  }));
+                },
+                child: iconAndTextRow(AppIcons.givingIcon, "Follow @iTestified",
+                    AppIcons.nextIcon),
+              ),
+              lineWidget(width: double.infinity, color: AppColors.opaqueBlack),
+              GestureDetector(
+                  onTap: () {
+                    Navigator.of(context)
+                        .push(MaterialPageRoute(builder: (context) {
+                      return const About();
+                    }));
+                  },
+                  child: iconAndTextRow(
+                      AppIcons.aboutIcon, "About", AppIcons.nextIcon)),
+              GestureDetector(
+                onTap: () {
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) {
+                    return const RateItestified();
                   }));
                 },
                 child: iconAndTextRow(
-                    AppIcons.helpIcon, "Help", AppIcons.nextIcon)),
-            lineWidget(width: double.infinity, color: AppColors.opaqueBlack),
-            GestureDetector(
-                onTap: () async {
-                  await showLogoutDialogOverlay(context, "Log Out");
-                },
-                child: iconAndTextRow(
-                    AppIcons.helpIcon, "Log Out", AppIcons.nextIcon)),
-          ],
+                    AppIcons.rateIcon, "Rate iTestified", AppIcons.nextIcon),
+              ),
+              GestureDetector(
+                  onTap: () {
+                    Navigator.of(context)
+                        .push(MaterialPageRoute(builder: (context) {
+                      return const HelpDesk();
+                    }));
+                  },
+                  child: iconAndTextRow(
+                      AppIcons.helpIcon, "Help", AppIcons.nextIcon)),
+              lineWidget(width: double.infinity, color: AppColors.opaqueBlack),
+              GestureDetector(
+                  onTap: () {
+                    Navigator.pushNamed(context, DeleteAccount.routeName);
+                  },
+                  child: iconAndTextRow(AppIcons.deleteIcon, "Delete Account",
+                      AppIcons.nextIcon)),
+              GestureDetector(
+                  onTap: () async {
+                    await showLogoutDialogOverlay(context, "Log Out");
+                  },
+                  child: iconAndTextRow(
+                      AppIcons.helpIcon, "Log Out", AppIcons.nextIcon)),
+            ],
+          ),
         ),
       ),
     );
