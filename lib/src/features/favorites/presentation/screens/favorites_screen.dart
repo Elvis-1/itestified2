@@ -75,18 +75,16 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                 child: ListView(
               padding: EdgeInsets.fromViewPadding(ViewPadding.zero, 1),
               children: [
-                videoTestimoniesContainer2(context,
-                    videoContainerHeight: 220,
+                const videoTestimoniesContainer2(
+                    videoContainerHeight: 230,
                     videoContainerWidth: double.infinity,
                     fix: BoxFit.cover,
                     imageHeight: 200),
-                Container(
-                    // margin: EdgeInsets.only(left: 5.w, right: 5.w),
-                    child: const TextTestimonyContainer()),
+                const TextTestimonyContainer(),
                 SizedBox(
                   height: 15.h,
                 ),
-                quoteContainer(context, imageWidth: double.infinity),
+                const quoteContainer(imageWidth: double.infinity),
               ],
             ))
           ],

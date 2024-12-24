@@ -8,14 +8,18 @@ import 'package:itestified/src/core/widgets/appbar2.dart';
 import 'package:itestified/src/core/widgets/btn_and_text.dart';
 import 'package:itestified/src/core/widgets/normal_text_style.dart';
 import 'package:itestified/src/core/widgets/text_widget.dart';
+import 'package:itestified/src/features/app_theme/theme_viewmodel.dart';
+import 'package:provider/provider.dart';
 
 class NoNotificationsScreen extends StatelessWidget {
   const NoNotificationsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    var themeProvider = Provider.of<ThemeViewmodel>(context);
+
     return Scaffold(
-      backgroundColor: AppColors.backgroundColor,
+      backgroundColor: themeProvider.themeData.colorScheme.background,
       body: Container(
         margin: EdgeInsets.symmetric(horizontal: 10.w),
         child: Column(
@@ -36,22 +40,30 @@ class NoNotificationsScreen extends StatelessWidget {
                 SizedBox(
                   height: 20.h,
                 ),
-                Text(
-                  "No Notificatins Yet",
-                  style: normalTextStyle(
-                      fontSize: 28.sp,
-                      fontWeight: FontWeight.w600,
-                      textColor: AppColors.white),
-                ),
+
+                textWidget("No Notifications Yet",
+                    fontSize: 28.sp, fontWeight: FontWeight.w600),
+                // Text(
+                //   "No Notificatins Yet",
+                //   style: normalTextStyle(
+                //       fontSize: 28.sp,
+                //       fontWeight: FontWeight.w600,
+                //       textColor: AppColors.white),
+                // ),
                 SizedBox(
                   height: 10.h,
                 ),
-                Text(
-                  "You will get notifications when they are available",
-                  textAlign: TextAlign.center,
-                  style: normalTextStyle(
-                      fontSize: 23.sp, textColor: AppColors.textColor),
-                ),
+                // Text(
+                //   "You will get notifications when they are available",
+                //   textAlign: TextAlign.center,
+                //   style: normalTextStyle(
+                //       fontSize: 23.sp, textColor: AppColors.textColor),
+                // ),
+
+                textWidget("You will get notifications when they are available",
+                    textAlign: TextAlign.center,
+                    fontSize: 23.sp,
+                    fontWeight: FontWeight.w600),
               ],
             ),
           ],

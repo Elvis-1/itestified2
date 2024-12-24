@@ -8,10 +8,12 @@ import 'package:itestified/src/core/widgets/line_widget.dart';
 import 'package:itestified/src/core/widgets/modals.dart';
 import 'package:itestified/src/core/widgets/normal_text_style.dart';
 import 'package:itestified/src/core/widgets/text_widget.dart';
+import 'package:itestified/src/features/app_theme/theme_viewmodel.dart';
 import 'package:itestified/src/features/category/presentation/widgets/video_testimonies_container.dart';
 import 'package:itestified/src/features/video/presentation/widgets/likeOrShare.dart';
 import 'package:itestified/src/features/video/presentation/widgets/related_video_container.dart';
 import 'package:itestified/src/features/video/presentation/widgets/video_container.dart';
+import 'package:provider/provider.dart';
 
 class VideoScreen extends StatelessWidget {
   const VideoScreen({super.key});
@@ -20,12 +22,14 @@ class VideoScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var themeProvider = Provider.of<ThemeViewmodel>(context);
+
     return Scaffold(
-      backgroundColor: AppColors.backgroundColor,
+      backgroundColor: themeProvider.themeData.colorScheme.background,
       body: Column(
         children: [
           // video and text element
-          videoContainer(context, () {
+          videoContainer(unpressed: () {
             showModalBottomSheet(
                 context: context,
                 builder: (context) {
@@ -41,19 +45,23 @@ class VideoScreen extends StatelessWidget {
             child: Row(
               children: [
                 likeOrShare(AppIcons.likeIcon2, "30",
-                    containerColor: AppColors.lightBlack),
+                    containerColor: themeProvider
+                        .themeData.searchBarTheme.backgroundColor!
+                        .resolve({})),
                 SizedBox(
                   width: 15.w,
                 ),
                 likeOrShare(AppIcons.shareIcon, "Share",
-                    containerColor: AppColors.lightBlack),
+                    containerColor: themeProvider
+                        .themeData.searchBarTheme.backgroundColor!
+                        .resolve({})),
               ],
             ),
           ),
           SizedBox(
             height: 10.h,
           ),
-          lineWidget(width: double.infinity, color: AppColors.opaqueBlack),
+          lineWidget(width: double.infinity, color: AppColors.opaqueBlack2),
           // app logo
           Container(
             margin: EdgeInsets.only(left: 15.w),
@@ -163,7 +171,7 @@ class VideoScreen extends StatelessWidget {
                   itemCount: 4,
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, index) {
-                    return videoTestimoniesContainer2(context,
+                    return videoTestimoniesContainer2(
                         fix: BoxFit.cover,
                         imageHeight: 150,
                         playArrowLeftPosition: 130,

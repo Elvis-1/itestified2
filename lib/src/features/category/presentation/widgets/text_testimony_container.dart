@@ -5,7 +5,9 @@ import 'package:itestified/src/config/theme/app_color.dart';
 import 'package:itestified/src/core/utils/app_const/app_icons.dart';
 import 'package:itestified/src/core/widgets/normal_text_style.dart';
 import 'package:itestified/src/core/widgets/text_widget.dart';
+import 'package:itestified/src/features/app_theme/theme_viewmodel.dart';
 import 'package:itestified/src/features/profile/presentation/screens/my_testimonies_details.dart';
+import 'package:provider/provider.dart';
 
 class TextTestimonyContainer extends StatelessWidget {
   const TextTestimonyContainer({
@@ -16,6 +18,8 @@ class TextTestimonyContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var themeProvider = Provider.of<ThemeViewmodel>(context);
+
     return InkWell(
       onTap: () {
         Navigator.pushNamed(context, MyTestimoniesDetailsScreen.routeName);
@@ -25,7 +29,8 @@ class TextTestimonyContainer extends StatelessWidget {
             const EdgeInsets.only(top: 10, right: 20, left: 20, bottom: 10),
 
         decoration: BoxDecoration(
-            color: AppColors.opaqueBlack2,
+            color: themeProvider.themeData.searchBarTheme.backgroundColor!
+                .resolve({}),
             borderRadius: BorderRadius.circular(20)),
         //  height: 150,
         width: containerWidth,
@@ -35,13 +40,18 @@ class TextTestimonyContainer extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                textWidget("Jesus Changed my Genotype", fontSize: 13.sp),
+                textWidget(
+                  "Jesus Changed my Genotype",
+                  fontSize: 13.sp,
+                  fontWeight: FontWeight.w600,
+                ),
                 CircleAvatar(
                     radius: 10,
                     backgroundColor: AppColors.opaqueBlack,
                     child: Image.asset(
                       AppIcons.favoriteIcon,
                       width: 12,
+                      color: themeProvider.themeData.colorScheme.onTertiary,
                     ))
               ],
             ),
@@ -52,7 +62,9 @@ class TextTestimonyContainer extends StatelessWidget {
                 text: TextSpan(
                     text:
                         'For years, I lived with the pain and limitations of having the sickle cell genotype. Countless hospitals visits and painful crises became a part of my life in',
-                    style: normalTextStyle(textColor: AppColors.textColor),
+                    style: normalTextStyle(
+                        textColor:
+                            themeProvider.themeData.colorScheme.tertiary),
                     children: [
                   TextSpan(
                       text: ' ... See more',
@@ -75,24 +87,37 @@ class TextTestimonyContainer extends StatelessWidget {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        textWidget("Chika Amaka", fontSize: 13),
+                        textWidget(
+                          "Chika Amaka",
+                          fontSize: 13,
+                          fontWeight: FontWeight.w500,
+                        ),
                         Row(
                           children: [
-                            textWidget("Healing ",
-                                fontSize: 10.sp, color: AppColors.textColor),
+                            textWidget(
+                              "Healing ",
+                              fontSize: 10.sp,
+                              color: themeProvider
+                                  .themeData.colorScheme.onTertiary,
+                            ),
                             SizedBox(
                               width: 5.w,
                             ),
                             Container(
                               height: 5,
                               width: 5,
-                              color: AppColors.textColor,
+                              color: themeProvider
+                                  .themeData.colorScheme.onTertiary,
                             ),
                             SizedBox(
                               width: 5.w,
                             ),
-                            textWidget(" 30 minutes ago",
-                                fontSize: 8.sp, color: AppColors.textColor),
+                            textWidget(
+                              " 30 minutes ago",
+                              fontSize: 8.sp,
+                              color: themeProvider
+                                  .themeData.colorScheme.onTertiary,
+                            ),
                           ],
                         ),
                       ],

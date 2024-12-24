@@ -7,6 +7,7 @@ import 'package:itestified/src/config/theme/app_color.dart';
 import 'package:itestified/src/core/utils/app_const/app_icons.dart';
 import 'package:itestified/src/core/widgets/app_bar.dart';
 import 'package:itestified/src/core/widgets/text_widget.dart';
+import 'package:itestified/src/features/app_theme/theme_viewmodel.dart';
 import 'package:itestified/src/features/category/presentation/screens/video_written_test_screen.dart';
 import 'package:itestified/src/features/category/presentation/widgets/text_testimony_container.dart';
 import 'package:itestified/src/features/category/presentation/widgets/video_testimonies_container.dart';
@@ -16,6 +17,7 @@ import 'package:itestified/src/features/notifications/presentation/screens/no_no
 import 'package:itestified/src/features/search/presentation/screens/search_screen.dart';
 import 'package:itestified/src/features/video/presentation/screens/video_list_screen.dart';
 import 'package:itestified/src/features/written_testimonies.dart/presentation/screens/written_testimonies.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -41,8 +43,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var themeProvider = Provider.of<ThemeViewmodel>(context);
+
     return Scaffold(
-      backgroundColor: AppColors.backgroundColor,
+      backgroundColor: themeProvider.themeData.colorScheme.background,
       body: Container(
         margin: EdgeInsets.only(top: 5.h, bottom: 5.h, left: 15.w, right: 15.w),
         child: Column(
@@ -52,11 +56,19 @@ class _HomeScreenState extends State<HomeScreen> {
               height: 60.h,
             ),
             // app bar
-            appBar(gotoSearchPage, gotoNotificationsPage),
+            CustomAppBar(
+              gotoSearchPage: gotoSearchPage,
+              gotoNotificationPage: gotoNotificationsPage,
+            ),
             SizedBox(
               height: 10.h,
             ),
-            textWidget('Scripture of the day', fontSize: 18.sp),
+            textWidget(
+              'Scripture of the day',
+              fontSize: 18.sp,
+              fontWeight: FontWeight.w600,
+              color: themeProvider.themeData.colorScheme.onTertiary,
+            ),
             SizedBox(
               height: 10.h,
             ),
@@ -77,8 +89,16 @@ class _HomeScreenState extends State<HomeScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      textWidget("Jeremaih", fontSize: 18),
-                      textWidget('kjv', fontSize: 10)
+                      textWidget(
+                        "Jeremaih",
+                        fontSize: 18,
+                        color: AppColors.white,
+                      ),
+                      textWidget(
+                        'kjv',
+                        fontSize: 10,
+                        color: AppColors.textColor,
+                      )
                     ],
                   ),
                   SizedBox(
@@ -117,7 +137,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        textWidget("Video testimonies", fontSize: 18.sp),
+                        textWidget(
+                          "Video testimonies",
+                          fontSize: 18.sp,
+                          color: themeProvider.themeData.colorScheme.onTertiary,
+                          fontWeight: FontWeight.w600,
+                        ),
                         GestureDetector(
                           onTap: () {
                             Navigator.pushNamed(
@@ -142,7 +167,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           scrollDirection: Axis.horizontal,
                           itemCount: 5,
                           itemBuilder: (context, i) {
-                            return videoTestimoniesContainer2(context,
+                            return const videoTestimoniesContainer2(
                                 playArrowLeftPosition: 150,
                                 playArrowTopPosition: 50,
                                 itestifyIconLeftPosition: 2,
@@ -158,7 +183,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        textWidget("Written Testimonies", fontSize: 18.sp),
+                        textWidget(
+                          "Written Testimonies",
+                          fontSize: 18.sp,
+                          fontWeight: FontWeight.w600,
+                        ),
                         GestureDetector(
                           onTap: () {
                             Navigator.of(context)
@@ -182,7 +211,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           physics: const BouncingScrollPhysics(),
                           scrollDirection: Axis.horizontal,
                           itemCount: 5,
-                          itemBuilder: (context, int) {
+                          itemBuilder: (context, i) {
                             return const TextTestimonyContainer();
                           })),
                   SizedBox(
@@ -193,7 +222,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        textWidget("Inspirational Quotes", fontSize: 18.sp),
+                        textWidget(
+                          "Inspirational Quotes",
+                          fontSize: 18.sp,
+                          fontWeight: FontWeight.w600,
+                        ),
                         GestureDetector(
                           onTap: () {
                             Navigator.of(context)
@@ -219,9 +252,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           physics: const BouncingScrollPhysics(),
                           scrollDirection: Axis.horizontal,
                           itemCount: 5,
-                          itemBuilder: (context, int) {
-                            return quoteContainer(context,
-                                containerHeight: 120);
+                          itemBuilder: (context, i) {
+                            return const quoteContainer(containerHeight: 120);
                           })),
                 ],
               ),

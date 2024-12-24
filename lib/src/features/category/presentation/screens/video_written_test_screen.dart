@@ -100,7 +100,7 @@ class _VideoAndWrittenTestimonieScreenState
                                     return const VideoScreen();
                                   }));
                                 },
-                                child: videoTestimoniesContainer2(context,
+                                child: videoTestimoniesContainer2(
                                     videoContainerHeight: 230,
                                     videoContainerWidth: 400,
                                     imageHeight: 200))

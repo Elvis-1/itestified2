@@ -3,8 +3,10 @@ import 'package:itestified/src/config/theme/app_color.dart';
 
 class AppThemes {
   static ThemeData lightTheme = ThemeData(
+      searchBarTheme: SearchBarThemeData(
+        backgroundColor: MaterialStateProperty.all(AppColors.lightGrayColor),
+      ),
       primaryColor: AppColors.primaryColor,
-      backgroundColor: AppColors.white,
       colorScheme: ColorScheme.fromSeed(
         seedColor: AppColors.primaryColor,
         background: AppColors.white,
@@ -22,6 +24,9 @@ class AppThemes {
       ));
 
   static ThemeData darkTheme = ThemeData(
+    searchBarTheme: SearchBarThemeData(
+      backgroundColor: MaterialStateProperty.all(AppColors.opaqueBlack),
+    ),
     primaryColor: AppColors.primaryColor,
     colorScheme: ColorScheme.fromSeed(
       tertiary: AppColors.textColor,
