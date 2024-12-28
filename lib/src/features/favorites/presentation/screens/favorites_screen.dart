@@ -1,17 +1,15 @@
 import 'dart:ui';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:itestified/src/config/theme/app_color.dart';
 import 'package:itestified/src/core/utils/app_const/app_strings.dart';
-import 'package:itestified/src/core/widgets/normal_text_style.dart';
-import 'package:itestified/src/core/widgets/popupmenu_btn.dart';
 import 'package:itestified/src/core/widgets/text_widget.dart';
+import 'package:itestified/src/features/app_theme/theme_viewmodel.dart';
 import 'package:itestified/src/features/category/presentation/widgets/text_testimony_container.dart';
 import 'package:itestified/src/features/category/presentation/widgets/video_testimonies_container.dart';
 import 'package:itestified/src/features/favorites/presentation/widgets/clear_favorites_drpdown.dart';
 import 'package:itestified/src/features/home/widget/quotes_container.dart';
+import 'package:provider/provider.dart';
 
 class FavoritesScreen extends StatefulWidget {
   const FavoritesScreen({super.key});
@@ -27,8 +25,10 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
   bool text = false;
   @override
   Widget build(BuildContext context) {
+    var themeProvider = Provider.of<ThemeViewmodel>(context);
+
     return Scaffold(
-      backgroundColor: AppColors.backgroundColor,
+      backgroundColor: themeProvider.themeData.colorScheme.background,
       body: Container(
         margin: EdgeInsets.symmetric(horizontal: 15.w),
         child: Column(
@@ -45,7 +45,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                 textWidget("Favorites", fontSize: 25.sp),
                 Container(
                     //  width: 150,
-                    color: AppColors.backgroundColor,
+                    color: themeProvider.themeData.colorScheme.background,
                     child: ClearFavoritesDropDown<Widget>(
                       options: clearFav,
                     )
@@ -76,15 +76,19 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
               padding: EdgeInsets.fromViewPadding(ViewPadding.zero, 1),
               children: [
                 const videoTestimoniesContainer2(
-                    videoContainerHeight: 230,
+                    videoContainerHeight: 260,
                     videoContainerWidth: double.infinity,
+                    itestifyIconTopPosition: 205,
                     fix: BoxFit.cover,
                     imageHeight: 200),
                 const TextTestimonyContainer(),
                 SizedBox(
                   height: 15.h,
                 ),
-                const quoteContainer(imageWidth: double.infinity),
+                const quoteContainer(
+                  imageWidth: double.infinity,
+                  containerHeight: 160,
+                ),
               ],
             ))
           ],

@@ -23,7 +23,7 @@ class ForgotPasswordScreen extends StatelessWidget {
     var themeProvider = Provider.of<ThemeViewmodel>(context);
 
     return Scaffold(
-      backgroundColor: AppColors.backgroundColor,
+      backgroundColor: themeProvider.themeData.colorScheme.background,
       body: Container(
         margin: EdgeInsets.symmetric(horizontal: 15.w),
         child: Column(
@@ -53,12 +53,14 @@ class ForgotPasswordScreen extends StatelessWidget {
                   Text(
                     "Email Address",
                     style: normalTextStyle(
-                        textColor: AppColors.white, fontSize: 20),
+                        textColor:
+                            themeProvider.themeData.colorScheme.onTertiary,
+                        fontSize: 20),
                   ),
                   SizedBox(
                     height: 10.h,
                   ),
-                  customTextField(context,
+                  customTextField(
                       hintText: "Enter Email Address",
                       prefixIc: Icon(
                         Icons.email_outlined,
@@ -71,9 +73,7 @@ class ForgotPasswordScreen extends StatelessWidget {
             // login account btn
 
             Container(
-              padding: EdgeInsets.only(
-                  //  bottom: MediaQuery.of(context).viewInsets.bottom + 20.h,
-                  ),
+              margin: EdgeInsets.only(bottom: 10.h),
               child: Column(
                 children: [
                   GestureDetector(

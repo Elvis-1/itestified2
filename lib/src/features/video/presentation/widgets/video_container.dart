@@ -89,6 +89,7 @@ class videoContainer extends StatelessWidget {
                         child: textWidget(
                           "09:30",
                           fontSize: 12,
+                          color: AppColors.textColor,
                         ),
                       ),
                       SizedBox(
@@ -163,7 +164,9 @@ class videoContainer extends StatelessWidget {
                       GestureDetector(
                         onTap: unpressed,
                         child: textWidget("See Details",
-                            fontSize: 12.sp, color: AppColors.primaryColor),
+                            fontWeight: FontWeight.w600,
+                            fontSize: 12.sp,
+                            color: AppColors.primaryColor),
                       ),
                     ],
                   ),

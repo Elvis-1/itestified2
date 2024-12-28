@@ -32,7 +32,7 @@ class SearchScreen extends StatelessWidget {
             SizedBox(
               height: 50.h,
             ),
-            customTextField(context,
+            customTextField(
                 prefixIc: const Icon(Icons.search), hintText: "Search"),
             SizedBox(
               height: 20.h,

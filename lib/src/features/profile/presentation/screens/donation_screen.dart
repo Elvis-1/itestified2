@@ -7,8 +7,10 @@ import 'package:itestified/src/core/utils/app_const/app_icons.dart';
 import 'package:itestified/src/core/utils/app_const/enum.dart';
 import 'package:itestified/src/core/widgets/appbar2.dart';
 import 'package:itestified/src/core/widgets/text_widget.dart';
+import 'package:itestified/src/features/app_theme/theme_viewmodel.dart';
 import 'package:itestified/src/features/profile/presentation/screens/account_details_screen.dart';
 import 'package:itestified/src/features/profile/presentation/widgets/donations_title.dart';
+import 'package:provider/provider.dart';
 
 class DonationScreen extends StatelessWidget {
   const DonationScreen({super.key});
@@ -17,8 +19,10 @@ class DonationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var themeProvider = Provider.of<ThemeViewmodel>(context);
+
     return Scaffold(
-      backgroundColor: AppColors.backgroundColor,
+      backgroundColor: themeProvider.themeData.colorScheme.background,
       body: Column(
         children: [
           SizedBox(
@@ -72,11 +76,11 @@ class DonationScreen extends StatelessWidget {
                 donationsTitle("Donate in NGN", () {
                   Navigator.pushNamed(context, AccountDetailsScreen.routeName,
                       arguments: TransferType.NGN);
-                }),
+                }, context),
                 donationsTitle("Donate in USD", () {
                   Navigator.pushNamed(context, AccountDetailsScreen.routeName,
                       arguments: TransferType.USD);
-                }),
+                }, context),
               ],
             ),
           )

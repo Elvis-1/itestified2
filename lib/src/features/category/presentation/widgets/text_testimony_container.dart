@@ -29,8 +29,7 @@ class TextTestimonyContainer extends StatelessWidget {
             const EdgeInsets.only(top: 10, right: 20, left: 20, bottom: 10),
 
         decoration: BoxDecoration(
-            color: themeProvider.themeData.searchBarTheme.backgroundColor!
-                .resolve({}),
+            color: themeProvider.themeData.colorScheme.onBackground,
             borderRadius: BorderRadius.circular(20)),
         //  height: 150,
         width: containerWidth,
@@ -42,8 +41,9 @@ class TextTestimonyContainer extends StatelessWidget {
               children: [
                 textWidget(
                   "Jesus Changed my Genotype",
-                  fontSize: 13.sp,
+                  fontSize: 16.sp,
                   fontWeight: FontWeight.w600,
+                  color: themeProvider.themeData.colorScheme.onTertiary,
                 ),
                 CircleAvatar(
                     radius: 10,

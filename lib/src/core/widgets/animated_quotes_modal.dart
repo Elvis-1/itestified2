@@ -4,6 +4,8 @@ import 'package:itestified/src/config/theme/app_color.dart';
 import 'package:itestified/src/core/utils/app_const/app_icons.dart';
 import 'package:itestified/src/core/widgets/btn_and_text.dart';
 import 'package:itestified/src/core/widgets/text_widget.dart';
+import 'package:itestified/src/features/app_theme/theme_viewmodel.dart';
+import 'package:provider/provider.dart';
 
 class AnimatedQuotesModal extends StatefulWidget {
   @override
@@ -40,11 +42,16 @@ class _AnimatedQuotesModalState extends State<AnimatedQuotesModal>
 
   @override
   Widget build(BuildContext context) {
+    var themeProvider = Provider.of<ThemeViewmodel>(context);
+
     return SlideTransition(
       position: _offsetAnimation!,
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 25.w),
-        color: AppColors.backgroundColor,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          color: themeProvider.themeData.colorScheme.background,
+        ),
+        padding: EdgeInsets.only(top: 25.w, right: 10.w, left: 10.w),
         width: double.infinity,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -59,7 +66,7 @@ class _AnimatedQuotesModalState extends State<AnimatedQuotesModal>
             textWidget(
               "Source: Redeemed Christian Church of God",
               fontSize: 14.sp,
-              color: AppColors.textColor,
+              color: themeProvider.themeData.colorScheme.tertiary,
             ),
             SizedBox(
               height: 50.h,
@@ -75,6 +82,7 @@ class _AnimatedQuotesModalState extends State<AnimatedQuotesModal>
                 containerWidth: double.infinity,
                 containerColor: AppColors.transparent,
                 verticalPadding: 15.w,
+                textColor: AppColors.primaryColor,
                 text: "Share"),
           ],
         ),

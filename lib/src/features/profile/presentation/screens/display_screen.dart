@@ -32,8 +32,9 @@ class DisplayScreen extends StatelessWidget {
               height: 20.h,
             ),
             textWidget(
+                textAlign: TextAlign.center,
                 "Select your preferred theme for the best experience with iTestified",
-                fontSize: 13.sp,
+                fontSize: 15.sp,
                 color: themeProvider.themeData.colorScheme.tertiary),
             // checkboxes
 
@@ -41,7 +42,7 @@ class DisplayScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 textWidget("Dark Mode",
-                    fontSize: 14.sp,
+                    fontSize: 15.sp,
                     color: themeProvider.themeData.colorScheme.tertiary),
                 Radio(
                     value: true,
@@ -56,7 +57,7 @@ class DisplayScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 textWidget("Light Mode",
-                    fontSize: 14.sp,
+                    fontSize: 15.sp,
                     color: themeProvider.themeData.colorScheme.tertiary),
                 Radio(
                     value: false,

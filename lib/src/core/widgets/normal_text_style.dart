@@ -7,10 +7,11 @@ TextStyle normalTextStyle(
     {FontWeight fontWeight = FontWeight.normal,
     // String fontFamily = 'Mulish',
     Color textColor = const Color(0xFF252525),
-    double fontSize = 13}) {
+    double fontSize = 13,
+    double height = 1.5}) {
   return GoogleFonts.openSans(
-    color: textColor,
-    fontWeight: fontWeight,
-    fontSize: fontSize.sp,
-  );
+      color: textColor,
+      fontWeight: fontWeight,
+      fontSize: fontSize.sp,
+      height: height);
 }

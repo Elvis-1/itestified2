@@ -4,7 +4,9 @@ import 'package:itestified/src/config/theme/app_color.dart';
 import 'package:itestified/src/core/utils/app_const/app_icons.dart';
 import 'package:itestified/src/core/widgets/normal_text_style.dart';
 import 'package:itestified/src/core/widgets/text_widget.dart';
+import 'package:itestified/src/features/app_theme/theme_viewmodel.dart';
 import 'package:itestified/src/features/video/presentation/widgets/likeOrShare.dart';
+import 'package:provider/provider.dart';
 
 class CommentContainer extends StatelessWidget {
   CommentContainer({super.key, this.backgroundColor = AppColors.lightBlack});
@@ -13,6 +15,8 @@ class CommentContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var themeProvider = Provider.of<ThemeViewmodel>(context);
+    backgroundColor = themeProvider.themeData.colorScheme.background;
     return Container(
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15.w), color: backgroundColor),
@@ -45,8 +49,9 @@ class CommentContainer extends StatelessWidget {
                               child: Text(
                                 "Our God is indeed a good God, he knows all, Our God is indeed a good God, he knows all Our God is indeed a good God, he knows all Our God is indeed a good God, he knows all Our God is indeed a good God, he knows all,",
                                 textAlign: TextAlign.left,
-                                style:
-                                    normalTextStyle(textColor: AppColors.white),
+                                style: normalTextStyle(
+                                    textColor: themeProvider
+                                        .themeData.colorScheme.onTertiary),
                               ),
                             ),
                           ],
@@ -83,6 +88,8 @@ class CommentAndResponse extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var themeProvider = Provider.of<ThemeViewmodel>(context);
+
     return Column(
       children: [
         CommentContainer(),
@@ -92,7 +99,7 @@ class CommentAndResponse extends StatelessWidget {
             left: 20.w,
           ),
           child: CommentContainer(
-            backgroundColor: AppColors.blackColor,
+            backgroundColor: themeProvider.themeData.colorScheme.background,
           ),
         ),
       ],

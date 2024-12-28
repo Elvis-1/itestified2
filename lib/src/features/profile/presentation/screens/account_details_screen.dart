@@ -11,8 +11,10 @@ import 'package:itestified/src/core/utils/app_const/enum.dart';
 import 'package:itestified/src/core/widgets/appbar2.dart';
 import 'package:itestified/src/core/widgets/btn_and_text.dart';
 import 'package:itestified/src/core/widgets/text_widget.dart';
+import 'package:itestified/src/features/app_theme/theme_viewmodel.dart';
 import 'package:itestified/src/features/profile/presentation/widgets/giving_container.dart';
 import 'package:itestified/src/features/profile/presentation/widgets/text_row.dart';
+import 'package:provider/provider.dart';
 
 class AccountDetailsScreen extends StatelessWidget {
   const AccountDetailsScreen({super.key, required this.transferType});
@@ -22,8 +24,11 @@ class AccountDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var themeProvider = Provider.of<ThemeViewmodel>(context);
+    final customColors = Theme.of(context).extension<AppCustomColors>();
+
     return Scaffold(
-      backgroundColor: AppColors.backgroundColor,
+      backgroundColor: themeProvider.themeData.colorScheme.background,
       body: Column(
         children: [
           SizedBox(
@@ -46,9 +51,9 @@ class AccountDetailsScreen extends StatelessWidget {
                           height: 2.h,
                         ),
                         textWidget(
-                            "Please transfer to the account below, use the verification code as the narration, and upload your receipt for verification. Thank you for your generosity!",
-                            fontSize: 15.sp,
-                            color: AppColors.textColor),
+                          "Please transfer to the account below, use the verification code as the narration, and upload your receipt for verification. Thank you for your generosity!",
+                          fontSize: 15.sp,
+                        ),
                         SizedBox(
                           height: 10.h,
                         ),
@@ -84,7 +89,8 @@ class AccountDetailsScreen extends StatelessWidget {
                     height: 15.h,
                   ),
                   textWidget('Verification Code',
-                      color: AppColors.white, fontSize: 15),
+                      color: themeProvider.themeData.colorScheme.onTertiary,
+                      fontSize: 15),
                   SizedBox(
                     height: 5.h,
                   ),
@@ -92,8 +98,7 @@ class AccountDetailsScreen extends StatelessWidget {
                       alignment: Alignment.topLeft,
                       child: Row(
                         children: [
-                          textWidget('12A765FG',
-                              color: AppColors.textColor, fontSize: 15),
+                          textWidget('12A765FG', fontSize: 15),
                           Container(
                             margin: const EdgeInsets.only(left: 10),
                             child: const Icon(
@@ -107,7 +112,8 @@ class AccountDetailsScreen extends StatelessWidget {
                     height: 15.h,
                   ),
                   textWidget('Upload Payment Reciept',
-                      color: AppColors.white, fontSize: 15),
+                      color: themeProvider.themeData.colorScheme.onTertiary,
+                      fontSize: 15),
                   SizedBox(
                     height: 15.h,
                   ),
@@ -122,7 +128,10 @@ class AccountDetailsScreen extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Image.asset(AppIcons.browseFilesIcon),
+                          Image.asset(
+                            AppIcons.browseFilesIcon,
+                            color: themeProvider.themeData.colorScheme.tertiary,
+                          ),
                           SizedBox(
                             height: 5.h,
                           ),
@@ -131,8 +140,7 @@ class AccountDetailsScreen extends StatelessWidget {
                           SizedBox(
                             height: 10.h,
                           ),
-                          textWidget("PDF,PNG up to 5mb",
-                              color: AppColors.textColor, fontSize: 10),
+                          textWidget("PDF,PNG up to 5mb", fontSize: 10),
                         ],
                       ),
                     ),
@@ -144,8 +152,9 @@ class AccountDetailsScreen extends StatelessWidget {
                       borderColor: AppColors.transparent,
                       verticalPadding: 12,
                       text: 'Submit',
-                      textColor: AppColors.textColor,
-                      containerColor: AppColors.greyColor)
+                      textColor: AppColors.white,
+                      containerColor:
+                          customColors?.donationBtn ?? AppColors.greyColor)
                 ],
               ),
             ),

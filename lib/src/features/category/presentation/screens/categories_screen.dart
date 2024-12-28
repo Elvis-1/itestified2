@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:itestified/src/config/theme/app_color.dart';
 import 'package:itestified/src/core/widgets/text_widget.dart';
+import 'package:itestified/src/features/app_theme/theme_viewmodel.dart';
 import 'package:itestified/src/features/category/presentation/screens/video_written_test_screen.dart';
 import 'package:itestified/src/features/category/presentation/widgets/category_container.dart';
+import 'package:provider/provider.dart';
 
 class CategoriesListScreen extends StatelessWidget {
   const CategoriesListScreen({super.key});
@@ -13,8 +15,10 @@ class CategoriesListScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var themeProvider = Provider.of<ThemeViewmodel>(context);
+
     return Scaffold(
-      backgroundColor: AppColors.backgroundColor,
+      backgroundColor: themeProvider.themeData.colorScheme.background,
       body: Container(
         margin: EdgeInsets.symmetric(horizontal: 10.w),
         child: Column(
@@ -36,7 +40,7 @@ class CategoriesListScreen extends StatelessWidget {
                               return const VideoAndWrittenTestimonieScreen();
                             }));
                           },
-                          child: categoryContainer());
+                          child: const CategoryContainer());
                     }))
           ],
         ),

@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:itestified/src/config/theme/app_color.dart';
+import 'package:itestified/src/config/theme/app_theme.dart';
 import 'package:itestified/src/core/utils/app_const/app_icons.dart';
 import 'package:itestified/src/core/widgets/btn_and_text.dart';
 import 'package:itestified/src/core/widgets/custom_textfield.dart';
 import 'package:itestified/src/core/widgets/line_widget.dart';
 import 'package:itestified/src/core/widgets/normal_text_style.dart';
 import 'package:itestified/src/core/widgets/text_widget.dart';
+import 'package:itestified/src/features/app_theme/theme_viewmodel.dart';
 import 'package:itestified/src/features/auth/presentation/screens/forgot_pass_screen.dart';
 import 'package:itestified/src/features/auth/presentation/screens/signup_screen.dart';
 import 'package:itestified/src/features/nav/navbar.dart';
+import 'package:provider/provider.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -18,12 +21,14 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var themeProvider = Provider.of<ThemeViewmodel>(context);
+
     return Scaffold(
-      backgroundColor: AppColors.backgroundColor,
+      backgroundColor: themeProvider.themeData.colorScheme.background,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         centerTitle: true,
-        backgroundColor: AppColors.backgroundColor,
+        backgroundColor: themeProvider.themeData.colorScheme.background,
         title: textWidget("Welcome Back"),
       ),
       body: Container(
@@ -42,13 +47,14 @@ class LoginScreen extends StatelessWidget {
               ),
               Text(
                 "Email Address",
-                style:
-                    normalTextStyle(textColor: AppColors.white, fontSize: 20),
+                style: normalTextStyle(
+                    textColor: themeProvider.themeData.colorScheme.onTertiary,
+                    fontSize: 20),
               ),
               SizedBox(
                 height: 10.h,
               ),
-              customTextField(context,
+              customTextField(
                   hintText: "Enter Email Address",
                   prefixIc: Icon(
                     Icons.email_outlined,
@@ -60,20 +66,21 @@ class LoginScreen extends StatelessWidget {
               ),
               Text(
                 "Password",
-                style:
-                    normalTextStyle(textColor: AppColors.white, fontSize: 20),
+                style: normalTextStyle(
+                    textColor: themeProvider.themeData.colorScheme.onTertiary,
+                    fontSize: 20),
               ),
               SizedBox(
                 height: 10.h,
               ),
-              customTextField(context,
+              customTextField(
                   hintText: "Enter Password",
                   prefixIc: Icon(
                     Icons.lock_outline,
                     color: Colors.grey.shade700,
                   ),
                   suffixIcon: Icon(
-                    Icons.visibility_off,
+                    Icons.visibility_off_outlined,
                     size: 30.sp,
                     color: Colors.grey.shade700,
                   )),
@@ -90,7 +97,9 @@ class LoginScreen extends StatelessWidget {
                       Text(
                         "Remember me",
                         style: normalTextStyle(
-                            fontSize: 15, textColor: AppColors.white),
+                            fontSize: 15,
+                            textColor:
+                                themeProvider.themeData.colorScheme.onTertiary),
                       ),
                     ],
                   ),
@@ -103,7 +112,7 @@ class LoginScreen extends StatelessWidget {
                       "Forgot password?",
                       style: normalTextStyle(
                           textColor: AppColors.primaryColor,
-                          fontWeight: FontWeight.w600),
+                          fontWeight: FontWeight.w700),
                     ),
                   ),
                 ],
@@ -136,15 +145,20 @@ class LoginScreen extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  lineWidget(color: AppColors.textColor, width: 180.w),
+                  lineWidget(
+                      color: themeProvider.themeData.colorScheme.outline,
+                      width: 180.w),
                   Text(
-                    "OR",
+                    " OR ",
                     style: normalTextStyle(
                       fontSize: 18.sp,
-                      textColor: AppColors.textColor,
+                      fontWeight: FontWeight.w300,
+                      textColor: themeProvider.themeData.colorScheme.tertiary,
                     ),
                   ),
-                  lineWidget(color: AppColors.textColor, width: 180.w)
+                  lineWidget(
+                      color: themeProvider.themeData.colorScheme.outline,
+                      width: 180.w),
                 ],
               ),
               SizedBox(
@@ -154,13 +168,18 @@ class LoginScreen extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Image.asset(AppIcons.googleIcon),
+                  themeProvider.themeData == AppThemes.darkTheme
+                      ? Image.asset(AppIcons.googleIcon)
+                      : Image.asset(AppIcons.googleLightIcon),
                   SizedBox(
                     width: 25.w,
                   ),
-                  Image.asset(AppIcons.appleIcon),
+                  themeProvider.themeData == AppThemes.darkTheme
+                      ? Image.asset(AppIcons.appleIcon)
+                      : Image.asset(AppIcons.appleLightIcon),
                 ],
               ),
+
               SizedBox(
                 height: 200.h,
               ),

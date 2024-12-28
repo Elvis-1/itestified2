@@ -10,15 +10,21 @@ class AppIcons {
   static String appLogoDarkIcon = "assets/icons/app_logo_dark.png";
   static String logoIcon = "assets/icons/logoIcon.png";
   static String appleIcon = "assets/icons/apple_icon.png";
+  static String appleLightIcon = "assets/icons/apple_light.png";
   static String filterIcon = "assets/icons/filter_icon.png";
   static String facebookIcon = "assets/icons/facebook.png";
+
   static String twitterIcon = "assets/icons/twitter.png";
+  static String twitterLightIcon = "assets/icons/x_light.png";
+  static String youtubeLightIcon = "assets/icons/youtube_light.png";
+
   static String editIcon = "assets/icons/edit.png";
   static String instagramIcon = "assets/icons/instagram.png";
   static String youtubeIcon = "assets/icons/youtube.png";
   static String deleteIcon = "assets/icons/delete.png";
   static String commentIcon = "assets/icons/comment.png";
   static String googleIcon = "assets/icons/google_icon.png";
+  static String googleLightIcon = "assets/icons/google_light.png";
   static String notificationIcon = "assets/icons/notification_icon.png";
   static String notification1Icon = "assets/icons/notification1.png";
   static String passwordIcon = "assets/icons/password.png";

@@ -61,9 +61,15 @@ class ProfileScreen extends StatelessWidget {
                         ),
                         fit: BoxFit.cover)),
               ),
-              textWidget("Chika Amaka", fontSize: 23.sp),
-              textWidget("chikaamaka200@gmail.com",
-                  fontSize: 17.sp, color: AppColors.textColor),
+              textWidget(
+                "Chika Amaka",
+                fontSize: 23.sp,
+                fontWeight: FontWeight.w600,
+              ),
+              textWidget(
+                "chikaamaka200@gmail.com",
+                fontSize: 17.sp,
+              ),
               SizedBox(
                 height: 10.h,
               ),
@@ -111,7 +117,9 @@ class ProfileScreen extends StatelessWidget {
                   },
                   child: iconAndTextRow(
                       AppIcons.givingIcon, "Donations", AppIcons.nextIcon)),
-              lineWidget(width: double.infinity, color: AppColors.opaqueBlack),
+              lineWidget(
+                  width: double.infinity,
+                  color: themeProvider.themeData.colorScheme.outline),
               GestureDetector(
                 onTap: () {
                   Navigator.of(context)
@@ -142,7 +150,9 @@ class ProfileScreen extends StatelessWidget {
                 child: iconAndTextRow(AppIcons.givingIcon, "Follow @iTestified",
                     AppIcons.nextIcon),
               ),
-              lineWidget(width: double.infinity, color: AppColors.opaqueBlack),
+              lineWidget(
+                  width: double.infinity,
+                  color: themeProvider.themeData.colorScheme.outline),
               GestureDetector(
                   onTap: () {
                     Navigator.of(context)
@@ -171,7 +181,9 @@ class ProfileScreen extends StatelessWidget {
                   },
                   child: iconAndTextRow(
                       AppIcons.helpIcon, "Help", AppIcons.nextIcon)),
-              lineWidget(width: double.infinity, color: AppColors.opaqueBlack),
+              lineWidget(
+                  width: double.infinity,
+                  color: themeProvider.themeData.colorScheme.outline),
               GestureDetector(
                   onTap: () {
                     Navigator.pushNamed(context, DeleteAccount.routeName);

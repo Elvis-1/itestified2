@@ -4,7 +4,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:itestified/src/config/theme/app_color.dart';
 import 'package:itestified/src/core/widgets/text_widget.dart';
 
-Widget followRow(String icon) {
+Widget followRow(
+  String icon,
+) {
   return Container(
     margin: EdgeInsets.only(bottom: 10.h),
     child: Row(
@@ -21,7 +23,7 @@ Widget followRow(String icon) {
         ),
         Icon(
           Icons.chevron_right_outlined,
-          color: AppColors.textColor,
+          // color: AppColors.textC,
           size: 30.sp,
         )
       ],

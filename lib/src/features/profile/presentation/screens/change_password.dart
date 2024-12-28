@@ -6,15 +6,19 @@ import 'package:itestified/src/core/widgets/appbar2.dart';
 import 'package:itestified/src/core/widgets/btn_and_text.dart';
 import 'package:itestified/src/core/widgets/custom_textfield.dart';
 import 'package:itestified/src/core/widgets/normal_text_style.dart';
+import 'package:itestified/src/features/app_theme/theme_viewmodel.dart';
 import 'package:itestified/src/features/nav/navbar.dart';
+import 'package:provider/provider.dart';
 
 class ChangePasswordScreen extends StatelessWidget {
   const ChangePasswordScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    var themeProvider = Provider.of<ThemeViewmodel>(context);
+
     return Scaffold(
-      backgroundColor: AppColors.backgroundColor,
+      backgroundColor: themeProvider.themeData.colorScheme.background,
       body: Container(
         margin: EdgeInsets.symmetric(horizontal: 15.w),
         child: SingleChildScrollView(
@@ -33,88 +37,64 @@ class ChangePasswordScreen extends StatelessWidget {
               ),
               Text(
                 "Current Password",
-                style:
-                    normalTextStyle(textColor: AppColors.white, fontSize: 20),
+                style: normalTextStyle(
+                    textColor: themeProvider.themeData.colorScheme.onTertiary,
+                    fontSize: 20),
               ),
               SizedBox(
                 height: 10.h,
               ),
-              Container(
-                decoration: BoxDecoration(
-                    color: AppColors.lightBlack,
-                    border: Border.all(color: AppColors.transparent)),
-                child: customTextField(
-                    prefixIc: Icon(
-                      Icons.lock_outline,
-                      color: Colors.grey.shade700,
-                    ),
-                    context,
-                    borderColor: AppColors.lightBlack,
-                    hintText: "Enter Current Password",
-                    suffixIcon: Icon(
-                      Icons.visibility_off,
-                      size: 30.sp,
-                      color: Colors.white38,
-                    )),
+
+              customTextField(
+                hintText: "Enter Current Password",
+                prefixIc: Icon(
+                  Icons.lock_outline,
+                  color: Colors.grey.shade700,
+                ),
               ),
+
               SizedBox(
                 height: 20.h,
               ),
               Text(
                 "New Password",
-                style:
-                    normalTextStyle(textColor: AppColors.white, fontSize: 20),
+                style: normalTextStyle(
+                    textColor: themeProvider.themeData.colorScheme.onTertiary,
+                    fontSize: 20),
               ),
               SizedBox(
                 height: 10.h,
               ),
-              Container(
-                decoration: BoxDecoration(
-                    color: AppColors.lightBlack,
-                    border: Border.all(color: AppColors.transparent)),
-                child: customTextField(
-                    prefixIc: Icon(
-                      Icons.lock_outline,
-                      color: Colors.grey.shade700,
-                    ),
-                    context,
-                    borderColor: AppColors.lightBlack,
-                    hintText: "Enter New Password",
-                    suffixIcon: Icon(
-                      Icons.visibility_off,
-                      size: 30.sp,
-                      color: Colors.white38,
-                    )),
+
+              customTextField(
+                hintText: "Enter New Password",
+                prefixIc: Icon(
+                  Icons.lock_outline,
+                  color: Colors.grey.shade700,
+                ),
               ),
+
               SizedBox(
                 height: 30.h,
               ),
               Text(
                 "Confirm Password",
-                style:
-                    normalTextStyle(textColor: AppColors.white, fontSize: 20),
+                style: normalTextStyle(
+                    textColor: themeProvider.themeData.colorScheme.onTertiary,
+                    fontSize: 20),
               ),
               SizedBox(
                 height: 10.h,
               ),
-              Container(
-                decoration: BoxDecoration(
-                    color: AppColors.lightBlack,
-                    border: Border.all(color: AppColors.transparent)),
-                child: customTextField(
-                    prefixIc: Icon(
-                      Icons.lock_outline,
-                      color: Colors.grey.shade700,
-                    ),
-                    context,
-                    borderColor: AppColors.lightBlack,
-                    hintText: "Re-enter new Password",
-                    suffixIcon: Icon(
-                      Icons.visibility_off,
-                      size: 30.sp,
-                      color: Colors.white38,
-                    )),
+
+              customTextField(
+                hintText: "Re-enter new Password",
+                prefixIc: Icon(
+                  Icons.lock_outline,
+                  color: Colors.grey.shade700,
+                ),
               ),
+
               SizedBox(
                 height: 250.h,
               ),
@@ -140,7 +120,7 @@ class ChangePasswordScreen extends StatelessWidget {
       ),
       floatingActionButton: Container(
         alignment: Alignment.bottomCenter,
-        margin: EdgeInsets.symmetric(horizontal: 20.w),
+        margin: EdgeInsets.only(right: 20.w, left: 20.w, bottom: 10.h),
 
         //   padding: EdgeInsets.only(bottom: ),
         height: 50.h,

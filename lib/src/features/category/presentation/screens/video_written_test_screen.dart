@@ -8,10 +8,11 @@ import 'package:itestified/src/config/theme/app_color.dart';
 import 'package:itestified/src/core/utils/app_const/app_icons.dart';
 import 'package:itestified/src/core/widgets/appbar2.dart';
 import 'package:itestified/src/core/widgets/icon_and_text.dart';
-import 'package:itestified/src/core/widgets/line_widget.dart';
+import 'package:itestified/src/features/app_theme/theme_viewmodel.dart';
 import 'package:itestified/src/features/category/presentation/widgets/text_testimony_container.dart';
 import 'package:itestified/src/features/category/presentation/widgets/video_testimonies_container.dart';
 import 'package:itestified/src/features/video/presentation/screens/video_screen.dart';
+import 'package:provider/provider.dart';
 
 class VideoAndWrittenTestimonieScreen extends StatefulWidget {
   const VideoAndWrittenTestimonieScreen({super.key});
@@ -28,8 +29,10 @@ class _VideoAndWrittenTestimonieScreenState
 
   @override
   Widget build(BuildContext context) {
+    var themeProvider = Provider.of<ThemeViewmodel>(context);
+
     return Scaffold(
-      backgroundColor: AppColors.backgroundColor,
+      backgroundColor: themeProvider.themeData.colorScheme.background,
       body: Container(
         child: Column(
           children: [
@@ -43,7 +46,7 @@ class _VideoAndWrittenTestimonieScreenState
             ),
             // video and text row
             SizedBox(
-              height: 50.h,
+              height: 20.h,
             ),
             Container(
               decoration: BoxDecoration(
@@ -64,7 +67,8 @@ class _VideoAndWrittenTestimonieScreenState
                           AppIcons.videoIcon,
                           vidoes == true
                               ? AppColors.primaryColor
-                              : AppColors.backgroundColor)),
+                              : themeProvider
+                                  .themeData.colorScheme.background)),
                   GestureDetector(
                       onTap: () {
                         setState(() {
@@ -77,11 +81,10 @@ class _VideoAndWrittenTestimonieScreenState
                           AppIcons.textIcon,
                           text == true
                               ? AppColors.primaryColor
-                              : AppColors.backgroundColor))
+                              : themeProvider.themeData.colorScheme.background))
                 ],
               ),
             ),
-            //   lineWidget(width: double.infinity, color: AppColors.opaqueBlack),
 
             Expanded(
               child: ListView.builder(
@@ -91,7 +94,6 @@ class _VideoAndWrittenTestimonieScreenState
                   itemBuilder: (context, index) {
                     return Column(
                       children: [
-                        //  videoTestimoniesContainer(),
                         vidoes == true
                             ? GestureDetector(
                                 onTap: () {
@@ -100,15 +102,14 @@ class _VideoAndWrittenTestimonieScreenState
                                     return const VideoScreen();
                                   }));
                                 },
-                                child: videoTestimoniesContainer2(
-                                    videoContainerHeight: 230,
-                                    videoContainerWidth: 400,
-                                    imageHeight: 200))
+                                child: const videoTestimoniesContainer2(
+                                  videoContainerHeight: 265,
+                                  videoContainerWidth: 400,
+                                  imageHeight: 200,
+                                  itestifyIconTopPosition: 205,
+                                ))
                             : const TextTestimonyContainer(
                                 containerWidth: double.infinity),
-                        // lineWidget(
-                        //     width: double.infinity,
-                        //     color: AppColors.opaqueBlack),
                       ],
                     );
                   }),

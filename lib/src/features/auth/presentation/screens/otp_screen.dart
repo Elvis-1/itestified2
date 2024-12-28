@@ -7,8 +7,10 @@ import 'package:itestified/src/core/widgets/custom_textfield.dart';
 import 'package:itestified/src/core/widgets/normal_text_style.dart';
 import 'package:itestified/src/core/widgets/number_text_field.dart';
 import 'package:itestified/src/core/widgets/text_widget.dart';
+import 'package:itestified/src/features/app_theme/theme_viewmodel.dart';
 import 'package:itestified/src/features/auth/presentation/screens/new_password.dart';
 import 'package:itestified/src/features/nav/navbar.dart';
+import 'package:provider/provider.dart';
 
 class OTPScreen extends StatelessWidget {
   OTPScreen({super.key});
@@ -16,29 +18,51 @@ class OTPScreen extends StatelessWidget {
   final TextEditingController controller = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    var themeProvider = Provider.of<ThemeViewmodel>(context);
+
     return Scaffold(
-      backgroundColor: AppColors.backgroundColor,
+      backgroundColor: themeProvider.themeData.colorScheme.background,
       appBar: AppBar(
           centerTitle: true,
           automaticallyImplyLeading: false,
-          backgroundColor: AppColors.backgroundColor,
+          backgroundColor: themeProvider.themeData.colorScheme.background,
           title: textWidget('Reset Password')),
       body: Container(
         margin: EdgeInsets.symmetric(horizontal: 15.w),
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               // SizedBox(
               //   height: 45.h,
               // ),
 
-              textWidget(
-                  "We sent a code to chikaamaka3007@gmail.com kindly enter the code below",
+              RichText(
+                  textAlign: TextAlign.center,
+                  text: TextSpan(
+                    children: [
+                      TextSpan(
+                          text: 'We sent a code to ',
+                          style: normalTextStyle(
+                              fontWeight: FontWeight.w100,
+                              fontSize: 16.sp,
+                              textColor: themeProvider
+                                  .themeData.colorScheme.tertiary)),
+                      TextSpan(
+                          text: 'chikaamaka3007@gmail.com',
+                          style: normalTextStyle(
+                              fontSize: 16.sp,
+                              textColor: themeProvider
+                                  .themeData.colorScheme.onTertiary)),
+                    ],
+                  )),
+              textWidget("Kindly enter the code below",
                   fontWeight: FontWeight.w100,
-                  fontSize: 15,
+                  fontSize: 16.sp,
+                  color: themeProvider.themeData.colorScheme.tertiary,
                   textAlign: TextAlign.center),
+
               SizedBox(
                 height: 35.h,
               ),
@@ -82,6 +106,7 @@ class OTPScreen extends StatelessWidget {
                     child: textWidget(
                       "Resend mail",
                       fontSize: 15,
+                      fontWeight: FontWeight.w500,
                       color: AppColors.primaryColor,
                     ),
                   )

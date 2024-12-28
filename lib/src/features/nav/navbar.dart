@@ -6,11 +6,13 @@ import 'package:itestified/src/config/theme/app_color.dart';
 import 'package:itestified/src/core/utils/app_const/app_icons.dart';
 import 'package:itestified/src/core/widgets/dialog.dart';
 import 'package:itestified/src/features/add_testimony/presentation/screens/add_testimony.dart';
+import 'package:itestified/src/features/app_theme/theme_viewmodel.dart';
 import 'package:itestified/src/features/category/presentation/screens/categories_screen.dart';
 import 'package:itestified/src/features/favorites/presentation/screens/favorites_screen.dart';
 import 'package:itestified/src/features/home/presentation/home_screen.dart';
 import 'package:itestified/src/features/nav/bottom_nav.dart';
 import 'package:itestified/src/features/profile/presentation/screens/profile_screen.dart';
+import 'package:provider/provider.dart';
 
 class NavBar extends StatefulWidget {
   const NavBar({super.key});
@@ -36,14 +38,21 @@ class _NavBarState extends State<NavBar> {
 
   @override
   Widget build(BuildContext context) {
+    var themeProvider = Provider.of<ThemeViewmodel>(context);
+
     return Scaffold(
-      backgroundColor: AppColors.backgroundColor,
+      backgroundColor: themeProvider.themeData.colorScheme.background,
       body: pageList[pageIndex],
       bottomNavigationBar: SafeArea(
         child: Container(
           height: 80,
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15), color: Colors.black),
+            border: Border(
+                top: BorderSide(
+                    color: themeProvider.themeData.colorScheme.outline)),
+            borderRadius: BorderRadius.circular(15),
+            color: themeProvider.themeData.colorScheme.background,
+          ),
           padding: EdgeInsets.all(5.w),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -56,10 +65,10 @@ class _NavBarState extends State<NavBar> {
                 },
                 iconColor: pageIndex == 0
                     ? AppColors.primaryColor
-                    : AppColors.textColor,
+                    : themeProvider.themeData.colorScheme.tertiary,
                 textColor: pageIndex == 0
                     ? AppColors.primaryColor
-                    : AppColors.textColor,
+                    : themeProvider.themeData.colorScheme.tertiary,
                 icon: AppIcons.homeIcon,
               ),
               BottomNav(
@@ -70,10 +79,10 @@ class _NavBarState extends State<NavBar> {
                 },
                 textColor: pageIndex == 1
                     ? AppColors.primaryColor
-                    : AppColors.textColor,
+                    : themeProvider.themeData.colorScheme.tertiary,
                 iconColor: pageIndex == 1
                     ? AppColors.primaryColor
-                    : AppColors.textColor,
+                    : themeProvider.themeData.colorScheme.tertiary,
                 icon: AppIcons.catIcon,
               ),
               GestureDetector(
@@ -86,7 +95,7 @@ class _NavBarState extends State<NavBar> {
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(25),
                       color: AppColors.primaryColor),
-                  child: Icon(
+                  child: const Icon(
                     Icons.add,
                     color: AppColors.white,
                   ),
@@ -100,10 +109,10 @@ class _NavBarState extends State<NavBar> {
                 },
                 textColor: pageIndex == 2
                     ? AppColors.primaryColor
-                    : AppColors.textColor,
+                    : themeProvider.themeData.colorScheme.tertiary,
                 iconColor: pageIndex == 2
                     ? AppColors.primaryColor
-                    : AppColors.textColor,
+                    : themeProvider.themeData.colorScheme.tertiary,
                 icon: AppIcons.favoriteIcon,
               ),
               BottomNav(
@@ -114,10 +123,10 @@ class _NavBarState extends State<NavBar> {
                   },
                   textColor: pageIndex == 3
                       ? AppColors.primaryColor
-                      : AppColors.textColor,
+                      : themeProvider.themeData.colorScheme.tertiary,
                   iconColor: pageIndex == 3
                       ? AppColors.primaryColor
-                      : AppColors.textColor,
+                      : themeProvider.themeData.colorScheme.tertiary,
                   icon: AppIcons.profileIcon),
             ],
           ),

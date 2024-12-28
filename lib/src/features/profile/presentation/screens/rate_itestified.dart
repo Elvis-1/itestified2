@@ -11,14 +11,18 @@ import 'package:itestified/src/core/widgets/multiline_textfield.dart';
 import 'package:itestified/src/core/widgets/normal_text_style.dart';
 import 'package:itestified/src/core/widgets/snack_bar.dart';
 import 'package:itestified/src/core/widgets/text_widget.dart';
+import 'package:itestified/src/features/app_theme/theme_viewmodel.dart';
+import 'package:provider/provider.dart';
 
 class RateItestified extends StatelessWidget {
   const RateItestified({super.key});
 
   @override
   Widget build(BuildContext context) {
+    var themeProvider = Provider.of<ThemeViewmodel>(context);
+
     return Scaffold(
-      backgroundColor: AppColors.backgroundColor,
+      backgroundColor: themeProvider.themeData.colorScheme.background,
       body: SingleChildScrollView(
         child: Container(
           margin: EdgeInsets.symmetric(horizontal: 20.w),
@@ -36,8 +40,9 @@ class RateItestified extends StatelessWidget {
               Text(
                 "Tap the stars below to rate your experience with iTesfied",
                 textAlign: TextAlign.center,
-                style:
-                    normalTextStyle(textColor: AppColors.white, fontSize: 17),
+                style: normalTextStyle(
+                    textColor: themeProvider.themeData.colorScheme.onTertiary,
+                    fontSize: 17),
               ),
               SizedBox(
                 height: 20.h,
@@ -66,22 +71,28 @@ class RateItestified extends StatelessWidget {
                 height: 10.h,
               ),
               multilineTextField(hintText: "Enter your review here ..."),
-              SizedBox(
-                height: 270,
-              ),
-              GestureDetector(
-                onTap: () async {
-                  await showRateSubmittedDialogOverlay(context, "Messsssss");
-                },
-                child: btnAndText(
-                    text: "Submit",
-                    containerWidth: double.infinity,
-                    verticalPadding: 16),
-              )
             ],
           ),
         ),
       ),
+      floatingActionButton: Container(
+          alignment: Alignment.bottomCenter,
+          margin: EdgeInsets.only(right: 20.w, left: 20.w, bottom: 10.h),
+
+          //   padding: EdgeInsets.only(bottom: ),
+          height: 50,
+          child: GestureDetector(
+            onTap: () async {
+              await showRateSubmittedDialogOverlay(context, "Messsssss");
+            },
+            child: btnAndText(
+              borderColor: AppColors.transparent,
+              text: 'Submit',
+              containerWidth: double.infinity,
+              // containerColor: AppColors.redColor
+            ),
+          )),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }

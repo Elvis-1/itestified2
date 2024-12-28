@@ -27,6 +27,7 @@ class MyApp extends StatelessWidget {
       builder: (context, child) {
         return MaterialApp(
             theme: appTheme.themeData,
+            themeMode: ThemeMode.system,
             debugShowCheckedModeBanner: false,
             initialRoute: SplashScreen.routeName,
             onGenerateRoute: onGenerateRoute,

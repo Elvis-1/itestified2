@@ -62,7 +62,7 @@ class DeleteAccount extends StatelessWidget {
       ),
       floatingActionButton: Container(
           alignment: Alignment.bottomCenter,
-          margin: EdgeInsets.symmetric(horizontal: 20.w),
+          margin: EdgeInsets.only(right: 20.w, left: 20.w, bottom: 10.h),
 
           //   padding: EdgeInsets.only(bottom: ),
           height: 50,

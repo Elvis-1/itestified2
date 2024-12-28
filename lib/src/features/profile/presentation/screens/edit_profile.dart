@@ -21,7 +21,7 @@ class EditProfileScreen extends StatelessWidget {
       //   backgroundColor: AppColors.backgroundColor,
       backgroundColor: themeProvider.themeData.scaffoldBackgroundColor,
       body: Container(
-        margin: EdgeInsets.symmetric(horizontal: 15.w),
+        margin: EdgeInsets.only(right: 15.w, left: 15.w, bottom: 10),
         child: Column(
           children: [
             SizedBox(
@@ -64,15 +64,15 @@ class EditProfileScreen extends StatelessWidget {
                   Align(
                     alignment: Alignment.centerLeft,
                     child: textWidget("Full Name",
-                        fontSize: 16.sp, color: AppColors.textColor),
+                        fontSize: 18.sp,
+                        color: themeProvider.themeData.colorScheme.tertiary),
                   ),
                   SizedBox(
                     height: 10.h,
                   ),
-                  customTextField(context,
+                  customTextField(
                       prefixIc: Icon(
                         Icons.person_outline,
-                        color: AppColors.opaqueBlack,
                       ),
                       borderColor: AppColors.lightBlack),
                   SizedBox(
@@ -81,15 +81,15 @@ class EditProfileScreen extends StatelessWidget {
                   Align(
                     alignment: Alignment.centerLeft,
                     child: textWidget("Email Address",
-                        fontSize: 16.sp, color: AppColors.textColor),
+                        fontSize: 18.sp,
+                        color: themeProvider.themeData.colorScheme.tertiary),
                   ),
                   SizedBox(
                     height: 10.h,
                   ),
-                  customTextField(context,
+                  customTextField(
                       prefixIc: Icon(
                         Icons.email_outlined,
-                        color: AppColors.opaqueBlack,
                       ),
                       borderColor: AppColors.lightBlack),
                   SizedBox(
@@ -98,36 +98,50 @@ class EditProfileScreen extends StatelessWidget {
                   Align(
                     alignment: Alignment.centerLeft,
                     child: textWidget("Phone Number",
-                        fontSize: 16.sp, color: AppColors.textColor),
+                        fontSize: 18.sp,
+                        fontWeight: FontWeight.w600,
+                        color: themeProvider.themeData.colorScheme.tertiary),
                   ),
                   SizedBox(
                     height: 10.h,
                   ),
-                  customTextField(context,
-                      prefixIc: Icon(
+                  customTextField(
+                      prefixIc: const Icon(
                         Icons.phone_outlined,
-                        color: AppColors.opaqueBlack,
                       ),
                       borderColor: AppColors.lightBlack),
                   SizedBox(
                     height: 200.h,
                   ),
-                  GestureDetector(
-                    onTap: () {},
-                    child: Align(
-                        alignment: Alignment.center,
-                        child: btnAndText(
-                            fontSize: 18.sp,
-                            verticalPadding: 12.h,
-                            containerWidth: double.infinity,
-                            text: "Save Changes")),
-                  )
+                  // GestureDetector(
+                  //   onTap: () {},
+                  //   child: Align(
+                  //       alignment: Alignment.center,
+                  //       child: btnAndText(
+                  //           fontSize: 18.sp,
+                  //           verticalPadding: 12.h,
+                  //           containerWidth: double.infinity,
+                  //           text: "Save Changes")),
+                  // )
                 ],
               ),
             )
           ],
         ),
       ),
+
+      floatingActionButton: Container(
+          alignment: Alignment.bottomCenter,
+          margin: EdgeInsets.only(right: 20.w, left: 20.w, bottom: 10.h),
+
+          //   padding: EdgeInsets.only(bottom: ),
+          height: 50,
+          child: btnAndText(
+            borderColor: AppColors.transparent,
+            text: 'Save Changes',
+            containerWidth: double.infinity,
+          )),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }

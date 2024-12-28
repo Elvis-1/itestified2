@@ -8,9 +8,11 @@ import 'package:itestified/src/core/widgets/custom_textfield.dart';
 import 'package:itestified/src/core/widgets/line_widget.dart';
 import 'package:itestified/src/core/widgets/normal_text_style.dart';
 import 'package:itestified/src/core/widgets/text_widget.dart';
+import 'package:itestified/src/features/app_theme/theme_viewmodel.dart';
 import 'package:itestified/src/features/auth/presentation/screens/forgot_pass_screen.dart';
 import 'package:itestified/src/features/auth/presentation/screens/signup_screen.dart';
 import 'package:itestified/src/features/nav/navbar.dart';
+import 'package:provider/provider.dart';
 
 class NewPasswordScreen extends StatelessWidget {
   const NewPasswordScreen({super.key});
@@ -19,12 +21,14 @@ class NewPasswordScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var themeProvider = Provider.of<ThemeViewmodel>(context);
+
     return Scaffold(
-      backgroundColor: AppColors.backgroundColor,
+      backgroundColor: themeProvider.themeData.colorScheme.background,
       appBar: AppBar(
         centerTitle: true,
         automaticallyImplyLeading: false,
-        backgroundColor: AppColors.backgroundColor,
+        backgroundColor: themeProvider.themeData.colorScheme.background,
         title: textWidget("Create New Password"),
       ),
       body: Container(
@@ -52,15 +56,21 @@ class NewPasswordScreen extends StatelessWidget {
                     Text(
                       "New Password",
                       style: normalTextStyle(
-                          textColor: AppColors.white, fontSize: 20),
+                          textColor:
+                              themeProvider.themeData.colorScheme.onTertiary,
+                          fontSize: 20),
                     ),
                     SizedBox(
                       height: 10.h,
                     ),
-                    customTextField(context,
+                    customTextField(
                         hintText: "Enter Password",
+                        prefixIc: Icon(
+                          Icons.lock_outline,
+                          color: Colors.grey.shade700,
+                        ),
                         suffixIcon: Icon(
-                          Icons.visibility_off,
+                          Icons.visibility_off_outlined,
                           size: 30.sp,
                           color: Colors.grey.shade700,
                         )),
@@ -73,15 +83,17 @@ class NewPasswordScreen extends StatelessWidget {
                     Text(
                       "Confirm Password",
                       style: normalTextStyle(
-                          textColor: AppColors.white, fontSize: 20),
+                          textColor:
+                              themeProvider.themeData.colorScheme.onTertiary,
+                          fontSize: 20),
                     ),
                     SizedBox(
                       height: 10.h,
                     ),
-                    customTextField(context,
+                    customTextField(
                         hintText: "Enter Password",
                         suffixIcon: Icon(
-                          Icons.visibility_off,
+                          Icons.visibility_off_outlined,
                           size: 30.sp,
                           color: Colors.grey.shade700,
                         )),

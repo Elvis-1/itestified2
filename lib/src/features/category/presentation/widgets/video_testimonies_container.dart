@@ -12,147 +12,331 @@ import 'package:itestified/src/features/app_theme/theme_viewmodel.dart';
 import 'package:itestified/src/features/video/presentation/screens/video_screen.dart';
 import 'package:provider/provider.dart';
 
-Widget videoTestimoniesContainer(BuildContext context,
-    {double videoContainerHeight = 100,
-    double videoContainerWidth = 300,
-    double imageHeight = 100,
-    BoxFit fix = BoxFit.fill}) {
-  return InkWell(
-    onTap: () {
-      Navigator.pushNamed(context, VideoScreen.routeName);
-    },
-    child: Container(
-      height: videoContainerHeight.h,
-      width: videoContainerWidth.w,
-      margin: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // video container
-          Container(
-            height: imageHeight,
-            //  width: 270,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                image: DecorationImage(
-                    image: AssetImage(AppImages.recentTestimonyImage),
-                    fit: fix)),
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    Container(
-                      color: Colors.black.withOpacity(0.5),
-                      child: CircleAvatar(
-                        radius: 10,
-                        backgroundColor: AppColors.opaqueBlack,
-                        child: Image.asset(
-                          width: 12,
-                          AppIcons.favoriteIcon,
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-                SizedBox(
-                  height: 20.h,
-                ),
-                Center(
-                  child: const Icon(
-                    Icons.play_arrow,
-                    color: AppColors.white,
-                  ),
-                ),
+class videoTestimoniesContainer extends StatelessWidget {
+  videoTestimoniesContainer(
+      {super.key,
+      this.videoContainerHeight = 100,
+      this.videoContainerWidth = 300,
+      this.imageHeight = 100,
+      this.fix = BoxFit.cover});
+  final double videoContainerHeight;
+  double videoContainerWidth = 300;
+  double imageHeight = 100;
+  final BoxFit fix;
+  @override
+  Widget build(BuildContext context) {
+    var themeProvider = Provider.of<ThemeViewmodel>(context);
 
-                // SizedBox(
-                //   height: 40.h,
-                // ),
-                Spacer(),
-                Row(
-                  children: [
-                    const Spacer(),
-                    Container(
-                      padding: EdgeInsets.all(2.sp),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(3),
-                          color: AppColors.blackColor),
-                      child: textWidget(
-                        "09:30",
-                        fontSize: 12,
-                      ),
-                    ),
-                    SizedBox(
-                      width: 10.h,
-                    ),
-                  ],
-                ),
-
-                SizedBox(
-                  height: 10.h,
-                ),
-              ],
-            ),
-          ),
-
-          // itestify pic and text
-
-          Row(
-            children: [
-              Image.asset(
-                AppIcons.itestifyIcon,
-                width: 30,
-              ),
-              SizedBox(
-                width: 10.w,
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+    return InkWell(
+      onTap: () {
+        Navigator.pushNamed(context, VideoScreen.routeName);
+      },
+      child: Container(
+        height: videoContainerHeight.h,
+        width: videoContainerWidth.w,
+        //   margin: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // video container
+            Container(
+              height: 170, // imageHeight,
+              //  width: 270,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                  image: DecorationImage(
+                      image: AssetImage(AppImages.recentTestimonyImage),
+                      fit: fix)),
+              child: Column(
                 children: [
-                  textWidget("Prophetic Prayers for open doors",
-                      fontSize: 12.sp),
-                  textWidget("Redeemed Christian Church of God",
-                      fontSize: 11.sp, color: AppColors.textColor),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Container(
+                        color: Colors.black.withOpacity(0.5),
+                        child: CircleAvatar(
+                          radius: 10,
+                          backgroundColor: AppColors.opaqueBlack,
+                          child: Image.asset(
+                            width: 12,
+                            AppIcons.favoriteIcon,
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                  SizedBox(
+                    height: videoContainerHeight / 2,
+                  ),
+                  const Align(
+                    alignment: Alignment.center,
+                    child: Icon(
+                      Icons.play_arrow,
+                      color: AppColors.white,
+                    ),
+                  ),
+
+                  // SizedBox(
+                  //   height: 40.h,
+                  // ),
+                  const Spacer(),
                   Row(
                     children: [
-                      textWidget("Child Birth ",
-                          fontSize: 8.sp, color: AppColors.textColor),
-                      SizedBox(
-                        width: 5.w,
-                      ),
+                      const Spacer(),
                       Container(
-                        height: 5,
-                        width: 5,
-                        color: AppColors.textColor,
+                        padding: EdgeInsets.all(2.sp),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(3),
+                            color: AppColors.blackColor),
+                        child: textWidget(
+                          "09:30",
+                          fontSize: 12,
+                          color: AppColors.white,
+                        ),
                       ),
                       SizedBox(
-                        width: 5.w,
+                        width: 10.h,
                       ),
-                      textWidget(" 504 Views ",
-                          fontSize: 8.sp, color: AppColors.textColor),
-                      SizedBox(
-                        width: 5.w,
-                      ),
-                      Container(
-                        height: 5,
-                        width: 5,
-                        color: AppColors.textColor,
-                      ),
-                      SizedBox(
-                        width: 5.w,
-                      ),
-                      textWidget("14/4/2024",
-                          fontSize: 8.sp, color: AppColors.textColor),
                     ],
+                  ),
+
+                  SizedBox(
+                    height: 10.h,
                   ),
                 ],
               ),
-            ],
-          )
-        ],
+            ),
+
+            // itestify pic and text
+
+            Row(
+              children: [
+                Image.asset(
+                  AppIcons.itestifyIcon,
+                  width: 30,
+                ),
+                SizedBox(
+                  width: 10.w,
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    textWidget(
+                      "Prophetic Prayers for open doors",
+                      fontSize: 15.sp,
+                      fontWeight: FontWeight.w600,
+                      color: themeProvider.themeData.colorScheme.onTertiary,
+                    ),
+                    SizedBox(
+                      height: 5.h,
+                    ),
+                    textWidget(
+                      "Redeemed Christian Church of God",
+                      fontSize: 13.sp,
+                    ),
+                    SizedBox(
+                      height: 5.h,
+                    ),
+                    Row(
+                      children: [
+                        textWidget(
+                          "Child Birth ",
+                          fontSize: 10.sp,
+                        ),
+                        SizedBox(
+                          width: 5.w,
+                        ),
+                        Container(
+                          height: 5,
+                          width: 5,
+                          color: themeProvider.themeData.colorScheme.tertiary,
+                        ),
+                        SizedBox(
+                          width: 5.w,
+                        ),
+                        textWidget(" 504 Views ",
+                            fontSize: 10.sp,
+                            color:
+                                themeProvider.themeData.colorScheme.tertiary),
+                        SizedBox(
+                          width: 5.w,
+                        ),
+                        Container(
+                          height: 5,
+                          width: 5,
+                          color: themeProvider.themeData.colorScheme.tertiary,
+                        ),
+                        SizedBox(
+                          width: 5.w,
+                        ),
+                        textWidget("14/4/2024",
+                            fontSize: 10.sp,
+                            color:
+                                themeProvider.themeData.colorScheme.tertiary),
+                      ],
+                    ),
+                  ],
+                ),
+              ],
+            )
+          ],
+        ),
       ),
-    ),
-  );
+    );
+  }
 }
+
+// Widget videoTestimoniesContainer(BuildContext context,
+//     {
+//       double videoContainerHeight = 100,
+//     double videoContainerWidth = 300,
+//     double imageHeight = 100,
+//     BoxFit fix = BoxFit.cover
+
+//     }) {
+//   return InkWell(
+//     onTap: () {
+//       Navigator.pushNamed(context, VideoScreen.routeName);
+//     },
+//     child: Container(
+//       height: videoContainerHeight.h,
+//       width: videoContainerWidth.w,
+//       margin: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
+//       child: Column(
+//         crossAxisAlignment: CrossAxisAlignment.start,
+//         children: [
+//           // video container
+//           Container(
+//             height: 170, // imageHeight,
+//             //  width: 270,
+//             decoration: BoxDecoration(
+//                 borderRadius: BorderRadius.circular(15),
+//                 image: DecorationImage(
+//                     image: AssetImage(AppImages.recentTestimonyImage),
+//                     fit: fix)),
+//             child: Column(
+//               children: [
+//                 Row(
+//                   mainAxisAlignment: MainAxisAlignment.end,
+//                   children: [
+//                     Container(
+//                       color: Colors.black.withOpacity(0.5),
+//                       child: CircleAvatar(
+//                         radius: 10,
+//                         backgroundColor: AppColors.opaqueBlack,
+//                         child: Image.asset(
+//                           width: 12,
+//                           AppIcons.favoriteIcon,
+//                         ),
+//                       ),
+//                     )
+//                   ],
+//                 ),
+//                 SizedBox(
+//                   height: videoContainerHeight / 2,
+//                 ),
+//                 const Align(
+//                   alignment: Alignment.center,
+//                   child: Icon(
+//                     Icons.play_arrow,
+//                     color: AppColors.white,
+//                   ),
+//                 ),
+
+//                 // SizedBox(
+//                 //   height: 40.h,
+//                 // ),
+//                 const Spacer(),
+//                 Row(
+//                   children: [
+//                     const Spacer(),
+//                     Container(
+//                       padding: EdgeInsets.all(2.sp),
+//                       decoration: BoxDecoration(
+//                           borderRadius: BorderRadius.circular(3),
+//                           color: AppColors.blackColor),
+//                       child: textWidget(
+//                         "09:30",
+//                         fontSize: 12,
+//                       ),
+//                     ),
+//                     SizedBox(
+//                       width: 10.h,
+//                     ),
+//                   ],
+//                 ),
+
+//                 SizedBox(
+//                   height: 10.h,
+//                 ),
+//               ],
+//             ),
+//           ),
+
+//           // itestify pic and text
+
+//           Row(
+//             children: [
+//               Image.asset(
+//                 AppIcons.itestifyIcon,
+//                 width: 30,
+//               ),
+//               SizedBox(
+//                 width: 10.w,
+//               ),
+//               Column(
+//                 crossAxisAlignment: CrossAxisAlignment.start,
+//                 children: [
+//                   textWidget(
+//                     "Prophetic Prayers for open doors",
+//                     fontSize: 15.sp,
+//                     fontWeight: FontWeight.w600,
+//                     color: ,
+//                   ),
+//                   textWidget("Redeemed Christian Church of God",
+//                       fontSize: 11.sp, color: AppColors.textColor),
+//                   Row(
+//                     children: [
+//                       textWidget("Child Birth ",
+//                           fontSize: 8.sp, color: AppColors.textColor),
+//                       SizedBox(
+//                         width: 5.w,
+//                       ),
+//                       Container(
+//                         height: 5,
+//                         width: 5,
+//                         color: AppColors.textColor,
+//                       ),
+//                       SizedBox(
+//                         width: 5.w,
+//                       ),
+//                       textWidget(" 504 Views ",
+//                           fontSize: 8.sp, color: AppColors.textColor),
+//                       SizedBox(
+//                         width: 5.w,
+//                       ),
+//                       Container(
+//                         height: 5,
+//                         width: 5,
+//                         color: AppColors.textColor,
+//                       ),
+//                       SizedBox(
+//                         width: 5.w,
+//                       ),
+//                       textWidget("14/4/2024",
+//                           fontSize: 8.sp, color: AppColors.textColor),
+//                     ],
+//                   ),
+//                 ],
+//               ),
+//             ],
+//           )
+//         ],
+//       ),
+//     ),
+//   );
+
+// }
 
 class videoTestimoniesContainer2 extends StatelessWidget {
   const videoTestimoniesContainer2({
@@ -187,8 +371,7 @@ class videoTestimoniesContainer2 extends StatelessWidget {
       child: Container(
         height: videoContainerHeight.h,
         width: videoContainerWidth.w,
-        margin: EdgeInsets.symmetric(
-            horizontal: 10.w, vertical: 5.w), // Adjust for ScreenUtil
+        margin: EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.w),
         child: Stack(
           children: [
             // Video container
@@ -210,10 +393,10 @@ class videoTestimoniesContainer2 extends StatelessWidget {
                         margin: const EdgeInsets.only(top: 10, right: 8),
                         color: AppColors.opaqueBlack2,
                         child: const CircleAvatar(
-                          radius: 12, // Removed `.sp`
+                          radius: 12,
                           backgroundColor: AppColors.greyColor,
                           child: Icon(
-                            size: 15, // Removed `.sp`
+                            size: 15,
                             Icons.favorite_outline,
                           ),
                         ),
@@ -261,28 +444,29 @@ class videoTestimoniesContainer2 extends StatelessWidget {
               left: itestifyIconLeftPosition.w,
               child: Row(
                 children: [
-                  Image.asset(
-                    AppIcons.itestifyIcon,
-                    width: 30, // Removed `.w`
-                  ),
+                  Image.asset(AppIcons.itestifyIcon, width: 30.w),
                   const SizedBox(width: 10),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       textWidget(
                         "Prophetic Prayers for open doors",
-                        fontSize: 14,
+                        fontSize: 16,
                         fontWeight: FontWeight.w600, // Removed `.sp`
                       ),
-                      textWidget(
-                        "Redeemed Christian Church of God",
-                        fontSize: 10, // Removed `.sp`
+                      SizedBox(
+                        height: 5.h,
+                      ),
+                      textWidget("Redeemed Christian Church of God",
+                          fontSize: 13.sp),
+                      SizedBox(
+                        height: 5.h,
                       ),
                       Row(
                         children: [
                           textWidget(
                             "Child Birth ",
-                            fontSize: 8.sp,
+                            fontSize: 10.sp,
                           ),
                           const SizedBox(width: 5),
                           Container(
@@ -291,10 +475,7 @@ class videoTestimoniesContainer2 extends StatelessWidget {
                             color: themeProvider.themeData.colorScheme.tertiary,
                           ),
                           const SizedBox(width: 5),
-                          textWidget(
-                            " 504 Views ",
-                            fontSize: 8, // Removed `.sp`
-                          ),
+                          textWidget(" 504 Views ", fontSize: 10.sp),
                           const SizedBox(width: 5),
                           Container(
                             height: 5,
@@ -302,10 +483,7 @@ class videoTestimoniesContainer2 extends StatelessWidget {
                             color: themeProvider.themeData.colorScheme.tertiary,
                           ),
                           const SizedBox(width: 5),
-                          textWidget(
-                            "14/4/2024",
-                            fontSize: 8, // Removed `.sp`
-                          ),
+                          textWidget("14/4/2024", fontSize: 10.sp),
                         ],
                       ),
                     ],

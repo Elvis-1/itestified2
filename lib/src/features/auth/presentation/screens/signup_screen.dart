@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:itestified/src/config/theme/app_color.dart';
+import 'package:itestified/src/config/theme/app_theme.dart';
 import 'package:itestified/src/core/utils/app_const/app_icons.dart';
 import 'package:itestified/src/core/widgets/btn_and_text.dart';
 import 'package:itestified/src/core/widgets/custom_textfield.dart';
@@ -19,17 +20,19 @@ class SignUpScreen extends StatelessWidget {
   static const routeName = '/signup';
   @override
   Widget build(BuildContext context) {
-    var themeProvider = Provider.of<ThemeViewmodel>(context).themeData;
+    var themeProvider = Provider.of<ThemeViewmodel>(context);
     TextStyle style = normalTextStyle(
-        textColor: themeProvider.colorScheme.onTertiary, fontSize: 20);
+        textColor: themeProvider.themeData.colorScheme.onTertiary,
+        fontSize: 20);
     return Scaffold(
-      backgroundColor: themeProvider.colorScheme.background,
+      backgroundColor: themeProvider.themeData.colorScheme.background,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         centerTitle: true,
-        backgroundColor: themeProvider.colorScheme.background,
+        backgroundColor: themeProvider.themeData.colorScheme.background,
         title: textWidget("Create an account",
-            color: themeProvider.colorScheme.onTertiary),
+            fontWeight: FontWeight.w500,
+            color: themeProvider.themeData.colorScheme.onTertiary),
       ),
       body: Container(
         margin: EdgeInsets.symmetric(horizontal: 15.w),
@@ -48,12 +51,12 @@ class SignUpScreen extends StatelessWidget {
               SizedBox(
                 height: 10.h,
               ),
-              customTextField(context,
+              customTextField(
                   prefixIc: Icon(
-                    Icons.person_2_outlined,
-                    color: Colors.grey.shade700,
-                    size: 30.sp,
-                  )),
+                Icons.person_2_outlined,
+                color: Colors.grey.shade700,
+                size: 30.sp,
+              )),
               SizedBox(
                 height: 20.h,
               ),
@@ -61,7 +64,7 @@ class SignUpScreen extends StatelessWidget {
               SizedBox(
                 height: 10.h,
               ),
-              customTextField(context,
+              customTextField(
                   hintText: "Enter Email Address",
                   prefixIc: Icon(
                     Icons.email_outlined,
@@ -75,14 +78,14 @@ class SignUpScreen extends StatelessWidget {
               SizedBox(
                 height: 10.h,
               ),
-              customTextField(context,
+              customTextField(
                   hintText: "Enter Password",
                   prefixIc: Icon(
                     Icons.lock_outline,
                     color: Colors.grey.shade700,
                   ),
                   suffixIcon: Icon(
-                    Icons.visibility_off,
+                    Icons.visibility_off_outlined,
                     size: 30.sp,
                     color: Colors.grey.shade700,
                   )),
@@ -93,14 +96,14 @@ class SignUpScreen extends StatelessWidget {
               SizedBox(
                 height: 10.h,
               ),
-              customTextField(context,
+              customTextField(
                   hintText: 'Re-Enter Password',
                   prefixIc: Icon(
-                    Icons.lock_outline,
+                    Icons.lock_outlined,
                     color: Colors.grey.shade700,
                   ),
                   suffixIcon: Icon(
-                    Icons.visibility_off,
+                    Icons.visibility_off_outlined,
                     size: 30.sp,
                     color: Colors.grey.shade700,
                   )),
@@ -124,15 +127,20 @@ class SignUpScreen extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  lineWidget(color: AppColors.textColor, width: 180.w),
+                  lineWidget(
+                      color: themeProvider.themeData.colorScheme.outline,
+                      width: 180.w),
                   Text(
-                    "OR",
+                    " OR ",
                     style: normalTextStyle(
                       fontSize: 18.sp,
-                      textColor: AppColors.textColor,
+                      fontWeight: FontWeight.w300,
+                      textColor: themeProvider.themeData.colorScheme.tertiary,
                     ),
                   ),
-                  lineWidget(color: AppColors.textColor, width: 180.w)
+                  lineWidget(
+                      color: themeProvider.themeData.colorScheme.outline,
+                      width: 180.w),
                 ],
               ),
               SizedBox(
@@ -142,13 +150,18 @@ class SignUpScreen extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Image.asset(AppIcons.googleIcon),
+                  themeProvider.themeData == AppThemes.darkTheme
+                      ? Image.asset(AppIcons.googleIcon)
+                      : Image.asset(AppIcons.googleLightIcon),
                   SizedBox(
                     width: 25.w,
                   ),
-                  Image.asset(AppIcons.appleIcon),
+                  themeProvider.themeData == AppThemes.darkTheme
+                      ? Image.asset(AppIcons.appleIcon)
+                      : Image.asset(AppIcons.appleLightIcon),
                 ],
               ),
+
               SizedBox(
                 height: 30.h,
               ),
@@ -157,7 +170,7 @@ class SignUpScreen extends StatelessWidget {
                 children: [
                   textWidget("Already have an account?",
                       fontSize: 15.sp,
-                      color: themeProvider.colorScheme.onTertiary),
+                      color: themeProvider.themeData.colorScheme.onTertiary),
                   GestureDetector(
                     onTap: () {
                       Navigator.of(context).pushReplacement(
@@ -168,7 +181,8 @@ class SignUpScreen extends StatelessWidget {
                     child: textWidget(
                       " Log in",
                       fontSize: 15,
-                      color: themeProvider.primaryColor,
+                      fontWeight: FontWeight.w600,
+                      color: themeProvider.themeData.primaryColor,
                     ),
                   )
                 ],

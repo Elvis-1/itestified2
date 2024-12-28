@@ -37,7 +37,7 @@ class VideoListScreen extends StatelessWidget {
                     padding: EdgeInsets.fromViewPadding(ViewPadding.zero, 0.2),
                     itemBuilder: (context, index) {
                       return videoTestimoniesContainer2(
-                          videoContainerHeight: 230,
+                          videoContainerHeight: 240,
                           videoContainerWidth: 400,
                           imageHeight: 200);
                     }))

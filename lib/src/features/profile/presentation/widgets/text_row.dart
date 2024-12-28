@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:itestified/src/config/theme/app_color.dart';
 import 'package:itestified/src/core/widgets/text_widget.dart';
 
 class TextRow extends StatelessWidget {
@@ -20,16 +19,13 @@ class TextRow extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          textWidget(title,
-              color: AppColors.textColor,
-              fontWeight: FontWeight.w400,
-              fontSize: 13),
+          textWidget(title, fontWeight: FontWeight.w400, fontSize: 13),
           // Spacer(),
           Align(
               alignment: Alignment.topLeft,
               child: Row(
                 children: [
-                  textWidget(value, color: AppColors.textColor, fontSize: 15),
+                  textWidget(value, fontSize: 15),
                   if (isAccNumber)
                     Container(
                       margin: const EdgeInsets.only(left: 10),

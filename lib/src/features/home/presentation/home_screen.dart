@@ -75,7 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
             // scripture of the day container
             Container(
-              height: 120.h,
+              height: 125.h,
               padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
               decoration: BoxDecoration(
                   image: DecorationImage(
@@ -96,7 +96,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       textWidget(
                         'kjv',
-                        fontSize: 10,
+                        fontSize: 12,
                         color: AppColors.textColor,
                       )
                     ],
@@ -108,7 +108,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     width: 400.w,
                     child: textWidget(
                         "\"For I know the thoughts that I think towards you, saith the Lord, thoughts of peace and not of evil, to give you an expected end\"",
-                        fontSize: 14.sp,
+                        fontSize: 15.sp,
                         maxLines: 3,
                         overflow: TextOverflow.ellipsis,
                         color: AppColors.textColor),
@@ -149,7 +149,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                 context, VideoListScreen.routeName);
                           },
                           child: textWidget("See all",
-                              fontSize: 15.sp, color: AppColors.darkPurple),
+                              fontWeight: FontWeight.w600,
+                              fontSize: 15.sp,
+                              color: AppColors.darkPurple),
                         )
                       ],
                     ),
@@ -160,7 +162,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   // videos
                   SizedBox(
-                      height: 195.h,
+                      height: 220.h,
                       child: ListView.builder(
                           shrinkWrap: true,
                           physics: const BouncingScrollPhysics(),
@@ -168,12 +170,12 @@ class _HomeScreenState extends State<HomeScreen> {
                           itemCount: 5,
                           itemBuilder: (context, i) {
                             return const videoTestimoniesContainer2(
-                                playArrowLeftPosition: 150,
-                                playArrowTopPosition: 50,
+                                playArrowLeftPosition: 130,
+                                playArrowTopPosition: 60,
                                 itestifyIconLeftPosition: 2,
                                 fix: BoxFit.cover,
                                 imageHeight: 150,
-                                itestifyIconTopPosition: 140);
+                                itestifyIconTopPosition: 150);
                           })),
 
                   // written testimonies
@@ -194,7 +196,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                 .pushNamed(WrittenTestimonies.routeName);
                           },
                           child: textWidget("See all",
-                              fontSize: 15.sp, color: AppColors.darkPurple),
+                              fontWeight: FontWeight.w600,
+                              fontSize: 15.sp,
+                              color: AppColors.darkPurple),
                         )
                       ],
                     ),
@@ -205,7 +209,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
 
                   SizedBox(
-                      height: 170.h,
+                      height: 205.h,
                       child: ListView.builder(
                           shrinkWrap: true,
                           physics: const BouncingScrollPhysics(),
@@ -235,7 +239,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             }));
                           },
                           child: textWidget("See all",
-                              fontSize: 15.sp, color: AppColors.darkPurple),
+                              fontWeight: FontWeight.w500,
+                              fontSize: 15.sp,
+                              color: AppColors.darkPurple),
                         )
                       ],
                     ),

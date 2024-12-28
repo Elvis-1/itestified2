@@ -2,52 +2,68 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:itestified/src/config/theme/app_color.dart';
 import 'package:itestified/src/core/widgets/normal_text_style.dart';
+import 'package:itestified/src/features/app_theme/theme_viewmodel.dart';
+import 'package:provider/provider.dart';
 
-Widget terms(String useText) {
-  return Row(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    mainAxisAlignment: MainAxisAlignment.start,
-    children: [
-      Container(
-        margin: const EdgeInsets.only(top: 5, right: 10),
-        width: 3,
-        height: 3,
-        color: AppColors.textColor,
-      ),
-      Expanded(
-        child: Text(
-          useText,
-          style: normalTextStyle(
-            textColor: AppColors.textColor,
+class terms extends StatelessWidget {
+  const terms(this.useText, {super.key});
+  final String useText;
+  @override
+  Widget build(BuildContext context) {
+    var themeProvider = Provider.of<ThemeViewmodel>(context);
+
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        Container(
+          margin: const EdgeInsets.only(top: 5, right: 10),
+          width: 3,
+          height: 3,
+          color: themeProvider.themeData.colorScheme.tertiary,
+        ),
+        Expanded(
+          child: Text(
+            useText,
+            style: normalTextStyle(
+              textColor: themeProvider.themeData.colorScheme.tertiary,
+            ),
           ),
         ),
-      ),
-    ],
-  );
+      ],
+    );
+  }
 }
 
-Widget terms2(String useText) {
-  return Row(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    mainAxisAlignment: MainAxisAlignment.start,
-    children: [
-      SizedBox(
-        width: 10.w,
-      ),
-      Container(
-        margin: const EdgeInsets.only(top: 5, right: 10),
-        width: 3,
-        height: 3,
-        color: AppColors.textColor,
-      ),
-      Expanded(
-        child: Text(
-          useText,
-          style: normalTextStyle(
-            textColor: AppColors.textColor,
+class terms2 extends StatelessWidget {
+  const terms2(this.useText, {super.key});
+  final String useText;
+  @override
+  Widget build(BuildContext context) {
+    var themeProvider = Provider.of<ThemeViewmodel>(context);
+
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        SizedBox(
+          width: 10.w,
+        ),
+        Container(
+          margin: const EdgeInsets.only(top: 5, right: 10),
+          width: 3,
+          height: 3,
+          color: themeProvider.themeData.colorScheme.tertiary,
+        ),
+        Expanded(
+          child: Text(
+            useText,
+            style: normalTextStyle(
+              textColor: themeProvider.themeData.colorScheme.tertiary,
+            ),
           ),
         ),
-      ),
-    ],
-  );
+      ],
+    );
+  }
 }

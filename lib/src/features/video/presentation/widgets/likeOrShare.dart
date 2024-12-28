@@ -37,7 +37,6 @@ class likeOrShare extends StatelessWidget {
           textWidget(
             text,
             fontSize: 15,
-            color: AppColors.blackColor,
           )
         ],
       ),

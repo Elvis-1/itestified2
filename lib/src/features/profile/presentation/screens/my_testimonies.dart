@@ -5,16 +5,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:itestified/src/config/theme/app_color.dart';
 import 'package:itestified/src/core/widgets/appbar2.dart';
+import 'package:itestified/src/features/app_theme/theme_viewmodel.dart';
 import 'package:itestified/src/features/profile/presentation/screens/my_testimonies_details.dart';
 import 'package:itestified/src/features/profile/presentation/widgets/my_testimony_container.dart';
+import 'package:provider/provider.dart';
 
 class MyTestimoniesScreen extends StatelessWidget {
   const MyTestimoniesScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    var themeProvider = Provider.of<ThemeViewmodel>(context);
+
     return Scaffold(
-      backgroundColor: AppColors.backgroundColor,
+      backgroundColor: themeProvider.themeData.colorScheme.background,
       body: Column(
         children: [
           SizedBox(
@@ -40,7 +44,7 @@ class MyTestimoniesScreen extends StatelessWidget {
                             );
                           }));
                         },
-                        child: myTestimonyContainer(context));
+                        child: myTestimonyContainer());
                   }))
         ],
       ),
