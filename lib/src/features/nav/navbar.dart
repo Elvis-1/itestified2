@@ -17,6 +17,8 @@ import 'package:provider/provider.dart';
 class NavBar extends StatefulWidget {
   const NavBar({super.key});
 
+  static const routeName = '/nav-bar';
+
   @override
   State<NavBar> createState() => _NavBarState();
 }
@@ -42,95 +44,159 @@ class _NavBarState extends State<NavBar> {
 
     return Scaffold(
       backgroundColor: themeProvider.themeData.colorScheme.background,
-      body: pageList[pageIndex],
-      bottomNavigationBar: SafeArea(
-        child: Container(
-          height: 80,
-          decoration: BoxDecoration(
-            border: Border(
-                top: BorderSide(
-                    color: themeProvider.themeData.colorScheme.outline)),
-            borderRadius: BorderRadius.circular(15),
-            color: themeProvider.themeData.colorScheme.background,
-          ),
-          padding: EdgeInsets.all(5.w),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          bool isLargeScreen = constraints.maxWidth >= 600;
+
+          return Row(
             children: [
-              BottomNav(
-                text: "Home",
-                index: 0,
-                onTap: () {
-                  changePage(0);
-                },
-                iconColor: pageIndex == 0
-                    ? AppColors.primaryColor
-                    : themeProvider.themeData.colorScheme.tertiary,
-                textColor: pageIndex == 0
-                    ? AppColors.primaryColor
-                    : themeProvider.themeData.colorScheme.tertiary,
-                icon: AppIcons.homeIcon,
+              if (isLargeScreen)
+                NavigationRail(
+                  selectedIndex: pageIndex,
+                  onDestinationSelected: (index) => changePage(index),
+                  labelType: NavigationRailLabelType.selected,
+                  backgroundColor:
+                      themeProvider.themeData.colorScheme.background,
+                  leading: GestureDetector(
+                    onTap: () async {
+                      await showJoinOurCommunityDialogOverlay(context, 'Join');
+                    },
+                    child: Container(
+                      height: 50,
+                      width: 50,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(25),
+                        color: AppColors.primaryColor,
+                      ),
+                      child: const Icon(Icons.add, color: AppColors.white),
+                    ),
+                  ),
+                  destinations: [
+                    NavigationRailDestination(
+                      icon: Image.asset(
+                          AppIcons.homeIcon), // Icon(AppIcons.homeIcon),
+                      selectedIcon: Image.asset(AppIcons.homeIcon,
+                          color: AppColors
+                              .primaryColor), //  Icon(AppIcons.homeIcon, color: AppColors.primaryColor),
+                      label: Text("Home"),
+                    ),
+                    NavigationRailDestination(
+                      icon: Image.asset(
+                          AppIcons.catIcon), // Icon(AppIcons.catIcon),
+                      selectedIcon: Image.asset(AppIcons.catIcon,
+                          color: AppColors
+                              .primaryColor), // Icon(AppIcons.catIcon, color: AppColors.primaryColor),
+                      label: Text("Category"),
+                    ),
+                    NavigationRailDestination(
+                      icon: Image.asset(AppIcons.favoriteIcon),
+
+                      ///   Icon(AppIcons.favoriteIcon),
+                      selectedIcon: Image.asset(AppIcons.favoriteIcon,
+                          color: AppColors.primaryColor),
+                      label: Text("Favorites"),
+                    ),
+                    NavigationRailDestination(
+                      icon: Image.asset(
+                          AppIcons.profileIcon), //Icon(AppIcons.profileIcon),
+                      selectedIcon: Image.asset(AppIcons.profileIcon,
+                          color: AppColors.primaryColor),
+                      label: Text("Profile"),
+                    ),
+                  ],
+                ),
+              Expanded(
+                child: pageList[pageIndex],
               ),
-              BottomNav(
-                text: "Category",
-                index: 1,
-                onTap: () {
-                  changePage(1);
-                },
-                textColor: pageIndex == 1
-                    ? AppColors.primaryColor
-                    : themeProvider.themeData.colorScheme.tertiary,
-                iconColor: pageIndex == 1
-                    ? AppColors.primaryColor
-                    : themeProvider.themeData.colorScheme.tertiary,
-                icon: AppIcons.catIcon,
-              ),
-              GestureDetector(
-                onTap: () async {
-                  await showJoinOurCommunityDialogOverlay(context, 'Join');
-                },
+            ],
+          );
+        },
+      ),
+      bottomNavigationBar: LayoutBuilder(
+        builder: (context, constraints) => constraints.maxWidth < 600
+            ? SafeArea(
                 child: Container(
-                  height: 50,
-                  width: 50,
+                  height: 80,
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(25),
-                      color: AppColors.primaryColor),
-                  child: const Icon(
-                    Icons.add,
-                    color: AppColors.white,
+                    border: Border(
+                      top: BorderSide(
+                          color: themeProvider.themeData.colorScheme.outline),
+                    ),
+                    borderRadius: BorderRadius.circular(15),
+                    color: themeProvider.themeData.colorScheme.background,
+                  ),
+                  padding: EdgeInsets.all(5),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      BottomNav(
+                        text: "Home",
+                        index: 0,
+                        onTap: () => changePage(0),
+                        iconColor: pageIndex == 0
+                            ? AppColors.primaryColor
+                            : themeProvider.themeData.colorScheme.tertiary,
+                        textColor: pageIndex == 0
+                            ? AppColors.primaryColor
+                            : themeProvider.themeData.colorScheme.tertiary,
+                        icon: AppIcons.homeIcon,
+                      ),
+                      BottomNav(
+                        text: "Category",
+                        index: 1,
+                        onTap: () => changePage(1),
+                        iconColor: pageIndex == 1
+                            ? AppColors.primaryColor
+                            : themeProvider.themeData.colorScheme.tertiary,
+                        textColor: pageIndex == 1
+                            ? AppColors.primaryColor
+                            : themeProvider.themeData.colorScheme.tertiary,
+                        icon: AppIcons.catIcon,
+                      ),
+                      GestureDetector(
+                        onTap: () async {
+                          await showJoinOurCommunityDialogOverlay(
+                              context, 'Join');
+                        },
+                        child: Container(
+                          height: 50,
+                          width: 50,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(25),
+                            color: AppColors.primaryColor,
+                          ),
+                          child: const Icon(Icons.add, color: AppColors.white),
+                        ),
+                      ),
+                      BottomNav(
+                        text: "Favorites",
+                        index: 2,
+                        onTap: () => changePage(2),
+                        iconColor: pageIndex == 2
+                            ? AppColors.primaryColor
+                            : themeProvider.themeData.colorScheme.tertiary,
+                        textColor: pageIndex == 2
+                            ? AppColors.primaryColor
+                            : themeProvider.themeData.colorScheme.tertiary,
+                        icon: AppIcons.favoriteIcon,
+                      ),
+                      BottomNav(
+                        text: "Profile",
+                        index: 3,
+                        onTap: () => changePage(3),
+                        iconColor: pageIndex == 3
+                            ? AppColors.primaryColor
+                            : themeProvider.themeData.colorScheme.tertiary,
+                        textColor: pageIndex == 3
+                            ? AppColors.primaryColor
+                            : themeProvider.themeData.colorScheme.tertiary,
+                        icon: AppIcons.profileIcon,
+                      ),
+                    ],
                   ),
                 ),
-              ),
-              BottomNav(
-                text: "Favorites",
-                index: 2,
-                onTap: () {
-                  changePage(2);
-                },
-                textColor: pageIndex == 2
-                    ? AppColors.primaryColor
-                    : themeProvider.themeData.colorScheme.tertiary,
-                iconColor: pageIndex == 2
-                    ? AppColors.primaryColor
-                    : themeProvider.themeData.colorScheme.tertiary,
-                icon: AppIcons.favoriteIcon,
-              ),
-              BottomNav(
-                  text: "Profile",
-                  index: 3,
-                  onTap: () {
-                    changePage(3);
-                  },
-                  textColor: pageIndex == 3
-                      ? AppColors.primaryColor
-                      : themeProvider.themeData.colorScheme.tertiary,
-                  iconColor: pageIndex == 3
-                      ? AppColors.primaryColor
-                      : themeProvider.themeData.colorScheme.tertiary,
-                  icon: AppIcons.profileIcon),
-            ],
-          ),
-        ),
+              )
+            : const SizedBox.shrink(),
       ),
     );
   }

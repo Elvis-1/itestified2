@@ -23,7 +23,7 @@ class textWidget extends StatelessWidget {
   int? maxLines;
   Color? color;
   FontWeight? fontWeight = FontWeight.w600;
-  double fontSize = 28;
+  double? fontSize = 28;
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +37,7 @@ class textWidget extends StatelessWidget {
       style: GoogleFonts.openSans(
         color: color,
         fontWeight: fontWeight,
-        fontSize: fontSize.sp,
+        fontSize: fontSize,
       ),
     );
   }

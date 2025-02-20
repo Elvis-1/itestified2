@@ -12,6 +12,7 @@ import 'package:itestified/src/features/category/presentation/screens/video_writ
 import 'package:itestified/src/features/category/presentation/widgets/text_testimony_container.dart';
 import 'package:itestified/src/features/category/presentation/widgets/video_testimonies_container.dart';
 import 'package:itestified/src/features/home/widget/quotes_container.dart';
+import 'package:itestified/src/features/home/widget/video_testimoies_carousal.dart';
 import 'package:itestified/src/features/inspirational_qoutes.dart/presentation/screens/inspirational_quotes.dart';
 import 'package:itestified/src/features/notifications/presentation/screens/no_notifications_screen.dart';
 import 'package:itestified/src/features/search/presentation/screens/search_screen.dart';
@@ -46,227 +47,244 @@ class _HomeScreenState extends State<HomeScreen> {
     var themeProvider = Provider.of<ThemeViewmodel>(context);
 
     return Scaffold(
-      backgroundColor: themeProvider.themeData.colorScheme.background,
-      body: Container(
-        margin: EdgeInsets.only(top: 5.h, bottom: 5.h, left: 15.w, right: 15.w),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(
-              height: 60.h,
-            ),
-            // app bar
-            CustomAppBar(
-              gotoSearchPage: gotoSearchPage,
-              gotoNotificationPage: gotoNotificationsPage,
-            ),
-            SizedBox(
-              height: 10.h,
-            ),
-            textWidget(
-              'Scripture of the day',
-              fontSize: 18.sp,
-              fontWeight: FontWeight.w600,
-              color: themeProvider.themeData.colorScheme.onTertiary,
-            ),
-            SizedBox(
-              height: 10.h,
-            ),
-
-            // scripture of the day container
-            Container(
-              height: 125.h,
-              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: AssetImage(AppImages.scriptureImage)),
-                  borderRadius: BorderRadius.circular(15.sp),
-                  color: AppColors.darkPurple),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      textWidget(
-                        "Jeremaih",
-                        fontSize: 18,
-                        color: AppColors.white,
-                      ),
-                      textWidget(
-                        'kjv',
-                        fontSize: 12,
-                        color: AppColors.textColor,
-                      )
-                    ],
-                  ),
-                  SizedBox(
-                    height: 5.h,
-                  ),
-                  SizedBox(
-                    width: 400.w,
-                    child: textWidget(
-                        "\"For I know the thoughts that I think towards you, saith the Lord, thoughts of peace and not of evil, to give you an expected end\"",
-                        fontSize: 15.sp,
-                        maxLines: 3,
-                        overflow: TextOverflow.ellipsis,
-                        color: AppColors.textColor),
-                  ),
-                  SizedBox(
-                    height: 5.h,
-                  ),
-                  textWidget(
-                      textAlign: TextAlign.left,
-                      "Prayers: Lord guide me according to your will and plan",
-                      fontSize: 14.sp,
-                      color: AppColors.textColor)
-                ],
+      appBar: AppBar(
+        backgroundColor: themeProvider.themeData.colorScheme.background,
+        actions: [
+          Row(
+            children: [
+              // search and notificatins
+              GestureDetector(
+                  onTap: () {
+                    gotoSearchPage();
+                  },
+                  child: CircleAvatar(
+                      radius: 22,
+                      backgroundColor: themeProvider
+                          .themeData.searchBarTheme.backgroundColor!
+                          .resolve({}),
+                      child: Icon(
+                        size: 20,
+                        Icons.search,
+                        color: themeProvider.themeData.colorScheme.onTertiary,
+                      ))),
+              const SizedBox(
+                width: 10,
               ),
-            ),
-
-            Expanded(
-              child: ListView(
-                shrinkWrap: true,
-                physics: const BouncingScrollPhysics(),
-                children: [
-                  // video testimonies
-
-                  SizedBox(
-                    height: 20.h,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        textWidget(
-                          "Video testimonies",
-                          fontSize: 18.sp,
-                          color: themeProvider.themeData.colorScheme.onTertiary,
-                          fontWeight: FontWeight.w600,
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.pushNamed(
-                                context, VideoListScreen.routeName);
-                          },
-                          child: textWidget("See all",
-                              fontWeight: FontWeight.w600,
-                              fontSize: 15.sp,
-                              color: AppColors.darkPurple),
-                        )
-                      ],
-                    ),
-                  ),
-
-                  SizedBox(
-                    height: 10.h,
-                  ),
-                  // videos
-                  SizedBox(
-                      height: 220.h,
-                      child: ListView.builder(
-                          shrinkWrap: true,
-                          physics: const BouncingScrollPhysics(),
-                          scrollDirection: Axis.horizontal,
-                          itemCount: 5,
-                          itemBuilder: (context, i) {
-                            return const videoTestimoniesContainer2(
-                                playArrowLeftPosition: 130,
-                                playArrowTopPosition: 60,
-                                itestifyIconLeftPosition: 2,
-                                fix: BoxFit.cover,
-                                imageHeight: 150,
-                                itestifyIconTopPosition: 150);
-                          })),
-
-                  // written testimonies
-
-                  SizedBox(
-                    height: 20.h,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        textWidget(
-                          "Written Testimonies",
-                          fontSize: 18.sp,
-                          fontWeight: FontWeight.w600,
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.of(context)
-                                .pushNamed(WrittenTestimonies.routeName);
-                          },
-                          child: textWidget("See all",
-                              fontWeight: FontWeight.w600,
-                              fontSize: 15.sp,
-                              color: AppColors.darkPurple),
-                        )
-                      ],
-                    ),
-                  ),
-
-                  SizedBox(
-                    height: 10.h,
-                  ),
-
-                  SizedBox(
-                      height: 205.h,
-                      child: ListView.builder(
-                          shrinkWrap: true,
-                          physics: const BouncingScrollPhysics(),
-                          scrollDirection: Axis.horizontal,
-                          itemCount: 5,
-                          itemBuilder: (context, i) {
-                            return const TextTestimonyContainer();
-                          })),
-                  SizedBox(
-                    height: 10.h,
-                  ),
-                  SizedBox(
-                    height: 20.h,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        textWidget(
-                          "Inspirational Quotes",
-                          fontSize: 18.sp,
-                          fontWeight: FontWeight.w600,
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.of(context)
-                                .push(MaterialPageRoute(builder: (context) {
-                              return const InspirationalQuotes();
-                            }));
-                          },
-                          child: textWidget("See all",
-                              fontWeight: FontWeight.w500,
-                              fontSize: 15.sp,
-                              color: AppColors.darkPurple),
-                        )
-                      ],
-                    ),
-                  ),
-
-                  SizedBox(
-                    height: 10.h,
-                  ),
-
-                  SizedBox(
-                      height: 150.h,
-                      child: ListView.builder(
-                          shrinkWrap: true,
-                          physics: const BouncingScrollPhysics(),
-                          scrollDirection: Axis.horizontal,
-                          itemCount: 5,
-                          itemBuilder: (context, i) {
-                            return const quoteContainer(containerHeight: 120);
-                          })),
-                ],
+              GestureDetector(
+                  onTap: () {
+                    gotoNotificationsPage();
+                  },
+                  child: CircleAvatar(
+                      radius: 22,
+                      backgroundColor: themeProvider
+                          .themeData.searchBarTheme.backgroundColor!
+                          .resolve({}),
+                      child: Icon(
+                        size: 20,
+                        Icons.notifications_outlined,
+                        color: themeProvider.themeData.colorScheme.onTertiary,
+                      ))),
+              const SizedBox(
+                width: 5,
               ),
-            )
-          ],
+            ],
+          ),
+        ],
+        leadingWidth: 180,
+        leading: Container(
+          margin: const EdgeInsets.only(left: 3),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Image.asset(AppIcons.userIcon),
+              const SizedBox(
+                width: 3,
+              ),
+              textWidget(
+                "Welcome, Amaka",
+                fontSize: 15,
+                fontWeight: FontWeight.w600,
+                color: themeProvider.themeData.colorScheme.onTertiary,
+              ),
+            ],
+          ),
         ),
       ),
+      backgroundColor: themeProvider.themeData.colorScheme.background,
+      body: SafeArea(
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            bool isLargeScreen = constraints.maxWidth > 800; // Tablet & desktop
+
+            return Container(
+              margin: EdgeInsets.symmetric(
+                  horizontal: isLargeScreen ? 50 : 15, vertical: 5),
+              child: ListView(
+                //  crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  textWidget(
+                    'Scripture of the day',
+                    fontSize: Theme.of(context).textTheme.titleMedium?.fontSize,
+                    fontWeight: FontWeight.w600,
+                    color: themeProvider.themeData.colorScheme.onTertiary,
+                  ),
+                  const SizedBox(height: 10),
+
+                  // **Scripture of the day container**
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 10, vertical: 10),
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        fit: BoxFit.cover,
+                        image: AssetImage(AppImages.scriptureImage),
+                      ),
+                      borderRadius: BorderRadius.circular(15),
+                      color: AppColors.darkPurple,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              child: textWidget(
+                                maxLines: 1,
+                                overflow: TextOverflow.clip,
+                                "Jeremiah",
+                                fontSize: 18,
+                                color: AppColors.white,
+                              ),
+                            ),
+                            Expanded(
+                              child: textWidget(
+                                textAlign: TextAlign.end,
+                                overflow: TextOverflow.clip,
+                                maxLines: 1,
+                                'KJV',
+                                fontSize: 12,
+                                color: AppColors.textColor,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 5),
+                        textWidget(
+                          "\"For I know the thoughts that I think towards you, saith the Lord, thoughts of peace and not of evil, to give you an expected end\"",
+                          fontSize: 15,
+                          maxLines: 3,
+                          overflow: TextOverflow.ellipsis,
+                          color: AppColors.textColor,
+                        ),
+                        const SizedBox(height: 15),
+                        textWidget(
+                          textAlign: TextAlign.left,
+                          "Prayers: Lord guide me according to your will and plan",
+                          fontSize: 14,
+                          color: AppColors.textColor,
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+
+                  // **Main Content**
+                  sectionHeader("Video Testimonies", () {
+                    Navigator.pushNamed(context, VideoListScreen.routeName);
+                  }),
+
+                  const SizedBox(height: 10),
+                  SizedBox(child: VideoTestimoniesCarousel()),
+                  const SizedBox(height: 10),
+
+                  sectionHeader("Written Testimonies", () {
+                    Navigator.of(context)
+                        .pushNamed(WrittenTestimonies.routeName);
+                  }),
+
+                  const SizedBox(height: 10),
+                  SizedBox(
+                      height: 230,
+                      child: horizontalList(const TextTestimonyContainer())),
+
+                  const SizedBox(height: 10),
+                  sectionHeader("Inspirational Quotes", () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                          builder: (context) => const InspirationalQuotes()),
+                    );
+                  }),
+
+                  const SizedBox(height: 10),
+                  SizedBox(
+                      height: 230,
+                      child: horizontalList(const quoteContainer())),
+
+                  // Expanded(
+                  //   child: isLargeScreen
+                  //       ? Row(
+                  //           crossAxisAlignment: CrossAxisAlignment.start,
+                  //           children: [
+                  //             Expanded(child: buildLeftColumn(context)),
+                  //             const SizedBox(width: 20),
+                  //             // Expanded(child: buildRightColumn(context)),
+                  //           ],
+                  //         )
+                  //       :
+                  //       buildMainList(context), // Default vertical layout
+                  // )
+                ],
+              ),
+            );
+          },
+        ),
+      ),
+    );
+  }
+
+  Widget sectionHeader(String title, VoidCallback onTap) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        textWidget(
+          title,
+          fontSize: Theme.of(context).textTheme.titleMedium?.fontSize,
+          fontWeight: FontWeight.w600,
+        ),
+        GestureDetector(
+          onTap: onTap,
+          child: textWidget(
+            "See all",
+            fontWeight: FontWeight.w600,
+            fontSize: Theme.of(context).textTheme.titleSmall?.fontSize,
+            color: AppColors.darkPurple,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget buildLeftColumn(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        sectionHeader("Video Testimonies", () {
+          Navigator.pushNamed(context, VideoListScreen.routeName);
+        }),
+        const SizedBox(height: 10),
+        SizedBox(height: 230, child: VideoTestimoniesCarousel()),
+      ],
+    );
+  }
+
+  Widget horizontalList(Widget child) {
+    return ListView.builder(
+      shrinkWrap: true,
+      physics: const BouncingScrollPhysics(),
+      scrollDirection: Axis.horizontal,
+      itemCount: 5,
+      itemBuilder: (context, i) => child,
     );
   }
 }

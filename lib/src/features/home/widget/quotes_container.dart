@@ -1,8 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:itestified/src/config/theme/app_color.dart';
 import 'package:itestified/src/core/utils/app_const/app_icons.dart';
 import 'package:itestified/src/core/widgets/animated_quotes_modal.dart';
 import 'package:itestified/src/core/widgets/text_widget.dart';
@@ -27,7 +25,10 @@ class quoteContainer extends StatelessWidget {
     var themeProvider = Provider.of<ThemeViewmodel>(context);
 
     return Container(
-        margin: EdgeInsets.only(right: rightPadding.w, left: rightPadding),
+        margin: EdgeInsets.only(
+            right: rightPadding, left: rightPadding, bottom: 10),
+        width: 250,
+        height: 200,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -41,11 +42,11 @@ class quoteContainer extends StatelessWidget {
                     });
               },
               child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 7.w, vertical: 5.h),
-                height: containerHeight.h,
-                width: imageWidth.w,
+                padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 5),
+                height: containerHeight,
+                width: imageWidth,
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10.w),
+                    borderRadius: BorderRadius.circular(10),
                     image: DecorationImage(
                         image: AssetImage(AppImages.quotesImage),
                         fit: BoxFit.cover)),
@@ -73,17 +74,23 @@ class quoteContainer extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(
-              height: inbetweenHeight,
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                textWidget(
-                  "Source: Redeemed Christian Church of God",
-                  fontSize: textSize.sp,
-                ),
-              ],
+            // SizedBox(
+            //   height: inbetweenHeight,
+            // ),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: textWidget(
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      "Source: Redeemed Christian Church of God, Source: Redeemed Christian Church of God, Source: Redeemed Christian Church of God",
+                      fontSize: textSize,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ],
         ));

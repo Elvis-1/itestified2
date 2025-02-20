@@ -9,6 +9,8 @@ import 'package:itestified/src/core/utils/app_const/app_icons.dart';
 import 'package:itestified/src/core/widgets/btn_and_text.dart';
 import 'package:itestified/src/core/widgets/normal_text_style.dart';
 import 'package:itestified/src/core/widgets/text_widget.dart';
+import 'package:itestified/src/features/home/presentation/home_screen.dart';
+import 'package:itestified/src/features/nav/navbar.dart';
 import 'package:itestified/src/features/onboarding/widgets/onboarding_text.dart';
 
 class OnboardingScreen2 extends StatefulWidget {
@@ -56,7 +58,8 @@ class _OnboardingScreen2State extends State<OnboardingScreen2> {
                 onTap: () {
                   if (widget.index < 3) {
                     widget.pageController.animateToPage(widget.index + 1,
-                        duration: Duration(seconds: 1), curve: Curves.easeIn);
+                        duration: const Duration(seconds: 1),
+                        curve: Curves.easeIn);
                   }
                 },
                 child: btnAndText(
@@ -64,12 +67,20 @@ class _OnboardingScreen2State extends State<OnboardingScreen2> {
             SizedBox(
               height: 10.h,
             ),
-            btnAndText(
-                text: "Skip",
-                containerColor: Colors.transparent,
-                containerWidth: double.infinity,
-                verticalPadding: 15,
-                textColor: AppColors.primaryColor),
+            GestureDetector(
+              onTap: () {
+                Navigator.pushNamedAndRemoveUntil(
+                    context, NavBar.routeName, (route) => false);
+                // Navigator.of(context)
+                //     .pushReplacement(MaterialPageRoute(builder: (context) {
+                //   return const SignUpScreen();
+                // }));
+              },
+              child: btnAndText(
+                  text: "Get Started",
+                  containerWidth: double.infinity,
+                  verticalPadding: 15),
+            ),
             SizedBox(
               height: 20.h,
             )

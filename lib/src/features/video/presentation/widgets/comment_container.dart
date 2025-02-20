@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:itestified/src/config/theme/app_color.dart';
 import 'package:itestified/src/core/utils/app_const/app_icons.dart';
@@ -19,17 +20,17 @@ class CommentContainer extends StatelessWidget {
     backgroundColor = themeProvider.themeData.colorScheme.background;
     return Container(
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15.w), color: backgroundColor),
+            borderRadius: BorderRadius.circular(15), color: backgroundColor),
         padding: const EdgeInsets.all(10),
-        margin: EdgeInsets.only(bottom: 10.h),
+        margin: const EdgeInsets.only(bottom: 10),
         child: Column(
           children: [
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Image.asset(AppIcons.userIcon),
-                SizedBox(
-                  width: 10.w,
+                const SizedBox(
+                  width: 10,
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -40,12 +41,18 @@ class CommentContainer extends StatelessWidget {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            textWidget("Chika Amaka", fontSize: 15.sp),
-                            SizedBox(
-                              height: 5.h,
+                            textWidget(
+                              "Chika Amaka",
+                              fontSize: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium
+                                  ?.fontSize,
+                            ),
+                            const SizedBox(
+                              height: 5,
                             ),
                             SizedBox(
-                              width: 250.w,
+                              width: 250,
                               child: Text(
                                 "Our God is indeed a good God, he knows all, Our God is indeed a good God, he knows all Our God is indeed a good God, he knows all Our God is indeed a good God, he knows all Our God is indeed a good God, he knows all,",
                                 textAlign: TextAlign.left,
@@ -66,15 +73,11 @@ class CommentContainer extends StatelessWidget {
                             containerColor: AppColors.transparent)
                       ],
                     ),
-                    // Align(
-                    //   alignment: Alignment.bottomLeft,
-                    //   child: textWidget('Reply',
-                    //       color: AppColors.primaryColor, fontSize: 13.sp),
-                    // )
                   ],
                 ),
                 textWidget("2 days Ago",
-                    fontSize: 12.sp, color: AppColors.textColor)
+                    fontSize: Theme.of(context).textTheme.titleSmall?.fontSize,
+                    color: AppColors.textColor)
               ],
             ),
           ],
@@ -94,9 +97,9 @@ class CommentAndResponse extends StatelessWidget {
       children: [
         CommentContainer(),
         Container(
-          margin: EdgeInsets.only(
-            right: 20.w,
-            left: 20.w,
+          margin: const EdgeInsets.only(
+            //right: 5,
+            left: 20,
           ),
           child: CommentContainer(
             backgroundColor: themeProvider.themeData.colorScheme.background,

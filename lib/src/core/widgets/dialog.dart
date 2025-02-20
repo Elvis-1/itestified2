@@ -39,51 +39,63 @@ Future showRateSubmittedDialogOverlay(BuildContext context, message) {
   return showDialog(
       context: context,
       builder: (BuildContext context) {
-        return AlertDialog(
-          elevation: 0,
-          backgroundColor: AppColors.lightBlack,
-          content: SingleChildScrollView(
-            child: Container(
-              color: AppColors.lightBlack,
-              // height: 200.h,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  const CircleAvatar(
-                    backgroundColor: AppColors.primaryColor,
-                    child: Icon(
-                      Icons.check,
-                      color: Colors.white,
-                    ),
-                  ),
-                  Text(
-                    "Rating Submitted",
-                    style: GoogleFonts.mulish(
-                        fontSize: 20.sp,
-                        fontWeight: FontWeight.w500,
-                        color: AppColors.white),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  textWidget("Thank you for your time",
-                      fontSize: 14.sp, color: AppColors.textColor),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                ],
-              ),
-            ),
-          ),
-        );
+        return const rate();
       }).then((value) => Navigator.of(context).pop());
 }
 
 // WIDGETS
+class rate extends StatelessWidget {
+  const rate({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    var themeProvider = Provider.of<ThemeViewmodel>(context);
+
+    return AlertDialog(
+      elevation: 0,
+      backgroundColor: themeProvider.themeData.colorScheme.onBackground,
+      content: SingleChildScrollView(
+        child: Container(
+          color: themeProvider.themeData.colorScheme.onBackground,
+          // height: 200.h,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const SizedBox(
+                height: 10,
+              ),
+              const CircleAvatar(
+                backgroundColor: AppColors.primaryColor,
+                child: Icon(
+                  Icons.check,
+                  color: Colors.white,
+                ),
+              ),
+              Text(
+                "Rating Submitted",
+                style: GoogleFonts.mulish(
+                    fontSize: 20.sp,
+                    fontWeight: FontWeight.w500,
+                    color: themeProvider.themeData.colorScheme.onTertiary),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              textWidget(
+                "Thank you for your time",
+                fontSize: 14.sp,
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
 
 class logout extends StatelessWidget {
   const logout({super.key, required this.message});
@@ -238,10 +250,10 @@ class joinCommunity extends StatelessWidget {
 
     return AlertDialog(
       elevation: 0,
-      backgroundColor: themeProvider.themeData.colorScheme.background,
+      backgroundColor: themeProvider.themeData.colorScheme.onBackground,
       content: SingleChildScrollView(
         child: Container(
-          color: themeProvider.themeData.colorScheme.background,
+          color: themeProvider.themeData.colorScheme.onBackground,
           // height: 200.h,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,

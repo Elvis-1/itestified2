@@ -10,6 +10,8 @@ import 'package:itestified/src/core/widgets/btn_and_text.dart';
 import 'package:itestified/src/core/widgets/normal_text_style.dart';
 import 'package:itestified/src/core/widgets/text_widget.dart';
 import 'package:itestified/src/features/auth/presentation/screens/signup_screen.dart';
+import 'package:itestified/src/features/home/presentation/home_screen.dart';
+import 'package:itestified/src/features/nav/navbar.dart';
 import 'package:itestified/src/features/onboarding/widgets/onboarding_text.dart';
 
 class OnboardingScreen1 extends StatefulWidget {
@@ -57,7 +59,7 @@ class _OnboardingScreen1State extends State<OnboardingScreen1> {
                 onTap: () {
                   if (widget.index < 3) {
                     widget.pageController.animateToPage(widget.index + 1,
-                        duration: Duration(microseconds: 1000),
+                        duration: const Duration(seconds: 1),
                         curve: Curves.easeIn);
                   }
                 },
@@ -68,10 +70,8 @@ class _OnboardingScreen1State extends State<OnboardingScreen1> {
             ),
             GestureDetector(
               onTap: () {
-                Navigator.of(context)
-                    .pushReplacement(MaterialPageRoute(builder: (context) {
-                  return const SignUpScreen();
-                }));
+                Navigator.pushNamedAndRemoveUntil(
+                    context, NavBar.routeName, (route) => false);
               },
               child: btnAndText(
                   text: "Skip",

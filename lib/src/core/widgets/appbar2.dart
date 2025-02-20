@@ -6,6 +6,20 @@ import 'package:itestified/src/core/widgets/text_widget.dart';
 import 'package:itestified/src/features/app_theme/theme_viewmodel.dart';
 import 'package:provider/provider.dart';
 
+PreferredSizeWidget generalAppbar(String title, BuildContext context) {
+  var themeProvider = Provider.of<ThemeViewmodel>(context);
+  return AppBar(
+      backgroundColor: themeProvider.themeData.colorScheme.background,
+      title: Text(title),
+      automaticallyImplyLeading: false,
+      centerTitle: true,
+      leading: TextButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          child: Icon(Icons.arrow_back_ios_new_outlined)));
+}
+
 class appbar2 extends StatelessWidget {
   const appbar2(
     this.title, {

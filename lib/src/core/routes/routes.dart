@@ -8,6 +8,7 @@ import 'package:itestified/src/features/auth/presentation/screens/signup_screen.
 import 'package:itestified/src/features/category/presentation/screens/categories_screen.dart';
 import 'package:itestified/src/features/category/presentation/screens/video_written_test_screen.dart';
 import 'package:itestified/src/features/home/presentation/home_screen.dart';
+import 'package:itestified/src/features/nav/navbar.dart';
 import 'package:itestified/src/features/profile/presentation/screens/account_details_screen.dart';
 import 'package:itestified/src/features/profile/presentation/screens/delete_account.dart';
 import 'package:itestified/src/features/profile/presentation/screens/donation_screen.dart';
@@ -21,6 +22,10 @@ import 'package:itestified/src/features/written_testimonies.dart/presentation/sc
 
 Route onGenerateRoute(RouteSettings settings) {
   return switch (settings.name) {
+    NavBar.routeName => MaterialPageRoute(
+        builder: (_) => const NavBar(),
+        settings: const RouteSettings(name: NavBar.routeName),
+      ),
     // AUTH SCREENS
     LoginScreen.routeName => MaterialPageRoute(
         builder: (_) => const LoginScreen(),

@@ -11,6 +11,7 @@ import 'package:itestified/src/core/widgets/icon_and_text.dart';
 import 'package:itestified/src/features/app_theme/theme_viewmodel.dart';
 import 'package:itestified/src/features/category/presentation/widgets/text_testimony_container.dart';
 import 'package:itestified/src/features/category/presentation/widgets/video_testimonies_container.dart';
+import 'package:itestified/src/features/shared/widgets/screen.dart';
 import 'package:itestified/src/features/video/presentation/screens/video_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -32,91 +33,131 @@ class _VideoAndWrittenTestimonieScreenState
     var themeProvider = Provider.of<ThemeViewmodel>(context);
 
     return Scaffold(
-      backgroundColor: themeProvider.themeData.colorScheme.background,
-      body: Container(
-        child: Column(
-          children: [
-            SizedBox(
-              height: 50.h,
-            ),
+        appBar: generalAppbar('Healing Testimonies', context),
+        backgroundColor: themeProvider.themeData.colorScheme.background,
+        body: LayoutBuilder(
+          builder: (context, constraints) {
+            bool isLargeScreen = constraints.maxWidth > 600;
+            return Column(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                      border: Border(
+                          bottom: BorderSide(color: AppColors.opaqueBlack))),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            vidoes = true;
+                            text = false;
+                          });
+                        },
+                        child: iconAndText(
+                            "Videos",
+                            AppIcons.videoIcon,
+                            vidoes == true
+                                ? AppColors.primaryColor
+                                : themeProvider
+                                    .themeData.colorScheme.background,
+                            context),
+                      ),
+                      GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              vidoes = false;
+                              text = true;
+                            });
+                          },
+                          child: iconAndText(
+                              "Text",
+                              AppIcons.textIcon,
+                              text == true
+                                  ? AppColors.primaryColor
+                                  : themeProvider
+                                      .themeData.colorScheme.background,
+                              context))
+                    ],
+                  ),
+                ),
 
-            // appbar
-            const appbar2(
-              "Healing Testimonies",
-            ),
-            // video and text row
-            SizedBox(
-              height: 20.h,
-            ),
-            Container(
-              decoration: BoxDecoration(
-                  border:
-                      Border(bottom: BorderSide(color: AppColors.opaqueBlack))),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          vidoes = true;
-                          text = false;
-                        });
-                      },
-                      child: iconAndText(
-                          "Videos",
-                          AppIcons.videoIcon,
+                isLargeScreen
+                    ? Expanded(
+                        child: largeScreenGrid(
+                          context,
                           vidoes == true
-                              ? AppColors.primaryColor
-                              : themeProvider
-                                  .themeData.colorScheme.background)),
-                  GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          vidoes = false;
-                          text = true;
-                        });
-                      },
-                      child: iconAndText(
-                          "Text",
-                          AppIcons.textIcon,
-                          text == true
-                              ? AppColors.primaryColor
-                              : themeProvider.themeData.colorScheme.background))
-                ],
-              ),
-            ),
+                              ? GestureDetector(
+                                  onTap: () {
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(builder: (context) {
+                                      return const VideoScreen();
+                                    }));
+                                  },
+                                  child: const videoTestimoniesContainer2(
+                                    // videoContainerHeight: 300,
+                                    fix: BoxFit.fill,
+                                    imageHeight: 120,
+                                  ),
+                                )
+                              : const TextTestimonyContainer(
+                                  containerWidth: double.infinity),
+                        ),
+                      )
+                    : Expanded(
+                        child: smallScreenListView(
+                          vidoes == true
+                              ? GestureDetector(
+                                  onTap: () {
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(builder: (context) {
+                                      return const VideoScreen();
+                                    }));
+                                  },
+                                  child: const videoTestimoniesContainer2(
+                                    videoContainerHeight: 270,
+                                    videoContainerWidth: 400,
+                                    imageHeight: 200,
+                                    itestifyIconTopPosition: 205,
+                                  ))
+                              : const TextTestimonyContainer(
+                                  containerWidth: double.infinity),
+                        ),
+                      )
 
-            Expanded(
-              child: ListView.builder(
-                  padding: EdgeInsets.fromViewPadding(ViewPadding.zero, 1),
-                  itemCount: 10,
-                  physics: const BouncingScrollPhysics(),
-                  itemBuilder: (context, index) {
-                    return Column(
-                      children: [
-                        vidoes == true
-                            ? GestureDetector(
-                                onTap: () {
-                                  Navigator.of(context).push(
-                                      MaterialPageRoute(builder: (context) {
-                                    return const VideoScreen();
-                                  }));
-                                },
-                                child: const videoTestimoniesContainer2(
-                                  videoContainerHeight: 265,
-                                  videoContainerWidth: 400,
-                                  imageHeight: 200,
-                                  itestifyIconTopPosition: 205,
-                                ))
-                            : const TextTestimonyContainer(
-                                containerWidth: double.infinity),
-                      ],
-                    );
-                  }),
-            )
-          ],
-        ),
-      ),
-    );
+                // Expanded(
+                //   child: ListView.builder(
+                //       padding: EdgeInsets.fromViewPadding(ViewPadding.zero, 1),
+                //       itemCount: 10,
+                //       physics: const BouncingScrollPhysics(),
+                //       itemBuilder: (context, index) {
+                //         return Column(
+                //           children: [
+                //             vidoes == true
+                //                 ?
+
+                //                 GestureDetector(
+                //                     onTap: () {
+                //                       Navigator.of(context).push(
+                //                           MaterialPageRoute(builder: (context) {
+                //                         return const VideoScreen();
+                //                       }));
+                //                     },
+                //                     child: const videoTestimoniesContainer2(
+                //                       videoContainerHeight: 270,
+                //                       videoContainerWidth: 400,
+                //                       imageHeight: 200,
+                //                       itestifyIconTopPosition: 205,
+                //                     ))
+                //                 : const TextTestimonyContainer(
+                //                     containerWidth: double.infinity),
+                //           ],
+                //         );
+                //       }),
+                // )
+              ],
+            );
+          },
+        ));
   }
 }

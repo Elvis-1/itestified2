@@ -66,6 +66,7 @@ class CheckBoxWidget extends StatelessWidget {
       onTap: () {
         onCheckboxChanged(index);
         print('This is index $index');
+        print('This is current index $currentIndex');
       },
       child: Container(
         width: 20,
@@ -80,33 +81,33 @@ class CheckBoxWidget extends StatelessWidget {
   }
 }
 
-class CheckBoxList extends StatefulWidget {
-  const CheckBoxList({super.key});
+// class CheckBoxList extends StatefulWidget {
+//   const CheckBoxList({super.key});
 
-  @override
-  State<CheckBoxList> createState() => _CheckBoxListState();
-}
+//   @override
+//   State<CheckBoxList> createState() => _CheckBoxListState();
+// }
 
-class _CheckBoxListState extends State<CheckBoxList> {
-  int currentIndex = -1; // Initialize to -1, meaning no checkbox is selected.
+// class _CheckBoxListState extends State<CheckBoxList> {
+//   int currentIndex = -1; // Initialize to -1, meaning no checkbox is selected.
 
-  void updateCheckboxState(int index) {
-    setState(() {
-      currentIndex = index; // Update the selected checkbox index.
-    });
-  }
+//   void updateCheckboxState(int index) {
+//     setState(() {
+//       currentIndex = index; // Update the selected checkbox index.
+//     });
+//   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: List.generate(
-        5, // Replace 5 with the number of checkboxes you need.
-        (index) => CheckBoxWidget(
-          index: index,
-          currentIndex: currentIndex,
-          onCheckboxChanged: updateCheckboxState,
-        ),
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Column(
+//       children: List.generate(
+//         5, // Replace 5 with the number of checkboxes you need.
+//         (index) => CheckBoxWidget(
+//           index: index,
+//           currentIndex: currentIndex,
+//           onCheckboxChanged: updateCheckboxState,
+//         ),
+//       ),
+//     );
+//   }
+// }

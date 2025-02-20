@@ -2,10 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:itestified/src/config/theme/app_color.dart';
+import 'package:itestified/src/core/widgets/appbar2.dart';
 import 'package:itestified/src/core/widgets/text_widget.dart';
 import 'package:itestified/src/features/app_theme/theme_viewmodel.dart';
 import 'package:itestified/src/features/category/presentation/screens/video_written_test_screen.dart';
 import 'package:itestified/src/features/category/presentation/widgets/category_container.dart';
+import 'package:itestified/src/features/shared/widgets/screen.dart';
 import 'package:provider/provider.dart';
 
 class CategoriesListScreen extends StatelessWidget {
@@ -18,33 +20,68 @@ class CategoriesListScreen extends StatelessWidget {
     var themeProvider = Provider.of<ThemeViewmodel>(context);
 
     return Scaffold(
-      backgroundColor: themeProvider.themeData.colorScheme.background,
-      body: Container(
-        margin: EdgeInsets.symmetric(horizontal: 10.w),
-        child: Column(
-          children: [
-            SizedBox(
-              height: 50.h,
-            ),
-            // category container
-            textWidget("Categories", fontSize: 25.sp),
-            Expanded(
-                child: ListView.builder(
-                    itemCount: 10,
-                    physics: const BouncingScrollPhysics(),
-                    itemBuilder: (context, index) {
-                      return GestureDetector(
-                          onTap: () {
-                            Navigator.of(context)
-                                .push(MaterialPageRoute(builder: (context) {
-                              return const VideoAndWrittenTestimonieScreen();
-                            }));
-                          },
-                          child: const CategoryContainer());
-                    }))
-          ],
+        appBar: AppBar(
+          backgroundColor: themeProvider.themeData.colorScheme.background,
+          centerTitle: true,
+          title: textWidget(
+            "Categories",
+            fontSize: Theme.of(context).textTheme.titleLarge?.fontSize,
+          ),
         ),
-      ),
-    );
+        backgroundColor: themeProvider.themeData.colorScheme.background,
+        body: LayoutBuilder(
+          builder: (context, constraints) {
+            bool isLargeScreen = constraints.maxWidth > 600;
+
+            return isLargeScreen
+                ? largeScreenGrid(
+                    gridNumber: 3,
+                    context,
+                    GestureDetector(
+                        onTap: () {
+                          Navigator.of(context)
+                              .push(MaterialPageRoute(builder: (context) {
+                            return const VideoAndWrittenTestimonieScreen();
+                          }));
+                        },
+                        child: Container(
+                            margin: const EdgeInsets.only(right: 1),
+                            child: const CategoryContainer())))
+                : smallScreenListView(GestureDetector(
+                    onTap: () {
+                      Navigator.of(context)
+                          .push(MaterialPageRoute(builder: (context) {
+                        return const VideoAndWrittenTestimonieScreen();
+                      }));
+                    },
+                    child: const CategoryContainer()));
+          },
+        )
+
+        // Container(
+        //   margin: EdgeInsets.symmetric(horizontal: 10.w),
+        //   child: Column(
+        //     children: [
+        //       // category container
+        //       // textWidget("Categories", fontSize: 25.sp),
+        //       Expanded(
+        //           child: ListView.builder(
+        //               itemCount: 10,
+        //               physics: const BouncingScrollPhysics(),
+        //               itemBuilder: (context, index) {
+        //                 return GestureDetector(
+        //                     onTap: () {
+        //                       Navigator.of(context)
+        //                           .push(MaterialPageRoute(builder: (context) {
+        //                         return const VideoAndWrittenTestimonieScreen();
+        //                       }));
+        //                     },
+        //                     child: const CategoryContainer());
+        //               }))
+        //     ],
+        //   ),
+        // ),
+
+        );
   }
 }

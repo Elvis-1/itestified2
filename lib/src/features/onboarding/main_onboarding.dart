@@ -8,7 +8,6 @@ import 'package:itestified/src/config/theme/app_color.dart';
 import 'package:itestified/src/features/onboarding/onboarding_screen1.dart';
 import 'package:itestified/src/features/onboarding/onboarding_screen2.dart';
 import 'package:itestified/src/features/onboarding/onboarding_screen3.dart';
-import 'package:itestified/src/features/onboarding/widgets/page.dart';
 
 class MainOnboarding extends StatefulWidget {
   const MainOnboarding({super.key});
@@ -61,7 +60,7 @@ class _MainOnboardingState extends State<MainOnboarding> {
                   color: AppColors.white,
                   size: Size.square(8.0),
                   activeColor: AppColors.primaryColor,
-                  activeSize: Size(18.0, 8.0),
+                  activeSize: Size(25.0, 8.0),
                   activeShape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(5.0))),
             ))

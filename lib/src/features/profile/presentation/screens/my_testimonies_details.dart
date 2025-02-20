@@ -53,7 +53,7 @@ class MyTestimoniesDetailsScreen extends StatelessWidget {
           ],
           if (!isFromProfile) ...[
             Container(
-              margin: EdgeInsets.only(right: 10),
+              margin: const EdgeInsets.only(right: 10),
               color: Colors.black.withOpacity(0.5),
               child: CircleAvatar(
                 radius: 10,
@@ -69,40 +69,47 @@ class MyTestimoniesDetailsScreen extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Container(
-          margin: EdgeInsets.only(right: 15.w, left: 15.w, bottom: 10.h),
+          margin: const EdgeInsets.only(right: 15, left: 15, bottom: 10),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               textWidget(
                 'Jesus changed genotype!',
-                fontSize: 17.sp,
+                fontSize: Theme.of(context).textTheme.titleMedium?.fontSize,
                 fontWeight: FontWeight.w600,
                 color: themeProvider.themeData.colorScheme.onTertiary,
               ),
-              SizedBox(
-                height: 10.h,
+              const SizedBox(
+                height: 10,
               ),
               // user pic, name , category
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Image.asset(AppIcons.userIcon),
-                  SizedBox(
-                    width: 10.w,
+                  const SizedBox(
+                    width: 10,
                   ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      textWidget("Chika Amaka", fontSize: 13),
+                      textWidget(
+                        "Chika Amaka",
+                        fontSize:
+                            Theme.of(context).textTheme.titleSmall?.fontSize,
+                      ),
                       Row(
                         children: [
                           textWidget(
                             "Healing ",
-                            fontSize: 13.sp,
+                            fontSize: Theme.of(context)
+                                .textTheme
+                                .titleSmall
+                                ?.fontSize,
                           ),
                           SizedBox(
-                            width: 5.w,
+                            width: 5,
                           ),
                           Container(
                             height: 5,
@@ -114,13 +121,16 @@ class MyTestimoniesDetailsScreen extends StatelessWidget {
                           ),
                           textWidget(
                             " 30 minutes ago",
-                            fontSize: 13.sp,
+                            fontSize: Theme.of(context)
+                                .textTheme
+                                .titleSmall
+                                ?.fontSize,
                             color: themeProvider.themeData.colorScheme.tertiary,
                           ),
                         ],
                       ),
-                      SizedBox(
-                        height: 10.h,
+                      const SizedBox(
+                        height: 10,
                       ),
                     ],
                   ),
@@ -129,24 +139,25 @@ class MyTestimoniesDetailsScreen extends StatelessWidget {
 
               SizedBox(
                 //  height: 100.h,
-                width: 500.w,
+                // width: 500,
                 child: Text(
                   "sickle cell genotype. Countless hospital visits and painful crises became a part of my life. My faith in God was strong, but the struggle was relentless. Despite the adversity, I held on to the hope that one day, I would experience healing.One evening, during a powerful prayer session at my church, I felt an overwhelming sense of peace and warmth envelop me. The pastor, led by the Spirit, specifically prayed for those suffering from chronic illnesses. As the congregation joined in fervent prayer, I felt a shift within me. It was as if a heavy burden was being lifted off my shoulders.In the weeks that followed, I noticed a remarkable change. The frequent crises that had plagued my life began to subside. My energy levels increased, and I felt a renewed sense of vitality. Encouraged by these changes, I decided to visit my doctor for a comprehensive check-up.The results were nothing short of a miracle. My genotype had changed from SS to AA. The doctors were baffled, unable to explain the transformation scientifically. But I knew the truth—it was Jesus who had healed me.Today, I live free from the pain and limitations that once defined my life. My story is a testament to the incredible power of faith and prayer. Jesus changed my genotype, and with it, He transformed my entire life. I now use my testimony to encourage others, reminding them that with God, all things are possible.",
                   style: normalTextStyle(
-                      height: 1.7,
-                      textColor: themeProvider.themeData.colorScheme.tertiary,
-                      fontSize: 15.sp),
+                    height: 1.7,
+                    textColor: themeProvider.themeData.colorScheme.tertiary,
+                    fontSize: Theme.of(context).textTheme.titleMedium?.fontSize,
+                  ),
                 ),
               ),
-              SizedBox(
-                height: 100.h,
+              const SizedBox(
+                height: 100,
               ),
 
               Align(
                 alignment: Alignment.center,
                 child: Container(
-                  width: 230.w,
-                  height: 50.h,
+                  width: 230,
+                  height: 50,
                   decoration: BoxDecoration(
                       border: Border.all(color: AppColors.transparent),
                       color: themeProvider.themeData.colorScheme.onBackground,
@@ -166,20 +177,25 @@ class MyTestimoniesDetailsScreen extends StatelessWidget {
                                   children: [
                                     Container(
                                         //  height: 70.h,
-                                        padding: EdgeInsets.symmetric(
-                                            vertical: 30.h),
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 30),
                                         color: themeProvider
                                             .themeData.colorScheme.background,
                                         //  height: 50,
                                         child: Align(
                                           alignment: Alignment.center,
-                                          child: textWidget('Comments',
-                                              color: themeProvider.themeData
-                                                  .colorScheme.tertiary,
-                                              fontSize: 20.sp),
+                                          child: textWidget(
+                                            'Comments',
+                                            color: themeProvider
+                                                .themeData.colorScheme.tertiary,
+                                            fontSize: Theme.of(context)
+                                                .textTheme
+                                                .titleMedium
+                                                ?.fontSize,
+                                          ),
                                         )),
                                     Container(
-                                        height: 400.h,
+                                        height: 400,
                                         child: const commentListModal()),
                                   ],
                                 );

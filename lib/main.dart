@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:itestified/src/config/providers.dart';
 import 'package:itestified/src/config/theme/app_color.dart';
@@ -12,6 +13,11 @@ import 'package:itestified/src/config/service_locators.dart' as service_locator;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await service_locator.setupLocator();
+  await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.landscapeRight,
+    DeviceOrientation.landscapeLeft,
+    DeviceOrientation.portraitUp, // Optional: Keep portrait enabled
+  ]);
   runApp(MultiProvider(providers: providers, child: const MyApp()));
 }
 

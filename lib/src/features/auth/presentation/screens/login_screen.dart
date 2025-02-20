@@ -186,7 +186,8 @@ class LoginScreen extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  textWidget("Don't have an account?", fontSize: 15.sp),
+                  textWidget("Don't have an account?",
+                      fontWeight: FontWeight.w600, fontSize: 15.sp),
                   GestureDetector(
                     onTap: () {
                       Navigator.of(context).pushReplacement(
@@ -198,6 +199,7 @@ class LoginScreen extends StatelessWidget {
                       " Create account",
                       fontSize: 15,
                       color: AppColors.primaryColor,
+                      fontWeight: FontWeight.w600,
                     ),
                   )
                 ],

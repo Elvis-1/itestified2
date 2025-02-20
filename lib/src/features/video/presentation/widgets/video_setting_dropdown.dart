@@ -33,6 +33,9 @@ class _VideoSettingsDropdownState extends State<VideoSettingsDropdown> {
     setState(() {
       currentIndex = index;
     });
+    print('this is called');
+    print('index when called $index');
+    print('current index when called $currentIndex');
   }
 
   void openDropdown(Widget dropD) {
@@ -57,12 +60,13 @@ class _VideoSettingsDropdownState extends State<VideoSettingsDropdown> {
 
   OverlayEntry _createOverlayEntry(Widget dropdown) {
     RenderBox renderBox = context.findRenderObject() as RenderBox;
-    final size = renderBox.size;
-    final offset = renderBox.localToGlobal(Offset.zero);
+    // final size = renderBox.size;
+    // final offset = renderBox.localToGlobal(Offset.zero);
 
     return OverlayEntry(
       builder: (context) => GestureDetector(
-        onTap: closeDropdown, // Close dropdown when tapping outside
+        onTap: closeDropdown,
+        // Close dropdown when tapping outside
         child: Stack(
           children: [
             // Positioned.fill(
@@ -123,7 +127,7 @@ class _VideoSettingsDropdownState extends State<VideoSettingsDropdown> {
                     onChangedCheckBox: updateIndex,
                   ));
                 },
-                child: qualityAndPlaybackCont(
+                child: qualityAndPlaybackContainer(
                   "Quality",
                   '100p',
                   AppIcons.videoQualityIcon,
@@ -141,7 +145,7 @@ class _VideoSettingsDropdownState extends State<VideoSettingsDropdown> {
                   onChangedCheckBox: updateIndex,
                 ));
               },
-              child: qualityAndPlaybackCont(
+              child: qualityAndPlaybackContainer(
                 "Playback",
                 '1x',
                 AppIcons.videoPlaybackIcon,
@@ -210,28 +214,26 @@ class qualityAndPlaybackOptions extends StatelessWidget {
   final int currentIndex;
   final Function(int) onChangedCheckBox;
 
-  // final Widget Function(String title, int index, int currentIndex,
-  //     Function(int) onChangedCheckBox) options;
   @override
   Widget build(BuildContext context) {
     var themeProvider = Provider.of<ThemeViewmodel>(context);
 
     return Container(
-      padding: EdgeInsets.all(10),
+      padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           color: themeProvider.themeData.colorScheme.background),
       child: Column(
         children: [
           if (type == 'quality') ...[
-            options('0.25x', 0, currentIndex, onChangedCheckBox),
-            options('0.5x', 1, currentIndex, onChangedCheckBox),
-            options('0.75x', 2, currentIndex, onChangedCheckBox),
-          ],
-          if (type == 'playback') ...[
             options('360p', 3, currentIndex, onChangedCheckBox),
             options('480p', 4, currentIndex, onChangedCheckBox),
             options('720p', 5, currentIndex, onChangedCheckBox),
+          ],
+          if (type == 'playback') ...[
+            options('0.25x', 0, currentIndex, onChangedCheckBox),
+            options('0.5x', 1, currentIndex, onChangedCheckBox),
+            options('0.75x', 2, currentIndex, onChangedCheckBox),
           ]
         ],
       ),
@@ -239,8 +241,8 @@ class qualityAndPlaybackOptions extends StatelessWidget {
   }
 }
 
-class qualityAndPlaybackCont extends StatelessWidget {
-  const qualityAndPlaybackCont(
+class qualityAndPlaybackContainer extends StatelessWidget {
+  const qualityAndPlaybackContainer(
     this.title,
     this.value,
     this.icon, {

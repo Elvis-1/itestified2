@@ -23,153 +23,181 @@ class commentListModal extends StatelessWidget {
   Widget build(BuildContext context) {
     var themeProvider = Provider.of<ThemeViewmodel>(context);
 
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: themeProvider.themeData.colorScheme.background,
-        body: ListView.builder(
-            //  itemCount: 10,
-            itemBuilder: (context, index) {
-          return Container(
-              decoration:
-                  BoxDecoration(borderRadius: BorderRadius.circular(25.w)),
-              margin: EdgeInsets.only(bottom: 10.h),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Image.asset(AppIcons.userIcon),
-                  SizedBox(
-                    width: 10.w,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              textWidget("Chika Amaka", fontSize: 15.sp),
-                              SizedBox(
-                                height: 5.h,
-                              ),
-                              SizedBox(
-                                width: 250.w,
-                                child: Text(
-                                  "Our God is indeed a good God, he knows all, Our God is indeed a good God, he knows all Our God is indeed a good God, he knows all Our God is indeed a good God, he knows all Our God is indeed a good God, he knows all",
-                                  textAlign: TextAlign.left,
-                                  style: normalTextStyle(
-                                      textColor: themeProvider
-                                          .themeData.colorScheme.tertiary),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          likeOrShare(AppIcons.likeIcon, '2',
-                              containerColor: AppColors.transparent),
-                          likeOrShare(AppIcons.unlikeIcon, '2',
-                              containerColor: AppColors.transparent)
-                        ],
-                      ),
-                      InkWell(
-                        onTap: () {
-                          showModalBottomSheet(
-                              context: context,
-                              builder: (context) {
-                                return ListView(
-                                  shrinkWrap: true,
-                                  children: [
-                                    Container(
-                                        //  height: 70.h,
-                                        padding: EdgeInsets.symmetric(
-                                            vertical: 30.h),
-                                        color: themeProvider
-                                            .themeData.colorScheme.background,
-                                        //  height: 50,
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
-                                              child: InkWell(
-                                                  onTap: () {
-                                                    Navigator.pop(context);
-                                                  },
-                                                  child: const Icon(Icons
-                                                      .arrow_back_ios_new)),
-                                            ),
-                                            Align(
-                                              alignment: Alignment.center,
-                                              child: textWidget('Comments',
-                                                  fontWeight: FontWeight.w500,
-                                                  color: themeProvider.themeData
-                                                      .colorScheme.onTertiary,
-                                                  fontSize: 20.sp),
-                                            ),
-                                            Container()
-                                          ],
-                                        )),
-                                    SizedBox(
-                                        height: 400.h,
-                                        child: const singleCommentModal()),
-                                  ],
-                                );
-                              });
-                        },
-                        child: Align(
-                          alignment: Alignment.bottomLeft,
-                          child: textWidget('Reply',
-                              color: AppColors.primaryColor, fontSize: 13.sp),
-                        ),
-                      )
-                    ],
-                  ),
-                  textWidget("2 days Ago", fontSize: 12.sp)
-                ],
-              ));
-        }),
-        bottomNavigationBar: Container(
-          padding: EdgeInsets.only(
-              left: 5.w,
-              right: 5.w,
-              bottom: MediaQuery.of(context).viewInsets.bottom),
-          margin: EdgeInsets.only(
-            left: 10.w,
-            right: 10.w,
-            top: 5.h,
-            bottom: 28.h,
-          ),
-          child: Row(
-            children: [
-              Image.asset(AppIcons.userIcon),
-              SizedBox(
-                width: 10.w,
-              ),
-              Expanded(
-                  child: Container(
-                      decoration: BoxDecoration(
-                          // color: AppColors.lightBlack,
-                          ),
-                      child: customTextField(
-                          borderColor:
-                              themeProvider.themeData.colorScheme.tertiary,
-                          hintText: "Add a comment"))),
-              SizedBox(
-                width: 10.w,
-              ),
-              Image.asset(AppIcons.sendBtnIcon),
-            ],
-          ),
-        ),
-      ),
-    );
+    return SafeArea(child: LayoutBuilder(
+      builder: (context, constraints) {
+        bool isLargeScreen = constraints.maxWidth > 800;
+        return Scaffold(
+            backgroundColor: themeProvider.themeData.colorScheme.background,
+            body: isLargeScreen
+                ? Row(
+                    children: [const SizedBox.shrink()],
+                  )
+                : mainContent(context),
+            bottomNavigationBar:
+                isLargeScreen ? SizedBox.shrink() : rightColumn(context));
+      },
+    ));
   }
+}
+
+Widget mainContent(BuildContext context) {
+  return leftColumn(context);
+}
+
+Widget rightColumn(BuildContext context) {
+  var themeProvider = Provider.of<ThemeViewmodel>(context);
+
+  // textfield
+  return Container(
+    padding: EdgeInsets.only(
+        left: 5, right: 5, bottom: MediaQuery.of(context).viewInsets.bottom),
+    margin: const EdgeInsets.only(
+      left: 10,
+      right: 10,
+      top: 5,
+      bottom: 28,
+    ),
+    child: Row(
+      children: [
+        Image.asset(AppIcons.userIcon),
+        const SizedBox(
+          width: 10,
+        ),
+        Expanded(
+            child: Container(
+                child: customTextField(
+                    borderColor: themeProvider.themeData.colorScheme.tertiary,
+                    hintText: "Add a comment"))),
+        const SizedBox(
+          width: 10,
+        ),
+        Image.asset(AppIcons.sendBtnIcon),
+      ],
+    ),
+  );
+}
+
+Widget leftColumn(BuildContext context) {
+  var themeProvider = Provider.of<ThemeViewmodel>(context);
+// list of comments
+  return ListView.builder(
+      itemCount: 10,
+      itemBuilder: (context, index) {
+        return Container(
+            decoration: BoxDecoration(borderRadius: BorderRadius.circular(25)),
+            margin: const EdgeInsets.only(bottom: 10),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Image.asset(AppIcons.userIcon),
+                const SizedBox(
+                  width: 10,
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            textWidget(
+                              "Chika Amaka",
+                              fontSize: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium
+                                  ?.fontSize,
+                            ),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            SizedBox(
+                              width: 250,
+                              child: Text(
+                                "Our God is indeed a good God, he knows all, Our God is indeed a good God, he knows all Our God is indeed a good God, he knows all Our God is indeed a good God, he knows all Our God is indeed a good God, he knows all",
+                                textAlign: TextAlign.left,
+                                style: normalTextStyle(
+                                    textColor: themeProvider
+                                        .themeData.colorScheme.tertiary),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        likeOrShare(AppIcons.likeIcon, '2',
+                            containerColor: AppColors.transparent),
+                        likeOrShare(AppIcons.unlikeIcon, '2',
+                            containerColor: AppColors.transparent)
+                      ],
+                    ),
+                    InkWell(
+                      onTap: () {
+                        showModalBottomSheet(
+                            context: context,
+                            builder: (context) {
+                              return ListView(
+                                shrinkWrap: true,
+                                children: [
+                                  Container(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 30),
+                                      color: themeProvider
+                                          .themeData.colorScheme.background,
+                                      //  height: 50,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: InkWell(
+                                                onTap: () {
+                                                  Navigator.pop(context);
+                                                },
+                                                child: const Icon(
+                                                    Icons.arrow_back_ios_new)),
+                                          ),
+                                          Align(
+                                            alignment: Alignment.center,
+                                            child: textWidget('Comments',
+                                                fontWeight: FontWeight.w500,
+                                                color: themeProvider.themeData
+                                                    .colorScheme.onTertiary,
+                                                fontSize: 20),
+                                          ),
+                                          Container()
+                                        ],
+                                      )),
+                                  SizedBox(
+                                      height: 400.h,
+                                      child: const singleCommentModal()),
+                                ],
+                              );
+                            });
+                      },
+                      child: Align(
+                        alignment: Alignment.bottomLeft,
+                        child: textWidget(
+                          'Reply',
+                          color: AppColors.primaryColor,
+                          fontSize:
+                              Theme.of(context).textTheme.titleSmall?.fontSize,
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+                textWidget(
+                  "2 days Ago",
+                  fontSize: Theme.of(context).textTheme.titleSmall?.fontSize,
+                )
+              ],
+            ));
+      });
 }
 
 class singleCommentModal extends StatelessWidget {
@@ -189,20 +217,20 @@ class singleCommentModal extends StatelessWidget {
             }),
         bottomNavigationBar: Container(
           padding: EdgeInsets.only(
-              left: 5.w,
-              right: 5.w,
+              left: 5,
+              right: 5,
               bottom: MediaQuery.of(context).viewInsets.bottom),
-          margin: EdgeInsets.only(
-            left: 10.w,
-            right: 10.w,
-            top: 5.h,
+          margin: const EdgeInsets.only(
+            left: 10,
+            right: 10,
+            top: 5,
             bottom: 40,
           ),
           child: Row(
             children: [
               Image.asset(AppIcons.userIcon),
-              SizedBox(
-                width: 10.w,
+              const SizedBox(
+                width: 10,
               ),
               Expanded(
                   child: Container(
@@ -212,8 +240,8 @@ class singleCommentModal extends StatelessWidget {
                       child: customTextField(
                           borderColor: AppColors.lightBlack,
                           hintText: "Add a comment"))),
-              SizedBox(
-                width: 10.w,
+              const SizedBox(
+                width: 10,
               ),
               Image.asset(AppIcons.sendBtnIcon),
             ],
@@ -326,8 +354,7 @@ class videoDetailsModal extends StatelessWidget {
 
     return SingleChildScrollView(
       child: Container(
-        padding:
-            EdgeInsets.only(right: 10.w, left: 10.w, top: 10.h, bottom: 5.h),
+        padding: const EdgeInsets.only(right: 10, left: 10, top: 10, bottom: 5),
         decoration: BoxDecoration(
             color: themeProvider.themeData.colorScheme.background,
             borderRadius: BorderRadius.circular(10)),
@@ -340,7 +367,7 @@ class videoDetailsModal extends StatelessWidget {
               children: [
                 textWidget(
                   'Description',
-                  fontSize: 15.sp,
+                  fontSize: 15,
                   color: themeProvider.themeData.colorScheme.onTertiary,
                   fontWeight: FontWeight.w500,
                 ),
@@ -355,14 +382,14 @@ class videoDetailsModal extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(
-              height: 15.h,
+            const SizedBox(
+              height: 15,
             ),
             lineWidget(
                 width: double.infinity,
                 color: themeProvider.themeData.colorScheme.outline),
-            SizedBox(
-              height: 10.h,
+            const SizedBox(
+              height: 10,
             ),
             textWidget(
               maxLines: 2,
@@ -371,8 +398,8 @@ class videoDetailsModal extends StatelessWidget {
               fontSize: 17,
               fontWeight: FontWeight.w500,
             ),
-            SizedBox(
-              height: 15.h,
+            const SizedBox(
+              height: 15,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -383,15 +410,15 @@ class videoDetailsModal extends StatelessWidget {
                 textColumn("Childbirth", "Category"),
               ],
             ),
-            SizedBox(
-              height: 20.h,
+            const SizedBox(
+              height: 20,
             ),
             // disclaimer
 
-            textWidget("Disclaimer", fontSize: 14.sp),
+            textWidget("Disclaimer", fontSize: 14),
             textWidget(
               "This video was sourced from YouTube. We do not own the rights to this video in any form or way. It is posted here for the purpose of  sharing inspiring testimonies with our community",
-              fontSize: 13.sp,
+              fontSize: 13,
             )
           ],
         ),
@@ -401,13 +428,19 @@ class videoDetailsModal extends StatelessWidget {
 }
 
 Widget textColumn(String firstText, String secondText) {
-  return Column(
-    children: [
-      textWidget(firstText, fontSize: 18.sp),
-      textWidget(
-        secondText,
-        fontSize: 13.sp,
-      ),
-    ],
+  return Expanded(
+    child: Column(
+      children: [
+        textWidget(
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            firstText,
+            fontSize: 18),
+        textWidget(
+          secondText,
+          fontSize: 13,
+        ),
+      ],
+    ),
   );
 }
