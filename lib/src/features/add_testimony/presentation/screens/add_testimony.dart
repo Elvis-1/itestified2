@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:itestified/src/config/theme/app_color.dart';
 import 'package:itestified/src/core/utils/app_const/enum.dart';
 import 'package:itestified/src/core/widgets/appbar2.dart';
 import 'package:itestified/src/core/widgets/btn_and_text.dart';
 import 'package:itestified/src/core/widgets/custom_textfield.dart';
 import 'package:itestified/src/core/widgets/dropdown_btn.dart';
-import 'package:itestified/src/core/widgets/modals.dart';
 import 'package:itestified/src/core/widgets/multiline_textfield.dart';
 import 'package:itestified/src/core/widgets/text_widget.dart';
 import 'package:itestified/src/features/add_testimony/presentation/screens/testimony_posted_successfully.dart';
@@ -24,103 +22,123 @@ class AddTestimonyScreen extends StatelessWidget {
     var themeProvider = Provider.of<ThemeViewmodel>(context);
 
     return Scaffold(
+      appBar: generalAppbar(
+        action == TestimonyAction.Edit ? "Update Testimony" : "Add Testimony",
+        context,
+      ),
       backgroundColor: themeProvider.themeData.colorScheme.background,
-      body: SingleChildScrollView(
-        child: Container(
-          margin: EdgeInsets.symmetric(horizontal: 15.w),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                height: 50.h,
-              ),
+      body: Center(
+        child: ConstrainedBox(
+          constraints: BoxConstraints(maxWidth: 800), // Limit form width
+          child: SingleChildScrollView(
+            reverse: true,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              child: LayoutBuilder(
+                builder: (context, constraints) {
+                  bool isLargeScreen = constraints.maxWidth > 600;
 
-              appbar2(
-                action == TestimonyAction.Edit
-                    ? "Update Testimony"
-                    : "Add Testimony",
-              ),
-              SizedBox(
-                height: 40.h,
-              ),
-              textWidget(
-                "Title",
-                fontSize: 19.sp,
-                fontWeight: FontWeight.w600,
-              ),
-              SizedBox(
-                height: 10.h,
-              ),
-
-              Container(
-                  decoration: BoxDecoration(
-                      // color: AppColors.lightBlack,
-                      //  border: Border.all(color: AppColors.transparent)
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      isLargeScreen
+                          ? Row(
+                              children: [
+                                Expanded(child: _buildTitleField(context)),
+                                const SizedBox(width: 20),
+                                Expanded(
+                                    child: _buildCategoryDropdown(context)),
+                              ],
+                            )
+                          : Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                _buildTitleField(context),
+                                const SizedBox(height: 20),
+                                _buildCategoryDropdown(context),
+                              ],
+                            ),
+                      const SizedBox(height: 20),
+                      textWidget(
+                        "Description",
+                        fontSize:
+                            Theme.of(context).textTheme.bodyLarge?.fontSize,
+                        fontWeight: FontWeight.w600,
                       ),
-                  child: customTextField(
-                      borderColor: AppColors.lightBlack,
-                      hintText: "Enter your title")),
-              SizedBox(
-                height: 20.h,
+                      const SizedBox(height: 10),
+                      const multilineTextField(),
+                      const SizedBox(height: 40),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).pushReplacement(
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    const TestimonyPostedSuccessfully()),
+                          );
+                        },
+                        child: Container(
+                          height: 70,
+                          width: double.infinity,
+                          child: btnAndText(
+                            verticalPadding: 15,
+                            text: action == TestimonyAction.Edit
+                                ? "Save changes"
+                                : "Post",
+                            fontSize:
+                                Theme.of(context).textTheme.bodyLarge?.fontSize,
+                            containerWidth: double.infinity,
+                          ),
+                        ),
+                      ),
+                    ],
+                  );
+                },
               ),
-              textWidget(
-                "Category",
-                fontSize: 19.sp,
-                fontWeight: FontWeight.w600,
-              ),
-              SizedBox(
-                height: 10.h,
-              ),
-              // dropdown
-              Container(
-                  padding: EdgeInsets.symmetric(
-                    vertical: 5.h,
-                  ),
-                  decoration: BoxDecoration(
-                    color: themeProvider.themeData.colorScheme.onBackground,
-                    // border: Border.all(color: AppColors.lightBlack)
-                  ),
-                  width: double.infinity,
-                  child: const DropdownBTN()),
-
-              SizedBox(
-                height: 20.h,
-              ),
-              textWidget(
-                "Description",
-                fontSize: 19.sp,
-                fontWeight: FontWeight.w600,
-              ),
-              SizedBox(
-                height: 10.h,
-              ),
-              multilineTextField(),
-
-              SizedBox(
-                height: 150.h,
-              ),
-            ],
+            ),
           ),
         ),
       ),
-      floatingActionButton: GestureDetector(
-        onTap: () {
-          Navigator.of(context)
-              .pushReplacement(MaterialPageRoute(builder: (context) {
-            return const TestimonyPostedSuccessfully();
-          }));
-        },
-        child: Container(
-          padding: EdgeInsets.only(bottom: 10.h, right: 10.w, left: 10.w),
-          height: 60.h,
-          child: btnAndText(
-              verticalPadding: 15.h,
-              text: action == TestimonyAction.Edit ? "Save changes" : "Post",
-              fontSize: 19,
-              containerWidth: double.infinity),
+    );
+  }
+
+  Widget _buildTitleField(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        textWidget(
+          "Title",
+          fontSize: Theme.of(context).textTheme.bodyLarge?.fontSize,
+          fontWeight: FontWeight.w600,
         ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        const SizedBox(height: 10),
+        customTextField(
+          borderColor: AppColors.lightBlack,
+          hintText: "Enter your title",
+        ),
+      ],
+    );
+  }
+
+  Widget _buildCategoryDropdown(BuildContext context) {
+    var themeProvider = Provider.of<ThemeViewmodel>(context, listen: false);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        textWidget(
+          "Category",
+          fontSize: Theme.of(context).textTheme.bodyLarge?.fontSize,
+          fontWeight: FontWeight.w600,
+        ),
+        const SizedBox(height: 10),
+        Container(
+          padding: const EdgeInsets.symmetric(vertical: 5),
+          decoration: BoxDecoration(
+            color: themeProvider.themeData.colorScheme.onBackground,
+          ),
+          width: double.infinity,
+          child: const DropdownBTN(),
+        ),
+      ],
     );
   }
 }

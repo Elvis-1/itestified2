@@ -11,7 +11,7 @@ Widget btnAndText(
     String text = 'Next',
     Color borderColor = AppColors.btnColor,
     Color textColor = AppColors.white,
-    double fontSize = 17,
+    double? fontSize = 17,
     Widget container = const SizedBox.shrink()}) {
   return Container(
     width: containerWidth,

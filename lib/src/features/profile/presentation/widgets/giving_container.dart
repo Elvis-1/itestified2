@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:itestified/src/config/theme/app_color.dart';
 import 'package:itestified/src/core/widgets/line_widget.dart';
 import 'package:itestified/src/core/widgets/text_widget.dart';
@@ -25,12 +24,12 @@ class givingContainer extends StatelessWidget {
       rows.add(widgets[i]);
     }
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 10.h),
+      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
       margin: const EdgeInsets.only(bottom: 10),
       decoration: BoxDecoration(
           color: themeProvider.themeData.searchBarTheme.backgroundColor!
               .resolve({}),
-          borderRadius: BorderRadius.circular(10.sp)),
+          borderRadius: BorderRadius.circular(10)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -40,7 +39,7 @@ class givingContainer extends StatelessWidget {
               textWidget(title, fontSize: 18),
             ],
           ),
-          SizedBox(height: 10.h),
+          const SizedBox(height: 10),
           lineWidget(width: double.infinity, color: AppColors.darkPurple),
           Column(children: rows),
         ],

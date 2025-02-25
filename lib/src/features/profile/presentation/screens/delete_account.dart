@@ -15,63 +15,68 @@ class DeleteAccount extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: generalAppbar("Delete Account", context),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(
-            height: 50.h,
-          ),
-          appbar2(
-            "Delete Account",
-          ),
-          SizedBox(
-            height: 20.h,
-          ),
           Expanded(
               child: Container(
-            margin: EdgeInsets.symmetric(horizontal: 20.w),
+            margin: const EdgeInsets.symmetric(horizontal: 20),
             child: ListView(
               children: [
                 textWidget(
                   'Are you sure you want to delete your account?',
-                  fontSize: 15.sp,
+                  fontSize: Theme.of(context).textTheme.bodyMedium?.fontSize,
                 ),
                 textWidget(
-                    'This action cannot be undone, and you will lose all your data and settings associated with your account.',
-                    fontSize: 15.sp,
-                    color: AppColors.textColor),
-                SizedBox(
-                  height: 20.h,
+                  'This action cannot be undone, and you will lose all your data and settings associated with your account.',
+                  fontSize: Theme.of(context).textTheme.bodyMedium?.fontSize,
+                ),
+                const SizedBox(
+                  height: 20,
                 ),
                 textWidget(
                   'Reason for deleting account (Optional)',
-                  fontSize: 15.sp,
+                  fontSize: Theme.of(context).textTheme.bodyMedium?.fontSize,
                 ),
                 textWidget(
-                    'Please let us know the reason why you have decided to delete you account so that we can continue to improve our service.',
-                    fontSize: 15.sp,
-                    color: AppColors.textColor),
-                SizedBox(
-                  height: 20.h,
+                  'Please let us know the reason why you have decided to delete you account so that we can continue to improve our service.',
+                  fontSize: Theme.of(context).textTheme.bodyMedium?.fontSize,
                 ),
-                multilineTextField(hintText: 'Type here ..'),
+                const SizedBox(
+                  height: 20,
+                ),
+                const multilineTextField(hintText: 'Type here ..'),
               ],
             ),
-          ))
+          )),
+          Container(
+              alignment: Alignment.bottomCenter,
+              margin: EdgeInsets.only(right: 20.w, left: 20.w, bottom: 10.h),
+
+              //   padding: EdgeInsets.only(bottom: ),
+              height: 50,
+              child: btnAndText(
+                  borderColor: AppColors.transparent,
+                  text: 'Delete account',
+                  containerWidth: double.infinity,
+                  containerColor: AppColors.redColor)),
         ],
       ),
-      floatingActionButton: Container(
-          alignment: Alignment.bottomCenter,
-          margin: EdgeInsets.only(right: 20.w, left: 20.w, bottom: 10.h),
+      // floatingActionButton:
 
-          //   padding: EdgeInsets.only(bottom: ),
-          height: 50,
-          child: btnAndText(
-              borderColor: AppColors.transparent,
-              text: 'Delete account',
-              containerWidth: double.infinity,
-              containerColor: AppColors.redColor)),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      // Container(
+      //     alignment: Alignment.bottomCenter,
+      //     margin: EdgeInsets.only(right: 20.w, left: 20.w, bottom: 10.h),
+
+      //     //   padding: EdgeInsets.only(bottom: ),
+      //     height: 50,
+      //     child: btnAndText(
+      //         borderColor: AppColors.transparent,
+      //         text: 'Delete account',
+      //         containerWidth: double.infinity,
+      //         containerColor: AppColors.redColor)),
+      // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }

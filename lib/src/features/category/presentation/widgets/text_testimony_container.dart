@@ -9,11 +9,10 @@ import 'package:itestified/src/features/shared/widgets/read_more.dart';
 import 'package:provider/provider.dart';
 
 class TextTestimonyContainer extends StatelessWidget {
-  const TextTestimonyContainer({
-    super.key,
-    this.containerWidth = 300,
-  });
+  const TextTestimonyContainer(
+      {super.key, this.containerWidth = 300, this.index});
   final double containerWidth;
+  final int? index;
 
   @override
   Widget build(BuildContext context) {

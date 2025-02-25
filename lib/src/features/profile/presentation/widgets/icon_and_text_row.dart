@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:itestified/src/config/theme/app_color.dart';
 import 'package:itestified/src/core/widgets/text_widget.dart';
 import 'package:itestified/src/features/app_theme/theme_viewmodel.dart';
 import 'package:provider/provider.dart';
@@ -15,7 +13,7 @@ class iconAndTextRow extends StatelessWidget {
     var themeProvider = Provider.of<ThemeViewmodel>(context);
 
     return Container(
-      margin: EdgeInsets.only(bottom: 15.h),
+      margin: const EdgeInsets.only(bottom: 15),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -23,8 +21,8 @@ class iconAndTextRow extends StatelessWidget {
             children: [
               Image.asset(prefixIcon,
                   color: themeProvider.themeData.colorScheme.onTertiary),
-              SizedBox(
-                width: 15.w,
+              const SizedBox(
+                width: 15,
               ),
               textWidget(
                 title,

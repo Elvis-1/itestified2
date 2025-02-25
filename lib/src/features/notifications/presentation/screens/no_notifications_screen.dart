@@ -1,12 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:itestified/src/config/theme/app_color.dart';
 import 'package:itestified/src/core/utils/app_const/app_icons.dart';
 import 'package:itestified/src/core/widgets/appbar2.dart';
-import 'package:itestified/src/core/widgets/btn_and_text.dart';
-import 'package:itestified/src/core/widgets/normal_text_style.dart';
 import 'package:itestified/src/core/widgets/text_widget.dart';
 import 'package:itestified/src/features/app_theme/theme_viewmodel.dart';
 import 'package:provider/provider.dart';
@@ -19,54 +13,37 @@ class NoNotificationsScreen extends StatelessWidget {
     var themeProvider = Provider.of<ThemeViewmodel>(context);
 
     return Scaffold(
+      appBar: generalAppbar("Notifications", context),
       backgroundColor: themeProvider.themeData.colorScheme.background,
-      body: Container(
-        margin: EdgeInsets.symmetric(horizontal: 10.w),
-        child: Column(
-          children: [
-            SizedBox(
-              height: 50.h,
-            ),
-            appbar2(
-              "Notifications",
-            ),
-            Column(
-              //              mainAxisAlignment: MainAxisAlignment.center,
+      body: Center(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(
-                  height: 150.h,
+                Image.asset(
+                  AppImages.notificationImage,
+                  width: MediaQuery.of(context).size.width *
+                      0.3, // Responsive width
+                  fit: BoxFit.contain,
                 ),
-                Image.asset(AppImages.notificationImage),
-                SizedBox(
-                  height: 20.h,
+                const SizedBox(height: 20),
+                textWidget(
+                  "No Notifications Yet",
+                  fontSize: 28,
+                  fontWeight: FontWeight.w600,
                 ),
-
-                textWidget("No Notifications Yet",
-                    fontSize: 28.sp, fontWeight: FontWeight.w600),
-                // Text(
-                //   "No Notificatins Yet",
-                //   style: normalTextStyle(
-                //       fontSize: 28.sp,
-                //       fontWeight: FontWeight.w600,
-                //       textColor: AppColors.white),
-                // ),
-                SizedBox(
-                  height: 10.h,
+                const SizedBox(height: 10),
+                textWidget(
+                  "You will get notifications when they are available",
+                  textAlign: TextAlign.center,
+                  fontSize: 23,
+                  fontWeight: FontWeight.w600,
                 ),
-                // Text(
-                //   "You will get notifications when they are available",
-                //   textAlign: TextAlign.center,
-                //   style: normalTextStyle(
-                //       fontSize: 23.sp, textColor: AppColors.textColor),
-                // ),
-
-                textWidget("You will get notifications when they are available",
-                    textAlign: TextAlign.center,
-                    fontSize: 23.sp,
-                    fontWeight: FontWeight.w600),
               ],
             ),
-          ],
+          ),
         ),
       ),
     );

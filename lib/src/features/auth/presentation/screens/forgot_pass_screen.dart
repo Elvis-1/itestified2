@@ -1,8 +1,4 @@
-import 'dart:ui';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:itestified/src/config/theme/app_color.dart';
 import 'package:itestified/src/core/widgets/appbar2.dart';
 import 'package:itestified/src/core/widgets/btn_and_text.dart';
@@ -12,7 +8,6 @@ import 'package:itestified/src/core/widgets/text_widget.dart';
 import 'package:itestified/src/features/app_theme/theme_viewmodel.dart';
 import 'package:itestified/src/features/auth/presentation/screens/login_screen.dart';
 import 'package:itestified/src/features/auth/presentation/screens/otp_screen.dart';
-import 'package:itestified/src/features/nav/navbar.dart';
 import 'package:provider/provider.dart';
 
 class ForgotPasswordScreen extends StatelessWidget {
@@ -23,9 +18,10 @@ class ForgotPasswordScreen extends StatelessWidget {
     var themeProvider = Provider.of<ThemeViewmodel>(context);
 
     return Scaffold(
+      appBar: generalAppbar("Forgot Password", context),
       backgroundColor: themeProvider.themeData.colorScheme.background,
       body: Container(
-        margin: EdgeInsets.symmetric(horizontal: 15.w),
+        margin: const EdgeInsets.symmetric(horizontal: 15),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -33,22 +29,16 @@ class ForgotPasswordScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(
-                    height: 45.h,
-                  ),
-                  const appbar2(
-                    "Forgot Password",
-                  ),
-                  SizedBox(
-                    height: 30.h,
+                  const SizedBox(
+                    height: 30,
                   ),
                   textWidget(
                       "Enter your email below and we will send you instrutions on how to reset your password",
                       fontWeight: FontWeight.w100,
                       fontSize: 15,
                       textAlign: TextAlign.center),
-                  SizedBox(
-                    height: 35.h,
+                  const SizedBox(
+                    height: 35,
                   ),
                   Text(
                     "Email Address",
@@ -57,14 +47,14 @@ class ForgotPasswordScreen extends StatelessWidget {
                             themeProvider.themeData.colorScheme.onTertiary,
                         fontSize: 20),
                   ),
-                  SizedBox(
-                    height: 10.h,
+                  const SizedBox(
+                    height: 10,
                   ),
                   customTextField(
                       hintText: "Enter Email Address",
                       prefixIc: Icon(
                         Icons.email_outlined,
-                        size: 30.sp,
+                        size: 30,
                         color: Colors.grey.shade700,
                       )),
                 ],
@@ -73,7 +63,7 @@ class ForgotPasswordScreen extends StatelessWidget {
             // login account btn
 
             Container(
-              margin: EdgeInsets.only(bottom: 10.h),
+              margin: const EdgeInsets.only(bottom: 10),
               child: Column(
                 children: [
                   GestureDetector(
@@ -84,12 +74,12 @@ class ForgotPasswordScreen extends StatelessWidget {
                         alignment: Alignment.center,
                         child: btnAndText(
                             fontSize: 18,
-                            verticalPadding: 14.h,
+                            verticalPadding: 14,
                             containerWidth: double.infinity,
                             text: "Reset Password")),
                   ),
-                  SizedBox(
-                    height: 15.h,
+                  const SizedBox(
+                    height: 15,
                   ),
                   GestureDetector(
                     onTap: () {
@@ -105,7 +95,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                             fontSize: 18,
                             textColor: AppColors.primaryColor,
                             containerColor: AppColors.transparent,
-                            verticalPadding: 14.h,
+                            verticalPadding: 14,
                             containerWidth: double.infinity,
                             text: "Back to login")),
                   ),

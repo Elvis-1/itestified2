@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:itestified/src/core/widgets/appbar2.dart';
+import 'package:itestified/src/features/animations/fade_in_trans.dart';
 import 'package:itestified/src/features/app_theme/theme_viewmodel.dart';
 import 'package:itestified/src/features/category/presentation/widgets/text_testimony_container.dart';
 import 'package:itestified/src/features/shared/widgets/screen.dart';
@@ -21,10 +22,11 @@ class WrittenTestimonies extends StatelessWidget {
         builder: (context, contraints) {
           bool isLargeScreen = contraints.maxWidth > 600;
           return isLargeScreen
-              ? largeScreenGrid(context, const TextTestimonyContainer(),
+              ? largeScreenGrid(context,
+                  const FadeInTransitionWidget(child: TextTestimonyContainer()),
                   gridNumber: 3)
               : smallScreenListView(
-                  const TextTestimonyContainer(),
+                  const FadeInTransitionWidget(child: TextTestimonyContainer()),
                 );
         },
       )),

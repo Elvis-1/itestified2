@@ -1,15 +1,9 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:itestified/src/config/theme/app_color.dart';
 import 'package:itestified/src/core/utils/app_const/app_icons.dart';
 import 'package:itestified/src/core/widgets/btn_and_text.dart';
-import 'package:itestified/src/core/widgets/normal_text_style.dart';
-import 'package:itestified/src/core/widgets/text_widget.dart';
-import 'package:itestified/src/features/home/presentation/home_screen.dart';
+import 'package:itestified/src/features/animations/page_route_animation.dart';
 import 'package:itestified/src/features/nav/navbar.dart';
 import 'package:itestified/src/features/onboarding/widgets/onboarding_text.dart';
 
@@ -28,8 +22,7 @@ class _OnboardingScreen2State extends State<OnboardingScreen2> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        padding: EdgeInsets.symmetric(horizontal: 25.w),
-        // height: 200,
+        padding: const EdgeInsets.symmetric(horizontal: 25),
         width: double.infinity,
         decoration: BoxDecoration(
             image: DecorationImage(
@@ -38,21 +31,22 @@ class _OnboardingScreen2State extends State<OnboardingScreen2> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Spacer(),
+            const Spacer(),
             Text(
               'Watch Inspiring Testimonies',
               textAlign: TextAlign.center,
               style: GoogleFonts.openSans(
-                  color: AppColors.white,
-                  fontWeight: FontWeight.w600,
-                  fontSize: 26.sp),
+                color: AppColors.white,
+                fontWeight: FontWeight.w600,
+                fontSize: Theme.of(context).textTheme.headlineLarge?.fontSize,
+              ),
             ),
-            SizedBox(
-              height: 10.h,
+            const SizedBox(
+              height: 10,
             ),
-            onboardingText(),
-            SizedBox(
-              height: 70.h,
+            onboardingText(context),
+            const SizedBox(
+              height: 70,
             ),
             GestureDetector(
                 onTap: () {
@@ -64,25 +58,27 @@ class _OnboardingScreen2State extends State<OnboardingScreen2> {
                 },
                 child: btnAndText(
                     containerWidth: double.infinity, verticalPadding: 15)),
-            SizedBox(
-              height: 10.h,
+            const SizedBox(
+              height: 10,
             ),
             GestureDetector(
               onTap: () {
-                Navigator.pushNamedAndRemoveUntil(
-                    context, NavBar.routeName, (route) => false);
-                // Navigator.of(context)
-                //     .pushReplacement(MaterialPageRoute(builder: (context) {
-                //   return const SignUpScreen();
-                // }));
+                Navigator.of(context).pushAndRemoveUntil(
+                  MyCustomRouteTransition(
+                    route: const NavBar(),
+                  ),
+                  (route) => false,
+                );
+                // Navigator.pushNamedAndRemoveUntil(
+                //     context, NavBar.routeName, (route) => false);
               },
               child: btnAndText(
                   text: "Get Started",
                   containerWidth: double.infinity,
                   verticalPadding: 15),
             ),
-            SizedBox(
-              height: 20.h,
+            const SizedBox(
+              height: 20,
             )
           ],
         ),

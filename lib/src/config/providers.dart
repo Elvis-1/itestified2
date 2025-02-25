@@ -13,6 +13,6 @@ final List<SingleChildWidget> providers = [
   //   create: (_) => GetIt.I<ThemeViewmodel>(),
   // ),
   ChangeNotifierProvider(
-    create: (_) => ThemeViewmodel(AppThemes.darkTheme),
+    create: (_) => ThemeViewmodel(),
   ),
 ];

@@ -1,8 +1,5 @@
 import 'dart:ui';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:itestified/src/config/theme/app_color.dart';
 import 'package:itestified/src/core/widgets/appbar2.dart';
 import 'package:itestified/src/core/widgets/custom_textfield.dart';
@@ -18,35 +15,27 @@ class SearchScreen extends StatelessWidget {
     var themeProvider = Provider.of<ThemeViewmodel>(context);
 
     return Scaffold(
+      appBar: generalAppbar("Search", context),
       backgroundColor: themeProvider.themeData.colorScheme.background,
       body: Container(
-        margin: EdgeInsets.symmetric(horizontal: 15.w),
+        margin: const EdgeInsets.symmetric(horizontal: 15),
         child: Column(
           children: [
-            SizedBox(
-              height: 50.h,
-            ),
-            appbar2(
-              "Search",
-            ),
-            SizedBox(
-              height: 50.h,
-            ),
             customTextField(
                 prefixIc: const Icon(Icons.search), hintText: "Search"),
-            SizedBox(
-              height: 20.h,
+            const SizedBox(
+              height: 20,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                textWidget("Recent Searches", fontSize: 18.sp),
+                textWidget("Recent Searches", fontSize: 18),
                 textWidget("Clear all",
-                    fontSize: 15.sp, color: AppColors.darkPurple)
+                    fontSize: 15, color: AppColors.darkPurple)
               ],
             ),
-            SizedBox(
-              height: 30.h,
+            const SizedBox(
+              height: 30,
             ),
             Expanded(
                 child: ListView.builder(
@@ -54,7 +43,7 @@ class SearchScreen extends StatelessWidget {
                     itemCount: 6,
                     itemBuilder: (context, index) {
                       return Container(
-                        margin: EdgeInsets.only(bottom: 20.h),
+                        margin: const EdgeInsets.only(bottom: 20),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -65,8 +54,8 @@ class SearchScreen extends StatelessWidget {
                                   color: themeProvider
                                       .themeData.colorScheme.onTertiary,
                                 ),
-                                SizedBox(
-                                  width: 15.w,
+                                const SizedBox(
+                                  width: 15,
                                 ),
                                 textWidget(
                                   "Healing Testimonies",
@@ -76,7 +65,7 @@ class SearchScreen extends StatelessWidget {
                             ),
                             textWidget(
                               "x",
-                              fontSize: 17.sp,
+                              fontSize: 17,
                             )
                           ],
                         ),

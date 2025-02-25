@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+// import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:itestified/src/config/theme/app_color.dart';
 import 'package:itestified/src/core/widgets/btn_and_text.dart';
@@ -57,7 +57,6 @@ class rate extends StatelessWidget {
       content: SingleChildScrollView(
         child: Container(
           color: themeProvider.themeData.colorScheme.onBackground,
-          // height: 200.h,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -72,10 +71,13 @@ class rate extends StatelessWidget {
                   color: Colors.white,
                 ),
               ),
+              const SizedBox(
+                height: 10,
+              ),
               Text(
                 "Rating Submitted",
                 style: GoogleFonts.mulish(
-                    fontSize: 20.sp,
+                    fontSize: Theme.of(context).textTheme.bodyLarge?.fontSize,
                     fontWeight: FontWeight.w500,
                     color: themeProvider.themeData.colorScheme.onTertiary),
               ),
@@ -84,7 +86,7 @@ class rate extends StatelessWidget {
               ),
               textWidget(
                 "Thank you for your time",
-                fontSize: 14.sp,
+                fontSize: Theme.of(context).textTheme.bodyMedium?.fontSize,
               ),
               const SizedBox(
                 height: 20,
@@ -108,59 +110,59 @@ class logout extends StatelessWidget {
     return AlertDialog(
       elevation: 0,
       backgroundColor: themeProvider.themeData.colorScheme.background,
-      content: SingleChildScrollView(
-        child: Container(
-          color: themeProvider.themeData.colorScheme.background,
-          // height: 200.h,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const SizedBox(
-                height: 10,
+      content: Container(
+        height: 200,
+        color: themeProvider.themeData.colorScheme.background,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const SizedBox(
+              height: 10,
+            ),
+            Text(
+              message,
+              style: GoogleFonts.mulish(
+                fontSize: Theme.of(context).textTheme.bodyLarge?.fontSize,
+                fontWeight: FontWeight.w600,
+                color: themeProvider.themeData.colorScheme.onTertiary,
               ),
-              Text(
-                message,
-                style: GoogleFonts.mulish(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
-                  color: themeProvider.themeData.colorScheme.onTertiary,
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            textWidget(
+              "Are you sure you want to logout this",
+              fontSize: Theme.of(context).textTheme.bodyMedium?.fontSize,
+              color: themeProvider.themeData.colorScheme.tertiary,
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            Row(
+              children: [
+                Expanded(child: btnAndText(containerWidth: 130, text: "Yes")),
+                const SizedBox(
+                  width: 20,
                 ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              textWidget(
-                "Are you sure you want to logout this",
-                fontSize: 14.sp,
-                color: themeProvider.themeData.colorScheme.tertiary,
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Row(
-                children: [
-                  btnAndText(containerWidth: 130.w, text: "Yes"),
-                  SizedBox(
-                    width: 20.w,
-                  ),
-                  InkWell(
+                Expanded(
+                  child: InkWell(
                     onTap: () {
                       Navigator.pop(context);
                     },
                     child: btnAndText(
                       textColor: AppColors.primaryColor,
-                      containerWidth: 130.w,
+                      containerWidth: 130,
                       containerColor:
                           themeProvider.themeData.colorScheme.background,
                       text: "No",
                       //  horizontalPadding: 20
                     ),
                   ),
-                ],
-              )
-            ],
-          ),
+                ),
+              ],
+            )
+          ],
         ),
       ),
     );
@@ -207,7 +209,7 @@ class delete extends StatelessWidget {
                 height: 10,
               ),
               textWidget("Are you sure you want to delete this post",
-                  fontSize: 14.sp,
+                  fontSize: Theme.of(context).textTheme.bodyMedium?.fontSize,
                   color: themeProvider.themeData.colorScheme.tertiary),
               const SizedBox(
                 height: 20,
@@ -220,17 +222,17 @@ class delete extends StatelessWidget {
                     },
                     child: btnAndText(
                       textColor: AppColors.primaryColor,
-                      containerWidth: 130.w,
+                      containerWidth: 130,
                       containerColor:
                           themeProvider.themeData.colorScheme.background,
                       text: "Cancel",
                       //  horizontalPadding: 20
                     ),
                   ),
-                  SizedBox(
-                    width: 20.w,
+                  const SizedBox(
+                    width: 20,
                   ),
-                  btnAndText(containerWidth: 130.w, text: "Delete")
+                  btnAndText(containerWidth: 130, text: "Delete")
                 ],
               )
             ],
@@ -277,7 +279,7 @@ class joinCommunity extends StatelessWidget {
               Text(
                 "Join Our Community",
                 style: GoogleFonts.mulish(
-                    fontSize: 18,
+                    fontSize: Theme.of(context).textTheme.bodyLarge?.fontSize,
                     fontWeight: FontWeight.w500,
                     color: themeProvider.themeData.colorScheme.onTertiary),
               ),
@@ -302,7 +304,7 @@ class joinCommunity extends StatelessWidget {
                 },
                 child: btnAndText(
                   textColor: AppColors.white,
-                  containerWidth: 250.w,
+                  containerWidth: 250,
                   verticalPadding: 10,
                   containerColor: AppColors.primaryColor,
                   text: "Create an account",

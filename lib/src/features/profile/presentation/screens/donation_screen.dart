@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:itestified/src/config/theme/app_color.dart';
 import 'package:itestified/src/core/utils/app_const/app_icons.dart';
 import 'package:itestified/src/core/utils/app_const/enum.dart';
@@ -22,18 +21,10 @@ class DonationScreen extends StatelessWidget {
     var themeProvider = Provider.of<ThemeViewmodel>(context);
 
     return Scaffold(
+      appBar: generalAppbar("Donations", context),
       backgroundColor: themeProvider.themeData.colorScheme.background,
       body: Column(
         children: [
-          SizedBox(
-            height: 50.h,
-          ),
-          const appbar2(
-            "Donations",
-          ),
-          SizedBox(
-            height: 20.h,
-          ),
           Container(
             margin: const EdgeInsets.all(20),
             child: Column(
@@ -42,7 +33,7 @@ class DonationScreen extends StatelessWidget {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15.sp),
+                      borderRadius: BorderRadius.circular(15),
                       color: AppColors.darkPurple),
                   child: Column(
                     children: [
@@ -52,69 +43,70 @@ class DonationScreen extends StatelessWidget {
                           Image.asset(AppIcons.logoIcon),
                         ],
                       ),
-                      SizedBox(
-                        height: 10.h,
+                      const SizedBox(
+                        height: 10,
                       ),
                       textWidget(
                           "Your generous support helps us continue our mission to spread the word of God. Thank you for your contribution and God bless You!",
-                          fontSize: 15.sp,
+                          fontSize:
+                              Theme.of(context).textTheme.bodyLarge?.fontSize,
                           color: AppColors.textColor),
-                      SizedBox(
-                        height: 10.h,
+                      const SizedBox(
+                        height: 10,
                       ),
                       Align(
                         alignment: Alignment.bottomRight,
                         child: textWidget("CEO: Elvis Igiebor",
-                            fontSize: 15.sp, color: AppColors.textColor),
+                            fontSize:
+                                Theme.of(context).textTheme.bodyLarge?.fontSize,
+                            color: AppColors.textColor),
                       ),
                     ],
                   ),
                 ),
-                SizedBox(
-                  height: 20.h,
+                const SizedBox(
+                  height: 20,
                 ),
-                donationsTitle("Donate in NGN", () {
-                  Navigator.pushNamed(context, AccountDetailsScreen.routeName,
-                      arguments: TransferType.NGN);
-                }, context),
-                donationsTitle("Donate in USD", () {
-                  Navigator.pushNamed(context, AccountDetailsScreen.routeName,
-                      arguments: TransferType.USD);
-                }, context),
+                LayoutBuilder(builder: (context, constraint) {
+                  bool isLargeScreen = constraint.maxWidth > 600;
+                  return isLargeScreen
+                      ? Row(
+                          children: [
+                            Expanded(
+                              child: donationsTitle("Donate in NGN", () {
+                                Navigator.pushNamed(
+                                    context, AccountDetailsScreen.routeName,
+                                    arguments: TransferType.NGN);
+                              }, context),
+                            ),
+                            const SizedBox(width: 20),
+                            Expanded(
+                              child: donationsTitle("Donate in USD", () {
+                                Navigator.pushNamed(
+                                    context, AccountDetailsScreen.routeName,
+                                    arguments: TransferType.USD);
+                              }, context),
+                            ),
+                          ],
+                        )
+                      : Column(
+                          children: [
+                            donationsTitle("Donate in NGN", () {
+                              Navigator.pushNamed(
+                                  context, AccountDetailsScreen.routeName,
+                                  arguments: TransferType.NGN);
+                            }, context),
+                            donationsTitle("Donate in USD", () {
+                              Navigator.pushNamed(
+                                  context, AccountDetailsScreen.routeName,
+                                  arguments: TransferType.USD);
+                            }, context),
+                          ],
+                        );
+                }),
               ],
             ),
           )
-
-          // Align(
-          //   alignment: Alignment.bottomLeft,
-          //   child: textWidget("Account Details",
-          //       fontSize: 17.sp, color: AppColors.white),
-          // ),
-          // SizedBox(height: 20.h),
-
-          // Expanded(
-          //   child: ListView(
-          //     padding: EdgeInsets.fromViewPadding(ViewPadding.zero, 1),
-          //     physics: const BouncingScrollPhysics(),
-          //     children: [
-          //       givingContainer([
-          //         textRow("Account Holder", "Raenest/Elvis Aisosa  Igiebor"),
-          //         textRow("Bank Name", "Kredi Money  MFB LTD"),
-          //         textRow("Account Number", "1830029269"),
-          //       ], title: "For NGN Payments"),
-          //       SizedBox(height: 20.h),
-          //       givingContainer([
-          //         textRow("Account Holder", "Elvis Aisosa  Igiebor"),
-          //         textRow("Bank Name", "Wells Fargo"),
-          //         textRow("Account Number", "40630232503732813"),
-          //         textRow("Routing Number", "121000248"),
-          //         textRow("Swift Code", "WFBIUS6S"),
-          //         textRow("Address", "651 N"),
-          //       ], title: "For USD Payments"),
-          //       SizedBox(height: 20.h),
-          //     ],
-          //   ),
-          // ),
         ],
       ),
     );

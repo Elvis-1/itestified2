@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:itestified/src/config/theme/app_color.dart';
 import 'package:itestified/src/config/theme/app_theme.dart';
@@ -32,95 +34,223 @@ class LoginScreen extends StatelessWidget {
         title: textWidget("Welcome Back"),
       ),
       body: Container(
-        margin: EdgeInsets.symmetric(horizontal: 15.w),
+        margin: const EdgeInsets.symmetric(horizontal: 15),
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(
-                height: 30.h,
+              const SizedBox(
+                height: 30,
               ),
 
-              SizedBox(
-                height: 20.h,
+              const SizedBox(
+                height: 20,
               ),
-              Text(
-                "Email Address",
-                style: normalTextStyle(
-                    textColor: themeProvider.themeData.colorScheme.onTertiary,
-                    fontSize: 20),
-              ),
-              SizedBox(
-                height: 10.h,
-              ),
-              customTextField(
-                  hintText: "Enter Email Address",
-                  prefixIc: Icon(
-                    Icons.email_outlined,
-                    size: 30.sp,
-                    color: Colors.grey.shade700,
-                  )),
-              SizedBox(
-                height: 20.h,
-              ),
-              Text(
-                "Password",
-                style: normalTextStyle(
-                    textColor: themeProvider.themeData.colorScheme.onTertiary,
-                    fontSize: 20),
-              ),
-              SizedBox(
-                height: 10.h,
-              ),
-              customTextField(
-                  hintText: "Enter Password",
-                  prefixIc: Icon(
-                    Icons.lock_outline,
-                    color: Colors.grey.shade700,
-                  ),
-                  suffixIcon: Icon(
-                    Icons.visibility_off_outlined,
-                    size: 30.sp,
-                    color: Colors.grey.shade700,
-                  )),
+              LayoutBuilder(builder: (context, constraints) {
+                bool isLargeScreen = constraints.maxWidth > 600;
+                return !isLargeScreen
+                    ? Column(
+                        children: [
+                          Text(
+                            "Email Address",
+                            style: normalTextStyle(
+                                textColor: themeProvider
+                                    .themeData.colorScheme.onTertiary,
+                                fontSize: 20),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          customTextField(
+                              hintText: "Enter Email Address",
+                              prefixIc: Icon(
+                                Icons.email_outlined,
+                                size: 30,
+                                color: Colors.grey.shade700,
+                              )),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Text(
+                            "Password",
+                            style: normalTextStyle(
+                                textColor: themeProvider
+                                    .themeData.colorScheme.onTertiary,
+                                fontSize: 20),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          customTextField(
+                              hintText: "Enter Password",
+                              prefixIc: Icon(
+                                Icons.lock_outline,
+                                color: Colors.grey.shade700,
+                              ),
+                              suffixIcon: Icon(
+                                Icons.visibility_off_outlined,
+                                size: 30,
+                                color: Colors.grey.shade700,
+                              )),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              // Row(
+                              //   children: [
+                              //     Checkbox(value: false, onChanged: (value) {}),
+                              //     Text(
+                              //       "Remember me",
+                              //       style: normalTextStyle(
+                              //           fontSize: 15,
+                              //           textColor:
+                              //               themeProvider.themeData.colorScheme.onTertiary),
+                              //     ),
+                              //   ],
+                              // ),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) =>
+                                          const ForgotPasswordScreen()));
+                                },
+                                child: Text(
+                                  "Forgot password?",
+                                  style: normalTextStyle(
+                                      textColor: AppColors.primaryColor,
+                                      fontWeight: FontWeight.w700),
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                        ],
+                      )
+                    : Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "Email Address",
+                                      style: normalTextStyle(
+                                          textColor: themeProvider
+                                              .themeData.colorScheme.onTertiary,
+                                          fontSize: 20),
+                                    ),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    customTextField(
+                                        hintText: "Enter Email Address",
+                                        prefixIc: Icon(
+                                          Icons.email_outlined,
+                                          size: 30,
+                                          color: Colors.grey.shade700,
+                                        )),
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 20,
+                              ),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "Password",
+                                      style: normalTextStyle(
+                                          textColor: themeProvider
+                                              .themeData.colorScheme.onTertiary,
+                                          fontSize: 20),
+                                    ),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    customTextField(
+                                        hintText: "Enter Password",
+                                        prefixIc: Icon(
+                                          Icons.lock_outline,
+                                          color: Colors.grey.shade700,
+                                        ),
+                                        suffixIcon: Icon(
+                                          Icons.visibility_off_outlined,
+                                          size: 30,
+                                          color: Colors.grey.shade700,
+                                        )),
 
-              SizedBox(
-                height: 5.h,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      Checkbox(value: false, onChanged: (value) {}),
-                      Text(
-                        "Remember me",
-                        style: normalTextStyle(
-                            fontSize: 15,
-                            textColor:
-                                themeProvider.themeData.colorScheme.onTertiary),
-                      ),
-                    ],
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const ForgotPasswordScreen()));
-                    },
-                    child: Text(
-                      "Forgot password?",
-                      style: normalTextStyle(
-                          textColor: AppColors.primaryColor,
-                          fontWeight: FontWeight.w700),
-                    ),
-                  ),
-                ],
-              ),
+                                    // Row(
+                                    //   mainAxisAlignment:
+                                    //       MainAxisAlignment.spaceBetween,
+                                    //   children: [
+                                    //     // Row(
+                                    //     //   children: [
+                                    //     //     Checkbox(value: false, onChanged: (value) {}),
+                                    //     //     Text(
+                                    //     //       "Remember me",
+                                    //     //       style: normalTextStyle(
+                                    //     //           fontSize: 15,
+                                    //     //           textColor:
+                                    //     //               themeProvider.themeData.colorScheme.onTertiary),
+                                    //     //     ),
+                                    //     //   ],
+                                    //     // ),
+                                    //     GestureDetector(
+                                    //       onTap: () {
+                                    //         Navigator.of(context).push(
+                                    //             MaterialPageRoute(
+                                    //                 builder: (context) =>
+                                    //                     const ForgotPasswordScreen()));
+                                    //       },
+                                    //       child: Text(
+                                    //         "Forgot password?",
+                                    //         style: normalTextStyle(
+                                    //             textColor: AppColors.primaryColor,
+                                    //             fontWeight: FontWeight.w700),
+                                    //       ),
+                                    //     ),
 
-              SizedBox(
-                height: 20.h,
-              ),
+                                    //   ],
+                                    // ),
+                                    // const SizedBox(
+                                    //   height: 20,
+                                    // ),
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 15,
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) =>
+                                      const ForgotPasswordScreen()));
+                            },
+                            child: Text(
+                              "Forgot password?",
+                              style: normalTextStyle(
+                                  textColor: AppColors.primaryColor,
+                                  fontWeight: FontWeight.w700),
+                            ),
+                          ),
+                        ],
+                      );
+              }),
+
               // login account btn
               GestureDetector(
                 onTap: () {
@@ -132,14 +262,15 @@ class LoginScreen extends StatelessWidget {
                 child: Align(
                     alignment: Alignment.center,
                     child: btnAndText(
-                        fontSize: 18,
-                        verticalPadding: 14.h,
+                        fontSize:
+                            Theme.of(context).textTheme.bodyLarge?.fontSize,
+                        verticalPadding: 14,
                         containerWidth: double.infinity,
                         text: "Log in")),
               ),
 
-              SizedBox(
-                height: 20.h,
+              const SizedBox(
+                height: 20,
               ),
               // horizontal line
               Row(
@@ -147,18 +278,18 @@ class LoginScreen extends StatelessWidget {
                 children: [
                   lineWidget(
                       color: themeProvider.themeData.colorScheme.outline,
-                      width: 180.w),
+                      width: 170),
                   Text(
                     " OR ",
                     style: normalTextStyle(
-                      fontSize: 18.sp,
+                      fontSize: Theme.of(context).textTheme.bodyLarge?.fontSize,
                       fontWeight: FontWeight.w300,
                       textColor: themeProvider.themeData.colorScheme.tertiary,
                     ),
                   ),
                   lineWidget(
                       color: themeProvider.themeData.colorScheme.outline,
-                      width: 180.w),
+                      width: 170),
                 ],
               ),
               SizedBox(
@@ -171,8 +302,8 @@ class LoginScreen extends StatelessWidget {
                   themeProvider.themeData == AppThemes.darkTheme
                       ? Image.asset(AppIcons.googleIcon)
                       : Image.asset(AppIcons.googleLightIcon),
-                  SizedBox(
-                    width: 25.w,
+                  const SizedBox(
+                    width: 25,
                   ),
                   themeProvider.themeData == AppThemes.darkTheme
                       ? Image.asset(AppIcons.appleIcon)
@@ -180,14 +311,15 @@ class LoginScreen extends StatelessWidget {
                 ],
               ),
 
-              SizedBox(
-                height: 200.h,
-              ),
+              const SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  textWidget("Don't have an account?",
-                      fontWeight: FontWeight.w600, fontSize: 15.sp),
+                  textWidget(
+                    "Don't have an account?",
+                    fontWeight: FontWeight.w600,
+                    fontSize: Theme.of(context).textTheme.bodyLarge?.fontSize,
+                  ),
                   GestureDetector(
                     onTap: () {
                       Navigator.of(context).pushReplacement(
@@ -197,7 +329,7 @@ class LoginScreen extends StatelessWidget {
                     },
                     child: textWidget(
                       " Create account",
-                      fontSize: 15,
+                      fontSize: Theme.of(context).textTheme.bodyLarge?.fontSize,
                       color: AppColors.primaryColor,
                       fontWeight: FontWeight.w600,
                     ),

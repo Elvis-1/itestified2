@@ -1,13 +1,11 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:itestified/src/config/theme/app_color.dart';
 import 'package:itestified/src/config/theme/app_theme.dart';
 import 'package:itestified/src/core/utils/app_const/app_icons.dart';
 import 'package:itestified/src/core/widgets/appbar2.dart';
 import 'package:itestified/src/core/widgets/text_widget.dart';
 import 'package:itestified/src/features/app_theme/theme_viewmodel.dart';
 import 'package:itestified/src/features/profile/presentation/widgets/follow_row.dart';
+import 'package:itestified/src/features/shared/widgets/screen.dart';
 import 'package:provider/provider.dart';
 
 class FollowItestify extends StatelessWidget {
@@ -18,35 +16,80 @@ class FollowItestify extends StatelessWidget {
     var themeProvider = Provider.of<ThemeViewmodel>(context);
 
     return Scaffold(
+      appBar: generalAppbar("Follow iTestified", context),
       backgroundColor: themeProvider.themeData.colorScheme.background,
       body: Container(
-        margin: EdgeInsets.symmetric(horizontal: 20.w),
+        margin: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
           children: [
-            SizedBox(
-              height: 50.h,
-            ),
-            const appbar2(
-              "Follow iTestified",
-            ),
-            SizedBox(
-              height: 20.h,
-            ),
             textWidget(
               "Stay Connected with us on social media for updates, inspiration and more. Follow us on our platforms",
-              fontSize: 15.sp,
+              fontSize: Theme.of(context).textTheme.bodyMedium?.fontSize,
             ),
-            SizedBox(
-              height: 20.h,
+            const SizedBox(
+              height: 20,
             ),
-            followRow(AppIcons.facebookIcon),
-            followRow(AppIcons.instagramIcon),
-            followRow(themeProvider.themeData == AppThemes.darkTheme
-                ? AppIcons.twitterIcon
-                : AppIcons.twitterLightIcon),
-            followRow(themeProvider.themeData == AppThemes.darkTheme
-                ? AppIcons.youtubeIcon
-                : AppIcons.youtubeLightIcon),
+            LayoutBuilder(builder: (context, constraint) {
+              bool isLargeScreen = constraint.maxWidth > 600;
+              return isLargeScreen
+                  ? Column(
+                      children: [
+                        Row(
+                          children: [
+                            Expanded(
+                                child:
+                                    followRow(AppIcons.facebookIcon, context)),
+                            const SizedBox(
+                              width: 20,
+                            ),
+                            Expanded(
+                                child:
+                                    followRow(AppIcons.instagramIcon, context)),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: followRow(
+                                  themeProvider.themeData == AppThemes.darkTheme
+                                      ? AppIcons.twitterIcon
+                                      : AppIcons.twitterLightIcon,
+                                  context),
+                            ),
+                            const SizedBox(
+                              width: 20,
+                            ),
+                            Expanded(
+                              child: followRow(
+                                  themeProvider.themeData == AppThemes.darkTheme
+                                      ? AppIcons.youtubeIcon
+                                      : AppIcons.youtubeLightIcon,
+                                  context),
+                            ),
+                          ],
+                        )
+                      ],
+                    )
+
+                  // largeScreenGrid2(context, [
+
+                  //   ])
+
+                  : smallScreenListView2([
+                      followRow(AppIcons.facebookIcon, context),
+                      followRow(AppIcons.instagramIcon, context),
+                      followRow(
+                          themeProvider.themeData == AppThemes.darkTheme
+                              ? AppIcons.twitterIcon
+                              : AppIcons.twitterLightIcon,
+                          context),
+                      followRow(
+                          themeProvider.themeData == AppThemes.darkTheme
+                              ? AppIcons.youtubeIcon
+                              : AppIcons.youtubeLightIcon,
+                          context),
+                    ]);
+            })
           ],
         ),
       ),

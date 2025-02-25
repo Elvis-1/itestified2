@@ -1,30 +1,29 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:itestified/src/config/theme/app_color.dart';
 import 'package:itestified/src/core/widgets/text_widget.dart';
 
-Widget followRow(
-  String icon,
-) {
+Widget followRow(String icon, BuildContext context) {
   return Container(
-    margin: EdgeInsets.only(bottom: 10.h),
+    margin: const EdgeInsets.only(bottom: 10),
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Row(
           children: [
             Image.asset(icon),
-            SizedBox(
-              width: 10.w,
+            const SizedBox(
+              width: 10,
             ),
-            textWidget("@iTestified", fontSize: 14)
+            textWidget(
+              "@iTestified",
+              fontSize: Theme.of(context).textTheme.bodyMedium?.fontSize,
+            )
           ],
         ),
-        Icon(
+        const Icon(
           Icons.chevron_right_outlined,
           // color: AppColors.textC,
-          size: 30.sp,
+          size: 30,
         )
       ],
     ),

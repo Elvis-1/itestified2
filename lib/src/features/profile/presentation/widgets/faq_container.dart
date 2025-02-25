@@ -1,7 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:itestified/src/config/theme/app_color.dart';
 import 'package:itestified/src/core/widgets/normal_text_style.dart';
 import 'package:itestified/src/core/widgets/text_widget.dart';
 import 'package:itestified/src/features/app_theme/theme_viewmodel.dart';
@@ -17,8 +14,8 @@ class faqContainer extends StatelessWidget {
     var themeProvider = Provider.of<ThemeViewmodel>(context);
 
     return Container(
-      margin: EdgeInsets.only(bottom: 15.h),
-      padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 15.h),
+      margin: const EdgeInsets.only(bottom: 15),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
       decoration: BoxDecoration(
           color: themeProvider.themeData.searchBarTheme.backgroundColor
               ?.resolve({}),
@@ -33,11 +30,11 @@ class faqContainer extends StatelessWidget {
               children: [
                 textWidget(
                   title,
-                  fontSize: 15.sp,
+                  fontSize: Theme.of(context).textTheme.bodyMedium?.fontSize,
                 ),
                 showDetails
                     ? Container(
-                        margin: EdgeInsets.only(top: 15.h),
+                        margin: const EdgeInsets.only(top: 15),
                         child: SizedBox(
                           width: 350,
                           child: Text(
@@ -46,7 +43,10 @@ class faqContainer extends StatelessWidget {
                             details,
 
                             style: normalTextStyle(
-                                fontSize: 15.sp,
+                                fontSize: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium
+                                    ?.fontSize,
                                 textColor: themeProvider
                                     .themeData.colorScheme.tertiary),
                           ),

@@ -23,6 +23,7 @@ class videoTestimoniesContainer extends StatelessWidget {
   double videoContainerWidth = 300;
   double imageHeight = 100;
   final BoxFit fix;
+
   @override
   Widget build(BuildContext context) {
     var themeProvider = Provider.of<ThemeViewmodel>(context);
@@ -214,7 +215,7 @@ class videoTestimoniesContainer2 extends StatelessWidget {
 
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(context, VideoScreen.routeName);
+        Navigator.pushNamed(context, VideoScreen.routeName, arguments: 1);
       },
       child: Container(
         height: videoContainerHeight,

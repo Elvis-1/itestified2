@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:itestified/src/config/theme/app_color.dart';
 import 'package:itestified/src/core/widgets/appbar2.dart';
 import 'package:itestified/src/core/widgets/text_widget.dart';
+import 'package:itestified/src/features/animations/fade_in_trans.dart';
 import 'package:itestified/src/features/app_theme/theme_viewmodel.dart';
 import 'package:itestified/src/features/category/presentation/screens/video_written_test_screen.dart';
 import 'package:itestified/src/features/category/presentation/widgets/category_container.dart';
@@ -44,9 +45,11 @@ class CategoriesListScreen extends StatelessWidget {
                             return const VideoAndWrittenTestimonieScreen();
                           }));
                         },
-                        child: Container(
-                            margin: const EdgeInsets.only(right: 1),
-                            child: const CategoryContainer())))
+                        child: FadeInTransitionWidget(
+                          child: Container(
+                              margin: const EdgeInsets.only(right: 1),
+                              child: const CategoryContainer()),
+                        )))
                 : smallScreenListView(GestureDetector(
                     onTap: () {
                       Navigator.of(context)
@@ -54,7 +57,8 @@ class CategoriesListScreen extends StatelessWidget {
                         return const VideoAndWrittenTestimonieScreen();
                       }));
                     },
-                    child: const CategoryContainer()));
+                    child: const FadeInTransitionWidget(
+                        child: CategoryContainer())));
           },
         )
 

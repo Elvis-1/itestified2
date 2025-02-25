@@ -1,9 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:itestified/src/config/theme/app_color.dart';
 import 'package:itestified/src/config/theme/app_theme.dart';
-
 import 'package:itestified/src/core/widgets/appbar2.dart';
 import 'package:itestified/src/core/widgets/text_widget.dart';
 import 'package:itestified/src/features/app_theme/theme_viewmodel.dart';
@@ -13,63 +9,108 @@ class DisplayScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var themeProvider = Provider.of<ThemeViewmodel>(context);
-    return Scaffold(
-      backgroundColor: themeProvider
-          .themeData.colorScheme.background, //  AppColors.background,
-      //  backgroundColor: themeProvider.themeData.scaffoldBackgroundColor,
 
+    return Scaffold(
+      appBar: generalAppbar("Display", context),
+      backgroundColor: themeProvider.themeData.colorScheme.background,
       body: Container(
-        padding: EdgeInsets.symmetric(horizontal: 15.w),
+        padding: const EdgeInsets.symmetric(horizontal: 15),
         child: Column(
           children: [
-            SizedBox(
-              height: 50.h,
-            ),
-            const appbar2(
-              "Display",
-            ),
-            SizedBox(
-              height: 20.h,
-            ),
             textWidget(
-                textAlign: TextAlign.center,
-                "Select your preferred theme for the best experience with iTestified",
-                fontSize: 15.sp,
-                color: themeProvider.themeData.colorScheme.tertiary),
-            // checkboxes
-
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                textWidget("Dark Mode",
-                    fontSize: 15.sp,
-                    color: themeProvider.themeData.colorScheme.tertiary),
-                Radio(
-                    value: true,
-                    groupValue: themeProvider.status,
-                    onChanged: (value) {
-                      themeProvider.toggleTheme();
-                    }),
-              ],
+              textAlign: TextAlign.center,
+              "Select your preferred theme for the best experience with iTestified",
+              fontSize: Theme.of(context).textTheme.bodyMedium?.fontSize,
+              color: themeProvider.themeData.colorScheme.tertiary,
             ),
-
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                textWidget("Light Mode",
-                    fontSize: 15.sp,
-                    color: themeProvider.themeData.colorScheme.tertiary),
-                Radio(
-                    value: false,
-                    groupValue: themeProvider.status,
-                    onChanged: (value) {
-                      themeProvider.toggleTheme();
-                    }),
-              ],
+            const SizedBox(height: 20),
+            LayoutBuilder(
+              builder: (context, constraints) {
+                bool isLargeScreen = constraints.maxWidth > 600;
+                return isLargeScreen
+                    ? Row(
+                        children: [
+                          Expanded(
+                            child: modeTile(
+                              context,
+                              "Dark Mode",
+                              themeProvider.themeData == AppThemes.darkTheme,
+                              (value) {
+                                if (value == true) {
+                                  themeProvider.setTheme(AppThemes.darkTheme);
+                                }
+                              },
+                            ),
+                          ),
+                          const SizedBox(width: 20),
+                          Expanded(
+                            child: modeTile(
+                              context,
+                              "Light Mode",
+                              themeProvider.themeData == AppThemes.lightTheme,
+                              (value) {
+                                if (value == true) {
+                                  themeProvider.setTheme(AppThemes.lightTheme);
+                                }
+                              },
+                            ),
+                          ),
+                        ],
+                      )
+                    : Column(
+                        children: [
+                          modeTile(
+                            context,
+                            "Dark Mode",
+                            themeProvider.themeData == AppThemes.darkTheme,
+                            (value) {
+                              if (value == true) {
+                                themeProvider.setTheme(AppThemes.darkTheme);
+                              }
+                            },
+                          ),
+                          modeTile(
+                            context,
+                            "Light Mode",
+                            themeProvider.themeData == AppThemes.lightTheme,
+                            (value) {
+                              if (value == true) {
+                                themeProvider.setTheme(AppThemes.lightTheme);
+                              }
+                            },
+                          ),
+                        ],
+                      );
+              },
             ),
           ],
         ),
       ),
     );
   }
+}
+
+Widget modeTile(
+  BuildContext context,
+  String mode,
+  bool isSelected,
+  void Function(bool?) callback,
+) {
+  var themeProvider = Provider.of<ThemeViewmodel>(context);
+
+  return ListTile(
+    title: textWidget(
+      mode,
+      fontSize: Theme.of(context).textTheme.bodyMedium?.fontSize,
+      color: themeProvider.themeData.colorScheme.tertiary,
+    ),
+    trailing: Radio<bool>(
+      value: true,
+      groupValue: isSelected,
+      onChanged: callback,
+      activeColor: themeProvider.themeData.colorScheme.primary,
+    ),
+    onTap: () => callback(true), // Tap anywhere on the tile to select
+    contentPadding: const EdgeInsets.symmetric(horizontal: 10),
+  );
 }

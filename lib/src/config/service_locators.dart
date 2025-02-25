@@ -23,7 +23,7 @@ Future<void> setupLocator() async {
 
 void _registerViewModels() {
   // sl.registerFactory(() => RegisterViewModel(sl()));
-  sl.registerFactory(() => ThemeViewmodel(sl()));
+  sl.registerFactory(() => ThemeViewmodel());
 }
 
 void _registerDataSources() {

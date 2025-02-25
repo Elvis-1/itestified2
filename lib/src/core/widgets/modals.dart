@@ -1,7 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:itestified/src/config/theme/app_color.dart';
 import 'package:itestified/src/core/utils/app_const/app_icons.dart';
 import 'package:itestified/src/core/utils/app_const/enum.dart';
@@ -172,9 +169,8 @@ Widget leftColumn(BuildContext context) {
                                           Container()
                                         ],
                                       )),
-                                  SizedBox(
-                                      height: 400.h,
-                                      child: const singleCommentModal()),
+                                  const SizedBox(
+                                      height: 400, child: singleCommentModal()),
                                 ],
                               );
                             });
@@ -260,7 +256,7 @@ class editDeleteShareModal extends StatelessWidget {
     var themeProvider = Provider.of<ThemeViewmodel>(context);
 
     return Container(
-      height: 150.h,
+      height: 150,
       decoration: BoxDecoration(
           color: themeProvider
               .themeData.colorScheme.onBackground, // AppColors.lightBlack,
@@ -268,8 +264,8 @@ class editDeleteShareModal extends StatelessWidget {
               topLeft: Radius.circular(25), topRight: Radius.circular(25))),
       child: Column(
         children: [
-          SizedBox(
-            height: 15.h,
+          const SizedBox(
+            height: 15,
           ),
           InkWell(
             onTap: () {

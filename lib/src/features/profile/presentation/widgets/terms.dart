@@ -1,6 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:itestified/src/config/theme/app_color.dart';
 import 'package:itestified/src/core/widgets/normal_text_style.dart';
 import 'package:itestified/src/features/app_theme/theme_viewmodel.dart';
 import 'package:provider/provider.dart';
@@ -46,8 +44,8 @@ class terms2 extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        SizedBox(
-          width: 10.w,
+        const SizedBox(
+          width: 10,
         ),
         Container(
           margin: const EdgeInsets.only(top: 5, right: 10),

@@ -1,13 +1,11 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:itestified/src/config/theme/app_color.dart';
 import 'package:itestified/src/core/utils/app_const/app_icons.dart';
 import 'package:itestified/src/core/widgets/line_widget.dart';
 import 'package:itestified/src/core/widgets/modals.dart';
 import 'package:itestified/src/core/widgets/normal_text_style.dart';
 import 'package:itestified/src/core/widgets/text_widget.dart';
+import 'package:itestified/src/features/animations/fade_in_trans.dart';
 import 'package:itestified/src/features/app_theme/theme_viewmodel.dart';
 import 'package:itestified/src/features/category/presentation/widgets/video_testimonies_container.dart';
 import 'package:itestified/src/features/shared/widgets/read_more.dart';
@@ -17,7 +15,8 @@ import 'package:itestified/src/features/video/presentation/widgets/video_contain
 import 'package:provider/provider.dart';
 
 class VideoScreen extends StatelessWidget {
-  const VideoScreen({super.key});
+  const VideoScreen({super.key, required this.heroIndex});
+  final int heroIndex;
 
   static const routeName = 'video-screen';
 
@@ -158,12 +157,14 @@ Widget relatedVideosSection(BuildContext context) {
               itemBuilder: (context, index) {
                 return Container(
                   margin: const EdgeInsets.only(right: 10),
-                  child: const videoTestimoniesContainer2(
-                      fix: BoxFit.cover,
-                      imageHeight: 150,
-                      playArrowLeftPosition: 130,
-                      playArrowTopPosition: 50,
-                      itestifyIconTopPosition: 150),
+                  child: const FadeInTransitionWidget(
+                    child: videoTestimoniesContainer2(
+                        fix: BoxFit.cover,
+                        imageHeight: 150,
+                        playArrowLeftPosition: 130,
+                        playArrowTopPosition: 50,
+                        itestifyIconTopPosition: 150),
+                  ),
                 );
               }))
     ],

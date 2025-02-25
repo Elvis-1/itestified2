@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:itestified/src/config/theme/app_color.dart';
 import 'package:itestified/src/core/utils/app_const/app_icons.dart';
 import 'package:itestified/src/core/widgets/appbar2.dart';
@@ -18,45 +17,37 @@ class EditProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     var themeProvider = Provider.of<ThemeViewmodel>(context);
     return Scaffold(
+      appBar: generalAppbar("Edit Profile", context),
       //   backgroundColor: AppColors.backgroundColor,
       backgroundColor: themeProvider.themeData.scaffoldBackgroundColor,
       body: Container(
-        margin: EdgeInsets.only(right: 15.w, left: 15.w, bottom: 10),
+        margin: const EdgeInsets.only(right: 15, left: 15, bottom: 10),
         child: Column(
           children: [
-            SizedBox(
-              height: 50.h,
-            ),
-            const appbar2(
-              "Edit Profile",
-            ),
-            SizedBox(
-              height: 20.h,
-            ),
             Expanded(
               child: ListView(
                 shrinkWrap: true,
                 children: [
                   SizedBox(
-                    width: 200.h,
-                    height: 150.h,
+                    width: 200,
+                    height: 150,
                     child: Stack(
                       children: [
                         Positioned(
-                          top: 2.h,
-                          right: 130.w,
+                          top: 2,
+                          right: 130,
                           child: CircleAvatar(
                             radius: 50,
                             child: Image.asset(
-                              width: 100.w,
+                              width: 100,
                               AppIcons.userIcon,
                               fit: BoxFit.contain,
                             ),
                           ),
                         ),
                         Positioned(
-                            top: 75.h,
-                            right: 130.w,
+                            top: 75,
+                            right: 130,
                             child: Image.asset(AppIcons.camIcon)),
                       ],
                     ),
@@ -64,54 +55,54 @@ class EditProfileScreen extends StatelessWidget {
                   Align(
                     alignment: Alignment.centerLeft,
                     child: textWidget("Full Name",
-                        fontSize: 18.sp,
+                        fontSize: 18,
                         color: themeProvider.themeData.colorScheme.tertiary),
                   ),
-                  SizedBox(
-                    height: 10.h,
+                  const SizedBox(
+                    height: 10,
                   ),
                   customTextField(
                       prefixIc: Icon(
                         Icons.person_outline,
                       ),
                       borderColor: AppColors.lightBlack),
-                  SizedBox(
-                    height: 25.h,
+                  const SizedBox(
+                    height: 25,
                   ),
                   Align(
                     alignment: Alignment.centerLeft,
                     child: textWidget("Email Address",
-                        fontSize: 18.sp,
+                        fontSize: 18,
                         color: themeProvider.themeData.colorScheme.tertiary),
                   ),
-                  SizedBox(
-                    height: 10.h,
+                  const SizedBox(
+                    height: 10,
                   ),
                   customTextField(
                       prefixIc: Icon(
                         Icons.email_outlined,
                       ),
                       borderColor: AppColors.lightBlack),
-                  SizedBox(
-                    height: 25.h,
+                  const SizedBox(
+                    height: 25,
                   ),
                   Align(
                     alignment: Alignment.centerLeft,
                     child: textWidget("Phone Number",
-                        fontSize: 18.sp,
+                        fontSize: 18,
                         fontWeight: FontWeight.w600,
                         color: themeProvider.themeData.colorScheme.tertiary),
                   ),
-                  SizedBox(
-                    height: 10.h,
+                  const SizedBox(
+                    height: 10,
                   ),
                   customTextField(
                       prefixIc: const Icon(
                         Icons.phone_outlined,
                       ),
                       borderColor: AppColors.lightBlack),
-                  SizedBox(
-                    height: 200.h,
+                  const SizedBox(
+                    height: 200,
                   ),
                   // GestureDetector(
                   //   onTap: () {},
@@ -132,7 +123,7 @@ class EditProfileScreen extends StatelessWidget {
 
       floatingActionButton: Container(
           alignment: Alignment.bottomCenter,
-          margin: EdgeInsets.only(right: 20.w, left: 20.w, bottom: 10.h),
+          margin: const EdgeInsets.only(right: 20, left: 20, bottom: 10),
 
           //   padding: EdgeInsets.only(bottom: ),
           height: 50,

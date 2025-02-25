@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:itestified/src/config/theme/app_color.dart';
 import 'package:itestified/src/core/widgets/normal_text_style.dart';
 import 'package:itestified/src/features/app_theme/theme_viewmodel.dart';
@@ -36,18 +35,19 @@ class customTextField extends StatelessWidget {
       width: double.infinity,
       child: TextFormField(
         style: normalTextStyle(
-            fontSize: 18,
+            fontSize: Theme.of(context).textTheme.bodyLarge?.fontSize,
             textColor: themeProvider.themeData.colorScheme.tertiary),
         decoration: InputDecoration(
             border: InputBorder.none,
             suffixIcon: suffixIcon,
             prefixIcon: prefixIc,
             contentPadding:
-                EdgeInsets.symmetric(vertical: 10.h, horizontal: 13.w),
+                const EdgeInsets.symmetric(vertical: 10, horizontal: 13),
             hintText: hintText,
             hintStyle: normalTextStyle(
-                textColor: themeProvider.themeData.colorScheme.outline,
-                fontSize: 18.sp)),
+              textColor: themeProvider.themeData.colorScheme.outline,
+              fontSize: Theme.of(context).textTheme.bodyLarge?.fontSize,
+            )),
       ),
     );
   }

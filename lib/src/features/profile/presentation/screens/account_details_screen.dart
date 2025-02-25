@@ -4,7 +4,6 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:itestified/src/config/theme/app_color.dart';
 import 'package:itestified/src/core/utils/app_const/app_icons.dart';
 import 'package:itestified/src/core/utils/app_const/enum.dart';
@@ -28,18 +27,13 @@ class AccountDetailsScreen extends StatelessWidget {
     final customColors = Theme.of(context).extension<AppCustomColors>();
 
     return Scaffold(
+      appBar: generalAppbar("Donations", context),
       backgroundColor: themeProvider.themeData.colorScheme.background,
       body: Column(
         children: [
-          SizedBox(
-            height: 50.h,
-          ),
-          appbar2(
-            "Donations",
-          ),
           Expanded(
             child: Container(
-              margin: EdgeInsets.only(right: 20.w, left: 20.w),
+              margin: const EdgeInsets.only(right: 20, left: 20),
               child: ListView(
                 children: [
                   Container(
@@ -47,21 +41,22 @@ class AccountDetailsScreen extends StatelessWidget {
                         horizontal: 10, vertical: 10),
                     child: Column(
                       children: [
-                        SizedBox(
-                          height: 2.h,
+                        const SizedBox(
+                          height: 2,
                         ),
                         textWidget(
                           "Please transfer to the account below, use the verification code as the narration, and upload your receipt for verification. Thank you for your generosity!",
-                          fontSize: 15.sp,
+                          fontSize:
+                              Theme.of(context).textTheme.bodyLarge?.fontSize,
                         ),
-                        SizedBox(
-                          height: 10.h,
+                        const SizedBox(
+                          height: 10,
                         ),
                       ],
                     ),
                   ),
-                  SizedBox(
-                    height: 20.h,
+                  const SizedBox(
+                    height: 20,
                   ),
                   if (transferType == TransferType.USD) ...[
                     givingContainer([
@@ -85,14 +80,14 @@ class AccountDetailsScreen extends StatelessWidget {
                           title: "Bank Name", value: "Kredi Money  MFB LTD"),
                       TextRow(title: "Account Number", value: "1830029269"),
                     ], title: "For NGN Payments"),
-                  SizedBox(
-                    height: 15.h,
+                  const SizedBox(
+                    height: 15,
                   ),
                   textWidget('Verification Code',
                       color: themeProvider.themeData.colorScheme.onTertiary,
                       fontSize: 15),
-                  SizedBox(
-                    height: 5.h,
+                  const SizedBox(
+                    height: 5,
                   ),
                   Align(
                       alignment: Alignment.topLeft,
@@ -108,22 +103,22 @@ class AccountDetailsScreen extends StatelessWidget {
                           )
                         ],
                       )),
-                  SizedBox(
-                    height: 15.h,
+                  const SizedBox(
+                    height: 15,
                   ),
                   textWidget('Upload Payment Reciept',
                       color: themeProvider.themeData.colorScheme.onTertiary,
                       fontSize: 15),
-                  SizedBox(
-                    height: 15.h,
+                  const SizedBox(
+                    height: 15,
                   ),
                   DottedBorder(
                     borderType: BorderType.RRect,
-                    radius: Radius.circular(12.sp),
+                    radius: const Radius.circular(12),
                     padding: const EdgeInsets.all(6),
                     color: AppColors.primaryColor,
                     child: Container(
-                      padding: EdgeInsets.all(10.w),
+                      padding: const EdgeInsets.all(10),
                       width: double.infinity,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -132,21 +127,31 @@ class AccountDetailsScreen extends StatelessWidget {
                             AppIcons.browseFilesIcon,
                             color: themeProvider.themeData.colorScheme.tertiary,
                           ),
-                          SizedBox(
-                            height: 5.h,
+                          const SizedBox(
+                            height: 5,
                           ),
-                          textWidget("Browse Files",
-                              color: AppColors.primaryColor, fontSize: 14),
-                          SizedBox(
-                            height: 10.h,
+                          textWidget(
+                            "Browse Files",
+                            color: AppColors.primaryColor,
+                            fontSize:
+                                Theme.of(context).textTheme.bodySmall?.fontSize,
                           ),
-                          textWidget("PDF,PNG up to 5mb", fontSize: 10),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          textWidget(
+                            "PDF,PNG up to 5mb",
+                            fontSize: Theme.of(context)
+                                .textTheme
+                                .labelSmall
+                                ?.fontSize,
+                          ),
                         ],
                       ),
                     ),
                   ),
-                  SizedBox(
-                    height: 20.h,
+                  const SizedBox(
+                    height: 20,
                   ),
                   btnAndText(
                       borderColor: AppColors.transparent,

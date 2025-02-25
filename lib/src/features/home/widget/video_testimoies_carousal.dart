@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:itestified/src/features/animations/scale_animations.dart';
 import 'package:itestified/src/features/category/presentation/widgets/video_testimonies_container.dart';
 
 class VideoTestimoniesCarousel extends StatefulWidget {
@@ -42,23 +43,22 @@ class _VideoTestimoniesCarouselState extends State<VideoTestimoniesCarousel> {
           itemBuilder: (context, index) {
             bool isActive = index == _currentPage;
 
-            return AnimatedContainer(
-              duration: const Duration(milliseconds: 500),
-              margin: EdgeInsets.symmetric(
-                horizontal: isActive ? 5 : 10,
-              ),
-              child: Transform.scale(
-                scale: isActive ? 1.1 : 0.7,
-                child: videoTestimoniesContainer2(
-                  videoContainerHeight: isLargeScreen ? 500 : 100,
-                  videoContainerWidth: 350,
-                  playArrowLeftPosition: 130,
-                  playArrowTopPosition: 60,
-                  itestifyIconLeftPosition: 2,
+            return ScaleAnimationsWidget(
+              isActive: isActive,
+              child: Container(
+                margin: EdgeInsets.symmetric(
+                  horizontal: isActive ? 5 : 10,
+                ),
+                child: Hero(
+                  tag: index,
+                  child: videoTestimoniesContainer2(
+                    videoContainerHeight: isLargeScreen ? 500 : 100,
+                    videoContainerWidth: 350,
 
-                  fix: BoxFit.cover,
-                  imageHeight: isLargeScreen ? 500 : 150,
-                  //  itestifyIconTopPosition: 150
+                    fix: BoxFit.cover,
+                    imageHeight: isLargeScreen ? 500 : 150,
+                    //  itestifyIconTopPosition: 150
+                  ),
                 ),
               ),
             );

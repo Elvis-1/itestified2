@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:itestified/src/config/theme/app_color.dart';
-import 'package:itestified/src/core/widgets/appbar2.dart';
 import 'package:itestified/src/core/widgets/btn_and_text.dart';
-import 'package:itestified/src/core/widgets/custom_textfield.dart';
 import 'package:itestified/src/core/widgets/normal_text_style.dart';
 import 'package:itestified/src/core/widgets/number_text_field.dart';
 import 'package:itestified/src/core/widgets/text_widget.dart';
 import 'package:itestified/src/features/app_theme/theme_viewmodel.dart';
 import 'package:itestified/src/features/auth/presentation/screens/new_password.dart';
-import 'package:itestified/src/features/nav/navbar.dart';
 import 'package:provider/provider.dart';
 
 class OTPScreen extends StatelessWidget {
@@ -28,16 +24,12 @@ class OTPScreen extends StatelessWidget {
           backgroundColor: themeProvider.themeData.colorScheme.background,
           title: textWidget('Reset Password')),
       body: Container(
-        margin: EdgeInsets.symmetric(horizontal: 15.w),
+        margin: const EdgeInsets.symmetric(horizontal: 15),
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              // SizedBox(
-              //   height: 45.h,
-              // ),
-
               RichText(
                   textAlign: TextAlign.center,
                   text: TextSpan(
@@ -46,29 +38,35 @@ class OTPScreen extends StatelessWidget {
                           text: 'We sent a code to ',
                           style: normalTextStyle(
                               fontWeight: FontWeight.w100,
-                              fontSize: 16.sp,
+                              fontSize: Theme.of(context)
+                                  .textTheme
+                                  .bodyLarge
+                                  ?.fontSize,
                               textColor: themeProvider
                                   .themeData.colorScheme.tertiary)),
                       TextSpan(
                           text: 'chikaamaka3007@gmail.com',
                           style: normalTextStyle(
-                              fontSize: 16.sp,
+                              fontSize: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium
+                                  ?.fontSize,
                               textColor: themeProvider
                                   .themeData.colorScheme.onTertiary)),
                     ],
                   )),
               textWidget("Kindly enter the code below",
                   fontWeight: FontWeight.w100,
-                  fontSize: 16.sp,
+                  fontSize: Theme.of(context).textTheme.titleLarge?.fontSize,
                   color: themeProvider.themeData.colorScheme.tertiary,
                   textAlign: TextAlign.center),
 
-              SizedBox(
-                height: 35.h,
+              const SizedBox(
+                height: 35,
               ),
 
-              SizedBox(
-                height: 20.h,
+              const SizedBox(
+                height: 20,
               ),
               Form(
                 child: Row(
@@ -94,18 +92,21 @@ class OTPScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(
-                height: 20.h,
+              const SizedBox(
+                height: 20,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  textWidget("Didn't recieve any mail? ", fontSize: 15.sp),
+                  textWidget(
+                    "Didn't recieve any mail? ",
+                    fontSize: Theme.of(context).textTheme.bodyLarge?.fontSize,
+                  ),
                   GestureDetector(
                     onTap: () {},
                     child: textWidget(
                       "Resend mail",
-                      fontSize: 15,
+                      fontSize: Theme.of(context).textTheme.bodyLarge?.fontSize,
                       fontWeight: FontWeight.w500,
                       color: AppColors.primaryColor,
                     ),
@@ -113,20 +114,20 @@ class OTPScreen extends StatelessWidget {
                 ],
               ),
 
-              SizedBox(
-                height: 150.h,
+              const SizedBox(
+                height: 150,
               ),
 
               // login account btn
 
               Container(
                 padding: EdgeInsets.only(
-                  bottom: MediaQuery.of(context).viewInsets.bottom + 20.h,
+                  bottom: MediaQuery.of(context).viewInsets.bottom + 20,
                 ),
                 child: Column(
                   children: [
-                    SizedBox(
-                      height: 10.h,
+                    const SizedBox(
+                      height: 10,
                     ),
                     GestureDetector(
                       onTap: () {
@@ -139,7 +140,7 @@ class OTPScreen extends StatelessWidget {
                               fontSize: 18,
                               textColor: AppColors.primaryColor,
                               containerColor: AppColors.transparent,
-                              verticalPadding: 14.h,
+                              verticalPadding: 14,
                               containerWidth: double.infinity,
                               text: "Next")),
                     ),

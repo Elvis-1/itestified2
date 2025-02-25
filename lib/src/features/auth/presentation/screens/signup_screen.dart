@@ -1,9 +1,6 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:itestified/src/config/theme/app_color.dart';
 import 'package:itestified/src/config/theme/app_theme.dart';
 import 'package:itestified/src/core/utils/app_const/app_icons.dart';
 import 'package:itestified/src/core/widgets/btn_and_text.dart';
@@ -35,161 +32,291 @@ class SignUpScreen extends StatelessWidget {
             color: themeProvider.themeData.colorScheme.onTertiary),
       ),
       body: Container(
-        margin: EdgeInsets.symmetric(horizontal: 15.w),
+        margin: const EdgeInsets.symmetric(horizontal: 15),
         child: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                height: 30.h,
-              ),
-              Text(
-                "Full Name",
-                style: style,
-              ),
-              SizedBox(
-                height: 10.h,
-              ),
-              customTextField(
-                  prefixIc: Icon(
-                Icons.person_2_outlined,
-                color: Colors.grey.shade700,
-                size: 30.sp,
-              )),
-              SizedBox(
-                height: 20.h,
-              ),
-              Text("Email Address", style: style),
-              SizedBox(
-                height: 10.h,
-              ),
-              customTextField(
-                  hintText: "Enter Email Address",
-                  prefixIc: Icon(
-                    Icons.email_outlined,
-                    size: 30.sp,
-                    color: Colors.grey.shade700,
-                  )),
-              SizedBox(
-                height: 20.h,
-              ),
-              Text("Password", style: style),
-              SizedBox(
-                height: 10.h,
-              ),
-              customTextField(
-                  hintText: "Enter Password",
-                  prefixIc: Icon(
-                    Icons.lock_outline,
-                    color: Colors.grey.shade700,
-                  ),
-                  suffixIcon: Icon(
-                    Icons.visibility_off_outlined,
-                    size: 30.sp,
-                    color: Colors.grey.shade700,
-                  )),
-              SizedBox(
-                height: 20.h,
-              ),
-              Text("Confirm Password", style: style),
-              SizedBox(
-                height: 10.h,
-              ),
-              customTextField(
-                  hintText: 'Re-Enter Password',
-                  prefixIc: Icon(
-                    Icons.lock_outlined,
-                    color: Colors.grey.shade700,
-                  ),
-                  suffixIcon: Icon(
-                    Icons.visibility_off_outlined,
-                    size: 30.sp,
-                    color: Colors.grey.shade700,
-                  )),
-              SizedBox(
-                height: 50.h,
-              ),
+            physics: const BouncingScrollPhysics(),
+            child: Column(
+              children: [
+                LayoutBuilder(
+                  builder: (context, constraints) {
+                    bool isLargeScreen = constraints.maxWidth > 600;
+                    return isLargeScreen
+                        ? Column(
+                            children: [
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          "Full Name",
+                                          style: style,
+                                        ),
+                                        const SizedBox(
+                                          height: 10,
+                                        ),
+                                        customTextField(
+                                            prefixIc: Icon(
+                                          Icons.person_2_outlined,
+                                          color: Colors.grey.shade700,
+                                          size: 30,
+                                        )),
+                                      ],
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 20,
+                                  ),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text("Email Address", style: style),
+                                        const SizedBox(
+                                          height: 10,
+                                        ),
+                                        customTextField(
+                                            hintText: "Enter Email Address",
+                                            prefixIc: Icon(
+                                              Icons.email_outlined,
+                                              size: 30,
+                                              color: Colors.grey.shade700,
+                                            )),
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text("Password", style: style),
+                                        const SizedBox(
+                                          height: 10,
+                                        ),
+                                        customTextField(
+                                            hintText: "Enter Password",
+                                            prefixIc: Icon(
+                                              Icons.lock_outline,
+                                              color: Colors.grey.shade700,
+                                            ),
+                                            suffixIcon: Icon(
+                                              Icons.visibility_off_outlined,
+                                              size: 30,
+                                              color: Colors.grey.shade700,
+                                            )),
+                                      ],
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 20,
+                                  ),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text("Confirm Password", style: style),
+                                        const SizedBox(
+                                          height: 10,
+                                        ),
+                                        customTextField(
+                                            hintText: 'Re-Enter Password',
+                                            prefixIc: Icon(
+                                              Icons.lock_outlined,
+                                              color: Colors.grey.shade700,
+                                            ),
+                                            suffixIcon: Icon(
+                                              Icons.visibility_off_outlined,
+                                              size: 30,
+                                              color: Colors.grey.shade700,
+                                            )),
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                            ],
+                          )
+                        : Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const SizedBox(
+                                height: 30,
+                              ),
+                              Text(
+                                "Full Name",
+                                style: style,
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              customTextField(
+                                  prefixIc: Icon(
+                                Icons.person_2_outlined,
+                                color: Colors.grey.shade700,
+                                size: 30,
+                              )),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              Text("Email Address", style: style),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              customTextField(
+                                  hintText: "Enter Email Address",
+                                  prefixIc: Icon(
+                                    Icons.email_outlined,
+                                    size: 30,
+                                    color: Colors.grey.shade700,
+                                  )),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              Text("Password", style: style),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              customTextField(
+                                  hintText: "Enter Password",
+                                  prefixIc: Icon(
+                                    Icons.lock_outline,
+                                    color: Colors.grey.shade700,
+                                  ),
+                                  suffixIcon: Icon(
+                                    Icons.visibility_off_outlined,
+                                    size: 30,
+                                    color: Colors.grey.shade700,
+                                  )),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              Text("Confirm Password", style: style),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              customTextField(
+                                  hintText: 'Re-Enter Password',
+                                  prefixIc: Icon(
+                                    Icons.lock_outlined,
+                                    color: Colors.grey.shade700,
+                                  ),
+                                  suffixIcon: Icon(
+                                    Icons.visibility_off_outlined,
+                                    size: 30,
+                                    color: Colors.grey.shade700,
+                                  )),
+                              const SizedBox(
+                                height: 50,
+                              ),
 
-              // create account btn
-              Align(
-                  alignment: Alignment.center,
-                  child: btnAndText(
-                      fontSize: 18,
-                      verticalPadding: 14.h,
-                      containerWidth: double.infinity,
-                      text: "Create Account")),
+                              // create account btn
+                            ],
+                          );
+                  },
+                ),
+                Column(
+                  children: [
+                    Align(
+                        alignment: Alignment.center,
+                        child: btnAndText(
+                            fontSize:
+                                Theme.of(context).textTheme.bodyLarge?.fontSize,
+                            verticalPadding: 14,
+                            containerWidth: double.infinity,
+                            text: "Create Account")),
 
-              SizedBox(
-                height: 20.h,
-              ),
-              // horizontal line
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  lineWidget(
-                      color: themeProvider.themeData.colorScheme.outline,
-                      width: 180.w),
-                  Text(
-                    " OR ",
-                    style: normalTextStyle(
-                      fontSize: 18.sp,
-                      fontWeight: FontWeight.w300,
-                      textColor: themeProvider.themeData.colorScheme.tertiary,
+                    const SizedBox(
+                      height: 20,
                     ),
-                  ),
-                  lineWidget(
-                      color: themeProvider.themeData.colorScheme.outline,
-                      width: 180.w),
-                ],
-              ),
-              SizedBox(
-                height: 20.h,
-              ),
-              // social login
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  themeProvider.themeData == AppThemes.darkTheme
-                      ? Image.asset(AppIcons.googleIcon)
-                      : Image.asset(AppIcons.googleLightIcon),
-                  SizedBox(
-                    width: 25.w,
-                  ),
-                  themeProvider.themeData == AppThemes.darkTheme
-                      ? Image.asset(AppIcons.appleIcon)
-                      : Image.asset(AppIcons.appleLightIcon),
-                ],
-              ),
-
-              SizedBox(
-                height: 30.h,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  textWidget("Already have an account?",
-                      fontSize: 15.sp,
-                      color: themeProvider.themeData.colorScheme.onTertiary),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(builder: (context) {
-                        return const LoginScreen();
-                      }));
-                    },
-                    child: textWidget(
-                      " Log in",
-                      fontSize: 15,
-                      fontWeight: FontWeight.w600,
-                      color: themeProvider.themeData.primaryColor,
+                    // horizontal line
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        lineWidget(
+                            color: themeProvider.themeData.colorScheme.outline,
+                            width: 170),
+                        Text(
+                          " OR ",
+                          style: normalTextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w300,
+                            textColor:
+                                themeProvider.themeData.colorScheme.tertiary,
+                          ),
+                        ),
+                        lineWidget(
+                            color: themeProvider.themeData.colorScheme.outline,
+                            width: 170),
+                      ],
                     ),
-                  )
-                ],
-              )
-            ],
-          ),
-        ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    // social login
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        themeProvider.themeData == AppThemes.darkTheme
+                            ? Image.asset(AppIcons.googleIcon)
+                            : Image.asset(AppIcons.googleLightIcon),
+                        const SizedBox(
+                          width: 25,
+                        ),
+                        themeProvider.themeData == AppThemes.darkTheme
+                            ? Image.asset(AppIcons.appleIcon)
+                            : Image.asset(AppIcons.appleLightIcon),
+                      ],
+                    ),
+
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        textWidget("Already have an account?",
+                            fontSize:
+                                Theme.of(context).textTheme.bodyLarge?.fontSize,
+                            color:
+                                themeProvider.themeData.colorScheme.onTertiary),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(builder: (context) {
+                              return const LoginScreen();
+                            }));
+                          },
+                          child: textWidget(
+                            " Log in",
+                            fontSize: Theme.of(context)
+                                .textTheme
+                                .titleMedium
+                                ?.fontSize,
+                            fontWeight: FontWeight.w600,
+                            color: themeProvider.themeData.primaryColor,
+                          ),
+                        )
+                      ],
+                    )
+                  ],
+                )
+              ],
+            )),
       ),
     );
   }

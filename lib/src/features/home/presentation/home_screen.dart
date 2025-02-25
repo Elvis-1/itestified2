@@ -1,16 +1,10 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:itestified/src/config/theme/app_color.dart';
 import 'package:itestified/src/core/utils/app_const/app_icons.dart';
-import 'package:itestified/src/core/widgets/app_bar.dart';
 import 'package:itestified/src/core/widgets/text_widget.dart';
+import 'package:itestified/src/features/animations/fade_in_trans.dart';
 import 'package:itestified/src/features/app_theme/theme_viewmodel.dart';
-import 'package:itestified/src/features/category/presentation/screens/video_written_test_screen.dart';
 import 'package:itestified/src/features/category/presentation/widgets/text_testimony_container.dart';
-import 'package:itestified/src/features/category/presentation/widgets/video_testimonies_container.dart';
 import 'package:itestified/src/features/home/widget/quotes_container.dart';
 import 'package:itestified/src/features/home/widget/video_testimoies_carousal.dart';
 import 'package:itestified/src/features/inspirational_qoutes.dart/presentation/screens/inspirational_quotes.dart';
@@ -206,20 +200,23 @@ class _HomeScreenState extends State<HomeScreen> {
                   const SizedBox(height: 10),
                   SizedBox(
                       height: 230,
-                      child: horizontalList(const TextTestimonyContainer())),
+                      child: horizontalList(const FadeInTransitionWidget(
+                          child: TextTestimonyContainer()))),
 
                   const SizedBox(height: 10),
                   sectionHeader("Inspirational Quotes", () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
-                          builder: (context) => const InspirationalQuotes()),
+                          builder: (context) => const FadeInTransitionWidget(
+                              child: InspirationalQuotes())),
                     );
                   }),
 
                   const SizedBox(height: 10),
                   SizedBox(
                       height: 230,
-                      child: horizontalList(const quoteContainer())),
+                      child: horizontalList(const FadeInTransitionWidget(
+                          child: const quoteContainer()))),
 
                   // Expanded(
                   //   child: isLargeScreen

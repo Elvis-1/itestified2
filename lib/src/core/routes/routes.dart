@@ -52,7 +52,9 @@ Route onGenerateRoute(RouteSettings settings) {
       ),
 // VIDEO SCREEN
     VideoScreen.routeName => MaterialPageRoute(
-        builder: (_) => const VideoScreen(),
+        builder: (_) => VideoScreen(
+          heroIndex: settings.arguments as int,
+        ),
         settings: const RouteSettings(name: VideoScreen.routeName),
       ),
 
