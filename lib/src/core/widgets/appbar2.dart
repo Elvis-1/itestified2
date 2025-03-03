@@ -10,7 +10,12 @@ PreferredSizeWidget generalAppbar(String title, BuildContext context) {
   var themeProvider = Provider.of<ThemeViewmodel>(context);
   return AppBar(
       backgroundColor: themeProvider.themeData.colorScheme.background,
-      title: Text(title),
+      title: textWidget2(
+          fontWeight: FontWeight.w600,
+          fontSize: 20,
+          lineHeight: 27.24 / 20,
+          title,
+          color: themeProvider.themeData.colorScheme.onTertiary),
       automaticallyImplyLeading: false,
       centerTitle: true,
       leading: TextButton(

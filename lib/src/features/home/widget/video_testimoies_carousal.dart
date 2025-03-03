@@ -47,7 +47,7 @@ class _VideoTestimoniesCarouselState extends State<VideoTestimoniesCarousel> {
               isActive: isActive,
               child: Container(
                 margin: EdgeInsets.symmetric(
-                  horizontal: isActive ? 5 : 10,
+                  horizontal: isActive ? 5 : 16,
                 ),
                 child: Hero(
                   tag: index,

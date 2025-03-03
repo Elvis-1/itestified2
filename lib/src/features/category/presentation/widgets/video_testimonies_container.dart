@@ -198,6 +198,8 @@ class videoTestimoniesContainer2 extends StatelessWidget {
     this.itestifyIconLeftPosition = 5,
     this.fix = BoxFit.fill,
     this.imageHeight = 100,
+    this.firstTextSize = 12,
+    this.secondTextSize = 10,
   });
 
   final double videoContainerHeight;
@@ -208,6 +210,10 @@ class videoTestimoniesContainer2 extends StatelessWidget {
   final double itestifyIconLeftPosition;
   final double itestifyIconTopPosition;
   final BoxFit fix;
+  final double? firstTextSize;
+  final double? secondTextSize;
+
+  // double fontSize = MediaQuery.textScalerOf(context).scale(10.0);
 
   @override
   Widget build(BuildContext context) {
@@ -302,41 +308,49 @@ class videoTestimoniesContainer2 extends StatelessWidget {
             ),
             Row(
               children: [
-                Image.asset(AppIcons.itestifyIcon, width: 30),
-                const SizedBox(width: 10),
+                Image.asset(AppIcons.itestifyIcon, width: 20),
+                const SizedBox(width: 4),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      textWidget(
+                      textWidget2(
+                        color: themeProvider.themeData.colorScheme.onTertiary,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         "Prophetic Prayer for open doors",
-                        fontSize:
-                            Theme.of(context).textTheme.titleMedium?.fontSize,
+                        fontSize: firstTextSize,
+                        //firstTextSize,
+                        lineHeight: 13.62 / 10,
+                        //Theme.of(context).textTheme.titleMedium?.fontSize,
                         fontWeight: FontWeight.w600, // Removed `.sp`
                       ),
                       const SizedBox(
                         height: 5,
                       ),
-                      textWidget(
+                      textWidget2(
+                        fontWeight: FontWeight.w400,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         "Redeemed Christian Church of God",
-                        fontSize:
-                            Theme.of(context).textTheme.titleSmall?.fontSize,
+                        lineHeight: 10.89 / 8,
+                        fontSize: secondTextSize,
+                        // Theme.of(context).textTheme.titleSmall?.fontSize,
                       ),
                       const SizedBox(
                         height: 5,
                       ),
                       Row(
                         children: [
-                          textWidget(
+                          textWidget2(
                             "Child Birth ",
-                            fontSize: Theme.of(context)
-                                .textTheme
-                                .labelSmall
-                                ?.fontSize,
+                            fontWeight: FontWeight.w400,
+                            fontSize: secondTextSize,
+                            lineHeight: 10.89 / 8,
+                            // Theme.of(context)
+                            //     .textTheme
+                            //     .labelSmall
+                            //     ?.fontSize,
                           ),
                           const SizedBox(width: 5),
                           Container(
@@ -345,12 +359,15 @@ class videoTestimoniesContainer2 extends StatelessWidget {
                             color: themeProvider.themeData.colorScheme.tertiary,
                           ),
                           const SizedBox(width: 5),
-                          textWidget(
+                          textWidget2(
                             " 504 Views ",
-                            fontSize: Theme.of(context)
-                                .textTheme
-                                .labelSmall
-                                ?.fontSize,
+                            fontWeight: FontWeight.w400,
+                            fontSize: 8,
+                            lineHeight: 10.89 / 8,
+                            // fontSize: Theme.of(context)
+                            //     .textTheme
+                            //     .labelSmall
+                            //     ?.fontSize,
                           ),
                           const SizedBox(width: 5),
                           Container(
@@ -359,12 +376,15 @@ class videoTestimoniesContainer2 extends StatelessWidget {
                             color: themeProvider.themeData.colorScheme.tertiary,
                           ),
                           const SizedBox(width: 5),
-                          textWidget(
+                          textWidget2(
                             "14/4/2024",
-                            fontSize: Theme.of(context)
-                                .textTheme
-                                .labelSmall
-                                ?.fontSize,
+                            fontWeight: FontWeight.w400,
+                            fontSize: 8,
+                            lineHeight: 10.89 / 8,
+                            // fontSize: Theme.of(context)
+                            //     .textTheme
+                            //     .labelSmall
+                            //     ?.fontSize,
                           ),
                         ],
                       ),

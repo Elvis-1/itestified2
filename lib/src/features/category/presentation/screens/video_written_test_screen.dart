@@ -3,7 +3,6 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:itestified/src/config/theme/app_color.dart';
 import 'package:itestified/src/core/utils/app_const/app_icons.dart';
 import 'package:itestified/src/core/widgets/appbar2.dart';
@@ -118,10 +117,18 @@ class _VideoAndWrittenTestimonieScreenState
                                         );
                                       }));
                                     },
-                                    child: const videoTestimoniesContainer2(
+                                    child: videoTestimoniesContainer2(
                                       videoContainerHeight: 270,
                                       videoContainerWidth: 400,
                                       imageHeight: 200,
+                                      firstTextSize: Theme.of(context)
+                                          .textTheme
+                                          .titleMedium
+                                          ?.fontSize,
+                                      secondTextSize: Theme.of(context)
+                                          .textTheme
+                                          .labelSmall
+                                          ?.fontSize,
                                       itestifyIconTopPosition: 205,
                                     ))
                                 : const TextTestimonyContainer(

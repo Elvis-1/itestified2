@@ -292,8 +292,8 @@ class LoginScreen extends StatelessWidget {
                       width: 170),
                 ],
               ),
-              SizedBox(
-                height: 20.h,
+              const SizedBox(
+                height: 20,
               ),
               // social login
               Row(

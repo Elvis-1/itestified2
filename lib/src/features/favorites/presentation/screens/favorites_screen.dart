@@ -1,7 +1,4 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:itestified/src/core/utils/app_const/app_strings.dart';
 import 'package:itestified/src/core/widgets/text_widget.dart';
 import 'package:itestified/src/features/animations/fade_in_trans.dart';
@@ -69,78 +66,56 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                   child: isLargeScreen
                       ? largeScreenGrid2(
                           context,
-                          const [
+                          [
                             videoTestimoniesContainer2(
-
+                                firstTextSize: Theme.of(context)
+                                    .textTheme
+                                    .titleMedium
+                                    ?.fontSize,
+                                secondTextSize: Theme.of(context)
+                                    .textTheme
+                                    .labelSmall
+                                    ?.fontSize,
                                 //videoContainerHeight: 350,
                                 videoContainerWidth: double.infinity,
                                 fix: BoxFit.cover,
                                 imageHeight: 140),
-                            TextTestimonyContainer(),
-                            SizedBox(
+                            const TextTestimonyContainer(),
+                            const SizedBox(
                               height: 5,
                             ),
-                            quoteContainer(
+                            const quoteContainer(
                               imageWidth: double.infinity,
                               containerHeight: 160,
                             ),
                           ],
                         )
                       : smallScreenListView2(
-                          const [
+                          [
                             videoTestimoniesContainer2(
+                                firstTextSize: Theme.of(context)
+                                    .textTheme
+                                    .titleMedium
+                                    ?.fontSize,
+                                secondTextSize: Theme.of(context)
+                                    .textTheme
+                                    .labelSmall
+                                    ?.fontSize,
                                 videoContainerHeight: 280,
                                 videoContainerWidth: double.infinity,
                                 itestifyIconTopPosition: 205,
                                 fix: BoxFit.cover,
                                 imageHeight: 205),
-                            TextTestimonyContainer(),
-                            SizedBox(
+                            const TextTestimonyContainer(),
+                            const SizedBox(
                               height: 15,
                             ),
-                            quoteContainer(
+                            const quoteContainer(
                               imageWidth: double.infinity,
                               containerHeight: 160,
                             ),
                           ],
-                        )
-
-                  // Container(
-                  //   margin: EdgeInsets.symmetric(horizontal: 15.w),
-                  //   child: Column(
-                  //     children: [
-                  //       // favorite video container
-
-                  //       Expanded(
-                  //           child:
-
-                  //           ListView(
-
-                  //         children:
-
-                  //         const [
-                  //            videoTestimoniesContainer2(
-                  //               videoContainerHeight: 280,
-                  //               videoContainerWidth: double.infinity,
-                  //               itestifyIconTopPosition: 205,
-                  //               fix: BoxFit.cover,
-                  //               imageHeight: 205),
-                  //            TextTestimonyContainer(),
-                  //            SizedBox(
-                  //             height: 15,
-                  //           ),
-                  //            quoteContainer(
-                  //             imageWidth: double.infinity,
-                  //             containerHeight: 160,
-                  //           ),
-                  //         ],
-                  //       ))
-
-                  //     ],
-                  //   ),
-                  // ),
-
-                  ),
+                        )),
             );
           },
         ));

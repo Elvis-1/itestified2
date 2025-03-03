@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:itestified/src/config/theme/app_color.dart';
 import 'package:itestified/src/core/utils/app_const/app_icons.dart';
 import 'package:itestified/src/core/widgets/text_widget.dart';
@@ -190,7 +191,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                   const SizedBox(height: 10),
                   SizedBox(child: VideoTestimoniesCarousel()),
-                  const SizedBox(height: 10),
+                  // const SizedBox(height: 10),
 
                   sectionHeader("Written Testimonies", () {
                     Navigator.of(context)
@@ -216,7 +217,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   SizedBox(
                       height: 230,
                       child: horizontalList(const FadeInTransitionWidget(
-                          child: const quoteContainer()))),
+                          child: quoteContainer()))),
 
                   // Expanded(
                   //   child: isLargeScreen
@@ -241,6 +242,8 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget sectionHeader(String title, VoidCallback onTap) {
+    var themeProvider = Provider.of<ThemeViewmodel>(context);
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -248,6 +251,7 @@ class _HomeScreenState extends State<HomeScreen> {
           title,
           fontSize: Theme.of(context).textTheme.titleMedium?.fontSize,
           fontWeight: FontWeight.w600,
+          color: themeProvider.themeData.colorScheme.onTertiary,
         ),
         GestureDetector(
           onTap: onTap,

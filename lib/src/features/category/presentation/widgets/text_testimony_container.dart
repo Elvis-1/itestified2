@@ -10,7 +10,7 @@ import 'package:provider/provider.dart';
 
 class TextTestimonyContainer extends StatelessWidget {
   const TextTestimonyContainer(
-      {super.key, this.containerWidth = 300, this.index});
+      {super.key, this.containerWidth = 282, this.index});
   final double containerWidth;
   final int? index;
 
@@ -23,14 +23,14 @@ class TextTestimonyContainer extends StatelessWidget {
         Navigator.pushNamed(context, MyTestimoniesDetailsScreen.routeName);
       },
       child: Container(
-        height: 170,
+        height: 149,
         padding:
-            const EdgeInsets.only(top: 10, right: 20, left: 20, bottom: 10),
+            const EdgeInsets.only(top: 12, right: 12, left: 12, bottom: 12),
         decoration: BoxDecoration(
             color: themeProvider.themeData.colorScheme.onBackground,
             borderRadius: BorderRadius.circular(20)),
         width: containerWidth,
-        margin: const EdgeInsets.only(right: 10, left: 10, bottom: 10, top: 10),
+        margin: const EdgeInsets.only(right: 12, left: 10, bottom: 10, top: 10),
         child: Column(
           children: [
             Row(

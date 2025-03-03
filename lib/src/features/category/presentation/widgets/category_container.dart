@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:itestified/src/config/theme/app_color.dart';
 import 'package:itestified/src/core/widgets/normal_text_style.dart';
 import 'package:itestified/src/core/widgets/text_widget.dart';
 import 'package:itestified/src/features/app_theme/theme_viewmodel.dart';
@@ -30,13 +28,15 @@ class CategoryContainer extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // title
-                    textWidget(
+                    textWidget2(
+                        color: themeProvider.themeData.colorScheme.onTertiary,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         "Healing Testimonies",
                         fontSize:
                             Theme.of(context).textTheme.titleMedium?.fontSize,
-                        fontWeight: FontWeight.w500),
+                        lineHeight: 21.79 / 16,
+                        fontWeight: FontWeight.w600),
                     const SizedBox(
                       height: 10,
                     ),

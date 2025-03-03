@@ -1,8 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:itestified/src/config/theme/app_color.dart';
-import 'package:itestified/src/core/widgets/appbar2.dart';
 import 'package:itestified/src/core/widgets/text_widget.dart';
 import 'package:itestified/src/features/animations/fade_in_trans.dart';
 import 'package:itestified/src/features/app_theme/theme_viewmodel.dart';
@@ -24,9 +21,11 @@ class CategoriesListScreen extends StatelessWidget {
         appBar: AppBar(
           backgroundColor: themeProvider.themeData.colorScheme.background,
           centerTitle: true,
-          title: textWidget(
+          title: textWidget2(
             "Categories",
-            fontSize: Theme.of(context).textTheme.titleLarge?.fontSize,
+            fontSize: 20,
+            color: themeProvider.themeData.colorScheme
+                .onTertiary, //Theme.of(context).textTheme.titleLarge?.fontSize,
           ),
         ),
         backgroundColor: themeProvider.themeData.colorScheme.background,
