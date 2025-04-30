@@ -5,10 +5,9 @@ import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:itestified/src/config/network/config.dart';
 import 'package:itestified/src/config/service_locators.dart';
+import 'package:itestified/src/core/widgets/internet_ch.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
-
-import 'package:http_parser/http_parser.dart';
 
 import '../utils/exceptions.dart';
 import '../utils/local/auth_local_source.dart';
@@ -136,7 +135,7 @@ class ApiClient {
       final response = await http.post(
         Uri.parse(url),
         headers: {
-          'Authorization': 'Bearer $token',
+          // 'Authorization': 'Bearer $token',
           'Content-Type': 'application/json',
           'Accept': 'application/json'
         },
@@ -312,49 +311,49 @@ class ApiClient {
     }
   }
 
-  Future<http.Response> upload(
-    String uri, {
-    List<FormUploadDocument>? files,
-    Map<String, String>? body,
-    Map<String, dynamic>? extraHeaders,
-  }) async {
-    try {
-      final headers = await initializeHeaders();
-      await setAuthCookieAndToken(headers);
+  // Future<http.Response> upload(
+  //   String uri, {
+  //   List<FormUploadDocument>? files,
+  //   Map<String, String>? body,
+  //   Map<String, dynamic>? extraHeaders,
+  // }) async {
+  //   try {
+  //     final headers = await initializeHeaders();
+  //     await setAuthCookieAndToken(headers);
 
-      late List<http.MultipartFile> multipartFiles;
+  //     late List<http.MultipartFile> multipartFiles;
 
-      if (files != null && files.isNotEmpty) {
-        multipartFiles = files.map((uploadDocument) {
-          return http.MultipartFile(
-            uploadDocument.field,
-            http.ByteStream.fromBytes(uploadDocument.file.readAsBytesSync()),
-            uploadDocument.file.lengthSync(),
-            filename: uploadDocument.name,
-            contentType: MediaType.parse(
-              getMimeType(uploadDocument.file.path),
-            ),
-          );
-        }).toList();
-      } else {
-        multipartFiles = [];
-      }
+  //     if (files != null && files.isNotEmpty) {
+  //       multipartFiles = files.map((uploadDocument) {
+  //         return http.MultipartFile(
+  //           uploadDocument.field,
+  //           http.ByteStream.fromBytes(uploadDocument.file.readAsBytesSync()),
+  //           uploadDocument.file.lengthSync(),
+  //           filename: uploadDocument.name,
+  //           contentType: MediaType.parse(
+  //             getMimeType(uploadDocument.file.path),
+  //           ),
+  //         );
+  //       }).toList();
+  //     } else {
+  //       multipartFiles = [];
+  //     }
 
-      final request = http.MultipartRequest(
-        'POST',
-        Uri.parse(uri),
-      )
-        ..headers.addAll(headers)
-        ..fields.addAll(body ?? {})
-        ..files.addAll(multipartFiles);
+  //     final request = http.MultipartRequest(
+  //       'POST',
+  //       Uri.parse(uri),
+  //     )
+  //       ..headers.addAll(headers)
+  //       ..fields.addAll(body ?? {})
+  //       ..files.addAll(multipartFiles);
 
-      final response = await request.send();
+  //     final response = await request.send();
 
-      return http.Response.fromStream(response);
-    } catch (e) {
-      throw ApiException.getException(e);
-    }
-  }
+  //     return http.Response.fromStream(response);
+  //   } catch (e) {
+  //     throw ApiException.getException(e);
+  //   }
+  // }
 
   Future<String?> getToken() async {
     final prefs = await SharedPreferences.getInstance();

@@ -1,6 +1,10 @@
 import 'package:get_it/get_it.dart';
 import 'package:itestified/src/config/network/api_client.dart';
+import 'package:itestified/src/config/utils/local/auth_local_source.dart';
 import 'package:itestified/src/features/app_theme/theme_viewmodel.dart';
+import 'package:itestified/src/features/auth/data/aut_api.dart';
+import 'package:itestified/src/features/auth/domain/service/auth_service.dart';
+import 'package:itestified/src/features/auth/presentation/viewmodel/auth_viewmodel.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -22,19 +26,17 @@ Future<void> setupLocator() async {
 }
 
 void _registerViewModels() {
-  // sl.registerFactory(() => RegisterViewModel(sl()));
+  sl.registerFactory(() => AuthViewModel(sl()));
   sl.registerFactory(() => ThemeViewmodel());
 }
 
 void _registerDataSources() {
-  // sl
-  //   ..registerLazySingleton<AuthLocalSource>(() => AuthLocalSourceImpl(sl()))
-  //   // same data source for all auth pr
-  //   ..registerLazySingleton<AuthApi>(() => AuthApiImpl(sl()));
+  sl
+    ..registerLazySingleton<AuthLocalSource>(() => AuthLocalSourceImpl(sl()))
+    //   // same data source for all auth pr
+    ..registerLazySingleton<AuthApi>(() => AuthApiImpl(sl()));
 }
 
 void _registerServices() {
-  // sl
-  //   ..registerLazySingleton<RegisterService>(
-  //       () => RegisterServiceImpl(authApi: sl()))
+  sl..registerLazySingleton<AuthService>(() => AuthServiceImpl(authApi: sl()));
 }

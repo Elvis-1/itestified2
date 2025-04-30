@@ -25,20 +25,25 @@ class VideoListScreen extends StatelessWidget {
                   context,
                   FadeInTransitionWidget(
                     child: videoTestimoniesContainer2(
-                        videoContainerHeight: 270,
-                        videoContainerWidth: 400,
+                        firstTextSize:
+                            Theme.of(context).textTheme.titleMedium?.fontSize,
+                        secondTextSize:
+                            Theme.of(context).textTheme.labelSmall?.fontSize,
                         imageHeight: contraints.maxWidth < 800 ? 120 : 220),
                   ))
               : smallScreenListView(FadeInTransitionWidget(
-                  child: videoTestimoniesContainer2(
-                      firstTextSize:
-                          Theme.of(context).textTheme.titleMedium?.fontSize,
-                      secondTextSize:
-                          Theme.of(context).textTheme.labelSmall?.fontSize,
-                      videoContainerHeight: 280,
-                      videoContainerWidth: 345,
-                      fix: BoxFit.cover,
-                      imageHeight: 200),
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 24),
+                    child: videoTestimoniesContainer2(
+                        firstTextSize:
+                            Theme.of(context).textTheme.titleMedium?.fontSize,
+                        secondTextSize:
+                            Theme.of(context).textTheme.labelSmall?.fontSize,
+                        videoContainerHeight: 280,
+                        videoContainerWidth: 345,
+                        fix: BoxFit.cover,
+                        imageHeight: 200),
+                  ),
                 ));
         },
       )),
