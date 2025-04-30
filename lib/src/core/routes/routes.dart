@@ -32,7 +32,9 @@ Route onGenerateRoute(RouteSettings settings) {
         settings: const RouteSettings(name: LoginScreen.routeName),
       ),
     OTPScreen.routeName => MaterialPageRoute(
-        builder: (_) => OTPScreen(),
+        builder: (_) => OTPScreen(
+          args: settings.arguments as Arguments,
+        ),
         settings: const RouteSettings(name: OTPScreen.routeName),
       ),
     SignUpScreen.routeName => MaterialPageRoute(
@@ -40,8 +42,12 @@ Route onGenerateRoute(RouteSettings settings) {
         settings: const RouteSettings(name: SignUpScreen.routeName),
       ),
     NewPasswordScreen.routeName => MaterialPageRoute(
-        builder: (_) => const NewPasswordScreen(),
-        settings: const RouteSettings(name: NewPasswordScreen.routeName),
+        builder: (_) => NewPasswordScreen(
+          args: settings.arguments as Arguments,
+        ),
+        settings: const RouteSettings(
+          name: NewPasswordScreen.routeName,
+        ),
       ),
 
 // HOME SCREEN

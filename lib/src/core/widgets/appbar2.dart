@@ -1,28 +1,102 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:itestified/src/core/utils/app_const/app_icons.dart';
 import 'package:itestified/src/core/widgets/text_widget.dart';
+import 'package:itestified/src/core/widgets/textwidget.dart';
 import 'package:itestified/src/features/app_theme/theme_viewmodel.dart';
 import 'package:provider/provider.dart';
 
 PreferredSizeWidget generalAppbar(String title, BuildContext context) {
   var themeProvider = Provider.of<ThemeViewmodel>(context);
+  return PreferredSize(
+      preferredSize: const Size.fromHeight(60),
+      child: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 1),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Icon(
+                    Icons.arrow_back_ios_new_outlined,
+                    color: themeProvider.themeData.colorScheme.onTertiary,
+                  )),
+              TextWidgets.textWidget20(context, title,
+                  mainColor: themeProvider.themeData.colorScheme.onTertiary),
+              const SizedBox(width: 30),
+            ],
+          ),
+        ),
+      ));
+}
+
+PreferredSizeWidget generalAppBar2(
+  BuildContext context,
+) {
+  final theme = Theme.of(context);
+  var themeProvider = Provider.of<ThemeViewmodel>(context);
   return AppBar(
-      backgroundColor: themeProvider.themeData.colorScheme.background,
-      title: textWidget2(
-          fontWeight: FontWeight.w600,
-          fontSize: 20,
-          lineHeight: 27.24 / 20,
-          title,
-          color: themeProvider.themeData.colorScheme.onTertiary),
-      automaticallyImplyLeading: false,
-      centerTitle: true,
-      leading: TextButton(
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-          child: Icon(Icons.arrow_back_ios_new_outlined)));
+    automaticallyImplyLeading: false,
+    backgroundColor: theme.colorScheme.surface,
+    title: Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Row(
+            children: [
+              Image.asset(AppIcons.userIcon),
+              const SizedBox(
+                width: 10,
+              ),
+              TextWidgets.textWidget14(
+                context,
+                "Welcome, Amaka",
+                fontWeight: FontWeight.w600,
+              ),
+            ],
+          ),
+          Row(
+            children: [
+              GestureDetector(
+                  onTap: () {
+                    //gotoSearchPage();
+                  },
+                  child: CircleAvatar(
+                      radius: 20,
+                      backgroundColor: themeProvider
+                          .themeData.searchBarTheme.backgroundColor!
+                          .resolve({}),
+                      child: Icon(
+                        size: 16,
+                        Icons.search,
+                        color: themeProvider.themeData.colorScheme.onTertiary,
+                      ))),
+              const SizedBox(
+                width: 10,
+              ),
+              GestureDetector(
+                  onTap: () {
+                    // gotoNotificationsPage();
+                  },
+                  child: CircleAvatar(
+                      radius: 20,
+                      backgroundColor: themeProvider
+                          .themeData.searchBarTheme.backgroundColor!
+                          .resolve({}),
+                      child: Icon(
+                        size: 16,
+                        Icons.notifications_outlined,
+                        color: themeProvider.themeData.colorScheme.onTertiary,
+                      ))),
+            ],
+          ),
+        ],
+      ),
+    ),
+  );
 }
 
 class appbar2 extends StatelessWidget {
@@ -37,7 +111,7 @@ class appbar2 extends StatelessWidget {
     var themeProvider = Provider.of<ThemeViewmodel>(context);
 
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 10.w),
+      margin: const EdgeInsets.symmetric(horizontal: 10),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -50,7 +124,7 @@ class appbar2 extends StatelessWidget {
                 color: themeProvider.themeData.colorScheme.onTertiary,
               )),
           textWidget(title,
-              fontSize: 25.sp,
+              fontSize: 20,
               color: themeProvider.themeData.colorScheme.onTertiary),
           Container()
         ],
@@ -58,4 +132,18 @@ class appbar2 extends StatelessWidget {
     );
     ;
   }
+}
+
+PreferredSizeWidget appBar(BuildContext context, String title) {
+  var themeProvider = Provider.of<ThemeViewmodel>(context);
+
+  return AppBar(
+    automaticallyImplyLeading: false,
+    centerTitle: true,
+    backgroundColor: themeProvider.themeData.colorScheme.background,
+    title: textWidget(
+      title,
+      fontWeight: FontWeight.w600,
+    ),
+  );
 }

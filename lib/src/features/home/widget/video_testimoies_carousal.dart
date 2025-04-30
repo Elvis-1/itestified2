@@ -54,10 +54,10 @@ class _VideoTestimoniesCarouselState extends State<VideoTestimoniesCarousel> {
                   child: videoTestimoniesContainer2(
                     videoContainerHeight: isLargeScreen ? 500 : 100,
                     videoContainerWidth: 350,
-
+                    firstTextSize: 10,
+                    secondTextSize: 8,
                     fix: BoxFit.cover,
                     imageHeight: isLargeScreen ? 500 : 150,
-                    //  itestifyIconTopPosition: 150
                   ),
                 ),
               ),

@@ -26,14 +26,14 @@ class _OnboardingScreen2State extends State<OnboardingScreen2> {
         width: double.infinity,
         decoration: BoxDecoration(
             image: DecorationImage(
-                image: AssetImage(AppImages.onboardingImage1),
+                image: AssetImage(AppImages.onboardingImage2),
                 fit: BoxFit.cover)),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const Spacer(),
             Text(
-              'Watch Inspiring Testimonies',
+              'Share Your Own Testimony',
               textAlign: TextAlign.center,
               style: GoogleFonts.openSans(
                 color: AppColors.white,
@@ -44,11 +44,12 @@ class _OnboardingScreen2State extends State<OnboardingScreen2> {
             const SizedBox(
               height: 10,
             ),
-            onboardingText(context),
+            onboardingText(context,
+                'Your story matters. Share your journey of faith and encourage others to believe and grow.'),
             const SizedBox(
               height: 70,
             ),
-            GestureDetector(
+            InkWell(
                 onTap: () {
                   if (widget.index < 3) {
                     widget.pageController.animateToPage(widget.index + 1,
@@ -61,7 +62,7 @@ class _OnboardingScreen2State extends State<OnboardingScreen2> {
             const SizedBox(
               height: 10,
             ),
-            GestureDetector(
+            InkWell(
               onTap: () {
                 Navigator.of(context).pushAndRemoveUntil(
                   MyCustomRouteTransition(
@@ -69,17 +70,52 @@ class _OnboardingScreen2State extends State<OnboardingScreen2> {
                   ),
                   (route) => false,
                 );
+
                 // Navigator.pushNamedAndRemoveUntil(
-                //     context, NavBar.routeName, (route) => false);
+                //                 context, NavBar.routeName, (route) => false);
               },
               child: btnAndText(
-                  text: "Get Started",
+                  text: "Skip",
+                  containerColor: Colors.transparent,
                   containerWidth: double.infinity,
-                  verticalPadding: 15),
+                  verticalPadding: 15,
+                  textColor: AppColors.primaryColor),
             ),
             const SizedBox(
               height: 20,
             )
+            // GestureDetector(
+            //     onTap: () {
+            //       if (widget.index < 3) {
+            //         widget.pageController.animateToPage(widget.index + 1,
+            //             duration: const Duration(seconds: 1),
+            //             curve: Curves.easeIn);
+            //       }
+            //     },
+            //     child: btnAndText(
+            //         containerWidth: double.infinity, verticalPadding: 15)),
+            // const SizedBox(
+            //   height: 10,
+            // ),
+            // GestureDetector(
+            //   onTap: () {
+            //     Navigator.of(context).pushAndRemoveUntil(
+            //       MyCustomRouteTransition(
+            //         route: const NavBar(),
+            //       ),
+            //       (route) => false,
+            //     );
+            //     // Navigator.pushNamedAndRemoveUntil(
+            //     //     context, NavBar.routeName, (route) => false);
+            //   },
+            //   child: btnAndText(
+            //       text: "Get Started",
+            //       containerWidth: double.infinity,
+            //       verticalPadding: 15),
+            // ),
+            // const SizedBox(
+            //   height: 20,
+            // )
           ],
         ),
       ),

@@ -8,6 +8,7 @@ import 'package:itestified/src/config/theme/app_color.dart';
 import 'package:itestified/src/core/utils/app_const/app_icons.dart';
 import 'package:itestified/src/core/widgets/normal_text_style.dart';
 import 'package:itestified/src/core/widgets/text_widget.dart';
+import 'package:itestified/src/core/widgets/textwidget.dart';
 import 'package:itestified/src/features/app_theme/theme_viewmodel.dart';
 import 'package:itestified/src/features/video/presentation/screens/video_screen.dart';
 import 'package:provider/provider.dart';
@@ -314,77 +315,69 @@ class videoTestimoniesContainer2 extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      textWidget2(
-                        color: themeProvider.themeData.colorScheme.onTertiary,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        "Prophetic Prayer for open doors",
-                        fontSize: firstTextSize,
-                        //firstTextSize,
-                        lineHeight: 13.62 / 10,
-                        //Theme.of(context).textTheme.titleMedium?.fontSize,
-                        fontWeight: FontWeight.w600, // Removed `.sp`
-                      ),
+                      TextWidgets.textWidget10(
+                          context, "Prophetic Prayer for open doors ",
+                          fontWeight: FontWeight.w600,
+                          fontSize: firstTextSize!),
                       const SizedBox(
                         height: 5,
                       ),
-                      textWidget2(
-                        fontWeight: FontWeight.w400,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        "Redeemed Christian Church of God",
-                        lineHeight: 10.89 / 8,
-                        fontSize: secondTextSize,
-                        // Theme.of(context).textTheme.titleSmall?.fontSize,
-                      ),
+                      TextWidgets.textWidget10(
+                          // color: Theme.of(context)
+                          //     .extension<AppCustomColors>()
+                          //     ?.grey50,
+                          context,
+                          "Redeemed Christian Church of God",
+                          fontSize: secondTextSize!),
                       const SizedBox(
                         height: 5,
                       ),
                       Row(
                         children: [
-                          textWidget2(
+                          TextWidgets.textWidget10(
+                            context,
                             "Child Birth ",
                             fontWeight: FontWeight.w400,
-                            fontSize: secondTextSize,
-                            lineHeight: 10.89 / 8,
+                            fontSize: secondTextSize!,
+                            // color: Theme.of(context)
+                            //     .extension<AppCustomColors>()
+                            //     ?.grey50,
+                          ),
+                          const SizedBox(width: 5),
+                          Container(
+                            height: 5,
+                            width: 5,
+                            decoration: BoxDecoration(
+                                color: themeProvider
+                                    .themeData.colorScheme.tertiary,
+                                shape: BoxShape.circle),
+                          ),
+                          const SizedBox(width: 5),
+                          TextWidgets.textWidget10(
+                            context,
+                            "504 Views",
+                            fontWeight: FontWeight.w400,
+                            fontSize: 8,
+                            // color:
                             // Theme.of(context)
-                            //     .textTheme
-                            //     .labelSmall
-                            //     ?.fontSize,
+                            //     .extension<AppCustomColors>()
+                            //     ?.grey50,
                           ),
                           const SizedBox(width: 5),
                           Container(
                             height: 5,
                             width: 5,
-                            color: themeProvider.themeData.colorScheme.tertiary,
+                            decoration: BoxDecoration(
+                                color: themeProvider
+                                    .themeData.colorScheme.tertiary,
+                                shape: BoxShape.circle),
                           ),
                           const SizedBox(width: 5),
-                          textWidget2(
-                            " 504 Views ",
+                          TextWidgets.textWidget10(
+                            context,
+                            "18/6/2024",
                             fontWeight: FontWeight.w400,
-                            fontSize: 8,
-                            lineHeight: 10.89 / 8,
-                            // fontSize: Theme.of(context)
-                            //     .textTheme
-                            //     .labelSmall
-                            //     ?.fontSize,
-                          ),
-                          const SizedBox(width: 5),
-                          Container(
-                            height: 5,
-                            width: 5,
-                            color: themeProvider.themeData.colorScheme.tertiary,
-                          ),
-                          const SizedBox(width: 5),
-                          textWidget2(
-                            "14/4/2024",
-                            fontWeight: FontWeight.w400,
-                            fontSize: 8,
-                            lineHeight: 10.89 / 8,
-                            // fontSize: Theme.of(context)
-                            //     .textTheme
-                            //     .labelSmall
-                            //     ?.fontSize,
+                            fontSize: secondTextSize!,
                           ),
                         ],
                       ),
@@ -399,8 +392,6 @@ class videoTestimoniesContainer2 extends StatelessWidget {
     );
   }
 }
-
-
 
 // Widget videoTestimoniesContainer2(BuildContext context,
 //     {double videoContainerHeight = 100,

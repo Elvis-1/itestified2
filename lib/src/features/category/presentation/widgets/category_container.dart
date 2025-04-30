@@ -29,7 +29,8 @@ class CategoryContainer extends StatelessWidget {
                   children: [
                     // title
                     textWidget2(
-                        color: themeProvider.themeData.colorScheme.onTertiary,
+                        mainColor:
+                            themeProvider.themeData.colorScheme.onTertiary,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         "Healing Testimonies",
@@ -114,6 +115,5 @@ class CategoryContainer extends StatelessWidget {
 //       ],
 //     ),
 //   );
-
 
 // }

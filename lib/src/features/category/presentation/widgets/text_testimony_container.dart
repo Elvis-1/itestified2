@@ -3,6 +3,7 @@ import 'package:itestified/src/config/theme/app_color.dart';
 import 'package:itestified/src/core/utils/app_const/app_icons.dart';
 import 'package:itestified/src/core/widgets/normal_text_style.dart';
 import 'package:itestified/src/core/widgets/text_widget.dart';
+import 'package:itestified/src/core/widgets/textwidget.dart';
 import 'package:itestified/src/features/app_theme/theme_viewmodel.dart';
 import 'package:itestified/src/features/profile/presentation/screens/my_testimonies_details.dart';
 import 'package:itestified/src/features/shared/widgets/read_more.dart';
@@ -23,7 +24,6 @@ class TextTestimonyContainer extends StatelessWidget {
         Navigator.pushNamed(context, MyTestimoniesDetailsScreen.routeName);
       },
       child: Container(
-        height: 149,
         padding:
             const EdgeInsets.only(top: 12, right: 12, left: 12, bottom: 12),
         decoration: BoxDecoration(
@@ -37,21 +37,20 @@ class TextTestimonyContainer extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Expanded(
-                  child: textWidget(
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
-                    "Jesus Changed my Genotype",
-                    fontSize: Theme.of(context).textTheme.titleMedium?.fontSize,
+                    child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: TextWidgets.textWidget10(
+                    context,
                     fontWeight: FontWeight.w600,
-                    color: themeProvider.themeData.colorScheme.onTertiary,
+                    "Jesus Changed my Genotype",
                   ),
-                ),
+                )),
                 CircleAvatar(
-                    radius: 10,
+                    radius: 14,
                     backgroundColor: AppColors.opaqueBlack,
                     child: Image.asset(
                       AppIcons.favoriteIcon,
-                      width: 12,
+                      width: 14,
                       color: themeProvider.themeData.colorScheme.onTertiary,
                     ))
               ],
@@ -60,12 +59,15 @@ class TextTestimonyContainer extends StatelessWidget {
               height: 10,
             ),
 
-            Expanded(
+            Padding(
+              padding: EdgeInsets.only(bottom: 20),
               child: RichText(
                   text: TextSpan(
                       text: addReadMoreToText(
                           'For years, I lived with the pain and limitations of having the sickle cell genotype For years, '),
                       style: normalTextStyle(
+                          fontSize: 10,
+                          fontWeight: FontWeight.w400,
                           textColor:
                               themeProvider.themeData.colorScheme.tertiary),
                       children: [
@@ -91,14 +93,9 @@ class TextTestimonyContainer extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      textWidget(
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        "Chika Amaka",
-                        fontSize:
-                            Theme.of(context).textTheme.titleMedium?.fontSize,
-                        fontWeight: FontWeight.w500,
-                      ),
+                      TextWidgets.textWidget10(context, "Chika Amaka",
+                          fontWeight: FontWeight.w600),
+
                       const SizedBox(
                           height: 5), // Add spacing for better layout
                       Row(
@@ -106,31 +103,29 @@ class TextTestimonyContainer extends StatelessWidget {
                         children: [
                           Flexible(
                             // Ensures the text does not overflow the Row
-                            child: textWidget(
+                            child: TextWidgets.textWidget10(
+                              context,
                               "Healing",
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              fontSize: 10,
-                              color: themeProvider
-                                  .themeData.colorScheme.onTertiary,
+                              fontWeight: FontWeight.w400,
+                              fontSize: 8,
                             ),
                           ),
                           const SizedBox(width: 5),
                           Container(
                             height: 5,
                             width: 5,
-                            color:
-                                themeProvider.themeData.colorScheme.onTertiary,
+                            decoration: BoxDecoration(
+                                color: themeProvider
+                                    .themeData.colorScheme.onTertiary,
+                                shape: BoxShape.circle),
                           ),
                           const SizedBox(width: 5),
                           Flexible(
-                            child: textWidget(
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 1,
+                            child: TextWidgets.textWidget10(
+                              context,
                               "30 minutes ago",
+                              fontWeight: FontWeight.w400,
                               fontSize: 8,
-                              color: themeProvider
-                                  .themeData.colorScheme.onTertiary,
                             ),
                           ),
                         ],

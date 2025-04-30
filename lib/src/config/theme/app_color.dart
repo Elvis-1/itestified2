@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class AppColors {
-  // DARK THEME
   static const Color primaryColor = const Color(0xFF9966CC);
   static const Color darkPurple = Color(0xFF663380);
   static const Color lightGrayColor = const Color(0xffF7F7F7);
@@ -11,6 +10,7 @@ class AppColors {
   static const Color white = const Color(0xFFFFFFFF);
   static const Color textColor = const Color.fromRGBO(255, 255, 255, 0.75);
   static const Color greyColor = const Color.fromRGBO(255, 255, 255, 0.5);
+  static const Color grey50 = const Color(0xFF575757);
   //
   static const Color btnColor = const Color(0xFF9966CC);
   static const Color transparent = Colors.transparent;
@@ -30,19 +30,17 @@ class AppColors {
 @immutable
 class AppCustomColors extends ThemeExtension<AppCustomColors> {
   final Color? donationBtn;
+  final Color? grey50;
   // final Color? customSecondary;
 
-  const AppCustomColors({
-    this.donationBtn,
-  });
+  const AppCustomColors({this.donationBtn, this.grey50});
 
   @override
   AppCustomColors copyWith({
     Color? donationBtn,
   }) {
     return AppCustomColors(
-      donationBtn: donationBtn ?? this.donationBtn,
-    );
+        donationBtn: donationBtn ?? this.donationBtn, grey50: grey50 ?? grey50);
   }
 
   @override
