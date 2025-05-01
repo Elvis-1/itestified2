@@ -35,11 +35,11 @@ PreferredSizeWidget generalAppbar(String title, BuildContext context) {
 PreferredSizeWidget generalAppBar2(
   BuildContext context,
 ) {
-  final theme = Theme.of(context);
+ 
   var themeProvider = Provider.of<ThemeViewmodel>(context);
   return AppBar(
     automaticallyImplyLeading: false,
-    backgroundColor: theme.colorScheme.surface,
+    backgroundColor: themeProvider.themeData.colorScheme.surface,
     title: Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10.0),
       child: Row(

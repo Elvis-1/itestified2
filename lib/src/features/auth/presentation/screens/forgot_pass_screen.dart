@@ -26,7 +26,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     var themeProvider = Provider.of<ThemeViewmodel>(context);
     var authProvider = Provider.of<AuthViewModel>(context, listen: false);
     return Scaffold(
-      backgroundColor: themeProvider.themeData.colorScheme.background,
+      backgroundColor: themeProvider.themeData.colorScheme.surface,
       body: LayoutBuilder(builder: (context, constraints) {
         bool isTablet = constraints.maxWidth > 600; // Define tablet breakpoint
         double contentWidth =

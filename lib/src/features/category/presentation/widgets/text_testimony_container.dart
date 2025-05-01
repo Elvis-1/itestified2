@@ -27,8 +27,13 @@ class TextTestimonyContainer extends StatelessWidget {
         padding:
             const EdgeInsets.only(top: 12, right: 12, left: 12, bottom: 12),
         decoration: BoxDecoration(
-            color: themeProvider.themeData.colorScheme.onBackground,
-            borderRadius: BorderRadius.circular(20)),
+          color: themeProvider.themeData.colorScheme.outline,
+          border: Border.all(
+            color: themeProvider.themeData.colorScheme.outline,
+            width: 1,
+          ),
+          borderRadius: BorderRadius.circular(16),
+        ),
         width: containerWidth,
         margin: const EdgeInsets.only(right: 12, left: 10, bottom: 10, top: 10),
         child: Column(

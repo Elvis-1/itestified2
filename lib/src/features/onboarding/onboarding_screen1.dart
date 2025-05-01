@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:itestified/src/config/authprovider.dart';
 import 'package:itestified/src/config/theme/app_color.dart';
 import 'package:itestified/src/core/utils/app_const/app_icons.dart';
 import 'package:itestified/src/core/widgets/btn_and_text.dart';
@@ -8,8 +9,11 @@ import 'package:itestified/src/core/widgets/text_widget.dart';
 import 'package:itestified/src/features/animations/page_route_animation.dart';
 import 'package:itestified/src/features/auth/presentation/screens/login_screen.dart';
 import 'package:itestified/src/features/auth/presentation/screens/signup_screen.dart';
+import 'package:itestified/src/features/auth/presentation/viewmodel/auth_viewmodel.dart';
 import 'package:itestified/src/features/nav/navbar.dart';
 import 'package:itestified/src/features/onboarding/widgets/onboarding_text.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class OnboardingScreen3 extends StatefulWidget {
   OnboardingScreen3({super.key, required this.index});
@@ -91,9 +95,17 @@ class _OnboardingScreen3State extends State<OnboardingScreen3> {
             ),
 
             InkWell(
-              onTap: () {
-                Navigator.pushNamedAndRemoveUntil(
-                    context, NavBar.routeName, (route) => false);
+           onTap: () async {
+                final prefs = await SharedPreferences.getInstance();
+                await prefs.setBool('isOnboardingComplete', true);
+                Provider.of<AuthProvider>(context, listen: false)
+                    .setGuestMode(true);
+                Navigator.of(context).pushAndRemoveUntil(
+                  MyCustomRouteTransition(
+                    route: const NavBar(),
+                  ),
+                  (route) => false,
+                );
               },
               child: Container(
                 decoration: const BoxDecoration(

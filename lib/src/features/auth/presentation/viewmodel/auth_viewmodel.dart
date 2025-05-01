@@ -279,4 +279,5 @@ class AuthViewModel with ChangeNotifier {
       node.dispose();
     }
   }
+
 }

@@ -16,7 +16,7 @@ class likeOrShare extends StatelessWidget {
     var themeProvider = Provider.of<ThemeViewmodel>(context);
 
     containerColor =
-        containerColor ?? themeProvider.themeData.colorScheme.tertiary;
+        containerColor ?? themeProvider.themeData.colorScheme.surface;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       decoration: BoxDecoration(

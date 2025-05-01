@@ -19,7 +19,7 @@ class TermsOfUse extends StatelessWidget {
     var color = themeProvider.themeData.colorScheme;
     return Scaffold(
       appBar: generalAppbar("Terms of Use", context),
-      backgroundColor: themeProvider.themeData.colorScheme.background,
+      backgroundColor: themeProvider.themeData.colorScheme.surface,
       body: Column(
         children: [
           Expanded(

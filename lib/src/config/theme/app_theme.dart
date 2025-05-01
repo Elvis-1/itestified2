@@ -64,7 +64,7 @@ class AppThemes {
     primaryColor: AppColors.primaryColor,
     colorScheme: ColorScheme.fromSeed(
       surface: AppColors.blackColor,
-      outline: AppColors.opaqueBlack,
+      outline: AppColors.opaqueBlack2,
       tertiary: AppColors.textColor,
       onTertiary: AppColors.white,
       seedColor: AppColors.white, //AppColors.primaryColor,

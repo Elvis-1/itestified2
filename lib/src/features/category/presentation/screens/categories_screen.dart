@@ -19,7 +19,7 @@ class CategoriesListScreen extends StatelessWidget {
 
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: themeProvider.themeData.colorScheme.background,
+          backgroundColor: themeProvider.themeData.colorScheme.surface,
           centerTitle: true,
           title: textWidget2(
             "Categories",

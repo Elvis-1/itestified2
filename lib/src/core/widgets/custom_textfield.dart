@@ -73,7 +73,7 @@ class _customTextFieldState extends State<customTextField> {
               const EdgeInsets.symmetric(vertical: 10, horizontal: 13),
           hintText: widget.hintText,
           hintStyle: normalTextStyle(
-            textColor: themeProvider.themeData.colorScheme.outline,
+            textColor: themeProvider.themeData.colorScheme.onTertiary,
             fontSize: Theme.of(context).textTheme.bodyLarge?.fontSize,
           ),
           focusedErrorBorder: OutlineInputBorder(
@@ -89,7 +89,7 @@ class _customTextFieldState extends State<customTextField> {
           filled: true,
           error: null,
           errorStyle: const TextStyle(height: 0, fontSize: 0),
-          fillColor: themeProvider.themeData.colorScheme.onBackground,
+          fillColor: themeProvider.themeData.colorScheme.outline,
         ),
       ),
       if (widget.errorText != null) ...[

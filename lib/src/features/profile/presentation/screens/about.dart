@@ -17,7 +17,7 @@ class About extends StatelessWidget {
 
     return Scaffold(
       appBar: generalAppbar("About", context),
-      backgroundColor: themeProvider.themeData.colorScheme.background,
+      backgroundColor: themeProvider.themeData.colorScheme.surface,
       body: SingleChildScrollView(
         child: Column(
           children: [

@@ -50,6 +50,10 @@ class AppIcons {
   static String rateIcon = "assets/icons/rate.png";
   static String helpIcon = "assets/icons/help.png";
   static String browseFilesIcon = "assets/icons/browse.png";
+  static String donationIcon  = "assets/icons/gift.png";
+  static String donationHistory = "assets/icons/history.png";
+  static String recipt = "assets/icons/recipt.png";
+  static String reciptbig ="assets/icons/reciptbig.png";
 
   static String profileIcon = "assets/icons/profile.png";
   static String catIcon = "assets/icons/category.png";

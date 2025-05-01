@@ -44,9 +44,11 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Scaffold(
       appBar: generalAppBar2(
+        
+        
         context,
       ),
-      backgroundColor: themeProvider.themeData.colorScheme.background,
+      backgroundColor: themeProvider.themeData.colorScheme.surface,
       body: SafeArea(
         child: LayoutBuilder(
           builder: (context, constraints) {

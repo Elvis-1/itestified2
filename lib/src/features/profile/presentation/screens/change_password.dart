@@ -16,7 +16,7 @@ class ChangePasswordScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: generalAppbar("Change my password", context),
-      backgroundColor: themeProvider.themeData.colorScheme.background,
+      backgroundColor: themeProvider.themeData.colorScheme.surface,
       body: Container(
         margin: const EdgeInsets.symmetric(horizontal: 15),
         child: SingleChildScrollView(
@@ -60,7 +60,11 @@ class ChangePasswordScreen extends StatelessWidget {
                 height: 10,
               ),
               customTextField(
+                
+    
+                borderColor: themeProvider.themeData.colorScheme.outline,
                 hintText: "Re-enter new Password",
+                
                 prefixIc: Icon(
                   Icons.lock_outline,
                   color: Colors.grey.shade700,

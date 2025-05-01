@@ -30,6 +30,7 @@ class quoteContainer extends StatelessWidget {
             right: rightPadding, left: rightPadding, bottom: 10),
         width: 250,
         height: 200,
+    
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

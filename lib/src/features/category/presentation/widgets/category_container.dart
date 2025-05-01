@@ -16,8 +16,8 @@ class CategoryContainer extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 10),
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: themeProvider.themeData.colorScheme.onBackground),
+          borderRadius: BorderRadius.circular(16),
+          color: themeProvider.themeData.colorScheme.outline),
       child: Column(
         children: [
           Row(
@@ -29,15 +29,15 @@ class CategoryContainer extends StatelessWidget {
                   children: [
                     // title
                     textWidget2(
-                        mainColor:
-                            themeProvider.themeData.colorScheme.onTertiary,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        "Healing Testimonies",
-                        fontSize:
-                            Theme.of(context).textTheme.titleMedium?.fontSize,
-                        lineHeight: 21.79 / 16,
-                        fontWeight: FontWeight.w600),
+                      mainColor: themeProvider.themeData.colorScheme.onTertiary,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      "Healing Testimonies",
+                      fontSize:
+                          Theme.of(context).textTheme.titleMedium?.fontSize,
+                      lineHeight: 21.79 / 16,
+                      fontWeight: FontWeight.w600,
+                    ),
                     const SizedBox(
                       height: 10,
                     ),

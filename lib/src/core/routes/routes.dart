@@ -20,10 +20,19 @@ import 'package:itestified/src/features/video/presentation/screens/video_list_sc
 import 'package:itestified/src/features/video/presentation/screens/video_screen.dart';
 import 'package:itestified/src/features/written_testimonies.dart/presentation/screens/written_testimonies.dart';
 
+import '../../features/profile/presentation/screens/donation_details.dart';
+import '../../features/profile/presentation/screens/donation_history.dart';
+
 Route onGenerateRoute(RouteSettings settings) {
   return switch (settings.name) {
     NavBar.routeName => MaterialPageRoute(
-        builder: (_) => const NavBar(),
+        builder: (_) {
+          final args = settings.arguments as Map<String, dynamic>?;
+          return NavBar(
+            initialPage: args?['initialPage'] as Widget?,
+            initialIndex: args?['initialIndex'] as int? ?? 0,
+          );
+        },
         settings: const RouteSettings(name: NavBar.routeName),
       ),
     // AUTH SCREENS
@@ -45,25 +54,20 @@ Route onGenerateRoute(RouteSettings settings) {
         builder: (_) => NewPasswordScreen(
           args: settings.arguments as Arguments,
         ),
-        settings: const RouteSettings(
-          name: NewPasswordScreen.routeName,
-        ),
+        settings: const RouteSettings(name: NewPasswordScreen.routeName),
       ),
-
-// HOME SCREEN
-
+    // HOME SCREEN
     HomeScreen.routeName => MaterialPageRoute(
         builder: (_) => const HomeScreen(),
         settings: const RouteSettings(name: HomeScreen.routeName),
       ),
-// VIDEO SCREEN
+    // VIDEO SCREEN
     VideoScreen.routeName => MaterialPageRoute(
         builder: (_) => VideoScreen(
           heroIndex: settings.arguments as int,
         ),
         settings: const RouteSettings(name: VideoScreen.routeName),
       ),
-
     // VIDEO AND WRITTEN TESTIMONY SCREEN
     VideoAndWrittenTestimonieScreen.routeName => MaterialPageRoute(
         builder: (_) => const VideoAndWrittenTestimonieScreen(),
@@ -89,7 +93,6 @@ Route onGenerateRoute(RouteSettings settings) {
         settings:
             const RouteSettings(name: MyTestimoniesDetailsScreen.routeName),
       ),
-
     // ADD TESTIMONY SCREEN
     AddTestimonyScreen.routeName => MaterialPageRoute(
         builder: (_) => AddTestimonyScreen(
@@ -97,20 +100,30 @@ Route onGenerateRoute(RouteSettings settings) {
         ),
         settings: const RouteSettings(name: AddTestimonyScreen.routeName),
       ),
-
     // DONATION SCREEN
     DonationScreen.routeName => MaterialPageRoute(
         builder: (_) => const DonationScreen(),
         settings: const RouteSettings(name: DonationScreen.routeName),
       ),
-    // DONATION SCREEN
+    // DONATION HISTORY SCREEN
+    DonationHistoryScreen.routeName => MaterialPageRoute(
+        builder: (_) => DonationHistoryScreen(),
+        settings: const RouteSettings(name: DonationHistoryScreen.routeName),
+      ),
+    // DONATION DETAILS SCREEN
+    DonationDetailsScreen.routeName => MaterialPageRoute(
+        builder: (_) => DonationDetailsScreen(
+          transaction: settings.arguments as Map<String, dynamic>,
+        ),
+        settings: const RouteSettings(name: DonationDetailsScreen.routeName),
+      ),
+    // ACCOUNT DETAILS SCREEN
     AccountDetailsScreen.routeName => MaterialPageRoute(
         builder: (_) => AccountDetailsScreen(
           transferType: settings.arguments as TransferType,
         ),
         settings: const RouteSettings(name: AccountDetailsScreen.routeName),
       ),
-
     // ABOUT
     TermsOfUse.routeName => MaterialPageRoute(
         builder: (_) => const TermsOfUse(),
