@@ -29,7 +29,7 @@ class AppThemes {
   );
   static ThemeData lightTheme = ThemeData(
       useMaterial3: true,
-      searchBarTheme: SearchBarThemeData(
+      searchBarTheme: const SearchBarThemeData(
         backgroundColor: WidgetStatePropertyAll(AppColors.lightGrayColor),
       ),
       primaryColor: AppColors.primaryColor,
@@ -42,7 +42,7 @@ class AppThemes {
         onTertiary: AppColors.blackColor,
       ),
       scaffoldBackgroundColor: AppColors.white,
-      buttonTheme: ButtonThemeData(
+      buttonTheme: const ButtonThemeData(
         buttonColor: AppColors.btnColor,
       ),
       textTheme: textTheme,
@@ -64,7 +64,7 @@ class AppThemes {
     primaryColor: AppColors.primaryColor,
     colorScheme: ColorScheme.fromSeed(
       surface: AppColors.blackColor,
-      outline: AppColors.opaqueBlack2,
+      outline: AppColors.opaqueBlack,
       tertiary: AppColors.textColor,
       onTertiary: AppColors.white,
       seedColor: AppColors.white, //AppColors.primaryColor,

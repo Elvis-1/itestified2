@@ -51,7 +51,7 @@ class DonationHistoryScreen extends StatelessWidget {
                   children: [
                     const SizedBox(height: 20),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                 mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         GestureDetector(
                           onTap: () => _showDateRangeBottomSheet(context),
@@ -70,6 +70,7 @@ class DonationHistoryScreen extends StatelessWidget {
                             ],
                           ),
                         ),
+                        SizedBox(width: 24,),
                         GestureDetector(
                           onTap: () => _showStatusFilterBottomSheet(context),
                           child: Row(
@@ -242,6 +243,9 @@ class DonationHistoryScreen extends StatelessWidget {
     final donationHistoryProvider =
         Provider.of<DonationHistoryProvider>(context, listen: false);
 
+    DateTime? localStartDate = donationHistoryProvider.startDate;
+    DateTime? localEndDate = donationHistoryProvider.endDate;
+
     showModalBottomSheet(
       context: context,
       backgroundColor: themeData.colorScheme.surface,
@@ -249,87 +253,96 @@ class DonationHistoryScreen extends StatelessWidget {
         borderRadius: BorderRadius.vertical(top: Radius.circular(12)),
       ),
       builder: (context) {
-        return SizedBox(
-          width: double.infinity,
-          height: 358,
-          child: Padding(
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        return StatefulBuilder(
+          builder: (BuildContext context, StateSetter setState) {
+            return SizedBox(
+              width: double.infinity,
+              height: 358,
+              child: Padding(
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    textWidget(
-                      'Date Range',
-                      fontSize: themeData.textTheme.titleLarge?.fontSize,
-                      fontWeight: FontWeight.w600,
-                      color: themeData.colorScheme.onSurface,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        textWidget(
+                          'Date Range',
+                          fontSize: themeData.textTheme.titleLarge?.fontSize,
+                          fontWeight: FontWeight.w600,
+                          color: themeData.colorScheme.onSurface,
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            donationHistoryProvider.clearDateRange();
+                            Navigator.pop(context);
+                          },
+                          child: const Icon(
+                            Icons.close,
+                            size: 24,
+                            color: AppColors.grey50,
+                          ),
+                        ),
+                      ],
                     ),
-                    GestureDetector(
-                      onTap: () {
-                        donationHistoryProvider.clearDateRange();
-                        Navigator.pop(context);
+                    const SizedBox(height: 16),
+                    textWidget(
+                      'Start Date',
+                      fontSize: themeData.textTheme.bodyMedium?.fontSize,
+                      fontWeight: FontWeight.w600,
+                      color: themeData.colorScheme.onTertiary,
+                    ),
+                    const SizedBox(height: 8),
+                    _DatePickerContainer(
+                      initialDate: localStartDate,
+                      onDateSelected: (date) {
+                        setState(() {
+                          localStartDate = date;
+                        });
                       },
-                      child: const Icon(
-                        Icons.close,
-                        size: 24,
-                        color: AppColors.grey50,
+                      provider: donationHistoryProvider,
+                    ),
+                    const SizedBox(height: 12),
+                    textWidget(
+                      'End Date',
+                      fontSize: themeData.textTheme.bodyMedium?.fontSize,
+                      fontWeight: FontWeight.w600,
+                      color: themeData.colorScheme.onTertiary,
+                    ),
+                    const SizedBox(height: 8),
+                    _DatePickerContainer(
+                      initialDate: localEndDate,
+                      onDateSelected: (date) {
+                        setState(() {
+                          localEndDate = date;
+                        });
+                      },
+                      provider: donationHistoryProvider,
+                    ),
+                    const SizedBox(height: 16),
+                    Center(
+                      child: GestureDetector(
+                        onTap: () {
+                          donationHistoryProvider.setDateRange(
+                            localStartDate,
+                            localEndDate,
+                          );
+                          Navigator.pop(context);
+                        },
+                        child: btnAndText(
+                          text: "Close",
+                          fontSize: themeData.textTheme.bodyLarge?.fontSize,
+                          containerWidth: 345,
+                          verticalPadding: 10,
+                        ),
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 16),
-                textWidget(
-                  'Start Date',
-                  fontSize: themeData.textTheme.bodyMedium?.fontSize,
-                  fontWeight: FontWeight.w600,
-                  color: themeData.colorScheme.onTertiary,
-                ),
-                const SizedBox(height: 8),
-                _DatePickerContainer(
-                  initialDate: donationHistoryProvider.startDate,
-                  onDateSelected: (date) {
-                    donationHistoryProvider.setDateRange(
-                        date, donationHistoryProvider.endDate);
-                  },
-                  provider: donationHistoryProvider,
-                ),
-                const SizedBox(height: 12),
-                textWidget(
-                  'End Date',
-                  fontSize: themeData.textTheme.bodyMedium?.fontSize,
-                  fontWeight: FontWeight.w600,
-                  color: themeData.colorScheme.onTertiary,
-                ),
-                const SizedBox(height: 8),
-                _DatePickerContainer(
-                  initialDate: donationHistoryProvider.endDate,
-                  onDateSelected: (date) {
-                    donationHistoryProvider.setDateRange(
-                        donationHistoryProvider.startDate, date);
-                  },
-                  provider: donationHistoryProvider,
-                ),
-                const SizedBox(height: 16),
-                // Optional Close button
-                Center(
-                  child: GestureDetector(
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                    child: btnAndText(
-                      text: "Close",
-                      fontSize: themeData.textTheme.bodyLarge?.fontSize,
-                      containerWidth: 345,
-                      verticalPadding: 10,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
+              ),
+            );
+          },
         );
       },
     );

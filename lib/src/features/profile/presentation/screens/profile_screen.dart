@@ -55,19 +55,27 @@ class ProfileScreen extends StatelessWidget {
             child: Column(
               children: [
                 const SizedBox(height: 10),
-                Container(
-                  width: 100,
-                  height: 100,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    image: DecorationImage(
-                      image: AssetImage(
-                        isGuest ? AppIcons.profileIcon : AppIcons.userIcon,
+                Consumer<ThemeViewmodel>(
+                  builder: (context, themeProvider, child) {
+                    final isDarkMode =
+                        themeProvider.themeData.brightness == Brightness.dark;
+                    return CircleAvatar(
+                      radius:
+                          50,
+                      backgroundColor: Colors.transparent,
+                      child: Image.asset(
+                        isGuest
+                            ? (isDarkMode
+                                ? AppIcons.guestIconDark
+                                : AppIcons.guestIconLight)
+                            : AppIcons.userIcon,
+                        width: 100,
+                        height: 100,
+                        fit: BoxFit.contain,
+             
                       ),
-            
-                      fit: BoxFit.contain,
-                    ),
-                  ),
+                    );
+                  },
                 ),
                 textWidget(
                   isGuest ? "Guest Mode" : "Chika Amaka",
@@ -134,19 +142,18 @@ class ProfileScreen extends StatelessWidget {
                   onTap: () {
                     Navigator.of(context)
                         .push(MaterialPageRoute(builder: (context) {
-                      return  DonationHistoryScreen();
+                      return const DonationHistoryScreen();
                     }));
                   },
-                  child: iconAndTextRow(AppIcons.donationHistory, "Donation History",
-                      AppIcons.nextIcon),
+                  child: iconAndTextRow(AppIcons.donationHistory,
+                      "Donation History", AppIcons.nextIcon),
                 ),
-                
-             
-                  lineWidget(
-                    width: double.infinity,
-                    color: themeProvider.themeData.colorScheme.outline,
-                  ),
-                  
+                lineWidget(
+                  width: double.infinity,
+                  color: Theme.of(context).brightness == Brightness.dark
+                      ? AppColors.White50
+                      : AppColors.grey30,
+                ),
                 if (!isGuest) ...[
                   GestureDetector(
                     onTap: () {
@@ -176,8 +183,14 @@ class ProfileScreen extends StatelessWidget {
                       return const FollowItestify();
                     }));
                   },
-                  child: iconAndTextRow(AppIcons.givingIcon,
+                  child: iconAndTextRow(AppIcons.follow,
                       "Follow @iTestified", AppIcons.nextIcon),
+                ),
+                lineWidget(
+                  width: double.infinity,
+                  color: Theme.of(context).brightness == Brightness.dark
+                      ? AppColors.White50
+                      : AppColors.grey30,
                 ),
                 GestureDetector(
                   onTap: () {
@@ -210,6 +223,12 @@ class ProfileScreen extends StatelessWidget {
                   child: iconAndTextRow(
                       AppIcons.helpIcon, "Help", AppIcons.nextIcon),
                 ),
+                lineWidget(
+                  width: double.infinity,
+                  color: Theme.of(context).brightness == Brightness.dark
+                      ? AppColors.White50
+                      : AppColors.grey30,
+                ),
                 if (!isGuest) ...[
                   lineWidget(
                     width: double.infinity,
@@ -228,6 +247,12 @@ class ProfileScreen extends StatelessWidget {
                     },
                     child: iconAndTextRow(
                         AppIcons.helpIcon, "Log Out", AppIcons.nextIcon),
+                  ),
+                  lineWidget(
+                    width: double.infinity,
+                    color: Theme.of(context).brightness == Brightness.dark
+                        ? AppColors.White50
+                        : AppColors.grey30,
                   ),
                 ],
               ],

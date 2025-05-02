@@ -31,6 +31,7 @@ class AccountDetailsScreen extends StatelessWidget {
       appBar: generalAppbar("Donations", context),
       backgroundColor: themeProvider.themeData.colorScheme.surface,
       body: Column(
+        
         children: [
           Expanded(
             child: Container(

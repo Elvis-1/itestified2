@@ -106,9 +106,9 @@ class _NavBarState extends State<NavBar> {
                       label: const Text("Favorites"),
                     ),
                     NavigationRailDestination(
-                      icon: Image.asset(AppIcons.profileIcon),
+                      icon: Image.asset(AppIcons.profileOutline),
                       selectedIcon: Image.asset(
-                        AppIcons.profileIcon,
+                        AppIcons.profileFilled,
                         color: AppColors.primaryColor,
                       ),
                       label: const Text("Profile"),
@@ -150,7 +150,9 @@ class _NavBarState extends State<NavBar> {
                         textColor: pageIndex == 0
                             ? AppColors.primaryColor
                             : themeProvider.themeData.colorScheme.tertiary,
-                        icon: AppIcons.homeIcon,
+                        icon: pageIndex == 0
+                            ? AppIcons.homefilled
+                            : AppIcons.homeIcon,
                       ),
                       BottomNav(
                         text: "Category",
@@ -162,11 +164,14 @@ class _NavBarState extends State<NavBar> {
                         textColor: pageIndex == 1
                             ? AppColors.primaryColor
                             : themeProvider.themeData.colorScheme.tertiary,
-                        icon: AppIcons.catIcon,
+                        icon: pageIndex == 1
+                            ? AppIcons.categoryiconfilled
+                            : AppIcons.catIcon,
                       ),
                       GestureDetector(
                         onTap: () async {
-                          await showJoinOurCommunityDialogOverlay(context, 'Join');
+                          await showJoinOurCommunityDialogOverlay(
+                              context, 'Join');
                         },
                         child: Container(
                           height: 50,
@@ -179,7 +184,7 @@ class _NavBarState extends State<NavBar> {
                         ),
                       ),
                       BottomNav(
-                        text: "Favorites",
+                        text: "Favourite",
                         index: 2,
                         onTap: () => changePage(2),
                         iconColor: pageIndex == 2
@@ -188,7 +193,9 @@ class _NavBarState extends State<NavBar> {
                         textColor: pageIndex == 2
                             ? AppColors.primaryColor
                             : themeProvider.themeData.colorScheme.tertiary,
-                        icon: AppIcons.favoriteIcon,
+                        icon: pageIndex == 2
+                            ? AppIcons.favouritef
+                            : AppIcons.favoriteIcon,
                       ),
                       BottomNav(
                         text: "Profile",
@@ -200,7 +207,9 @@ class _NavBarState extends State<NavBar> {
                         textColor: pageIndex == 3
                             ? AppColors.primaryColor
                             : themeProvider.themeData.colorScheme.tertiary,
-                        icon: AppIcons.profileIcon,
+                        icon: pageIndex == 3
+                            ? AppIcons.profileFilled // Filled when active
+                            : AppIcons.profileOutline, // Outlined when inactive
                       ),
                     ],
                   ),

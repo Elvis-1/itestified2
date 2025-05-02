@@ -11,13 +11,15 @@ class AppColors {
   static const Color textColor = const Color.fromRGBO(255, 255, 255, 0.75);
   static const Color greyColor = const Color.fromRGBO(255, 255, 255, 0.5);
   static const Color grey50 = const Color(0xFF575757);
+  static const Color grey30 = Color(0XFF9A9A9A);
+  static  Color  White50 = Colors.white.withOpacity(0.5);
   //
   static const Color btnColor = const Color(0xFF9966CC);
   static const Color transparent = Colors.transparent;
   static const Color blackColor = Colors.black;
   static const Color redColor = Color(0xFFE53935);
-  static const Color lineColor = Color(0xFFF8F8F8); 
-    static const Color darkgrey = Color(0xFFBCBCBC);
+  static const Color lineColor = Color(0xFFF8F8F8);
+  static const Color darkgrey = Color(0xFFBCBCBC);
 
   static const Color lightBlack = Color(0xFF171717);
   static const Color lightBlack2 = Color(0xFF575757);
