@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:itestified/src/config/authprovider.dart';
 import 'package:itestified/src/config/theme/app_color.dart';
 import 'package:itestified/src/core/utils/app_const/app_icons.dart';
 import 'package:itestified/src/core/widgets/appbar2.dart';
+import 'package:itestified/src/core/widgets/dialog.dart';
 import 'package:itestified/src/core/widgets/textwidget.dart';
 import 'package:itestified/src/features/animations/fade_in_trans.dart';
 import 'package:itestified/src/features/app_theme/theme_viewmodel.dart';
@@ -15,6 +17,8 @@ import 'package:itestified/src/features/search/presentation/screens/search_scree
 import 'package:itestified/src/features/video/presentation/screens/video_list_screen.dart';
 import 'package:itestified/src/features/written_testimonies.dart/presentation/screens/written_testimonies.dart';
 import 'package:provider/provider.dart';
+
+import '../../video/presentation/screens/video_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -38,14 +42,22 @@ class _HomeScreenState extends State<HomeScreen> {
     }));
   }
 
+// Handles tap on video testimony, showing community dialog for guests
+  void _handleVideoTestimonyTap(BuildContext context, {int? videoId}) {
+    var authProvider = Provider.of<AuthProvider>(context, listen: false);
+    if (authProvider.isGuest) {
+      showJoinOurCommunityDialogOverlay(context, "Join Our Community");
+    } else {
+      Navigator.pushNamed(context, VideoScreen.routeName, arguments: videoId);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     var themeProvider = Provider.of<ThemeViewmodel>(context);
 
     return Scaffold(
       appBar: generalAppBar2(
-        
-        
         context,
       ),
       backgroundColor: themeProvider.themeData.colorScheme.surface,
@@ -132,6 +144,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                   const SizedBox(height: 10),
                   SizedBox(child: VideoTestimoniesCarousel()),
+// const SizedBox(height: 10),
                   // const SizedBox(height: 10),
 
                   sectionHeader("Written Testimonies", () {

@@ -16,7 +16,7 @@ class VideoListScreen extends StatelessWidget {
     var themeProvider = Provider.of<ThemeViewmodel>(context);
     return Scaffold(
       appBar: generalAppbar('Video Testimonies', context),
-      backgroundColor: themeProvider.themeData.colorScheme.background,
+      backgroundColor: themeProvider.themeData.colorScheme.surface,
       body: SafeArea(child: LayoutBuilder(
         builder: (context, contraints) {
           bool isLargeScreen = contraints.maxWidth > 600;

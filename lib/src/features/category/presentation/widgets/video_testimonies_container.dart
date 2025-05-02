@@ -4,15 +4,24 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:itestified/src/config/authprovider.dart';
 import 'package:itestified/src/config/theme/app_color.dart';
 import 'package:itestified/src/core/utils/app_const/app_icons.dart';
+import 'package:itestified/src/core/widgets/dialog.dart';
 import 'package:itestified/src/core/widgets/normal_text_style.dart';
 import 'package:itestified/src/core/widgets/text_widget.dart';
 import 'package:itestified/src/core/widgets/textwidget.dart';
 import 'package:itestified/src/features/app_theme/theme_viewmodel.dart';
 import 'package:itestified/src/features/video/presentation/screens/video_screen.dart';
 import 'package:provider/provider.dart';
-
+void _handleVideoTestimonyTap(BuildContext context, {int? videoId}) {
+  var authProvider = Provider.of<AuthProvider>(context, listen: false);
+  if (authProvider.isGuest) {
+    showJoinOurCommunityDialogOverlay(context, "Join Our Community");
+  } else {
+    Navigator.pushNamed(context, VideoScreen.routeName, arguments: videoId);
+  }
+}
 class videoTestimoniesContainer extends StatelessWidget {
   videoTestimoniesContainer(
       {super.key,
@@ -25,13 +34,14 @@ class videoTestimoniesContainer extends StatelessWidget {
   double imageHeight = 100;
   final BoxFit fix;
 
+
   @override
   Widget build(BuildContext context) {
     var themeProvider = Provider.of<ThemeViewmodel>(context);
 
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(context, VideoScreen.routeName);
+        _handleVideoTestimonyTap(context); 
       },
       child: Container(
         height: videoContainerHeight.h,
@@ -188,19 +198,22 @@ class videoTestimoniesContainer extends StatelessWidget {
   }
 }
 
+
+
 class videoTestimoniesContainer2 extends StatelessWidget {
   const videoTestimoniesContainer2({
     super.key,
-    this.videoContainerHeight = 100,
+    this.videoContainerHeight = 230,
     this.videoContainerWidth = 300,
     this.playArrowLeftPosition = 180,
     this.playArrowTopPosition = 80,
     this.itestifyIconTopPosition = 185,
     this.itestifyIconLeftPosition = 5,
     this.fix = BoxFit.fill,
-    this.imageHeight = 100,
+    this.imageHeight = 150,
     this.firstTextSize = 12,
     this.secondTextSize = 10,
+    this.videoId = 1, // Default videoId
   });
 
   final double videoContainerHeight;
@@ -213,8 +226,7 @@ class videoTestimoniesContainer2 extends StatelessWidget {
   final BoxFit fix;
   final double? firstTextSize;
   final double? secondTextSize;
-
-  // double fontSize = MediaQuery.textScalerOf(context).scale(10.0);
+  final int videoId; // Add videoId parameter
 
   @override
   Widget build(BuildContext context) {
@@ -222,7 +234,7 @@ class videoTestimoniesContainer2 extends StatelessWidget {
 
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(context, VideoScreen.routeName, arguments: 1);
+        _handleVideoTestimonyTap(context, videoId: videoId);
       },
       child: Container(
         height: videoContainerHeight,
@@ -250,21 +262,16 @@ class videoTestimoniesContainer2 extends StatelessWidget {
                   right: 5,
                   child: Row(
                     children: [
-                      //  const Spacer(),
                       Container(
                           margin: const EdgeInsets.only(top: 10, right: 8),
                           child: CircleAvatar(
                               radius: 15,
                               backgroundColor:
-                                  //AppColors.opaqueBlack,
-                                  themeProvider
-                                      .themeData.searchBarTheme.backgroundColor!
-                                      .resolve({}),
+                                  themeProvider.themeData.searchBarTheme.backgroundColor!.resolve({}),
                               child: Icon(
                                 size: 15,
                                 Icons.favorite_outline,
-                                color: themeProvider
-                                    .themeData.colorScheme.onTertiary,
+                                color: themeProvider.themeData.colorScheme.onTertiary,
                               ))),
                     ],
                   ),
@@ -275,7 +282,6 @@ class videoTestimoniesContainer2 extends StatelessWidget {
                   right: 5,
                   child: Row(
                     children: [
-                      // const Spacer(),
                       Container(
                           padding: const EdgeInsets.all(2),
                           decoration: BoxDecoration(
@@ -284,8 +290,7 @@ class videoTestimoniesContainer2 extends StatelessWidget {
                           ),
                           child: Text(
                             "09:30",
-                            style:
-                                normalTextStyle(textColor: AppColors.textColor),
+                            style: normalTextStyle(textColor: AppColors.textColor),
                           )),
                       const SizedBox(
                         width: 10,
@@ -297,7 +302,7 @@ class videoTestimoniesContainer2 extends StatelessWidget {
                 const SizedBox(
                   height: 10,
                 ),
-                //  Play arrow icon
+                // Play arrow icon
                 const Center(
                   child: Icon(
                     Icons.play_arrow,
@@ -323,9 +328,6 @@ class videoTestimoniesContainer2 extends StatelessWidget {
                         height: 5,
                       ),
                       TextWidgets.textWidget10(
-                          // color: Theme.of(context)
-                          //     .extension<AppCustomColors>()
-                          //     ?.grey50,
                           context,
                           "Redeemed Christian Church of God",
                           fontSize: secondTextSize!),
@@ -339,17 +341,13 @@ class videoTestimoniesContainer2 extends StatelessWidget {
                             "Child Birth ",
                             fontWeight: FontWeight.w400,
                             fontSize: secondTextSize!,
-                            // color: Theme.of(context)
-                            //     .extension<AppCustomColors>()
-                            //     ?.grey50,
                           ),
                           const SizedBox(width: 5),
                           Container(
                             height: 5,
                             width: 5,
                             decoration: BoxDecoration(
-                                color: themeProvider
-                                    .themeData.colorScheme.tertiary,
+                                color: themeProvider.themeData.colorScheme.tertiary,
                                 shape: BoxShape.circle),
                           ),
                           const SizedBox(width: 5),
@@ -358,18 +356,13 @@ class videoTestimoniesContainer2 extends StatelessWidget {
                             "504 Views",
                             fontWeight: FontWeight.w400,
                             fontSize: 8,
-                            // color:
-                            // Theme.of(context)
-                            //     .extension<AppCustomColors>()
-                            //     ?.grey50,
                           ),
                           const SizedBox(width: 5),
                           Container(
                             height: 5,
                             width: 5,
                             decoration: BoxDecoration(
-                                color: themeProvider
-                                    .themeData.colorScheme.tertiary,
+                                color: themeProvider.themeData.colorScheme.tertiary,
                                 shape: BoxShape.circle),
                           ),
                           const SizedBox(width: 5),
@@ -392,7 +385,6 @@ class videoTestimoniesContainer2 extends StatelessWidget {
     );
   }
 }
-
 // Widget videoTestimoniesContainer2(BuildContext context,
 //     {double videoContainerHeight = 100,
 //     double videoContainerWidth = 300,

@@ -27,4 +27,5 @@ final List<SingleChildWidget> providers = [
     
   ),
   ChangeNotifierProvider(create: (_) => DonationHistoryProvider()),
+  
 ];

@@ -28,13 +28,14 @@ class _MyTestimoniesDetailsScreenState
 
     return Scaffold(
       backgroundColor: themeProvider.themeData.colorScheme.surface,
-      body:  SafeArea(
+      body: SafeArea(
         child: Stack(children: [
           Column(
             children: [
               Container(
                 color: themeProvider.themeData.colorScheme.surface,
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -156,8 +157,10 @@ class _MyTestimoniesDetailsScreenState
                             height: 1.7,
                             textColor:
                                 themeProvider.themeData.colorScheme.tertiary,
-                            fontSize:
-                                Theme.of(context).textTheme.titleMedium?.fontSize,
+                            fontSize: Theme.of(context)
+                                .textTheme
+                                .titleMedium
+                                ?.fontSize,
                           ),
                         ),
                         const SizedBox(height: 100),
@@ -174,7 +177,9 @@ class _MyTestimoniesDetailsScreenState
                 width: 230,
                 height: 50,
                 decoration: BoxDecoration(
-                    border: Border.all(color: AppColors.transparent),
+                    border: Border.all(
+                      color: themeProvider.themeData.colorScheme.outline,
+                    ),
                     color: themeProvider.themeData.colorScheme.outline,
                     borderRadius: BorderRadius.circular(15)),
                 child: Row(
@@ -185,33 +190,14 @@ class _MyTestimoniesDetailsScreenState
                     InkWell(
                       onTap: () async {
                         await showModalBottomSheet(
+                            backgroundColor:
+                                themeProvider.themeData.colorScheme.surface,
                             context: context,
                             builder: (context) {
                               return ListView(
                                 shrinkWrap: true,
-                                children: [
-                                  Container(
-                                      //  height: 70.h,
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 30),
-                                      color: themeProvider
-                                          .themeData.colorScheme.surface,
-                                      //  height: 50,
-                                      child: Align(
-                                        alignment: Alignment.center,
-                                        child: textWidget(
-                                          'Comments',
-                                          color: themeProvider
-                                              .themeData.colorScheme.tertiary,
-                                          fontSize: Theme.of(context)
-                                              .textTheme
-                                              .titleMedium
-                                              ?.fontSize,
-                                        ),
-                                      )),
-                                  Container(
-                                      height: 400,
-                                      child: const commentListModal()),
+                                children: const [
+                                  commentListModal(),
                                 ],
                               );
                             });

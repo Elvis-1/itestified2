@@ -10,5 +10,5 @@ class AuthProvider with ChangeNotifier {
     notifyListeners();
   }
 
-// intergate with authviewmodel and set to false durting login
+// pleasse move this to  authviewmodel and set to false durting login
 }

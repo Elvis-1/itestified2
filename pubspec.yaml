@@ -39,6 +39,7 @@ dependencies:
   shared_preferences: ^2.2.3
   provider: ^6.1.2
   get_it: ^7.7.0
+  video_player: ^2.9.1
   google_fonts: ^6.2.1
   flutter_screenutil: ^5.9.3
   dots_indicator: ^3.0.0

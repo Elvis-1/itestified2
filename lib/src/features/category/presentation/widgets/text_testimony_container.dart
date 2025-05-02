@@ -63,7 +63,6 @@ class TextTestimonyContainer extends StatelessWidget {
             const SizedBox(
               height: 10,
             ),
-
             Padding(
               padding: EdgeInsets.only(bottom: 20),
               child: RichText(
@@ -82,32 +81,26 @@ class TextTestimonyContainer extends StatelessWidget {
                             normalTextStyle(textColor: AppColors.primaryColor)),
                   ])),
             ),
-
-            // image and text
             Row(
               children: [
                 Image.asset(
                   AppIcons.userIcon,
-                  width: 30, // Set a fixed width for better spacing
+                  width: 30,
                   height: 30,
                   fit: BoxFit.cover,
                 ),
                 const SizedBox(width: 10),
                 Expanded(
-                  // Ensures the Column does not overflow
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       TextWidgets.textWidget10(context, "Chika Amaka",
                           fontWeight: FontWeight.w600),
-
-                      const SizedBox(
-                          height: 5), // Add spacing for better layout
+                      const SizedBox(height: 5),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Flexible(
-                            // Ensures the text does not overflow the Row
                             child: TextWidgets.textWidget10(
                               context,
                               "Healing",

@@ -53,7 +53,7 @@ class _OnboardingScreen2State extends State<OnboardingScreen2> {
                 onTap: () {
                   if (widget.index < 3) {
                     widget.pageController.animateToPage(widget.index + 1,
-                        duration: const Duration(seconds: 1),
+                        duration: const Duration(milliseconds: 300),
                         curve: Curves.easeIn);
                   }
                 },

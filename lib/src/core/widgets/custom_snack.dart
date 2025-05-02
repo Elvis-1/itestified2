@@ -18,7 +18,7 @@ customSnack(BuildContext context, String message) {
               offset: const Offset(1, 1),
               color: themeProvider.themeData.colorScheme.outline)
         ],
-        color: themeProvider.themeData.colorScheme.background,
+        color: themeProvider.themeData.colorScheme.surface,
       ),
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
       child: Row(

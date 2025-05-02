@@ -28,7 +28,7 @@ class _OnboardingScreen1State extends State<OnboardingScreen1>
     super.initState();
     controller = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 500),
+      duration: const Duration(milliseconds: 5),
     );
   }
 
@@ -67,7 +67,7 @@ class _OnboardingScreen1State extends State<OnboardingScreen1>
                 onTap: () {
                   if (widget.index < 3) {
                     widget.pageController.animateToPage(widget.index + 1,
-                        duration: const Duration(seconds: 1),
+                        duration: const Duration(milliseconds: 300),
                         curve: Curves.easeIn);
                   }
                 },

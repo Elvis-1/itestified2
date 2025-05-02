@@ -58,9 +58,7 @@ class _OnboardingScreen3State extends State<OnboardingScreen3> {
             ),
             onboardingText(
                 context, 'Connect with believers and grow together in faith. '),
-            const SizedBox(
-              height: 30,
-            ),
+            const Spacer(),
             // const Spacer(),
             InkWell(
               onTap: () {
@@ -95,7 +93,7 @@ class _OnboardingScreen3State extends State<OnboardingScreen3> {
             ),
 
             InkWell(
-           onTap: () async {
+              onTap: () async {
                 final prefs = await SharedPreferences.getInstance();
                 await prefs.setBool('isOnboardingComplete', true);
                 Provider.of<AuthProvider>(context, listen: false)
@@ -118,6 +116,8 @@ class _OnboardingScreen3State extends State<OnboardingScreen3> {
                   fontWeight: FontWeight.w600,
                 ),
               ),
+            ),
+            const SizedBox(height: 5,
             )
           ],
         ),
