@@ -886,7 +886,6 @@ class VideoPlayerWidget extends StatelessWidget {
                       color: themeProvider.themeData.colorScheme.outline),
                   const SizedBox(height: 5),
                   commentSection(context),
-                  const SizedBox(height: 15),
                   LayoutBuilder(
                     builder: (context, constraints) {
                       bool isLargeScreen =
@@ -1202,13 +1201,12 @@ class VideoScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     var themeProvider = Provider.of<ThemeViewmodel>(context);
 
-    // Map heroIndex to video URL
     final videoUrls = {};
     final videoUrl = videoUrls[heroIndex] ??
         'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4';
 
     return Scaffold(
-      backgroundColor: themeProvider.themeData.colorScheme.background,
+      backgroundColor: themeProvider.themeData.colorScheme.surface,
       body: VideoPlayerWidget(videoUrl: videoUrl),
     );
   }
@@ -1221,44 +1219,59 @@ Widget mainList(BuildContext context) {
 }
 
 Widget relatedVideosSection(BuildContext context) {
-  var themeProvider = Provider.of<ThemeViewmodel>(context);
+  final themeProvider = Provider.of<ThemeViewmodel>(context);
+  final screenWidth = MediaQuery.of(context).size.width;
+  final isSmallScreen = screenWidth < 375;
+  final isMediumScreen = screenWidth < 600;
 
   return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-     
-      Container(
-        margin: const EdgeInsets.symmetric(horizontal: 15),
-        child: Align(
-            alignment: Alignment.topLeft,
-            child: textWidget(
-              "Related Videos",
-              fontSize: 18,
-              color: themeProvider.themeData.colorScheme.onTertiary,
-              fontWeight: FontWeight.w500,
-            )),
+      Padding(
+        padding: EdgeInsets.symmetric(
+            horizontal: isSmallScreen ? 12 : 15,
+            vertical: isSmallScreen ? 8 : 10),
+        child: textWidget(
+          "Related Videos",
+          fontSize: isSmallScreen ? 16 : 18,
+          color: themeProvider.themeData.colorScheme.onTertiary,
+          fontWeight: FontWeight.w500,
+        ),
       ),
-      const SizedBox(height: 10),
       SizedBox(
-          height: 250,
-          child: ListView.builder(
+        height: isMediumScreen ? 230 : 250,
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            final itemWidth =
+                constraints.maxWidth * (isMediumScreen ? 0.6 : 0.4);
+            final itemHeight = isMediumScreen ? 200 : 220;
+
+            return ListView.builder(
               shrinkWrap: true,
               itemCount: 4,
               scrollDirection: Axis.horizontal,
+              padding:
+                  EdgeInsets.symmetric(horizontal: isSmallScreen ? 12 : 15),
               itemBuilder: (context, index) {
                 return Container(
-                  margin: const EdgeInsets.only(right: 10),
+                  width: itemWidth,
+                  margin: EdgeInsets.only(right: isSmallScreen ? 8 : 12),
                   child: const FadeInTransitionWidget(
                     child: videoTestimoniesContainer2(
-                        fix: BoxFit.cover,
-                        imageHeight: 150,
-                        playArrowLeftPosition: 130,
-                        playArrowTopPosition: 50,
-                        itestifyIconTopPosition: 150),
+                      videoContainerWidth: double.infinity,
+                      videoContainerHeight: double.infinity,
+                      fix: BoxFit.cover,
+                      imageHeight: 150,
+                      firstTextSize: 14,
+                      secondTextSize: 12,
+                    ),
                   ),
                 );
-              })),
+              },
+            );
+          },
+        ),
+      ),
     ],
   );
 }
-
-

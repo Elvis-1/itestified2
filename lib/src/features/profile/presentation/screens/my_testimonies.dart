@@ -1,10 +1,5 @@
-import 'dart:ui';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:itestified/src/config/theme/app_color.dart';
-import 'package:itestified/src/core/widgets/animated_quotes_modal.dart';
 import 'package:itestified/src/core/widgets/appbar2.dart';
 import 'package:itestified/src/features/app_theme/theme_viewmodel.dart';
 import 'package:itestified/src/features/nav/navbar.dart';
@@ -18,52 +13,45 @@ class MyTestimoniesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var themeProvider = Provider.of<ThemeViewmodel>(context);
+    final themeProvider = Provider.of<ThemeViewmodel>(context);
 
-    return Scaffold(
-      appBar: generalAppbar("My Testimonies", context),
-      backgroundColor: themeProvider.themeData.colorScheme.surface,
-      body: LayoutBuilder(
-        builder: (context, constraints) {
-          bool isLargeScreen = constraints.maxWidth > 600;
+    return NavBar(
+      initialIndex: 3, // Assuming "Profile" is index 3 in your NavBar
+      initialPage: Scaffold(
+        appBar: generalAppbar("My Testimonies", context),
+        backgroundColor: themeProvider.themeData.colorScheme.surface,
+        body: LayoutBuilder(
+          builder: (context, constraints) {
+            bool isLargeScreen = constraints.maxWidth > 600;
 
-          return !isLargeScreen
-              ? smallScreenListView(
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.pushNamed(
-                        context,
-                        NavBar.routeName,
-                        arguments: {
-                          'initialPage': const MyTestimoniesDetailsScreen(
-                            isFromProfile: true,
-                          ),
-                          'initialIndex': 4,
-                        },
-                      );
-                    },
-                    child: const myTestimonyContainer(),
-                  ),
-                )
-              : largeScreenGrid(
-                  context,
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.pushNamed(
-                        context,
-                        NavBar.routeName,
-                        arguments: {
-                          'initialPage': const MyTestimoniesDetailsScreen(
-                            isFromProfile: true,
-                          ),
-                          'initialIndex': 4, 
-                        },
-                      );
-                    },
-                    child: const myTestimonyContainer(),
-                  ),
-                );
-        },
+            return !isLargeScreen
+                ? smallScreenListView(
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(
+                          context,
+                          MyTestimoniesDetailsScreen.routeName,
+                          arguments: {'isFromProfile': true},
+                        );
+                      },
+                      child: const myTestimonyContainer(),
+                    ),
+                  )
+                : largeScreenGrid(
+                    context,
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(
+                          context,
+                          MyTestimoniesDetailsScreen.routeName,
+                          arguments: {'isFromProfile': true},
+                        );
+                      },
+                      child: const myTestimonyContainer(),
+                    ),
+                  );
+          },
+        ),
       ),
     
 

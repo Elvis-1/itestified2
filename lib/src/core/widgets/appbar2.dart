@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:itestified/src/config/authprovider.dart';
 import 'package:itestified/src/core/utils/app_const/app_icons.dart';
+import 'package:itestified/src/core/widgets/btn_and_text.dart';
 import 'package:itestified/src/core/widgets/text_widget.dart';
 import 'package:itestified/src/core/widgets/textwidget.dart';
 import 'package:itestified/src/features/app_theme/theme_viewmodel.dart';
+import 'package:itestified/src/features/auth/presentation/screens/signup_screen.dart';
+import 'package:itestified/src/features/search/presentation/screens/search_screen.dart';
 import 'package:provider/provider.dart';
 
 PreferredSizeWidget generalAppbar(String title, BuildContext context) {
@@ -32,69 +36,238 @@ PreferredSizeWidget generalAppbar(String title, BuildContext context) {
       ));
 }
 
-PreferredSizeWidget generalAppBar2(
-  BuildContext context,
-) {
- 
-  var themeProvider = Provider.of<ThemeViewmodel>(context);
+PreferredSizeWidget generalAppBar2(BuildContext context) {
+  final themeProvider = Provider.of<ThemeViewmodel>(context);
+  final authProvider = Provider.of<AuthProvider>(context);
+  final isGuest = authProvider.isGuest;
+  final screenWidth = MediaQuery.of(context).size.width;
+
   return AppBar(
     automaticallyImplyLeading: false,
     backgroundColor: themeProvider.themeData.colorScheme.surface,
     title: Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Row(
-            children: [
-              Image.asset(AppIcons.userIcon),
-              const SizedBox(
-                width: 10,
-              ),
-              TextWidgets.textWidget14(
-                context,
-                "Welcome, Amaka",
-                fontWeight: FontWeight.w600,
-              ),
-            ],
-          ),
-          Row(
-            children: [
-              GestureDetector(
-                  onTap: () {
-                    //gotoSearchPage();
-                  },
-                  child: CircleAvatar(
-                      radius: 20,
-                      backgroundColor: themeProvider
-                          .themeData.searchBarTheme.backgroundColor!
-                          .resolve({}),
-                      child: Icon(
-                        size: 16,
-                        Icons.search,
-                        color: themeProvider.themeData.colorScheme.onTertiary,
-                      ))),
-              const SizedBox(
-                width: 10,
-              ),
-              GestureDetector(
-                  onTap: () {
-                    // gotoNotificationsPage();
-                  },
-                  child: CircleAvatar(
-                      radius: 20,
-                      backgroundColor: themeProvider
-                          .themeData.searchBarTheme.backgroundColor!
-                          .resolve({}),
-                      child: Icon(
-                        size: 16,
-                        Icons.notifications_outlined,
-                        color: themeProvider.themeData.colorScheme.onTertiary,
-                      ))),
-            ],
-          ),
-        ],
-      ),
+      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      child: isGuest
+          ? LayoutBuilder(
+              builder: (context, constraints) {
+                // For smaller screens, stack the elements vertically
+                if (constraints.maxWidth < 600) {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              TextWidgets.textWidget14(
+                                context,
+                                "Guest Mode",
+                                fontWeight: FontWeight.w600,
+                              ),
+                              const SizedBox(height: 4),
+                              TextWidgets.textWidget10(
+                                context,
+                                "You are currently browsing as a guest",
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ],
+                          ),
+                          if (screenWidth >
+                              350) // Only show button if there's enough space
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.pushNamed(
+                                    context, SignUpScreen.routeName);
+                              },
+                              child: btnAndText(
+                                text: "Create Account",
+                                containerWidth: 110,
+                                verticalPadding: 8,
+                                fontSize: 12,
+                              ),
+                            ),
+                        ],
+                      ),
+                      if (screenWidth <=
+                          350) // Show button below on very small screens
+                        Padding(
+                          padding: const EdgeInsets.only(top: 8.0),
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.pushNamed(
+                                  context, SignUpScreen.routeName);
+                            },
+                            child: btnAndText(
+                              text: "Create Account",
+                              containerWidth: double.infinity,
+                              verticalPadding: 8,
+                              fontSize: 12,
+                            ),
+                          ),
+                        ),
+                    ],
+                  );
+                }
+                // For larger screens, use the original row layout
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        TextWidgets.textWidget14(
+                          context,
+                          "Guest Mode",
+                          fontWeight: FontWeight.w600,
+                        ),
+                        const SizedBox(height: 4),
+                        TextWidgets.textWidget10(
+                          context,
+                          "You are currently browsing as a guest",
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ],
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(context, SignUpScreen.routeName);
+                      },
+                      child: btnAndText(
+                        text: "Create an Account",
+                        containerWidth: 119,
+                        verticalPadding: 8,
+                        fontSize: 12,
+                      ),
+                    ),
+                  ],
+                );
+              },
+            )
+          : LayoutBuilder(
+              builder: (context, constraints) {
+                // For smaller screens, adjust the layout
+                if (constraints.maxWidth < 600) {
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Flexible(
+                        child: Row(
+                          children: [
+                            Image.asset(AppIcons.userIcon,
+                                width: 24, height: 24),
+                            const SizedBox(width: 8),
+                            Flexible(
+                              child: TextWidgets.textWidget14(
+                                context,
+                                "Welcome, Amaka",
+                                fontWeight: FontWeight.w600,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Row(
+                        children: [
+                          const SizedBox(width: 8),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const SearchScreen()),
+                              );
+                            },
+                            child: CircleAvatar(
+                              radius: 18,
+                              backgroundColor: themeProvider
+                                  .themeData.searchBarTheme.backgroundColor!
+                                  .resolve({}),
+                              child: Icon(
+                                size: 16,
+                                Icons.search,
+                                color: themeProvider
+                                    .themeData.colorScheme.onTertiary,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          GestureDetector(
+                            onTap: () {},
+                            child: CircleAvatar(
+                              radius: 18,
+                              backgroundColor: themeProvider
+                                  .themeData.searchBarTheme.backgroundColor!
+                                  .resolve({}),
+                              child: Icon(
+                                size: 16,
+                                Icons.notifications_outlined,
+                                color: themeProvider
+                                    .themeData.colorScheme.onTertiary,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  );
+                }
+                // For larger screens, use the original layout
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        Image.asset(AppIcons.userIcon),
+                        const SizedBox(width: 10),
+                        TextWidgets.textWidget14(
+                          context,
+                          "Welcome, Amaka",
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        GestureDetector(
+                          onTap: () {},
+                          child: CircleAvatar(
+                            radius: 20,
+                            backgroundColor: themeProvider
+                                .themeData.searchBarTheme.backgroundColor!
+                                .resolve({}),
+                            child: Icon(
+                              size: 16,
+                              Icons.search,
+                              color: themeProvider
+                                  .themeData.colorScheme.onTertiary,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                        GestureDetector(
+                          onTap: () {},
+                          child: CircleAvatar(
+                            radius: 20,
+                            backgroundColor: themeProvider
+                                .themeData.searchBarTheme.backgroundColor!
+                                .resolve({}),
+                            child: Icon(
+                              size: 16,
+                              Icons.notifications_outlined,
+                              color: themeProvider
+                                  .themeData.colorScheme.onTertiary,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                );
+              },
+            ),
     ),
   );
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:material_symbols_icons/symbols.dart';
 
 class AppIcons {
   //////////
@@ -61,7 +62,6 @@ class AppIcons {
   static String homefilled = "assets/icons/homef.png";
   static String categoryiconfilled = "assets/icons/cfilled.png";
   static String guestIconLight = "assets/icons/guestlight.png";
-  static String profileOutline = "assets/icons/profile.png";
   static String profileFilled = "assets/icons/filledp.png";
   static String guestIcon = "assets/icons/guest.png";
   static String catIcon = "assets/icons/category.png";

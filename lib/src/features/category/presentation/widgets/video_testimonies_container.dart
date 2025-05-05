@@ -14,6 +14,7 @@ import 'package:itestified/src/core/widgets/textwidget.dart';
 import 'package:itestified/src/features/app_theme/theme_viewmodel.dart';
 import 'package:itestified/src/features/video/presentation/screens/video_screen.dart';
 import 'package:provider/provider.dart';
+
 void _handleVideoTestimonyTap(BuildContext context, {int? videoId}) {
   var authProvider = Provider.of<AuthProvider>(context, listen: false);
   if (authProvider.isGuest) {
@@ -22,6 +23,7 @@ void _handleVideoTestimonyTap(BuildContext context, {int? videoId}) {
     Navigator.pushNamed(context, VideoScreen.routeName, arguments: videoId);
   }
 }
+
 class videoTestimoniesContainer extends StatelessWidget {
   videoTestimoniesContainer(
       {super.key,
@@ -34,14 +36,13 @@ class videoTestimoniesContainer extends StatelessWidget {
   double imageHeight = 100;
   final BoxFit fix;
 
-
   @override
   Widget build(BuildContext context) {
     var themeProvider = Provider.of<ThemeViewmodel>(context);
 
     return InkWell(
       onTap: () {
-        _handleVideoTestimonyTap(context); 
+        _handleVideoTestimonyTap(context);
       },
       child: Container(
         height: videoContainerHeight.h,
@@ -198,8 +199,6 @@ class videoTestimoniesContainer extends StatelessWidget {
   }
 }
 
-
-
 class videoTestimoniesContainer2 extends StatelessWidget {
   const videoTestimoniesContainer2({
     super.key,
@@ -266,12 +265,14 @@ class videoTestimoniesContainer2 extends StatelessWidget {
                           margin: const EdgeInsets.only(top: 10, right: 8),
                           child: CircleAvatar(
                               radius: 15,
-                              backgroundColor:
-                                  themeProvider.themeData.searchBarTheme.backgroundColor!.resolve({}),
+                              backgroundColor: themeProvider
+                                  .themeData.searchBarTheme.backgroundColor!
+                                  .resolve({}),
                               child: Icon(
                                 size: 15,
                                 Icons.favorite_outline,
-                                color: themeProvider.themeData.colorScheme.onTertiary,
+                                color: themeProvider
+                                    .themeData.colorScheme.onTertiary,
                               ))),
                     ],
                   ),
@@ -290,7 +291,8 @@ class videoTestimoniesContainer2 extends StatelessWidget {
                           ),
                           child: Text(
                             "09:30",
-                            style: normalTextStyle(textColor: AppColors.textColor),
+                            style:
+                                normalTextStyle(textColor: AppColors.textColor),
                           )),
                       const SizedBox(
                         width: 10,
@@ -312,7 +314,9 @@ class videoTestimoniesContainer2 extends StatelessWidget {
                 // itestify icon and text
               ],
             ),
+            const SizedBox(height: 5,),
             Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Image.asset(AppIcons.itestifyIcon, width: 20),
                 const SizedBox(width: 4),
@@ -328,8 +332,7 @@ class videoTestimoniesContainer2 extends StatelessWidget {
                         height: 5,
                       ),
                       TextWidgets.textWidget10(
-                          context,
-                          "Redeemed Christian Church of God",
+                          context, "Redeemed Christian Church of God",
                           fontSize: secondTextSize!),
                       const SizedBox(
                         height: 5,
@@ -347,7 +350,8 @@ class videoTestimoniesContainer2 extends StatelessWidget {
                             height: 5,
                             width: 5,
                             decoration: BoxDecoration(
-                                color: themeProvider.themeData.colorScheme.tertiary,
+                                color: themeProvider
+                                    .themeData.colorScheme.tertiary,
                                 shape: BoxShape.circle),
                           ),
                           const SizedBox(width: 5),
@@ -362,7 +366,8 @@ class videoTestimoniesContainer2 extends StatelessWidget {
                             height: 5,
                             width: 5,
                             decoration: BoxDecoration(
-                                color: themeProvider.themeData.colorScheme.tertiary,
+                                color: themeProvider
+                                    .themeData.colorScheme.tertiary,
                                 shape: BoxShape.circle),
                           ),
                           const SizedBox(width: 5),
@@ -372,6 +377,7 @@ class videoTestimoniesContainer2 extends StatelessWidget {
                             fontWeight: FontWeight.w400,
                             fontSize: secondTextSize!,
                           ),
+                        
                         ],
                       ),
                     ],
@@ -529,3 +535,6 @@ class videoTestimoniesContainer2 extends StatelessWidget {
 //   );
 
 // }
+
+
+

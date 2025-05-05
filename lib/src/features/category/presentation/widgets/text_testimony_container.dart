@@ -35,7 +35,10 @@ class TextTestimonyContainer extends StatelessWidget {
           borderRadius: BorderRadius.circular(16),
         ),
         width: containerWidth,
-        margin: const EdgeInsets.only(right: 12, left: 10, bottom: 10, top: 10),
+        margin: const EdgeInsets.only(
+          right: 12,
+          left: 10,
+        ),
         child: Column(
           children: [
             Row(

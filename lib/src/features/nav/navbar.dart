@@ -1,16 +1,68 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:itestified/src/config/theme/app_color.dart';
-import 'package:itestified/src/core/utils/app_const/app_icons.dart';
 import 'package:itestified/src/core/widgets/dialog.dart';
 import 'package:itestified/src/features/app_theme/theme_viewmodel.dart';
 import 'package:itestified/src/features/category/presentation/screens/categories_screen.dart';
 import 'package:itestified/src/features/favorites/presentation/screens/favorites_screen.dart';
 import 'package:itestified/src/features/home/presentation/home_screen.dart';
-import 'package:itestified/src/features/nav/bottom_nav.dart';
 import 'package:itestified/src/features/profile/presentation/screens/profile_screen.dart';
+import 'package:material_symbols_icons/symbols.dart';
 import 'package:provider/provider.dart';
+
+// Navigation State Provider
+class NavProvider with ChangeNotifier {
+  int _currentIndex = 0;
+  int get currentIndex => _currentIndex;
+
+  void changeIndex(int index) {
+    _currentIndex = index;
+    notifyListeners();
+  }
+}
+
+class BottomNav extends StatelessWidget {
+  const BottomNav({
+    super.key,
+    required this.icon,
+    required this.index,
+    required this.onTap,
+    required this.textColor,
+    required this.isSelected,
+    required this.text,
+  });
+
+  final IconData icon;
+  final int index;
+  final void Function()? onTap;
+  final Color textColor;
+  final bool isSelected;
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Column(
+        children: [
+          SizedBox(
+            width: 25,
+            height: 25,
+            child: Icon(
+              icon,
+              color: textColor,
+              size: 24,
+              fill: isSelected ? 1.0 : 0.0,
+            ),
+          ),
+          Text(
+            text,
+            style: TextStyle(color: textColor, fontSize: 13),
+          ),
+        ],
+      ),
+    );
+  }
+}
 
 class NavBar extends StatefulWidget {
   const NavBar({super.key, this.initialPage, this.initialIndex = 0});
@@ -24,33 +76,45 @@ class NavBar extends StatefulWidget {
 }
 
 class _NavBarState extends State<NavBar> {
-  List<Widget> pageList = [
-    const HomeScreen(),
-    const CategoriesListScreen(),
-    const FavoritesScreen(),
-    const ProfileScreen(),
-  ];
-  int pageIndex = 0;
+  late List<Widget> pageList;
+  late int pageIndex;
 
   @override
   void initState() {
     super.initState();
+    pageList = [
+      const HomeScreen(),
+      const CategoriesListScreen(),
+      const FavoritesScreen(),
+      const ProfileScreen(),
+    ];
     pageIndex = widget.initialIndex;
+    
     if (widget.initialPage != null) {
       pageList = [...pageList, widget.initialPage!];
       pageIndex = pageList.length - 1;
     }
   }
 
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Initialize provider with initial index
+    Provider.of<NavProvider>(context, listen: false).changeIndex(pageIndex);
+  }
+
   void changePage(int index) {
+    final navProvider = Provider.of<NavProvider>(context, listen: false);
     setState(() {
       pageIndex = index;
     });
+    navProvider.changeIndex(index);
   }
 
   @override
   Widget build(BuildContext context) {
-    var themeProvider = Provider.of<ThemeViewmodel>(context);
+    final themeProvider = Provider.of<ThemeViewmodel>(context);
+    final navProvider = Provider.of<NavProvider>(context);
 
     return Scaffold(
       backgroundColor: themeProvider.themeData.colorScheme.surface,
@@ -62,7 +126,7 @@ class _NavBarState extends State<NavBar> {
             children: [
               if (isLargeScreen)
                 NavigationRail(
-                  selectedIndex: pageIndex,
+                  selectedIndex: navProvider.currentIndex,
                   onDestinationSelected: (index) => changePage(index),
                   labelType: NavigationRailLabelType.selected,
                   backgroundColor: themeProvider.themeData.colorScheme.surface,
@@ -82,41 +146,49 @@ class _NavBarState extends State<NavBar> {
                   ),
                   destinations: [
                     NavigationRailDestination(
-                      icon: Image.asset(AppIcons.homeIcon),
-                      selectedIcon: Image.asset(
-                        AppIcons.homeIcon,
-                        color: AppColors.primaryColor,
+                      icon: Icon(
+                        Symbols.home,
+                        color: navProvider.currentIndex == 0
+                            ? AppColors.primaryColor
+                            : themeProvider.themeData.colorScheme.tertiary,
+                        fill: navProvider.currentIndex == 0 ? 1.0 : 0.0,
                       ),
                       label: const Text("Home"),
                     ),
                     NavigationRailDestination(
-                      icon: Image.asset(AppIcons.catIcon),
-                      selectedIcon: Image.asset(
-                        AppIcons.catIcon,
-                        color: AppColors.primaryColor,
+                      icon: Icon(
+                        Symbols.dashboard,
+                        color: navProvider.currentIndex == 1
+                            ? AppColors.primaryColor
+                            : themeProvider.themeData.colorScheme.tertiary,
+                        fill: navProvider.currentIndex == 1 ? 1.0 : 0.0,
                       ),
                       label: const Text("Category"),
                     ),
                     NavigationRailDestination(
-                      icon: Image.asset(AppIcons.favoriteIcon),
-                      selectedIcon: Image.asset(
-                        AppIcons.favoriteIcon,
-                        color: AppColors.primaryColor,
+                      icon: Icon(
+                        Symbols.favorite,
+                        color: navProvider.currentIndex == 2
+                            ? AppColors.primaryColor
+                            : themeProvider.themeData.colorScheme.tertiary,
+                        fill: navProvider.currentIndex == 2 ? 1.0 : 0.0,
                       ),
                       label: const Text("Favorites"),
                     ),
                     NavigationRailDestination(
-                      icon: Image.asset(AppIcons.profileOutline),
-                      selectedIcon: Image.asset(
-                        AppIcons.profileFilled,
-                        color: AppColors.primaryColor,
+                      icon: Icon(
+                        Symbols.person,
+                        color: navProvider.currentIndex == 3
+                            ? AppColors.primaryColor
+                            : themeProvider.themeData.colorScheme.tertiary,
+                        fill: navProvider.currentIndex == 3 ? 1.0 : 0.0,
                       ),
                       label: const Text("Profile"),
                     ),
                   ],
                 ),
               Expanded(
-                child: pageList[pageIndex],
+                child: pageList[navProvider.currentIndex],
               ),
             ],
           );
@@ -144,29 +216,21 @@ class _NavBarState extends State<NavBar> {
                         text: "Home",
                         index: 0,
                         onTap: () => changePage(0),
-                        iconColor: pageIndex == 0
+                        textColor: navProvider.currentIndex == 0
                             ? AppColors.primaryColor
                             : themeProvider.themeData.colorScheme.tertiary,
-                        textColor: pageIndex == 0
-                            ? AppColors.primaryColor
-                            : themeProvider.themeData.colorScheme.tertiary,
-                        icon: pageIndex == 0
-                            ? AppIcons.homefilled
-                            : AppIcons.homeIcon,
+                        isSelected: navProvider.currentIndex == 0,
+                        icon: Symbols.home,
                       ),
                       BottomNav(
                         text: "Category",
                         index: 1,
                         onTap: () => changePage(1),
-                        iconColor: pageIndex == 1
+                        textColor: navProvider.currentIndex == 1
                             ? AppColors.primaryColor
                             : themeProvider.themeData.colorScheme.tertiary,
-                        textColor: pageIndex == 1
-                            ? AppColors.primaryColor
-                            : themeProvider.themeData.colorScheme.tertiary,
-                        icon: pageIndex == 1
-                            ? AppIcons.categoryiconfilled
-                            : AppIcons.catIcon,
+                        isSelected: navProvider.currentIndex == 1,
+                        icon: Symbols.dashboard,
                       ),
                       GestureDetector(
                         onTap: () async {
@@ -187,29 +251,21 @@ class _NavBarState extends State<NavBar> {
                         text: "Favourite",
                         index: 2,
                         onTap: () => changePage(2),
-                        iconColor: pageIndex == 2
+                        textColor: navProvider.currentIndex == 2
                             ? AppColors.primaryColor
                             : themeProvider.themeData.colorScheme.tertiary,
-                        textColor: pageIndex == 2
-                            ? AppColors.primaryColor
-                            : themeProvider.themeData.colorScheme.tertiary,
-                        icon: pageIndex == 2
-                            ? AppIcons.favouritef
-                            : AppIcons.favoriteIcon,
+                        isSelected: navProvider.currentIndex == 2,
+                        icon: Symbols.favorite,
                       ),
                       BottomNav(
                         text: "Profile",
                         index: 3,
                         onTap: () => changePage(3),
-                        iconColor: pageIndex == 3
+                        textColor: navProvider.currentIndex == 3
                             ? AppColors.primaryColor
                             : themeProvider.themeData.colorScheme.tertiary,
-                        textColor: pageIndex == 3
-                            ? AppColors.primaryColor
-                            : themeProvider.themeData.colorScheme.tertiary,
-                        icon: pageIndex == 3
-                            ? AppIcons.profileFilled // Filled when active
-                            : AppIcons.profileOutline, // Outlined when inactive
+                        isSelected: navProvider.currentIndex == 3,
+                        icon: Symbols.person,
                       ),
                     ],
                   ),

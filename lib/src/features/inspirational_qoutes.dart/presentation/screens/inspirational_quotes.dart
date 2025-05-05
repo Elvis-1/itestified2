@@ -17,7 +17,7 @@ class InspirationalQuotes extends StatelessWidget {
 
     return Scaffold(
       appBar: generalAppbar('Inspirational Quotes', context),
-      backgroundColor: themeProvider.themeData.colorScheme.background,
+      backgroundColor: themeProvider.themeData.colorScheme.surface,
       body: SafeArea(child: LayoutBuilder(
         builder: (context, contraints) {
           bool isLargeScreen = contraints.maxWidth > 600;
@@ -25,14 +25,12 @@ class InspirationalQuotes extends StatelessWidget {
               ? largeScreenGrid(
                   context,
                   const quoteContainer(
-                      imageWidth: double.infinity,
-                      containerHeight: 120,
+                      
                       textSize: 17),
                   gridNumber: 3)
               : smallScreenListView(
                   const quoteContainer(
-                      imageWidth: double.infinity,
-                      containerHeight: 180,
+                     
                       // inbetweenHeight: 10,
                       textSize: 17),
                 );

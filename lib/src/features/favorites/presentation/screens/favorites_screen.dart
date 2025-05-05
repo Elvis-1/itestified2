@@ -29,7 +29,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
-          backgroundColor: themeProvider.themeData.colorScheme.background,
+          backgroundColor: themeProvider.themeData.colorScheme.surface,
           title: textWidget(
             "Favorites",
             fontSize: Theme.of(context).textTheme.titleLarge?.fontSize,
@@ -37,7 +37,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
           actions: [
             Container(
                 //  width: 150,
-                color: themeProvider.themeData.colorScheme.background,
+                color: themeProvider.themeData.colorScheme.surface,
                 child: ClearFavoritesDropDown<Widget>(
                   options: clearFav,
                 )
@@ -57,7 +57,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                 ),
           ],
         ),
-        backgroundColor: themeProvider.themeData.colorScheme.background,
+        backgroundColor: themeProvider.themeData.colorScheme.surface,
         body: LayoutBuilder(
           builder: (context, constraints) {
             bool isLargeScreen = constraints.maxWidth > 600;
@@ -85,8 +85,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                               height: 5,
                             ),
                             const quoteContainer(
-                              imageWidth: double.infinity,
-                              containerHeight: 160,
+                            
                             ),
                           ],
                         )
@@ -111,8 +110,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                               height: 15,
                             ),
                             const quoteContainer(
-                              imageWidth: double.infinity,
-                              containerHeight: 160,
+                         
                             ),
                           ],
                         )),
