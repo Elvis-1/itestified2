@@ -8,7 +8,6 @@ import 'package:itestified/src/core/widgets/line_widget.dart';
 import 'package:itestified/src/core/widgets/text_widget.dart';
 import 'package:itestified/src/features/animations/fade_in_trans.dart';
 import 'package:itestified/src/features/app_theme/theme_viewmodel.dart';
-import 'package:itestified/src/features/auth/presentation/viewmodel/auth_viewmodel.dart';
 import 'package:itestified/src/features/notifications/presentation/screens/notifications_screen.dart';
 import 'package:itestified/src/features/profile/presentation/screens/about.dart';
 import 'package:itestified/src/features/profile/presentation/screens/change_password.dart';
@@ -25,7 +24,6 @@ import 'package:itestified/src/features/profile/presentation/widgets/icon_and_te
 import 'package:provider/provider.dart';
 
 import '../../../auth/presentation/screens/signup_screen.dart';
-import '../../../nav/navbar.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});

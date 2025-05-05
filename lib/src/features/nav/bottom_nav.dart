@@ -14,7 +14,7 @@ class BottomNav extends StatelessWidget {
     required this.text,
   });
 
-  final IconData icon; // Changed from String to IconData
+  final IconData icon; 
   final int index;
   final void Function()? onTap;
   final Color iconColor;
@@ -29,11 +29,11 @@ class BottomNav extends StatelessWidget {
         children: [
           SizedBox(
             width: 25,
-            height: 25, // Added height to ensure square sizing
+            height: 25, 
             child: Icon(
               icon,
               color: iconColor,
-              size: 24, // Adjusted size for better visibility
+              size: 24,
             ),
           ),
           Text(

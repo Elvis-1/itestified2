@@ -9,7 +9,6 @@ import 'package:itestified/src/features/profile/presentation/screens/profile_scr
 import 'package:material_symbols_icons/symbols.dart';
 import 'package:provider/provider.dart';
 
-// Navigation State Provider
 class NavProvider with ChangeNotifier {
   int _currentIndex = 0;
   int get currentIndex => _currentIndex;
@@ -89,7 +88,7 @@ class _NavBarState extends State<NavBar> {
       const ProfileScreen(),
     ];
     pageIndex = widget.initialIndex;
-    
+
     if (widget.initialPage != null) {
       pageList = [...pageList, widget.initialPage!];
       pageIndex = pageList.length - 1;
@@ -99,7 +98,7 @@ class _NavBarState extends State<NavBar> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    // Initialize provider with initial index
+
     Provider.of<NavProvider>(context, listen: false).changeIndex(pageIndex);
   }
 

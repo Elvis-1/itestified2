@@ -16,7 +16,7 @@ class MyTestimoniesScreen extends StatelessWidget {
     final themeProvider = Provider.of<ThemeViewmodel>(context);
 
     return NavBar(
-      initialIndex: 3, // Assuming "Profile" is index 3 in your NavBar
+      initialIndex: 3, 
       initialPage: Scaffold(
         appBar: generalAppbar("My Testimonies", context),
         backgroundColor: themeProvider.themeData.colorScheme.surface,

@@ -50,7 +50,6 @@ PreferredSizeWidget generalAppBar2(BuildContext context) {
       child: isGuest
           ? LayoutBuilder(
               builder: (context, constraints) {
-                // For smaller screens, stack the elements vertically
                 if (constraints.maxWidth < 600) {
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -74,8 +73,7 @@ PreferredSizeWidget generalAppBar2(BuildContext context) {
                               ),
                             ],
                           ),
-                          if (screenWidth >
-                              350) // Only show button if there's enough space
+                          if (screenWidth > 350)
                             GestureDetector(
                               onTap: () {
                                 Navigator.pushNamed(
@@ -90,8 +88,7 @@ PreferredSizeWidget generalAppBar2(BuildContext context) {
                             ),
                         ],
                       ),
-                      if (screenWidth <=
-                          350) // Show button below on very small screens
+                      if (screenWidth <= 350)
                         Padding(
                           padding: const EdgeInsets.only(top: 8.0),
                           child: GestureDetector(
@@ -110,7 +107,7 @@ PreferredSizeWidget generalAppBar2(BuildContext context) {
                     ],
                   );
                 }
-                // For larger screens, use the original row layout
+
                 return Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -147,7 +144,6 @@ PreferredSizeWidget generalAppBar2(BuildContext context) {
             )
           : LayoutBuilder(
               builder: (context, constraints) {
-                // For smaller screens, adjust the layout
                 if (constraints.maxWidth < 600) {
                   return Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -214,7 +210,7 @@ PreferredSizeWidget generalAppBar2(BuildContext context) {
                     ],
                   );
                 }
-                // For larger screens, use the original layout
+
                 return Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [

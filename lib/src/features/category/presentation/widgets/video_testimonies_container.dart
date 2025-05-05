@@ -53,7 +53,7 @@ class videoTestimoniesContainer extends StatelessWidget {
           children: [
             // video container
             Container(
-              height: 170, // imageHeight,
+              height: 170, 
               //  width: 270,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
@@ -304,17 +304,18 @@ class videoTestimoniesContainer2 extends StatelessWidget {
                 const SizedBox(
                   height: 10,
                 ),
-                // Play arrow icon
+
                 const Center(
                   child: Icon(
                     Icons.play_arrow,
                     color: AppColors.white,
                   ),
                 ),
-                // itestify icon and text
               ],
             ),
-            const SizedBox(height: 5,),
+            const SizedBox(
+              height: 5,
+            ),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -377,7 +378,6 @@ class videoTestimoniesContainer2 extends StatelessWidget {
                             fontWeight: FontWeight.w400,
                             fontSize: secondTextSize!,
                           ),
-                        
                         ],
                       ),
                     ],

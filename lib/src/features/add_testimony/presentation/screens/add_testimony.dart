@@ -29,7 +29,7 @@ class AddTestimonyScreen extends StatelessWidget {
       backgroundColor: themeProvider.themeData.colorScheme.background,
       body: Center(
         child: ConstrainedBox(
-          constraints: BoxConstraints(maxWidth: 800), // Limit form width
+          constraints: BoxConstraints(maxWidth: 800), 
           child: SingleChildScrollView(
             reverse: true,
             child: Padding(
