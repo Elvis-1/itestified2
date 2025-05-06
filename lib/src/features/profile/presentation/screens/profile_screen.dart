@@ -58,8 +58,7 @@ class ProfileScreen extends StatelessWidget {
                     final isDarkMode =
                         themeProvider.themeData.brightness == Brightness.dark;
                     return CircleAvatar(
-                      radius:
-                          50,
+                      radius: 50,
                       backgroundColor: Colors.transparent,
                       child: Image.asset(
                         isGuest
@@ -70,7 +69,6 @@ class ProfileScreen extends StatelessWidget {
                         width: 100,
                         height: 100,
                         fit: BoxFit.contain,
-             
                       ),
                     );
                   },
@@ -181,8 +179,8 @@ class ProfileScreen extends StatelessWidget {
                       return const FollowItestify();
                     }));
                   },
-                  child: iconAndTextRow(AppIcons.follow,
-                      "Follow @iTestified", AppIcons.nextIcon),
+                  child: iconAndTextRow(
+                      AppIcons.follow, "Follow @iTestified", AppIcons.nextIcon),
                 ),
                 lineWidget(
                   width: double.infinity,

@@ -95,12 +95,12 @@ class _NavBarState extends State<NavBar> {
     }
   }
 
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
+  // @override
+  // void didChangeDependencies() {
+  //   super.didChangeDependencies();
 
-    Provider.of<NavProvider>(context, listen: false).changeIndex(pageIndex);
-  }
+  //   Provider.of<NavProvider>(context, listen: false).changeIndex(pageIndex);
+  // }
 
   void changePage(int index) {
     final navProvider = Provider.of<NavProvider>(context, listen: false);
