@@ -5,6 +5,7 @@ import 'package:itestified/src/config/theme/app_theme.dart';
 import 'package:itestified/src/features/app_theme/theme_viewmodel.dart';
 import 'package:itestified/src/features/auth/presentation/viewmodel/auth_viewmodel.dart';
 import 'package:itestified/src/features/nav/navbar.dart';
+import 'package:itestified/src/features/profile/presentation/viewmodel/donation_viewmodel.dart';
 
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
@@ -22,6 +23,10 @@ final List<SingleChildWidget> providers = [
 
   ChangeNotifierProvider<AuthViewModel>(
     create: (_) => GetIt.I<AuthViewModel>(),
+  ),
+
+  ChangeNotifierProvider<DonationViewmodel>(
+    create: (_) => GetIt.I<DonationViewmodel>(),
   ),
   // ChangeNotifierProvider(
   //   create: (_) => ThemeViewmodel(),

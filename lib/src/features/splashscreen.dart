@@ -23,10 +23,10 @@ class _SplashScreenState extends State<SplashScreen> {
 
   gotoOnboardingScreen() {
     Timer(const Duration(seconds: 3), () {
-      Navigator.of(context)
-          .pushReplacement(MaterialPageRoute(builder: (context) {
-        return const MainOnboarding();
-      }));
+      if (!mounted) return;
+      Navigator.of(context).pushReplacement(MaterialPageRoute(
+        builder: (context) => const MainOnboarding(),
+      ));
     });
   }
 

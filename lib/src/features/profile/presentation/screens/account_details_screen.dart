@@ -8,7 +8,6 @@ import 'package:itestified/src/core/widgets/appbar2.dart';
 import 'package:itestified/src/core/widgets/btn_and_text.dart';
 import 'package:itestified/src/core/widgets/text_widget.dart';
 import 'package:itestified/src/features/app_theme/theme_viewmodel.dart';
-import 'package:itestified/src/features/auth/presentation/viewmodel/auth_viewmodel.dart';
 import 'package:itestified/src/features/profile/presentation/widgets/giving_container.dart';
 import 'package:itestified/src/features/profile/presentation/widgets/text_row.dart';
 import 'package:provider/provider.dart';
@@ -31,7 +30,6 @@ class AccountDetailsScreen extends StatelessWidget {
       appBar: generalAppbar("Donations", context),
       backgroundColor: themeProvider.themeData.colorScheme.surface,
       body: Column(
-        
         children: [
           Expanded(
             child: Container(
@@ -39,13 +37,15 @@ class AccountDetailsScreen extends StatelessWidget {
               child: ListView(
                 children: [
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 10, vertical: 10),
                     child: Column(
                       children: [
                         const SizedBox(height: 2),
                         textWidget(
                           "Please transfer to the account below, use the verification code as the narration, and upload your receipt for verification. Thank you for your generosity!",
-                          fontSize: Theme.of(context).textTheme.bodyLarge?.fontSize,
+                          fontSize:
+                              Theme.of(context).textTheme.bodyLarge?.fontSize,
                         ),
                         const SizedBox(height: 10),
                       ],
@@ -54,9 +54,12 @@ class AccountDetailsScreen extends StatelessWidget {
                   const SizedBox(height: 20),
                   if (transferType == TransferType.USD) ...[
                     givingContainer([
-                      TextRow(title: "Account Holder", value: "Elvis Aisosa Igiebor"),
+                      TextRow(
+                          title: "Account Holder",
+                          value: "Elvis Aisosa Igiebor"),
                       TextRow(title: "Bank Name", value: "Wells Fargo"),
-                      TextRow(title: "Account Number", value: "40630232503732813"),
+                      TextRow(
+                          title: "Account Number", value: "40630232503732813"),
                       TextRow(title: "Routing Number", value: "121000248"),
                       TextRow(title: "Swift Code", value: "WFBIUS6S"),
                       TextRow(title: "Address", value: "651 N"),
@@ -64,7 +67,9 @@ class AccountDetailsScreen extends StatelessWidget {
                   ],
                   if (transferType == TransferType.NGN)
                     givingContainer([
-                      TextRow(title: "Account Holder", value: "Raenest/Elvis Aisosa Igiebor"),
+                      TextRow(
+                          title: "Account Holder",
+                          value: "Raenest/Elvis Aisosa Igiebor"),
                       TextRow(title: "Bank Name", value: "Kredi Money MFB LTD"),
                       TextRow(title: "Account Number", value: "1830029269"),
                     ], title: "For NGN Payments"),
@@ -90,23 +95,22 @@ class AccountDetailsScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-                  
                   const SizedBox(height: 15),
                   if (authProvider.isGuest) ...[
                     Align(
-                    alignment: Alignment.centerLeft,
-                    child: textWidget(
-                      "Email Address",
-                      fontSize: 18,
-                      color: themeProvider.themeData.colorScheme.tertiary,
+                      alignment: Alignment.centerLeft,
+                      child: textWidget(
+                        "Email Address",
+                        fontSize: 18,
+                        color: themeProvider.themeData.colorScheme.tertiary,
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 10),
-                  customTextField(
-                    prefixIc: const Icon(Icons.email_outlined),
-                    borderColor: themeProvider.themeData.colorScheme.outline,
-                    hintText: 'Enter Email Address',
-                  ),
+                    const SizedBox(height: 10),
+                    customTextField(
+                      prefixIc: const Icon(Icons.email_outlined),
+                      borderColor: themeProvider.themeData.colorScheme.outline,
+                      hintText: 'Enter Email Address',
+                    ),
                     const SizedBox(height: 15),
                   ],
                   textWidget(
@@ -134,12 +138,16 @@ class AccountDetailsScreen extends StatelessWidget {
                           textWidget(
                             "Browse Files",
                             color: AppColors.primaryColor,
-                            fontSize: Theme.of(context).textTheme.bodySmall?.fontSize,
+                            fontSize:
+                                Theme.of(context).textTheme.bodySmall?.fontSize,
                           ),
                           const SizedBox(height: 10),
                           textWidget(
                             "PDF,PNG up to 5mb",
-                            fontSize: Theme.of(context).textTheme.labelSmall?.fontSize,
+                            fontSize: Theme.of(context)
+                                .textTheme
+                                .labelSmall
+                                ?.fontSize,
                           ),
                         ],
                       ),
@@ -151,7 +159,8 @@ class AccountDetailsScreen extends StatelessWidget {
                     verticalPadding: 12,
                     text: 'Submit',
                     textColor: AppColors.white,
-                    containerColor: customColors?.donationBtn ?? AppColors.greyColor,
+                    containerColor:
+                        customColors?.donationBtn ?? AppColors.greyColor,
                   ),
                 ],
               ),

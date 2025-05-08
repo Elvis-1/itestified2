@@ -8,15 +8,31 @@ import 'package:itestified/src/features/splashscreen.dart';
 import 'package:provider/provider.dart';
 import 'package:itestified/src/config/service_locators.dart' as service_locator;
 
+// void main() async {
+//   WidgetsFlutterBinding.ensureInitialized();
+//   await service_locator.setupLocator();
+//   await SystemChrome.setPreferredOrientations([
+//     DeviceOrientation.landscapeRight,
+//     DeviceOrientation.landscapeLeft,
+//     DeviceOrientation.portraitUp, // Optional: Keep portrait enabled
+//   ]);
+//   runApp(MultiProvider(providers: providers, child: const MyApp()));
+// }
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await service_locator.setupLocator();
-  await SystemChrome.setPreferredOrientations([
-    DeviceOrientation.landscapeRight,
-    DeviceOrientation.landscapeLeft,
-    DeviceOrientation.portraitUp, // Optional: Keep portrait enabled
-  ]);
-  runApp(MultiProvider(providers: providers, child: const MyApp()));
+
+  try {
+    await service_locator.setupLocator();
+    await SystemChrome.setPreferredOrientations([
+      DeviceOrientation.landscapeRight,
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.portraitUp,
+    ]);
+    runApp(MultiProvider(providers: providers, child: const MyApp()));
+  } catch (e, stackTrace) {
+    debugPrint('💥 Startup error: $e\n$stackTrace');
+  }
 }
 
 class MyApp extends StatelessWidget {
@@ -38,7 +54,6 @@ class MyApp extends StatelessWidget {
     // );
   }
 }
-
 
 // areas not yet responsive
 // notifications
