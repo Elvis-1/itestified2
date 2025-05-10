@@ -8,8 +8,11 @@ import 'package:itestified/src/features/auth/presentation/viewmodel/auth_viewmod
 import 'package:itestified/src/features/profile/data/profile_api.dart';
 import 'package:itestified/src/features/profile/domain/donation_service.dart';
 import 'package:itestified/src/features/profile/presentation/viewmodel/donation_viewmodel.dart';
+import 'package:itestified/src/features/video/utiils/constants.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../features/video/view_model/video_player_provider.dart';
 
 final sl = GetIt.instance;
 
@@ -32,7 +35,10 @@ void _registerViewModels() {
   sl
     ..registerFactory(() => AuthViewModel(sl()))
     ..registerFactory(() => ThemeViewmodel())
-    ..registerFactory(() => DonationViewmodel());
+    ..registerFactory(() => DonationViewmodel())
+    ..registerFactory(() => VideoViewModel());
+
+
 }
 
 void _registerDataSources() {

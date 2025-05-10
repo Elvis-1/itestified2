@@ -1,6 +1,6 @@
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
-import 'package:itestified/src/config/authprovider.dart';
+
 import 'package:itestified/src/config/theme/app_color.dart';
 import 'package:itestified/src/core/utils/app_const/app_icons.dart';
 import 'package:itestified/src/core/utils/app_const/enum.dart';
@@ -8,6 +8,7 @@ import 'package:itestified/src/core/widgets/appbar2.dart';
 import 'package:itestified/src/core/widgets/btn_and_text.dart';
 import 'package:itestified/src/core/widgets/text_widget.dart';
 import 'package:itestified/src/features/app_theme/theme_viewmodel.dart';
+import 'package:itestified/src/features/auth/presentation/viewmodel/auth_viewmodel.dart';
 import 'package:itestified/src/features/profile/presentation/widgets/giving_container.dart';
 import 'package:itestified/src/features/profile/presentation/widgets/text_row.dart';
 import 'package:provider/provider.dart';
@@ -23,7 +24,7 @@ class AccountDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var themeProvider = Provider.of<ThemeViewmodel>(context);
-    var authProvider = Provider.of<AuthProvider>(context);
+    var authProvider = Provider.of<AuthViewModel>(context);
     final customColors = Theme.of(context).extension<AppCustomColors>();
 
     return Scaffold(

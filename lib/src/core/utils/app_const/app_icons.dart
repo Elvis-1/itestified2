@@ -81,4 +81,6 @@ class AppImages {
   static String favoriteImage = "assets/images/favorite_image.png";
   static String quotesImage = "assets/images/quote.png";
   static String scriptureImage = "assets/images/scripture_frame.png";
+  static String togetherImage = "assets/images/together.png";
+    static String babyImage = "assets/images/baby.png";
 }

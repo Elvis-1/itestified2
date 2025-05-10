@@ -8,8 +8,9 @@ import 'package:itestified/src/core/widgets/btn_and_text.dart';
 import 'package:itestified/src/core/widgets/text_widget.dart';
 import 'package:itestified/src/features/app_theme/theme_viewmodel.dart';
 import 'package:itestified/src/features/profile/presentation/screens/donation_details.dart';
+import 'package:itestified/src/features/profile/presentation/viewmodel/donation_viewmodel.dart';
 import 'package:provider/provider.dart';
-import '../../../../config/donation_history_provider.dart';
+
 
 class DonationHistoryScreen extends StatelessWidget {
   static const String routeName = '/donation-history';
@@ -20,7 +21,7 @@ class DonationHistoryScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeViewmodel>(context);
     final donationHistoryProvider =
-        Provider.of<DonationHistoryProvider>(context);
+        Provider.of<DonationViewmodel>(context);
     final themeData = themeProvider.themeData;
 
     return Scaffold(
@@ -91,7 +92,7 @@ class DonationHistoryScreen extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: 20),
-                    Consumer<DonationHistoryProvider>(
+                    Consumer<DonationViewmodel>(
                       builder: (context, provider, _) {
                         return provider.isRefreshing
                             ? Container(
@@ -183,7 +184,7 @@ class DonationHistoryScreen extends StatelessWidget {
     final themeData =
         Provider.of<ThemeViewmodel>(context, listen: false).themeData;
     final donationHistoryProvider =
-        Provider.of<DonationHistoryProvider>(context, listen: false);
+        Provider.of<DonationViewmodel>(context, listen: false);
 
     showModalBottomSheet(
       context: context,
@@ -241,7 +242,7 @@ class DonationHistoryScreen extends StatelessWidget {
     final themeData =
         Provider.of<ThemeViewmodel>(context, listen: false).themeData;
     final donationHistoryProvider =
-        Provider.of<DonationHistoryProvider>(context, listen: false);
+        Provider.of<DonationViewmodel>(context, listen: false);
 
     DateTime? localStartDate = donationHistoryProvider.startDate;
     DateTime? localEndDate = donationHistoryProvider.endDate;
@@ -349,7 +350,7 @@ class DonationHistoryScreen extends StatelessWidget {
   }
 
   Widget _buildFilterOption(
-      BuildContext context, String status, DonationHistoryProvider provider) {
+      BuildContext context, String status, DonationViewmodel provider) {
     final themeData = Provider.of<ThemeViewmodel>(context).themeData;
     final isSelected = provider.selectedStatus == status;
 
@@ -489,7 +490,7 @@ class DonationHistoryScreen extends StatelessWidget {
 class _DatePickerContainer extends StatefulWidget {
   final DateTime? initialDate;
   final Function(DateTime?) onDateSelected;
-  final DonationHistoryProvider provider;
+  final DonationViewmodel provider;
 
   const _DatePickerContainer({
     required this.initialDate,

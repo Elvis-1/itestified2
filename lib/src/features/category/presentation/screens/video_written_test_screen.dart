@@ -1,175 +1,284 @@
-import 'dart:ui';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:itestified/src/config/theme/app_color.dart';
-import 'package:itestified/src/core/utils/app_const/app_icons.dart';
 import 'package:itestified/src/core/widgets/appbar2.dart';
 import 'package:itestified/src/core/widgets/icon_and_text.dart';
 import 'package:itestified/src/features/animations/fade_in_trans.dart';
 import 'package:itestified/src/features/app_theme/theme_viewmodel.dart';
 import 'package:itestified/src/features/category/presentation/widgets/text_testimony_container.dart';
 import 'package:itestified/src/features/category/presentation/widgets/video_testimonies_container.dart';
-import 'package:itestified/src/features/shared/widgets/screen.dart';
+import 'package:itestified/src/features/profile/presentation/screens/my_testimonies_details.dart';
 import 'package:itestified/src/features/video/presentation/screens/video_screen.dart';
+
+import 'package:material_symbols_icons/symbols.dart';
 import 'package:provider/provider.dart';
 
-class VideoAndWrittenTestimonieScreen extends StatefulWidget {
+class VideoAndWrittenTestimonieScreen extends StatelessWidget {
   const VideoAndWrittenTestimonieScreen({super.key});
-  static const routeName = '/vid-written-testimonies';
-  @override
-  State<VideoAndWrittenTestimonieScreen> createState() =>
-      _VideoAndWrittenTestimonieScreenState();
-}
 
-class _VideoAndWrittenTestimonieScreenState
-    extends State<VideoAndWrittenTestimonieScreen> {
-  bool vidoes = true;
-  bool text = false;
+  static const routeName = '/vid-written-testimonies';
 
   @override
   Widget build(BuildContext context) {
-    var themeProvider = Provider.of<ThemeViewmodel>(context);
+    return ChangeNotifierProvider(
+      create: (_) => VideoWrittenTestimoniesViewModel(),
+      child: Consumer<VideoWrittenTestimoniesViewModel>(
+        builder: (context, viewModel, _) {
+          final themeProvider = Provider.of<ThemeViewmodel>(context);
+          return Scaffold(
+            appBar: generalAppbar('Healing Testimonies', context),
+            backgroundColor: themeProvider.themeData.colorScheme.surface,
+            body: LayoutBuilder(
+              builder: (context, constraints) {
+                final isLargeScreen = constraints.maxWidth > viewModel.config.mobileBreakpoint;
+                final margin = viewModel.getMargin(context);
+                final horizontalPadding = viewModel.getHorizontalPadding(context);
+                final textSize = viewModel.getTextSize(context);
+                final iconSize = viewModel.getIconSize(context);
 
-    return Scaffold(
-        appBar: generalAppbar('Healing Testimonies', context),
-        backgroundColor: themeProvider.themeData.colorScheme.background,
-        body: LayoutBuilder(
-          builder: (context, constraints) {
-            bool isLargeScreen = constraints.maxWidth > 600;
-            return FadeInTransitionWidget(
-              child: Column(
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                        border: Border(
-                            bottom: BorderSide(color: AppColors.opaqueBlack))),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              vidoes = true;
-                              text = false;
-                            });
-                          },
-                          child: iconAndText(
-                              "Videos",
-                              AppIcons.videoIcon,
-                              vidoes == true
-                                  ? AppColors.primaryColor
-                                  : themeProvider
-                                      .themeData.colorScheme.background,
-                              context),
+           
+
+                return FadeInTransitionWidget(
+                  child: Column(
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          border: Border(
+                            bottom: BorderSide(color: AppColors.opaqueBlack),
+                          ),
                         ),
-                        GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                vidoes = false;
-                                text = true;
-                              });
-                            },
-                            child: iconAndText(
-                                "Text",
-                                AppIcons.textIcon,
-                                text == true
+                        padding: EdgeInsets.symmetric(vertical: viewModel.getPadding(context)),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            GestureDetector(
+                              onTap: () => viewModel.setVideoMode(true),
+                              child: iconAndText(
+                                "Videos",
+                                Icon(Symbols.slideshow, size: iconSize),
+                                viewModel.isVideoMode
                                     ? AppColors.primaryColor
-                                    : themeProvider
-                                        .themeData.colorScheme.background,
-                                context))
-                      ],
-                    ),
+                                    : themeProvider.themeData.colorScheme.surface,
+                                context,
+                              ),
+                            ),
+                            GestureDetector(
+                              onTap: () => viewModel.setVideoMode(false),
+                              child: iconAndText(
+                                "Text",
+                                Icon(Symbols.article, size: iconSize),
+                                !viewModel.isVideoMode
+                                    ? AppColors.primaryColor
+                                    : themeProvider.themeData.colorScheme.surface,
+                                context,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Expanded(
+                        child: isLargeScreen
+                            ? _buildLargeScreenGrid(context, viewModel, constraints)
+                            : _buildSmallScreenList(context, viewModel, constraints),
+                      ),
+                    ],
                   ),
-
-                  isLargeScreen
-                      ? Expanded(
-                          child: largeScreenGrid(
-                            context,
-                            vidoes == true
-                                ? GestureDetector(
-                                    onTap: () {
-                                      Navigator.of(context).push(
-                                          MaterialPageRoute(builder: (context) {
-                                        return const VideoScreen(heroIndex: 1);
-                                      }));
-                                    },
-                                    child: const videoTestimoniesContainer2(
-                                      // videoContainerHeight: 300,
-                                      fix: BoxFit.fill,
-                                      imageHeight: 120,
-                                    ),
-                                  )
-                                : const TextTestimonyContainer(
-                                    containerWidth: double.infinity),
-                          ),
-                        )
-                      : Expanded(
-                          child: smallScreenListView(
-                            vidoes == true
-                                ? GestureDetector(
-                                    onTap: () {
-                                      Navigator.of(context).push(
-                                          MaterialPageRoute(builder: (context) {
-                                        return const VideoScreen(
-                                          heroIndex: 1,
-                                        );
-                                      }));
-                                    },
-                                    child: videoTestimoniesContainer2(
-                                      videoContainerHeight: 270,
-                                      videoContainerWidth: 400,
-                                      imageHeight: 200,
-                                      firstTextSize: Theme.of(context)
-                                          .textTheme
-                                          .titleMedium
-                                          ?.fontSize,
-                                      secondTextSize: Theme.of(context)
-                                          .textTheme
-                                          .labelSmall
-                                          ?.fontSize,
-                                      itestifyIconTopPosition: 205,
-                                    ))
-                                : const TextTestimonyContainer(
-                                    containerWidth: double.infinity),
-                          ),
-                        )
-
-                  // Expanded(
-                  //   child: ListView.builder(
-                  //       padding: EdgeInsets.fromViewPadding(ViewPadding.zero, 1),
-                  //       itemCount: 10,
-                  //       physics: const BouncingScrollPhysics(),
-                  //       itemBuilder: (context, index) {
-                  //         return Column(
-                  //           children: [
-                  //             vidoes == true
-                  //                 ?
-
-                  //                 GestureDetector(
-                  //                     onTap: () {
-                  //                       Navigator.of(context).push(
-                  //                           MaterialPageRoute(builder: (context) {
-                  //                         return const VideoScreen();
-                  //                       }));
-                  //                     },
-                  //                     child: const videoTestimoniesContainer2(
-                  //                       videoContainerHeight: 270,
-                  //                       videoContainerWidth: 400,
-                  //                       imageHeight: 200,
-                  //                       itestifyIconTopPosition: 205,
-                  //                     ))
-                  //                 : const TextTestimonyContainer(
-                  //                     containerWidth: double.infinity),
-                  //           ],
-                  //         );
-                  //       }),
-                  // )
-                ],
-              ),
-            );
-          },
-        ));
+                );
+              },
+            ),
+          );
+        },
+      ),
+    );
   }
+
+  Widget _buildLargeScreenGrid(BuildContext context, VideoWrittenTestimoniesViewModel viewModel, BoxConstraints constraints) {
+    final margin = viewModel.getMargin(context);
+    final horizontalPadding = viewModel.getHorizontalPadding(context);
+    return GridView.builder(
+      padding: EdgeInsets.symmetric(horizontal: horizontalPadding, vertical: margin / 2),
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: viewModel.getGridCrossAxisCount(context),
+        crossAxisSpacing: margin,
+        mainAxisSpacing: margin,
+        childAspectRatio: viewModel.getContainerWidth(context) / viewModel.getContainerHeight(context),
+      ),
+      itemCount: 10,
+      itemBuilder: (context, index) {
+        return _buildContainer(context, viewModel, index);
+      },
+    );
+  }
+
+  Widget _buildSmallScreenList(BuildContext context, VideoWrittenTestimoniesViewModel viewModel, BoxConstraints constraints) {
+    final margin = viewModel.getMargin(context);
+    final horizontalPadding = viewModel.getHorizontalPadding(context);
+    return ListView.builder(
+      padding: EdgeInsets.symmetric(horizontal: horizontalPadding, vertical: margin / 2),
+      itemCount: 10,
+      itemBuilder: (context, index) {
+        return Padding(
+          padding: EdgeInsets.only(bottom: margin),
+          child: _buildContainer(context, viewModel, index),
+        );
+      },
+    );
+  }
+
+  Widget _buildContainer(BuildContext context, VideoWrittenTestimoniesViewModel viewModel, int index) {
+    final width = viewModel.getContainerWidth(context);
+    final height = viewModel.getContainerHeight(context);
+    final borderRadius = viewModel.getBorderRadius(context);
+
+    return ClipRect(
+      child: GestureDetector(
+        onTap: () => viewModel.navigateToScreen(context, index + 1),
+        child: Container(
+          constraints: BoxConstraints.tightFor(width: width, height: height),
+          child: viewModel.isVideoMode
+              ? VideoTestimonyContainer2(
+                  videoId: index + 1,
+                  containerWidth: width,
+                  containerHeight: height,
+                  borderRadius: borderRadius,
+                  imageHeightRatio: 0.55,
+                )
+              : TextTestimonyContainer(
+                  containerWidth: width,
+                  containerHeight: height,
+                  borderRadius: borderRadius,
+                  index: index,
+                ),
+        ),
+      ),
+    );
+  }
+}
+
+class VideoWrittenTestimoniesViewModel extends ChangeNotifier {
+  final VideoWrittenTestimoniesConfig config;
+  bool _isVideoMode = true;
+
+  VideoWrittenTestimoniesViewModel({this.config = const VideoWrittenTestimoniesConfig()});
+
+  bool get isVideoMode => _isVideoMode;
+
+  void setVideoMode(bool isVideo) {
+    _isVideoMode = isVideo;
+    notifyListeners();
+  }
+
+  double getContainerWidth(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    if (width >= config.desktopBreakpoint) return config.baseContainerWidth * 1.5;
+    if (width >= config.tabletBreakpoint) return config.baseContainerWidth * 1.2;
+    return config.baseContainerWidth;
+  }
+
+  double getContainerHeight(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    final baseHeight = _isVideoMode ? config.baseVideoContainerHeight : config.baseTextContainerHeight;
+    if (width >= config.desktopBreakpoint) return baseHeight * 1.5;
+    if (width >= config.tabletBreakpoint) return baseHeight * 1.2;
+    return baseHeight;
+  }
+
+  double getVideoImageHeight(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    final baseImageHeight = config.baseVideoImageHeight;
+    if (width >= config.desktopBreakpoint) return baseImageHeight * 1.5;
+    if (width >= config.tabletBreakpoint) return baseImageHeight * 1.2;
+    return baseImageHeight;
+  }
+
+  double getBorderRadius(BuildContext context) {
+    return config.baseBorderRadius;
+  }
+
+  double getMargin(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    if (width >= config.desktopBreakpoint) return config.baseMargin * 1.5;
+    if (width >= config.tabletBreakpoint) return config.baseMargin * 1.2;
+    return config.baseMargin;
+  }
+
+  double getHorizontalPadding(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    if (width >= config.desktopBreakpoint) return config.baseHorizontalPadding * 1.2;
+    if (width >= config.tabletBreakpoint) return config.baseHorizontalPadding * 1.1;
+    return config.baseHorizontalPadding;
+  }
+
+  double getPadding(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    if (width >= config.desktopBreakpoint) return config.basePadding * 1.2;
+    if (width >= config.tabletBreakpoint) return config.basePadding * 1.1;
+    return config.basePadding;
+  }
+
+  double getIconSize(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    if (width >= config.desktopBreakpoint) return config.baseIconSize * 1.2;
+    if (width >= config.tabletBreakpoint) return config.baseIconSize * 1.1;
+    return config.baseIconSize;
+  }
+
+  double getTextSize(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    final textScaleFactor = MediaQuery.of(context).textScaleFactor.clamp(0.8, 1.2);
+    final baseSize = width < config.mobileBreakpoint ? config.baseTextSize * 0.9 : config.baseTextSize;
+    final scaledSize = width >= config.desktopBreakpoint
+        ? baseSize * 1.2
+        : width >= config.tabletBreakpoint
+            ? baseSize * 1.1
+            : baseSize;
+    return scaledSize * textScaleFactor;
+  }
+
+  int getGridCrossAxisCount(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    return width >= config.desktopBreakpoint ? 3 : 2;
+  }
+
+  void navigateToScreen(BuildContext context, int heroIndex) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => _isVideoMode
+            ? VideoScreen(heroIndex: heroIndex)
+            : const MyTestimoniesDetailsScreen(),
+      ),
+    );
+  }
+}
+
+@immutable
+class VideoWrittenTestimoniesConfig {
+  final double mobileBreakpoint;
+  final double tabletBreakpoint;
+  final double desktopBreakpoint;
+  final double baseContainerWidth;
+  final double baseTextContainerHeight; 
+  final double baseVideoContainerHeight; 
+  final double baseVideoImageHeight;
+  final double baseBorderRadius;
+  final double baseMargin;
+  final double baseHorizontalPadding;
+  final double basePadding;
+  final double baseIconSize;
+  final double baseTextSize;
+
+  const VideoWrittenTestimoniesConfig({
+    this.mobileBreakpoint = 600,
+    this.tabletBreakpoint = 800,
+    this.desktopBreakpoint = 1200,
+    this.baseContainerWidth = 345.0,
+    this.baseTextContainerHeight = 162.0, 
+    this.baseVideoContainerHeight = 280.0,
+    this.baseVideoImageHeight = 220.0, 
+    this.baseBorderRadius = 16.0,
+    this.baseMargin = 8.0,
+    this.baseHorizontalPadding = 10.0,
+    this.basePadding = 10.0,
+    this.baseIconSize = 24.0,
+    this.baseTextSize = 16.0,
+  });
 }

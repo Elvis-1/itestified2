@@ -15,7 +15,7 @@ Widget nameTile(TextStyle style, AuthViewModel authViewModel) {
       const SizedBox(
         height: 10,
       ),
-      customTextField(
+      customTextField2(
           controller: authViewModel.fullNameController,
           errorText: authViewModel.nameError,
           authViewModel: authViewModel,
@@ -27,7 +27,7 @@ Widget nameTile(TextStyle style, AuthViewModel authViewModel) {
           prefixIc: Icon(
             Icons.person_2_outlined,
             color: Colors.grey.shade700,
-            size: 30,
+              size: 24,
           )),
     ],
   );
@@ -44,7 +44,7 @@ Widget passwordTile(TextStyle style, AuthViewModel authViewModel,
       const SizedBox(
         height: 10,
       ),
-      customTextField(
+      customTextField2(
           obscureText: !authViewModel.showPassword,
           errorText: authViewModel.passwordErr,
           isLast: islast,
@@ -69,7 +69,7 @@ Widget passwordTile(TextStyle style, AuthViewModel authViewModel,
               authViewModel.showPassword
                   ? Icons.visibility_outlined
                   : Icons.visibility_off_outlined,
-              size: 30,
+              size: 24,
               color: Colors.grey.shade700,
             ),
           )),
@@ -90,7 +90,7 @@ Widget confirmPasswordTile(
       const SizedBox(
         height: 10,
       ),
-      customTextField(
+      customTextField2(
           obscureText: !authViewModel.showPassword,
           isLast: true,
           controller: authViewModel.confirmPasswordController,
@@ -119,7 +119,7 @@ Widget confirmPasswordTile(
               authViewModel.showPassword
                   ? Icons.visibility_outlined
                   : Icons.visibility_off_outlined,
-              size: 30,
+              size: 24,
               color: Colors.grey.shade700,
             ),
           )),
@@ -139,7 +139,7 @@ Widget emailTile(TextStyle style, AuthViewModel authViewModel,
       const SizedBox(
         height: 10,
       ),
-      customTextField(
+      customTextField2(
           controller: authViewModel.emailController,
           errorText: authViewModel.emailError,
           authViewModel: authViewModel,
@@ -153,8 +153,8 @@ Widget emailTile(TextStyle style, AuthViewModel authViewModel,
           hintText: "Enter Email Address",
           prefixIc: Icon(
             Icons.email_outlined,
-            size: 30,
-            color: Colors.grey.shade700,
+            size: 24,
+               color: Colors.grey.shade700,
           )),
     ],
   );

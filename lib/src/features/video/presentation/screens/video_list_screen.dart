@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:itestified/src/core/widgets/appbar2.dart';
 import 'package:itestified/src/features/animations/fade_in_trans.dart';
 import 'package:itestified/src/features/app_theme/theme_viewmodel.dart';
+import 'package:itestified/src/features/category/presentation/widgets/text_testimony_container.dart';
 import 'package:itestified/src/features/category/presentation/widgets/video_testimonies_container.dart';
 import 'package:itestified/src/features/shared/widgets/screen.dart';
 import 'package:provider/provider.dart';
+
+import '../../../category/presentation/screens/video_written_test_screen.dart';
 
 class VideoListScreen extends StatelessWidget {
   const VideoListScreen({super.key});
@@ -13,40 +16,97 @@ class VideoListScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var themeProvider = Provider.of<ThemeViewmodel>(context);
-    return Scaffold(
-      appBar: generalAppbar('Video Testimonies', context),
-      backgroundColor: themeProvider.themeData.colorScheme.surface,
-      body: SafeArea(child: LayoutBuilder(
-        builder: (context, contraints) {
-          bool isLargeScreen = contraints.maxWidth > 600;
-          return isLargeScreen
-              ? largeScreenGrid(
-                  context,
-                  FadeInTransitionWidget(
-                    child: videoTestimoniesContainer2(
-                        firstTextSize:
-                            Theme.of(context).textTheme.titleMedium?.fontSize,
-                        secondTextSize:
-                            Theme.of(context).textTheme.labelSmall?.fontSize,
-                        imageHeight: contraints.maxWidth < 800 ? 120 : 220),
-                  ))
-              : smallScreenListView(FadeInTransitionWidget(
-                  child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 24),
-                    child: videoTestimoniesContainer2(
-                        firstTextSize:
-                            Theme.of(context).textTheme.titleMedium?.fontSize,
-                        secondTextSize:
-                            Theme.of(context).textTheme.labelSmall?.fontSize,
-                        videoContainerHeight: 280,
-                        videoContainerWidth: 345,
-                        fix: BoxFit.cover,
-                        imageHeight: 200),
-                  ),
-                ));
-        },
-      )),
+    return ChangeNotifierProvider(
+      create: (_) => VideoWrittenTestimoniesViewModel(),
+      child: Scaffold(
+        appBar: generalAppbar('Video Testimonies', context),
+        body: _VideoListContent(),
+      ),
     );
+  }
+}
+
+class _VideoListContent extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeViewmodel>(context);
+    final viewModel = Provider.of<VideoWrittenTestimoniesViewModel>(context);
+
+    return Container(
+      color: themeProvider.themeData.colorScheme.surface,
+      child: SafeArea(
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            final isLargeScreen = constraints.maxWidth > 600;
+            final crossAxisCount = viewModel.getGridCrossAxisCount(context);
+            final itemCount = 10;
+
+            return isLargeScreen
+                ? _buildGridLayout(context, crossAxisCount, itemCount)
+                : _buildListLayout(context, itemCount);
+          },
+        ),
+      ),
+    );
+  }
+
+  Widget _buildGridLayout(BuildContext context, int crossAxisCount, int itemCount) {
+    final viewModel = Provider.of<VideoWrittenTestimoniesViewModel>(context);
+    final padding = viewModel.getPadding(context);
+    final margin = viewModel.getMargin(context);
+
+    return GridView.builder(
+      padding: EdgeInsets.all(padding),
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: crossAxisCount,
+        crossAxisSpacing: margin,
+        mainAxisSpacing: margin,
+        childAspectRatio: 1.5, 
+      ),
+      itemCount: itemCount,
+      itemBuilder: (context, index) {
+        return FadeInTransitionWidget(
+          child: _buildTestimonyItem(context, index),
+        );
+      },
+    );
+  }
+
+  Widget _buildListLayout(BuildContext context, int itemCount) {
+    final viewModel = Provider.of<VideoWrittenTestimoniesViewModel>(context);
+    final padding = viewModel.getPadding(context);
+    final margin = viewModel.getMargin(context);
+
+    return ListView.builder(
+      padding: EdgeInsets.all(padding),
+      itemCount: itemCount,
+      itemBuilder: (context, index) {
+        return Padding(
+          padding: EdgeInsets.only(bottom: margin),
+          child: FadeInTransitionWidget(
+            child: _buildTestimonyItem(context, index),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildTestimonyItem(BuildContext context, int index) {
+    final viewModel = Provider.of<VideoWrittenTestimoniesViewModel>(context);
+    
+    return viewModel.isVideoMode
+        ? VideoTestimonyContainer2(
+            videoId: index + 1,
+            containerWidth: viewModel.getContainerWidth(context),
+            containerHeight: viewModel.getContainerHeight(context),
+            borderRadius: viewModel.getBorderRadius(context),
+            imageHeightRatio: 0.55,
+          )
+        : TextTestimonyContainer(
+            containerWidth: viewModel.getContainerWidth(context),
+            containerHeight: viewModel.getContainerHeight(context),
+            borderRadius: viewModel.getBorderRadius(context),
+            index: index,
+          );
   }
 }

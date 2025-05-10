@@ -28,7 +28,7 @@ class CategoriesListScreen extends StatelessWidget {
                 .onTertiary, //Theme.of(context).textTheme.titleLarge?.fontSize,
           ),
         ),
-        backgroundColor: themeProvider.themeData.colorScheme.background,
+        backgroundColor: themeProvider.themeData.colorScheme.surface,
         body: LayoutBuilder(
           builder: (context, constraints) {
             bool isLargeScreen = constraints.maxWidth > 600;

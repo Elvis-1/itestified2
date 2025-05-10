@@ -1,5 +1,3 @@
-import 'dart:async';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:itestified/src/config/theme/app_color.dart';
 import 'package:itestified/src/core/utils/app_const/app_icons.dart';
@@ -8,6 +6,7 @@ import 'package:itestified/src/core/widgets/normal_text_style.dart';
 import 'package:itestified/src/core/widgets/text_widget.dart';
 import 'package:itestified/src/features/app_theme/theme_viewmodel.dart';
 import 'package:itestified/src/features/video/presentation/widgets/likeOrShare.dart';
+import 'package:material_symbols_icons/material_symbols_icons.dart';
 import 'package:provider/provider.dart';
 
 class MyTestimoniesDetailsScreen extends StatefulWidget {
@@ -54,7 +53,7 @@ class _MyTestimoniesDetailsScreenState
                           showModalBottomSheet(
                             context: context,
                             builder: (context) {
-                              return const editDeleteShareModal();
+                              return const EditDeleteShareModal();
                             },
                           );
                         },
@@ -171,44 +170,47 @@ class _MyTestimoniesDetailsScreenState
               ),
             ],
           ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Container(
-                width: 230,
-                height: 50,
-                decoration: BoxDecoration(
-                    border: Border.all(
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: Container(
+                  width: 230,
+                  height: 50,
+                  decoration: BoxDecoration(
+                      border: Border.all(
+                        color: themeProvider.themeData.colorScheme.outline,
+                      ),
                       color: themeProvider.themeData.colorScheme.outline,
-                    ),
-                    color: themeProvider.themeData.colorScheme.outline,
-                    borderRadius: BorderRadius.circular(15)),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    likeOrShare(AppIcons.likeIcon, '10',
-                        containerColor: AppColors.transparent),
-                    InkWell(
-                      onTap: () async {
-                        await showModalBottomSheet(
-                            backgroundColor:
-                                themeProvider.themeData.colorScheme.surface,
-                            context: context,
-                            builder: (context) {
-                              return ListView(
-                                shrinkWrap: true,
-                                children: const [
-                                  commentListModal(),
-                                ],
-                              );
-                            });
-                      },
-                      child: likeOrShare(AppIcons.commentIcon, '10',
+                      borderRadius: BorderRadius.circular(15)),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      likeOrShare(Symbols.thumb_up_sharp, '10',
                           containerColor: AppColors.transparent),
-                    ),
-                    likeOrShare(AppIcons.shareIcon, '10',
-                        containerColor: AppColors.transparent),
-                  ],
-                )),
+                      InkWell(
+                        onTap: () async {
+                          await showModalBottomSheet(
+                              backgroundColor:
+                                  themeProvider.themeData.colorScheme.surface,
+                              context: context,
+                              builder: (context) {
+                                return ListView(
+                                  shrinkWrap: true,
+                                  children: const [
+                                   commentListModal(),
+                                  ],
+                                );
+                              });
+                        },
+                        child: likeOrShare(Symbols.comment, '12',
+                            containerColor: AppColors.transparent),
+                      ),
+                      likeOrShare(Symbols.share, 'Share',
+                          containerColor: AppColors.transparent),
+                    ],
+                  )),
+            ),
           ),
         ]),
       ),
