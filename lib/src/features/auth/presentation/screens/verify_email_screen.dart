@@ -8,16 +8,18 @@ import 'package:itestified/src/features/app_theme/theme_viewmodel.dart';
 import 'package:itestified/src/features/auth/presentation/viewmodel/auth_viewmodel.dart';
 import 'package:provider/provider.dart';
 
-class Arguments {
-  String email;
-  Arguments({required this.email});
-}
+// class Arguments {
+//   String email;
+//   Arguments({required this.email});
+// }
 
 class VerifyEmailScreen extends StatefulWidget {
-  const VerifyEmailScreen({super.key, required this.args});
+  const VerifyEmailScreen({
+    super.key,
+  });
   static const routeName = '/verify-email-screen';
 
-  final Arguments args;
+  //final Arguments args;
 
   @override
   State<VerifyEmailScreen> createState() => _VerifyEmailScreenState();
@@ -70,7 +72,7 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
                               textColor: themeProvider
                                   .themeData.colorScheme.tertiary)),
                       TextSpan(
-                          text: widget.args.email,
+                          text: 'widget.args.email',
                           style: normalTextStyle(
                               fontSize: Theme.of(context)
                                   .textTheme

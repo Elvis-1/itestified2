@@ -10,6 +10,7 @@ import 'package:itestified/src/features/auth/domain/requests/otp_request.dart';
 import 'package:itestified/src/features/auth/domain/requests/register_user_request.dart';
 import 'package:itestified/src/features/auth/domain/service/auth_service.dart';
 import 'package:itestified/src/features/auth/presentation/screens/new_password.dart';
+import 'package:itestified/src/features/auth/presentation/screens/verify_email_screen.dart';
 import 'package:itestified/src/features/auth/presentation/screens/otp_screen.dart';
 import 'package:itestified/src/features/nav/navbar.dart';
 
@@ -142,7 +143,10 @@ class AuthViewModel with ChangeNotifier {
       _clearFields();
 
       if (context.mounted) {
-        Navigator.pushNamed(context, NavBar.routeName);
+        //I commented this line so that the user can verify their email
+        //Navigator.pushNamed(context, NavBar.routeName);
+        Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) => const VerifyEmailScreen()));
       }
     });
   }
@@ -279,5 +283,4 @@ class AuthViewModel with ChangeNotifier {
       node.dispose();
     }
   }
-
 }
