@@ -11,7 +11,6 @@ import 'package:itestified/src/features/video/presentation/screens/video_screen.
 import 'package:itestified/src/features/written_testimonies.dart/presentation/screens/written_testimonies.dart';
 import 'package:provider/provider.dart';
 
-
 class HomeScreenViewModel extends ChangeNotifier {
   final HomeScreenConfig config;
 
@@ -79,15 +78,11 @@ class HomeScreenViewModel extends ChangeNotifier {
   }
 
   void gotoSearchPage(BuildContext context) {
-    Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-      return const SearchScreen();
-    }));
+    Navigator.of(context).pushNamed(SearchScreen.routeName);
   }
 
-  void gotoNotificationsPage(BuildContext context) {
-    Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-      return const NoNotificationsScreen();
-    }));
+  void gotoNoNotificationsPage(BuildContext context) {
+    Navigator.of(context).pushNamed(NoNotificationsScreen.routeName);
   }
 
   void handleVideoTestimonyTap(BuildContext context, {int? videoId}) {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:itestified/src/config/theme/app_color.dart';
 import 'package:itestified/src/core/widgets/appbar2.dart';
 import 'package:itestified/src/core/widgets/icon_and_text.dart';
@@ -11,16 +12,17 @@ import 'package:itestified/src/features/video/presentation/screens/video_screen.
 
 import 'package:material_symbols_icons/symbols.dart';
 import 'package:provider/provider.dart';
-
 class VideoAndWrittenTestimonieScreen extends StatelessWidget {
   const VideoAndWrittenTestimonieScreen({super.key});
-
   static const routeName = '/vid-written-testimonies';
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => VideoWrittenTestimoniesViewModel(),
+   
+    final viewModel = GetIt.I<VideoWrittenTestimoniesViewModel>();
+    
+    return ChangeNotifierProvider.value( 
+      value: viewModel,
       child: Consumer<VideoWrittenTestimoniesViewModel>(
         builder: (context, viewModel, _) {
           final themeProvider = Provider.of<ThemeViewmodel>(context);

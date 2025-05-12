@@ -1,29 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:itestified/src/config/theme/app_color.dart';
 import 'package:itestified/src/core/utils/app_const/app_icons.dart';
 import 'package:itestified/src/core/widgets/normal_text_style.dart';
 import 'package:itestified/src/core/widgets/textwidget.dart';
 import 'package:itestified/src/features/app_theme/theme_viewmodel.dart';
 import 'package:itestified/src/features/category/presentation/screens/video_written_test_screen.dart';
-
 import 'package:itestified/src/features/written_testimonies.dart/presentation/screens/video_testimony_viewmodel.dart';
-
 import 'package:provider/provider.dart';
-
 import '../../../favorites/presentation/screens/favorite_icon_view_model.dart';
 
 class VideoTestimonyContainer1 extends StatelessWidget {
-  const VideoTestimonyContainer1({
-    super.key,
-    required this.videoId,
-  });
-
+  const VideoTestimonyContainer1({super.key, required this.videoId});
   final int videoId;
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => VideoTestimonyViewModel(videoId: videoId),
+    final viewModel = GetIt.I<VideoTestimonyViewModel>(param1: videoId);
+
+    return ChangeNotifierProvider.value(
+      value: viewModel,
       child: Consumer<VideoTestimonyViewModel>(
         builder: (context, viewModel, _) {
           final themeProvider = Provider.of<ThemeViewmodel>(context);
@@ -302,8 +298,9 @@ class VideoTestimonyContainer2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => VideoTestimonyViewModel(videoId: videoId),
+    final viewModel = GetIt.I<VideoTestimonyViewModel>(param1: videoId);
+    return ChangeNotifierProvider.value(
+      value: viewModel,
       child: Consumer<VideoTestimonyViewModel>(
         builder: (context, viewModel, _) {
           final themeProvider = Provider.of<ThemeViewmodel>(context);
