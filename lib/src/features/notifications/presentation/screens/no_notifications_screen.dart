@@ -14,7 +14,7 @@ class NoNotificationsScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: generalAppbar("Notifications", context),
-      backgroundColor: themeProvider.themeData.colorScheme.background,
+      backgroundColor: themeProvider.themeData.colorScheme.surface,
       body: Center(
         child: SingleChildScrollView(
           child: Padding(

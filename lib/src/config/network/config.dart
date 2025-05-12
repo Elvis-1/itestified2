@@ -4,8 +4,9 @@ import '../service_locators.dart' as service_locator;
 enum Environment { dev, prod, mock }
 
 class AppConfig {
+  //https://itestify-mobile-backend.onrender.com/auth/register
   AppConfig._();
-  static const baseUrl = '';
+  static const baseUrl = 'https://itestify-backend-nxel.onrender.com/mobile';
   static Environment environment = Environment.prod;
 
   // init dependencies needed during the runApp process

@@ -66,7 +66,7 @@ class AddTestimonyScreen extends StatelessWidget {
                         fontWeight: FontWeight.w600,
                       ),
                       const SizedBox(height: 10),
-                      const multilineTextField(),
+                      const MultilineTextField(),
                       const SizedBox(height: 40),
                       GestureDetector(
                         onTap: () {

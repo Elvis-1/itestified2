@@ -17,10 +17,10 @@ class ApiException implements Exception {
 
     if (err is http.Response) {
       try {
-        print('This is the error ${err.body}');
+        print('This is the error in get Exception ${err.body}');
         return _handleResponseError(err);
       } catch (_) {
-        print('This is another error ${err.body}');
+        // print('This is another error ${err.body}');
         return OtherExceptions(AppStrings.kDefaultError);
       }
     }
@@ -34,8 +34,9 @@ class ApiException implements Exception {
     }
 
     if (err is http.Response) {
+      print('Error type: ${err.runtimeType}');
       try {
-        print('This is the error ${err.body}');
+        print('This is the error rrrrrrrrrrrr ${err.body}');
         return _handleErrorResponse(err);
       } catch (_) {
         print('This is another error ${err.body}');
@@ -52,11 +53,9 @@ class ApiException implements Exception {
       final Map<String, dynamic> responseData = jsonDecode(response.body);
 
       if (responseData.containsKey('message')) {
-        final dynamic errorData =
-            responseData["error"][0] ?? responseData["message"];
+        final dynamic errorData = responseData["message"];
 
         return OtherExceptions(errorData);
-        //   }
       }
     } catch (_) {
       debugPrint('ENTERED CATCH BLOCK');
@@ -83,10 +82,11 @@ class ApiException implements Exception {
   static ApiException _handleResponseError(http.Response response) {
     try {
       final Map<String, dynamic> responseData = jsonDecode(response.body);
-      //   final errorResponse = ErrorResponse.fromJson(jsonDecode(response.body));
+      //
+      //  final errorResponse = ErrorResponse.fromJson(jsonDecode(response.body));
 
       if (responseData.containsKey('message')) {
-        final dynamic errorData = responseData['error'];
+        final dynamic errorData = responseData['message'];
         print('---- data ----');
         print('---- errror2 $errorData ----');
         if (errorData is Map<String, dynamic> &&

@@ -13,9 +13,11 @@ import 'package:itestified/src/features/profile/presentation/screens/profile_scr
 import 'package:provider/provider.dart';
 
 class NavBar extends StatefulWidget {
-  const NavBar({super.key});
+  const NavBar({super.key, this.initialPage, this.initialIndex = 0});
 
   static const routeName = '/nav-bar';
+  final Widget? initialPage;
+  final int initialIndex;
 
   @override
   State<NavBar> createState() => _NavBarState();
@@ -26,11 +28,21 @@ class _NavBarState extends State<NavBar> {
     const HomeScreen(),
     const CategoriesListScreen(),
     const FavoritesScreen(),
-    const ProfileScreen()
+    const ProfileScreen(),
   ];
   int pageIndex = 0;
-  Color color = Colors.white;
-  void changePage(index) {
+
+  @override
+  void initState() {
+    super.initState();
+    pageIndex = widget.initialIndex;
+    if (widget.initialPage != null) {
+      pageList = [...pageList, widget.initialPage!];
+      pageIndex = pageList.length - 1;
+    }
+  }
+
+  void changePage(int index) {
     setState(() {
       pageIndex = index;
     });
@@ -41,7 +53,7 @@ class _NavBarState extends State<NavBar> {
     var themeProvider = Provider.of<ThemeViewmodel>(context);
 
     return Scaffold(
-      backgroundColor: themeProvider.themeData.colorScheme.background,
+      backgroundColor: themeProvider.themeData.colorScheme.surface,
       body: LayoutBuilder(
         builder: (context, constraints) {
           bool isLargeScreen = constraints.maxWidth >= 600;
@@ -53,8 +65,7 @@ class _NavBarState extends State<NavBar> {
                   selectedIndex: pageIndex,
                   onDestinationSelected: (index) => changePage(index),
                   labelType: NavigationRailLabelType.selected,
-                  backgroundColor:
-                      themeProvider.themeData.colorScheme.background,
+                  backgroundColor: themeProvider.themeData.colorScheme.surface,
                   leading: GestureDetector(
                     onTap: () async {
                       await showJoinOurCommunityDialogOverlay(context, 'Join');
@@ -71,35 +82,36 @@ class _NavBarState extends State<NavBar> {
                   ),
                   destinations: [
                     NavigationRailDestination(
-                      icon: Image.asset(
-                          AppIcons.homeIcon), // Icon(AppIcons.homeIcon),
-                      selectedIcon: Image.asset(AppIcons.homeIcon,
-                          color: AppColors
-                              .primaryColor), //  Icon(AppIcons.homeIcon, color: AppColors.primaryColor),
-                      label: Text("Home"),
+                      icon: Image.asset(AppIcons.homeIcon),
+                      selectedIcon: Image.asset(
+                        AppIcons.homeIcon,
+                        color: AppColors.primaryColor,
+                      ),
+                      label: const Text("Home"),
                     ),
                     NavigationRailDestination(
-                      icon: Image.asset(
-                          AppIcons.catIcon), // Icon(AppIcons.catIcon),
-                      selectedIcon: Image.asset(AppIcons.catIcon,
-                          color: AppColors
-                              .primaryColor), // Icon(AppIcons.catIcon, color: AppColors.primaryColor),
-                      label: Text("Category"),
+                      icon: Image.asset(AppIcons.catIcon),
+                      selectedIcon: Image.asset(
+                        AppIcons.catIcon,
+                        color: AppColors.primaryColor,
+                      ),
+                      label: const Text("Category"),
                     ),
                     NavigationRailDestination(
                       icon: Image.asset(AppIcons.favoriteIcon),
-
-                      ///   Icon(AppIcons.favoriteIcon),
-                      selectedIcon: Image.asset(AppIcons.favoriteIcon,
-                          color: AppColors.primaryColor),
-                      label: Text("Favorites"),
+                      selectedIcon: Image.asset(
+                        AppIcons.favoriteIcon,
+                        color: AppColors.primaryColor,
+                      ),
+                      label: const Text("Favorites"),
                     ),
                     NavigationRailDestination(
-                      icon: Image.asset(
-                          AppIcons.profileIcon), //Icon(AppIcons.profileIcon),
-                      selectedIcon: Image.asset(AppIcons.profileIcon,
-                          color: AppColors.primaryColor),
-                      label: Text("Profile"),
+                      icon: Image.asset(AppIcons.profileIcon),
+                      selectedIcon: Image.asset(
+                        AppIcons.profileIcon,
+                        color: AppColors.primaryColor,
+                      ),
+                      label: const Text("Profile"),
                     ),
                   ],
                 ),
@@ -118,12 +130,13 @@ class _NavBarState extends State<NavBar> {
                   decoration: BoxDecoration(
                     border: Border(
                       top: BorderSide(
-                          color: themeProvider.themeData.colorScheme.outline),
+                        color: themeProvider.themeData.colorScheme.outline,
+                      ),
                     ),
                     borderRadius: BorderRadius.circular(15),
-                    color: themeProvider.themeData.colorScheme.background,
+                    color: themeProvider.themeData.colorScheme.surface,
                   ),
-                  padding: EdgeInsets.all(5),
+                  padding: const EdgeInsets.all(5),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -153,8 +166,7 @@ class _NavBarState extends State<NavBar> {
                       ),
                       GestureDetector(
                         onTap: () async {
-                          await showJoinOurCommunityDialogOverlay(
-                              context, 'Join');
+                          await showJoinOurCommunityDialogOverlay(context, 'Join');
                         },
                         child: Container(
                           height: 50,

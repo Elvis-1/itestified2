@@ -19,7 +19,7 @@ class PrivacyPolicy extends StatelessWidget {
 
     return Scaffold(
       appBar: generalAppbar("Privacy Policy", context),
-      backgroundColor: themeProvider.themeData.colorScheme.background,
+      backgroundColor: themeProvider.themeData.colorScheme.surface,
       body: Column(
         children: [
           Expanded(

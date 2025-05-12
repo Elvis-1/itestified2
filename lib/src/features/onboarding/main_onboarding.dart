@@ -61,7 +61,9 @@ class _MainOnboardingState extends State<MainOnboarding> {
                   activeSize: const Size(25.0, 8.0),
                   activeShape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(5.0))),
-            ))
+            )
+            
+            )
       ],
     );
   }

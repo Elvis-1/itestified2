@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:itestified/src/config/theme/app_color.dart';
 import 'package:itestified/src/core/utils/app_const/app_icons.dart';
 import 'package:itestified/src/core/widgets/animated_quotes_modal.dart';
 import 'package:itestified/src/core/widgets/text_widget.dart';
@@ -29,6 +30,7 @@ class quoteContainer extends StatelessWidget {
             right: rightPadding, left: rightPadding, bottom: 10),
         width: 250,
         height: 200,
+    
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -50,23 +52,20 @@ class quoteContainer extends StatelessWidget {
                     image: DecorationImage(
                         image: AssetImage(AppImages.quotesImage),
                         fit: BoxFit.cover)),
-                child: Column(
+                child: const Column(
                   children: [
                     Row(
                       children: [
-                        const Spacer(),
+                        Spacer(),
                         CircleAvatar(
                             radius: 15,
-                            backgroundColor:
-                                //AppColors.opaqueBlack,
-                                themeProvider
-                                    .themeData.searchBarTheme.backgroundColor!
-                                    .resolve({}),
+                            backgroundColor: Colors.white
+                            //AppColors.opaqueBlack,
+                            ,
                             child: Icon(
                               size: 15,
                               Icons.favorite_outline,
-                              color: themeProvider
-                                  .themeData.colorScheme.onTertiary,
+                              color: AppColors.blackColor,
                             ))
                       ],
                     ),

@@ -17,7 +17,7 @@ class WrittenTestimonies extends StatelessWidget {
 
     return Scaffold(
       appBar: generalAppbar('Written Testimonies', context),
-      backgroundColor: themeProvider.themeData.colorScheme.background,
+      backgroundColor: themeProvider.themeData.colorScheme.surface,
       body: SafeArea(child: LayoutBuilder(
         builder: (context, contraints) {
           bool isLargeScreen = contraints.maxWidth > 600;

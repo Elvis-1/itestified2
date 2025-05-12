@@ -27,7 +27,7 @@ class _HelpDeskState extends State<HelpDesk> {
 
     return Scaffold(
       appBar: generalAppbar("Help", context),
-      backgroundColor: themeProvider.themeData.colorScheme.background,
+      backgroundColor: themeProvider.themeData.colorScheme.surface,
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),

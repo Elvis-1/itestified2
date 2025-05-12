@@ -28,7 +28,7 @@ class _OnboardingScreen1State extends State<OnboardingScreen1>
     super.initState();
     controller = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 500),
+      duration: const Duration(milliseconds: 5),
     );
   }
 
@@ -58,15 +58,16 @@ class _OnboardingScreen1State extends State<OnboardingScreen1>
             const SizedBox(
               height: 10,
             ),
-            onboardingText(context),
+            onboardingText(context,
+                'Witness real-life stories of healing, breakthroughs,  divine intervention and many more. '),
             const SizedBox(
               height: 70,
             ),
-            GestureDetector(
+            InkWell(
                 onTap: () {
                   if (widget.index < 3) {
                     widget.pageController.animateToPage(widget.index + 1,
-                        duration: const Duration(seconds: 1),
+                        duration: const Duration(milliseconds: 300),
                         curve: Curves.easeIn);
                   }
                 },
@@ -75,7 +76,7 @@ class _OnboardingScreen1State extends State<OnboardingScreen1>
             const SizedBox(
               height: 10,
             ),
-            GestureDetector(
+            InkWell(
               onTap: () {
                 Navigator.of(context).pushAndRemoveUntil(
                   MyCustomRouteTransition(

@@ -10,8 +10,15 @@ import 'package:itestified/src/core/widgets/text_widget.dart';
 import 'package:itestified/src/features/app_theme/theme_viewmodel.dart';
 import 'package:provider/provider.dart';
 
-class RateItestified extends StatelessWidget {
+class RateItestified extends StatefulWidget {
   const RateItestified({super.key});
+
+  @override
+  _RateItestifiedState createState() => _RateItestifiedState();
+}
+
+class _RateItestifiedState extends State<RateItestified> {
+  int _selectedRating = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -19,71 +26,75 @@ class RateItestified extends StatelessWidget {
 
     return Scaffold(
       appBar: generalAppbar("Rate iTestified", context),
-      backgroundColor: themeProvider.themeData.colorScheme.background,
+      backgroundColor: themeProvider.themeData.colorScheme.surface,
       body: SingleChildScrollView(
         child: Container(
           margin: const EdgeInsets.symmetric(horizontal: 20),
           child: Column(
             children: [
               Text(
-                "Tap the stars below to rate your experience with iTesfied",
+                "Tap the stars below to rate your experience with iTestified",
                 textAlign: TextAlign.center,
                 style: normalTextStyle(
                   textColor: themeProvider.themeData.colorScheme.onTertiary,
                   fontSize: Theme.of(context).textTheme.bodyLarge?.fontSize,
                 ),
               ),
-              const SizedBox(
-                height: 20,
-              ),
+              const SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   ...List.generate(
-                      5,
-                      (index) => Image.asset(
-                            width: 50,
-                            // scale: 0.5,
-                            AppIcons.ratingIcon,
-                            color: AppColors.primaryColor,
-                            fit: BoxFit.cover,
-                          ))
+                    5,
+                    (index) => GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          _selectedRating = index + 1;
+                        });
+                      },
+                      child: Image.asset(
+                        AppIcons.ratingIcon,
+                        width: 50,
+                        color: index < _selectedRating
+                            ? AppColors.darkPurple
+                            : AppColors.primaryColor
+                                .withOpacity(0.5),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
                 ],
               ),
-              const SizedBox(
-                height: 20,
-              ),
+              const SizedBox(height: 20),
               Align(
-                  alignment: Alignment.centerLeft,
-                  child: textWidget(
-                    "Review(optional)",
-                    fontSize: Theme.of(context).textTheme.bodyLarge?.fontSize,
-                  )),
-              const SizedBox(
-                height: 10,
+                alignment: Alignment.centerLeft,
+                child: textWidget(
+                  "Review (optional)",
+                  fontSize: Theme.of(context).textTheme.bodyLarge?.fontSize,
+                ),
               ),
-              const multilineTextField(hintText: "Enter your review here ..."),
+              const SizedBox(height: 10),
+              const MultilineTextField(hintText: "Enter your review here ..."),
             ],
           ),
         ),
       ),
       floatingActionButton: Container(
-          alignment: Alignment.bottomCenter,
-          margin: const EdgeInsets.only(right: 20, left: 20, bottom: 10),
-
-          //   padding: EdgeInsets.only(bottom: ),
-          height: 50,
-          child: GestureDetector(
-            onTap: () async {
-              await showRateSubmittedDialogOverlay(context, "Messsssss");
-            },
-            child: btnAndText(
-              borderColor: AppColors.transparent,
-              text: 'Submit',
-              containerWidth: double.infinity,
-              // containerColor: AppColors.redColor
-            ),
-          )),
+        alignment: Alignment.bottomCenter,
+        margin: const EdgeInsets.only(right: 20, left: 20, bottom: 10),
+        height: 50,
+        child: GestureDetector(
+          onTap: () async {
+            await showRateSubmittedDialogOverlay(
+                context, "Rating submitted successfully");
+          },
+          child: btnAndText(
+            borderColor: AppColors.transparent,
+            text: 'Submit',
+            containerWidth: double.infinity,
+          ),
+        ),
+      ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
