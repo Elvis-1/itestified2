@@ -119,7 +119,7 @@ Route onGenerateRoute(RouteSettings settings) {
       ),
     // DONATION HISTORY SCREEN
     DonationHistoryScreen.routeName => MaterialPageRoute(
-        builder: (_) => DonationHistoryScreen(),
+        builder: (_) => const DonationHistoryScreen(),
         settings: const RouteSettings(name: DonationHistoryScreen.routeName),
       ),
     // DONATION DETAILS SCREEN

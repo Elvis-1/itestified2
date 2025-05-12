@@ -54,8 +54,9 @@ class AppTheme {
   static final FilledButtonThemeData filledButtonTheme = FilledButtonThemeData(
     style: ButtonStyle(
       backgroundColor:
-          const WidgetStatePropertyAll(primaryColor), // Use primary color
-      foregroundColor: const WidgetStatePropertyAll(Colors.white), // Text color
+          const MaterialStatePropertyAll(primaryColor), // Use primary color
+      foregroundColor:
+          const MaterialStatePropertyAll(Colors.white), // Text color
       shape: MaterialStatePropertyAll(
         RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12)), // Rounded corners
@@ -99,9 +100,9 @@ class AppTheme {
     ),
     outlinedButtonTheme: OutlinedButtonThemeData(
       style: OutlinedButton.styleFrom(
-        side: BorderSide(color: AppTheme.primaryColor, width: 2),
+        side: const BorderSide(color: AppTheme.primaryColor, width: 2),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        padding: EdgeInsets.symmetric(vertical: 14, horizontal: 24),
+        padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 24),
         foregroundColor: AppTheme.primaryColor, // Text color
       ),
     ),

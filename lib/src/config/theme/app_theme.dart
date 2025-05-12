@@ -30,7 +30,7 @@ class AppThemes {
   static ThemeData lightTheme = ThemeData(
       useMaterial3: true,
       searchBarTheme: const SearchBarThemeData(
-        backgroundColor: WidgetStatePropertyAll(AppColors.lightGrayColor),
+        backgroundColor: MaterialStatePropertyAll(AppColors.lightGrayColor),
       ),
       primaryColor: AppColors.primaryColor,
       colorScheme: ColorScheme.fromSeed(
@@ -59,7 +59,7 @@ class AppThemes {
   static ThemeData darkTheme = ThemeData(
     useMaterial3: true,
     searchBarTheme: SearchBarThemeData(
-      backgroundColor: WidgetStatePropertyAll(AppColors.opaqueBlack),
+      backgroundColor: MaterialStatePropertyAll(AppColors.opaqueBlack),
     ),
     primaryColor: AppColors.primaryColor,
     colorScheme: ColorScheme.fromSeed(
