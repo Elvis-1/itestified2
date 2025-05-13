@@ -1,52 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:itestified/src/features/app_theme/theme_viewmodel.dart';
-import 'package:material_symbols_icons/symbols.dart';
-import 'package:provider/provider.dart';
+import 'package:get_it/get_it.dart';
+import 'package:itestified/src/features/favorites/services/favourite_service.dart';
 
-class FavoriteIconViewModel extends ChangeNotifier {
-  bool _isFavorited = false;
-
-  bool get isFavorited => _isFavorited;
-
-  void toggleFavorite() {
-    _isFavorited = !_isFavorited;
-    notifyListeners();
-  }
-}
-
-class FavoriteIcon extends StatelessWidget {
-  const FavoriteIcon({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final themeProvider = Provider.of<ThemeViewmodel>(context);
-
-    return ChangeNotifierProvider(
-      create: (_) => FavoriteIconViewModel(),
-      child: Consumer<FavoriteIconViewModel>(
-        builder: (context, viewModel, _) {
-          return GestureDetector(
-            onTap: () => viewModel.toggleFavorite(),
-            child: CircleAvatar(
-              radius: 16,
-              backgroundColor: themeProvider.themeData.colorScheme.outline,
-              child: Icon(
-                viewModel.isFavorited ? Symbols.favorite : Symbols.favorite,
-                color: themeProvider.themeData.colorScheme.primary,
-                size: 20,
-              ),
-            ),
-          );
-        },
-      ),
-    );
-  }
-}
-
-// Data class to represent a favorited video or testimony
+// Data class for favorited items
 class FavoritedItem {
   final int id;
-  final String type; // 'video' or 'testimony'
+  final String type; // 'video', 'post', 'inspiration'
   final String title;
   final String church;
   final String views;
@@ -62,27 +21,50 @@ class FavoritedItem {
     required this.date,
     required this.imagePath,
   });
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'type': type,
+        'title': title,
+        'church': church,
+        'views': views,
+        'date': date,
+        'imagePath': imagePath,
+      };
+
+  factory FavoritedItem.fromJson(Map<String, dynamic> json) => FavoritedItem(
+        id: json['id'] as int,
+        type: json['type'] as String,
+        title: json['title'] as String,
+        church: json['church'] as String,
+        views: json['views'] as String,
+        date: json['date'] as String,
+        imagePath: json['imagePath'] as String,
+      );
 }
 
-class FavoritesViewModel extends ChangeNotifier {
-  final List<FavoritedItem> _favoritedItems = [];
+class FavoriteIconViewModel {
+  final FavoritesService _service = GetIt.I<FavoritesService>();
 
-  List<FavoritedItem> get favoritedItems => _favoritedItems;
+  bool isFavorited(int id, String type) => _service.isFavorited(id, type);
 
-  void addFavorite(FavoritedItem item) {
-    if (!_favoritedItems.any((existingItem) =>
-        existingItem.id == item.id && existingItem.type == item.type)) {
-      _favoritedItems.add(item);
-      notifyListeners();
+  void toggleFavorite(FavoritedItem item) {
+    if (_service.isFavorited(item.id, item.type)) {
+      _service.removeFavorite(item.id, item.type);
+    } else {
+      _service.addFavorite(item);
     }
   }
+}
 
-  void removeFavorite(int id, String type) {
-    _favoritedItems.removeWhere((item) => item.id == id && item.type == type);
-    notifyListeners();
-  }
+class FavoritesViewModel {
+  final FavoritesService _service = GetIt.I<FavoritesService>();
 
-  bool isFavorited(int id, String type) {
-    return _favoritedItems.any((item) => item.id == id && item.type == type);
-  }
+  List<FavoritedItem> get favoritedItems => _service.getFavoritedItems();
+
+  void addFavorite(FavoritedItem item) => _service.addFavorite(item);
+
+  void removeFavorite(int id, String type) => _service.removeFavorite(id, type);
+
+  bool isFavorited(int id, String type) => _service.isFavorited(id, type);
 }

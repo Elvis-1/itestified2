@@ -18,10 +18,5 @@ final List<SingleChildWidget> providers = [
   ChangeNotifierProvider<NavProvider>(
     create: (_) => GetIt.I<NavProvider>(),
   ),
-  ChangeNotifierProvider<FavoritesViewModel>(
-    create: (_) => GetIt.I<FavoritesViewModel>(),
-  ),
-  ChangeNotifierProvider<VideoViewModel>(
-    create: (_) => GetIt.I<VideoViewModel>(),
-  ),
+
 ];

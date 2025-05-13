@@ -14,11 +14,16 @@ import 'package:provider/provider.dart';
 
 import 'home_screen_viewmodel.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   static const routeName = 'home-screen';
 
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final viewModel = GetIt.I<HomeScreenViewModel>();
@@ -54,63 +59,66 @@ class HomeScreen extends StatelessWidget {
     final scriptureWidth = viewModel.getScriptureContainerWidth(context);
     final scriptureHeight = viewModel.getScriptureContainerHeight(context);
 
-    return ListView(
-      children: [
-        Align(
-          alignment: Alignment.centerLeft,
-          child: TextWidgets.textWidget16(
+    return SizedBox(
+      height: MediaQuery.of(context).size.height, 
+      child: ListView(
+        children: [
+          Align(
+            alignment: Alignment.centerLeft,
+            child: TextWidgets.textWidget16(
+              context,
+              'Scripture of the day',
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          const SizedBox(height: 20),
+          _buildScriptureContainer(
+              context, viewModel, scriptureWidth, scriptureHeight, padding),
+          const SizedBox(height: 15),
+          _buildSectionHeader(
             context,
-            'Scripture of the day',
-            fontWeight: FontWeight.w600,
+            viewModel,
+            "Trending Video testimonies",
+            viewModel.gotoVideoListScreen,
+            textScale,
           ),
-        ),
-        const SizedBox(height: 20),
-        _buildScriptureContainer(
-            context, viewModel, scriptureWidth, scriptureHeight, padding),
-        const SizedBox(height: 15),
-        _buildSectionHeader(
-          context,
-          viewModel,
-          "Trending Video testimonies",
-          viewModel.gotoVideoListScreen,
-          textScale,
-        ),
-        const SizedBox(height: 10),
-        SizedBox(
-          height: viewModel.getVideoCarouselHeight(context),
-          child: const VideoTestimoniesCarousel(),
-        ),
-        const SizedBox(height: 15),
-        _buildSectionHeader(
-          context,
-          viewModel,
-          "Trending Text testimonies",
-          viewModel.gotoWrittenTestimonies,
-          textScale,
-        ),
-        const SizedBox(height: 15),
-        SizedBox(
-          height: viewModel.config.textTestimonyHeight,
-          child: _buildHorizontalList(
-            const FadeInTransitionWidget(child: TextTestimonyContainer()),
+          const SizedBox(height: 10),
+          SizedBox(
+            height: viewModel.getVideoCarouselHeight(context),
+            child: const VideoTestimoniesCarousel(),
           ),
-        ),
-        const SizedBox(height: 15),
-        _buildSectionHeader(
-          context,
-          viewModel,
-          "Inspirational Quotes",
-          viewModel.gotoInspirationalQuotes,
-          textScale,
-        ),
-        const SizedBox(height: 10),
-        SizedBox(
-          height: viewModel.config.quotesHeight,
-          child: _buildHorizontalList(
-            const FadeInTransitionWidget(child: quoteContainer()),
+          const SizedBox(height: 15),
+          _buildSectionHeader(
+            context,
+            viewModel,
+            "Trending Text testimonies",
+            viewModel.gotoWrittenTestimonies,
+            textScale,
           ),
-        ),
-      ],
+          const SizedBox(height: 15),
+          SizedBox(
+            height: viewModel.config.textTestimonyHeight,
+            child: _buildHorizontalList(
+              const FadeInTransitionWidget(child: TextTestimonyContainer()),
+            ),
+          ),
+          const SizedBox(height: 15),
+          _buildSectionHeader(
+            context,
+            viewModel,
+            "Inspirational Quotes",
+            viewModel.gotoInspirationalQuotes,
+            textScale,
+          ),
+          const SizedBox(height: 10),
+          SizedBox(
+            height: viewModel.config.quotesHeight,
+            child: _buildHorizontalList(
+              const FadeInTransitionWidget(child: quoteContainer()),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -127,50 +135,53 @@ class HomeScreen extends StatelessWidget {
       children: [
         Expanded(
           flex: 2,
-          child: ListView(
-            children: [
-              Align(
-                alignment: Alignment.centerLeft,
-                child: TextWidgets.textWidget16(
+          child: SizedBox(
+            height: MediaQuery.of(context).size.height,
+            child: ListView(
+              children: [
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: TextWidgets.textWidget16(
+                    context,
+                    'Scripture of the day',
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                const SizedBox(height: 20),
+                _buildScriptureContainer(
+                    context, viewModel, scriptureWidth, scriptureHeight, padding),
+                const SizedBox(height: 15),
+                _buildSectionHeader(
                   context,
-                  'Scripture of the day',
-                  fontWeight: FontWeight.w600,
+                  viewModel,
+                  "Trending Text testimonies",
+                  viewModel.gotoWrittenTestimonies,
+                  textScale,
                 ),
-              ),
-              const SizedBox(height: 20),
-              _buildScriptureContainer(
-                  context, viewModel, scriptureWidth, scriptureHeight, padding),
-              const SizedBox(height: 15),
-              _buildSectionHeader(
-                context,
-                viewModel,
-                "Trending Text testimonies",
-                viewModel.gotoWrittenTestimonies,
-                textScale,
-              ),
-              const SizedBox(height: 15),
-              SizedBox(
-                height: viewModel.config.textTestimonyHeight * 1.2,
-                child: _buildHorizontalList(
-                  const FadeInTransitionWidget(child: TextTestimonyContainer()),
+                const SizedBox(height: 15),
+                SizedBox(
+                  height: viewModel.config.textTestimonyHeight * 1.2,
+                  child: _buildHorizontalList(
+                    const FadeInTransitionWidget(child: TextTestimonyContainer()),
+                  ),
                 ),
-              ),
-              const SizedBox(height: 15),
-              _buildSectionHeader(
-                context,
-                viewModel,
-                "Inspirational Quotes",
-                viewModel.gotoInspirationalQuotes,
-                textScale,
-              ),
-              const SizedBox(height: 10),
-              SizedBox(
-                height: viewModel.config.quotesHeight * 1.2,
-                child: _buildHorizontalList(
-                  const FadeInTransitionWidget(child: quoteContainer()),
+                const SizedBox(height: 15),
+                _buildSectionHeader(
+                  context,
+                  viewModel,
+                  "Inspirational Quotes",
+                  viewModel.gotoInspirationalQuotes,
+                  textScale,
                 ),
-              ),
-            ],
+                const SizedBox(height: 10),
+                SizedBox(
+                  height: viewModel.config.quotesHeight * 1.2,
+                  child: _buildHorizontalList(
+                    const FadeInTransitionWidget(child: quoteContainer()),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
         const SizedBox(width: 20),
@@ -299,12 +310,15 @@ class HomeScreen extends StatelessWidget {
   }
 
   Widget _buildHorizontalList(Widget child) {
-    return ListView.builder(
-      shrinkWrap: true,
-      physics: const BouncingScrollPhysics(),
-      scrollDirection: Axis.horizontal,
-      itemCount: 5,
-      itemBuilder: (context, i) => child,
+    return SizedBox(
+      width: double.infinity, 
+      child: ListView.builder(
+        shrinkWrap: true,
+        physics: const BouncingScrollPhysics(),
+        scrollDirection: Axis.horizontal,
+        itemCount: 5,
+        itemBuilder: (context, i) => child,
+      ),
     );
   }
 }

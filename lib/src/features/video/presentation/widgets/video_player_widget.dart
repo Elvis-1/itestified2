@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:itestified/src/config/theme/app_color.dart';
 import 'package:itestified/src/core/utils/app_const/app_icons.dart';
 import 'package:itestified/src/core/widgets/line_widget.dart';
@@ -30,7 +31,7 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
   @override
   void initState() {
     super.initState();
-    _viewModel = VideoViewModel();
+    _viewModel = GetIt.I<VideoViewModel>();
     print('VideoPlayerWidget initState: ${_viewModel.hashCode}');
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted) {
@@ -52,58 +53,48 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
     final screenWidth = MediaQuery.of(context).size.width;
     final videoHeight = screenWidth * (9 / 16);
 
-    return ChangeNotifierProvider.value(
-      value: _viewModel,
-      child: Selector<
-          VideoViewModel,
-          ({
-            bool isFullScreen,
-            bool isInitialized,
-            String? errorMessage,
-            bool showControls
-          })>(
-        selector: (_, provider) => (
-          isFullScreen: provider.isFullScreen,
-          isInitialized: provider.isInitialized,
-          errorMessage: provider.errorMessage,
-          showControls: provider.showControls,
-        ),
-        builder: (context, data, _) {
-          print(
-              'VideoPlayerWidget rebuilding: ${_viewModel.hashCode}, showControls: ${data.showControls}, isPlaying: ${_viewModel.isPlaying}');
-          if (data.errorMessage != null) {
-            WidgetsBinding.instance.addPostFrameCallback((_) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text(data.errorMessage!)),
-              );
-            });
-          }
-          return data.isFullScreen
-              ? WillPopScope(
-                  onWillPop: () async {
-                    if (data.isFullScreen) {
-                      _viewModel.toggleFullScreen();
-                      return false;
-                    }
-                    return true;
-                  },
-                  child: _buildFullScreenPlayer(context, _viewModel, data),
-                )
-              : _buildNormalScreenPlayer(context, _viewModel, videoHeight, data);
-        },
-      ),
-    );
+    return _buildVideoPlayer(context, _viewModel, videoHeight, themeProvider);
+  }
+
+  Widget _buildVideoPlayer(
+      BuildContext context, VideoViewModel provider, double videoHeight, ThemeViewmodel themeProvider) {
+    final isFullScreen = provider.isFullScreen;
+    final isInitialized = provider.isInitialized;
+    final errorMessage = provider.errorMessage;
+    final showControls = provider.showControls;
+
+    print(
+        'VideoPlayerWidget rebuilding: ${_viewModel.hashCode}, showControls: $showControls, isPlaying: ${provider.isPlaying}');
+    if (errorMessage != null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(errorMessage)),
+        );
+      });
+    }
+
+    return isFullScreen
+        ? WillPopScope(
+            onWillPop: () async {
+              if (isFullScreen) {
+                provider.toggleFullScreen();
+                return false;
+              }
+              return true;
+            },
+            child: _buildFullScreenPlayer(context, provider, isFullScreen, isInitialized, errorMessage, showControls),
+          )
+        : _buildNormalScreenPlayer(context, provider, videoHeight, isFullScreen, isInitialized, errorMessage,
+            showControls, themeProvider);
   }
 
   Widget _buildFullScreenPlayer(
       BuildContext context,
       VideoViewModel provider,
-      ({
-        bool isFullScreen,
-        bool isInitialized,
-        String? errorMessage,
-        bool showControls
-      }) data) {
+      bool isFullScreen,
+      bool isInitialized,
+      String? errorMessage,
+      bool showControls) {
     return GestureDetector(
       onTap: provider.toggleControls,
       child: Container(
@@ -112,17 +103,10 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
           alignment: Alignment.center,
           children: [
             _buildVideoContent(provider, context),
-            if (data.isInitialized &&
-                data.errorMessage == null &&
-                data.showControls)
-              _buildPlayPauseButton(provider),
-            if (data.showControls) _buildTopControls(context, provider),
-            if (data.isInitialized &&
-                data.errorMessage == null &&
-                data.showControls)
-              _buildBottomControls(context, provider),
-            if (data.errorMessage != null)
-              _buildErrorContent(context, provider),
+            if (isInitialized && errorMessage == null && showControls) _buildPlayPauseButton(provider),
+            if (showControls) _buildTopControls(context, provider),
+            if (isInitialized && errorMessage == null && showControls) _buildBottomControls(context, provider),
+            if (errorMessage != null) _buildErrorContent(context, provider),
           ],
         ),
       ),
@@ -133,22 +117,18 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
       BuildContext context,
       VideoViewModel provider,
       double videoHeight,
-      ({
-        bool isFullScreen,
-        bool isInitialized,
-        String? errorMessage,
-        bool showControls
-      }) data) {
-    final themeProvider = Provider.of<ThemeViewmodel>(context);
-    print('NormalScreenPlayer backgroundColor: ${themeProvider.themeData.colorScheme.surface}');
+      bool isFullScreen,
+      bool isInitialized,
+      String? errorMessage,
+      bool showControls,
+      ThemeViewmodel themeProvider) {
     return Scaffold(
-      backgroundColor: themeProvider.themeData.colorScheme.surface, 
+      backgroundColor: themeProvider.themeData.colorScheme.surface,
       body: SafeArea(
         child: ListView(
           children: [
-            _buildVideoContainer(context, provider, videoHeight, data),
-            if (data.isInitialized && data.errorMessage == null)
-              VideoProgressBar(provider: provider),
+            _buildVideoContainer(context, provider, videoHeight, isInitialized, errorMessage, showControls),
+            if (isInitialized && errorMessage == null) VideoProgressBar(provider: provider),
             _buildVideoInfo(context),
             _buildActionButtons(context),
             _buildAppLogo(context),
@@ -161,15 +141,7 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
   }
 
   Widget _buildVideoContainer(
-      BuildContext context,
-      VideoViewModel provider,
-      double videoHeight,
-      ({
-        bool isFullScreen,
-        bool isInitialized,
-        String? errorMessage,
-        bool showControls
-      }) data) {
+      BuildContext context, VideoViewModel provider, double videoHeight, bool isInitialized, String? errorMessage, bool showControls) {
     return GestureDetector(
       onTap: provider.toggleControls,
       child: SizedBox(
@@ -182,17 +154,10 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
               color: AppColors.blackColor,
               child: _buildVideoContent(provider, context),
             ),
-            if (data.isInitialized &&
-                data.errorMessage == null &&
-                data.showControls)
-              _buildPlayPauseButton(provider),
-            if (data.showControls) _buildTopControls(context, provider),
-            if (data.isInitialized &&
-                data.errorMessage == null &&
-                data.showControls)
-              _buildBottomControls(context, provider),
-            if (data.errorMessage != null)
-              _buildErrorContent(context, provider),
+            if (isInitialized && errorMessage == null && showControls) _buildPlayPauseButton(provider),
+            if (showControls) _buildTopControls(context, provider),
+            if (isInitialized && errorMessage == null && showControls) _buildBottomControls(context, provider),
+            if (errorMessage != null) _buildErrorContent(context, provider),
           ],
         ),
       ),
@@ -200,20 +165,13 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
   }
 
   Widget _buildPlayPauseButton(VideoViewModel provider) {
-    return Selector<VideoViewModel, bool>(
-      selector: (_, provider) => provider.isPlaying,
-      builder: (context, isPlaying, _) {
-        print(
-            'Rebuilding play/pause button, isPlaying: $isPlaying, showControls: ${provider.showControls}');
-        return GestureDetector(
-          onTap: provider.togglePlayPause,
-          child: Icon(
-            isPlaying ? Icons.pause : Icons.play_arrow,
-            color: AppColors.white,
-            size: 50,
-          ),
-        );
-      },
+    return GestureDetector(
+      onTap: provider.togglePlayPause,
+      child: Icon(
+        provider.isPlaying ? Icons.pause : Icons.play_arrow,
+        color: AppColors.white,
+        size: 50,
+      ),
     );
   }
 
@@ -228,14 +186,12 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
           GestureDetector(
             behavior: HitTestBehavior.opaque,
             onTap: () {
-              print(
-                  'Back button tapped, isFullScreen: ${provider.isFullScreen}');
+              print('Back button tapped, isFullScreen: ${provider.isFullScreen}');
               if (provider.isFullScreen) {
                 provider.toggleFullScreen();
               } else if (Navigator.canPop(context)) {
                 Navigator.pop(context);
               } else {
-            ;
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(content: Text('No screen to go back to')),
                 );
@@ -290,17 +246,10 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Selector<VideoViewModel, ({Duration position, Duration duration})>(
-            selector: (_, provider) =>
-                (position: provider.position, duration: provider.duration),
-            builder: (context, data, _) {
-              print('Rebuilding timer: ${data.position} / ${data.duration}');
-              return textWidget(
-                '${formatDuration(data.position)} / ${formatDuration(data.duration)}',
-                fontSize: Theme.of(context).textTheme.bodySmall?.fontSize,
-                color: AppColors.white,
-              );
-            },
+          textWidget(
+            '${formatDuration(provider.position)} / ${formatDuration(provider.duration)}',
+            fontSize: Theme.of(context).textTheme.bodySmall?.fontSize,
+            color: AppColors.white,
           ),
           GestureDetector(
             onTap: provider.toggleFullScreen,
@@ -503,10 +452,9 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
     return Column(
       children: [
         Container(
-          margin: const EdgeInsets.only(left: 15,top: 10),
+          margin: const EdgeInsets.only(left: 15, top: 10),
           child: Row(
             children: [
-           
               Image.asset(AppIcons.itestifyIcon, width: 30),
               const SizedBox(width: 5),
               textWidget(

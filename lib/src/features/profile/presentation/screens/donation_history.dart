@@ -27,10 +27,16 @@ class _DonationHistoryScreenState extends State<DonationHistoryScreen> {
   DateTime? _endDate;
   bool _isRefreshing = false;
 
-
-
   @override
   Widget build(BuildContext context) {
+    // Robust GetIt check
+    if (!GetIt.I.isRegistered<DonationViewmodel>()) {
+      print('Error: DonationViewmodel not registered in GetIt');
+      return const Scaffold(
+        body: Center(child: Text('Error: DonationViewmodel not registered')),
+      );
+    }
+
     final viewModel = GetIt.I<DonationViewmodel>();
     final themeProvider = Provider.of<ThemeViewmodel>(context);
     final themeData = themeProvider.themeData;

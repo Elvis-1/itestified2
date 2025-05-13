@@ -1,13 +1,13 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:itestified/src/config/theme/app_color.dart';
 import 'package:itestified/src/core/utils/app_const/app_icons.dart';
 import 'package:itestified/src/core/widgets/animated_quotes_modal.dart';
 import 'package:itestified/src/core/widgets/text_widget.dart';
 import 'package:itestified/src/features/app_theme/theme_viewmodel.dart';
-
+import 'package:itestified/src/features/favorites/presentation/screens/favorite_icon_view_model.dart';
 import 'package:provider/provider.dart';
-
-import '../../favorites/presentation/screens/favorite_icon_view_model.dart';
 
 class quoteContainer extends StatelessWidget {
   const quoteContainer({
@@ -28,7 +28,7 @@ class quoteContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeViewmodel>(context);
-    final favoritesViewModel = Provider.of<FavoritesViewModel>(context);
+    final favoritesViewModel = GetIt.I<FavoritesViewModel>();
     final quoteId = index ?? 1;
 
     final favoritedItem = FavoritedItem(
@@ -72,27 +72,31 @@ class quoteContainer extends StatelessWidget {
                   Positioned(
                     top: 8,
                     right: 8,
-                    child: GestureDetector(
-                      onTap: () {
-                        if (favoritesViewModel.isFavorited(
-                            quoteId, 'inspiration')) {
-                          favoritesViewModel.removeFavorite(
-                              quoteId, 'inspiration');
-                        } else {
-                          favoritesViewModel.addFavorite(favoritedItem);
-                        }
+                    child: ValueListenableBuilder<List<FavoritedItem>>(
+                      valueListenable: GetIt.I<ValueListenable<List<FavoritedItem>>>(),
+                      builder: (context, favorites, child) {
+                        final isFavorited = favoritesViewModel.isFavorited(quoteId, 'inspiration');
+                        print('quoteContainer: Building favorite icon, quoteId=$quoteId, isFavorited=$isFavorited');
+                        return GestureDetector(
+                          onTap: () {
+                            print('quoteContainer: Favorite clicked, quoteId=$quoteId, currentState=$isFavorited');
+                            if (isFavorited) {
+                              favoritesViewModel.removeFavorite(quoteId, 'inspiration');
+                            } else {
+                              favoritesViewModel.addFavorite(favoritedItem);
+                            }
+                          },
+                          child: CircleAvatar(
+                            radius: 15,
+                            backgroundColor: Colors.white,
+                            child: Icon(
+                              isFavorited ? Icons.favorite : Icons.favorite_border,
+                              size: 15,
+                              color: AppColors.blackColor,
+                            ),
+                          ),
+                        );
                       },
-                      child: CircleAvatar(
-                        radius: 15,
-                        backgroundColor: Colors.white,
-                        child: Icon(
-                          favoritesViewModel.isFavorited(quoteId, 'inspiration')
-                              ? Icons.favorite
-                              : Icons.favorite_outline,
-                          size: 15,
-                          color: AppColors.blackColor,
-                        ),
-                      ),
                     ),
                   ),
                 ],

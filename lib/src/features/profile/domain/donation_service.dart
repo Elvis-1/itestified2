@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:itestified/src/config/network/api_client.dart';
 
 abstract class DonationService {
   List<Map<String, dynamic>> getTransactions();
 }
 
 class DonationServicesImp implements DonationService {
-  final dynamic dependency; 
+  final ApiClient _apiClient;
 
-  DonationServicesImp(this.dependency);
+  DonationServicesImp(this._apiClient);
 
   @override
   List<Map<String, dynamic>> getTransactions() {
-
+  
     return [
       {
         'amount': '₦ 5000',

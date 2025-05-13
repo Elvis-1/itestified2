@@ -1,8 +1,9 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:itestified/src/config/theme/app_color.dart';
 import 'package:itestified/src/core/utils/app_const/app_icons.dart';
 import 'package:itestified/src/core/widgets/normal_text_style.dart';
-import 'package:itestified/src/core/widgets/text_widget.dart';
 import 'package:itestified/src/core/widgets/textwidget.dart';
 import 'package:itestified/src/features/app_theme/theme_viewmodel.dart';
 import 'package:itestified/src/features/favorites/presentation/screens/favorite_icon_view_model.dart';
@@ -13,8 +14,8 @@ import 'package:provider/provider.dart';
 class TextTestimonyContainer extends StatelessWidget {
   const TextTestimonyContainer({
     super.key,
-    this.containerWidth = 282.0, 
-    this.containerHeight = 149.0, 
+    this.containerWidth = 282.0,
+    this.containerHeight = 149.0,
     this.borderRadius = 16.0,
     this.index,
   });
@@ -26,9 +27,9 @@ class TextTestimonyContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var themeProvider = Provider.of<ThemeViewmodel>(context);
-    var favoritesViewModel = Provider.of<FavoritesViewModel>(context);
-    double screenWidth = MediaQuery.of(context).size.width;
+    final themeProvider = Provider.of<ThemeViewmodel>(context);
+    final favoritesViewModel = GetIt.I<FavoritesViewModel>();
+    final double screenWidth = MediaQuery.of(context).size.width;
 
     final testimonyId = index ?? 1;
     final favoritedItem = FavoritedItem(
@@ -47,15 +48,15 @@ class TextTestimonyContainer extends StatelessWidget {
       },
       child: LayoutBuilder(
         builder: (context, constraints) {
-          bool isLargeScreen = constraints.maxWidth > 800;
-          double scaledWidth = isLargeScreen ? containerWidth * 1.2 : containerWidth;
-          double scaledHeight = isLargeScreen ? containerHeight * 1.2 : containerHeight;
-          double scaledBorderRadius = isLargeScreen ? borderRadius * 1.2 : borderRadius;
-          double padding = isLargeScreen ? 16 : 12;
-          double avatarRadius = isLargeScreen ? 16 : 14;
-          double iconSize = isLargeScreen ? 16 : 14;
-          double spacing = isLargeScreen ? 12 : 10;
-          double dotSize = isLargeScreen ? 6 : 5;
+          final bool isLargeScreen = constraints.maxWidth > 800;
+          final double scaledWidth = isLargeScreen ? containerWidth * 1.2 : containerWidth;
+          final double scaledHeight = isLargeScreen ? containerHeight * 1.2 : containerHeight;
+          final double scaledBorderRadius = isLargeScreen ? borderRadius * 1.2 : borderRadius;
+          final double padding = isLargeScreen ? 16 : 12;
+          final double avatarRadius = isLargeScreen ? 16 : 14;
+          final double iconSize = isLargeScreen ? 16 : 14;
+          final double spacing = isLargeScreen ? 12 : 10;
+          final double dotSize = isLargeScreen ? 6 : 5;
 
           return Container(
             width: scaledWidth,
@@ -86,25 +87,31 @@ class TextTestimonyContainer extends StatelessWidget {
                         ),
                       ),
                     ),
-                    GestureDetector(
-                      onTap: () {
-                        if (favoritesViewModel.isFavorited(testimonyId, 'post')) {
-                          favoritesViewModel.removeFavorite(testimonyId, 'post');
-                        } else {
-                          favoritesViewModel.addFavorite(favoritedItem);
-                        }
+                    ValueListenableBuilder<List<FavoritedItem>>(
+                      valueListenable: GetIt.I<ValueListenable<List<FavoritedItem>>>(),
+                      builder: (context, favorites, child) {
+                        final isFavorited = favoritesViewModel.isFavorited(testimonyId, 'post');
+                        print('TextTestimonyContainer: Building favorite icon, testimonyId=$testimonyId, isFavorited=$isFavorited');
+                        return GestureDetector(
+                          onTap: () {
+                            print('TextTestimonyContainer: Favorite clicked, testimonyId=$testimonyId, currentState=$isFavorited');
+                            if (isFavorited) {
+                              favoritesViewModel.removeFavorite(testimonyId, 'post');
+                            } else {
+                              favoritesViewModel.addFavorite(favoritedItem);
+                            }
+                          },
+                          child: CircleAvatar(
+                            radius: avatarRadius,
+                            backgroundColor: AppColors.opaqueBlack,
+                            child: Icon(
+                              isFavorited ? Icons.favorite : Icons.favorite_border,
+                              size: iconSize,
+                              color: AppColors.primaryColor,
+                            ),
+                          ),
+                        );
                       },
-                      child: CircleAvatar(
-                        radius: avatarRadius,
-                        backgroundColor: AppColors.opaqueBlack,
-                        child: Icon(
-                          favoritesViewModel.isFavorited(testimonyId, 'post')
-                              ? Icons.favorite
-                              : Icons.favorite_outline,
-                          size: iconSize,
-                          color: AppColors.primaryColor,
-                        ),
-                      ),
                     ),
                   ],
                 ),

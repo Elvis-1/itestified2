@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:itestified/src/config/theme/app_color.dart';
 import 'package:itestified/src/core/utils/app_const/app_icons.dart';
 import 'package:itestified/src/core/widgets/appbar2.dart';
@@ -6,7 +7,6 @@ import 'package:itestified/src/core/widgets/normal_text_style.dart';
 import 'package:itestified/src/core/widgets/text_widget.dart';
 import 'package:itestified/src/features/app_theme/theme_viewmodel.dart';
 import 'package:itestified/src/features/favorites/presentation/screens/favorite_icon_view_model.dart';
-
 import 'package:itestified/src/features/inspirational_qoutes.dart/presentation/screens/inspirational_quotes.dart';
 import 'package:itestified/src/features/category/presentation/widgets/text_testimony_container.dart';
 import 'package:provider/provider.dart';
@@ -17,23 +17,21 @@ class FavoritesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final favoritesViewModel = Provider.of<FavoritesViewModel>(context);
-    final favoritedItems = favoritesViewModel.favoritedItems;
+    final viewModel = GetIt.I<FavoritesViewModel>();
+    final favoritedItems = viewModel.favoritedItems;
     final themeProvider = Provider.of<ThemeViewmodel>(context);
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
     final isLargeScreen = screenWidth > 800;
 
     return Scaffold(
-      appBar:appBar(context, 'Favourites',),
-      
+      appBar: appBar(context, 'Favourites'),
       backgroundColor: themeProvider.themeData.colorScheme.surface,
       body: favoritedItems.isEmpty
           ? Center(
               child: Container(
                 margin: EdgeInsets.symmetric(horizontal: screenWidth * 0.03),
                 child: Column(
-                  
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     SizedBox(height: screenHeight * 0.15),
@@ -69,21 +67,19 @@ class FavoritesScreen extends StatelessWidget {
               itemCount: favoritedItems.length,
               itemBuilder: (context, index) {
                 final item = favoritedItems[index];
-                return Center(child: _buildFavoritedItem(context, item, index));
+                return Center(child: _buildFavoritedItem(context, viewModel, item, index));
               },
             ),
     );
   }
 
   Widget _buildFavoritedItem(
-      BuildContext context, FavoritedItem item, int index) {
-    final favoritesViewModel = Provider.of<FavoritesViewModel>(context);
+      BuildContext context, FavoritesViewModel viewModel, FavoritedItem item, int index) {
     final dimensions = _getItemDimensions(item.type);
 
     return Container(
       margin: EdgeInsets.only(
-          bottom:
-              index == favoritesViewModel.favoritedItems.length - 1 ? 0 : 12),
+          bottom: index == viewModel.favoritedItems.length - 1 ? 0 : 12),
       width: dimensions['width'],
       height: dimensions['height'],
       child: item.type == 'inspiration'
@@ -95,7 +91,7 @@ class FavoritesScreen extends StatelessWidget {
                   borderRadius: 16.0,
                   index: item.id,
                 )
-              : _buildMediaItem(context, item, dimensions),
+              : _buildMediaItem(context, viewModel, item, dimensions),
     );
   }
 
@@ -114,11 +110,11 @@ class FavoritesScreen extends StatelessWidget {
 
   Widget _buildMediaItem(
     BuildContext context,
+    FavoritesViewModel viewModel,
     FavoritedItem item,
     Map<String, double> dimensions,
   ) {
     final themeProvider = Provider.of<ThemeViewmodel>(context);
-    final favoritesViewModel = Provider.of<FavoritesViewModel>(context);
     final isTablet = MediaQuery.of(context).size.width >= 600;
     final isVideo = item.type == 'video';
     final thumbnailHeight = isVideo ? 220.0 : dimensions['height']!;
@@ -154,8 +150,7 @@ class FavoritesScreen extends StatelessWidget {
                     top: padding * 2,
                     right: padding * 2,
                     child: GestureDetector(
-                      onTap: () =>
-                          favoritesViewModel.removeFavorite(item.id, item.type),
+                      onTap: () => viewModel.removeFavorite(item.id, item.type),
                       child: CircleAvatar(
                         radius: iconSize / 2,
                         backgroundColor:

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:itestified/src/features/category/presentation/widgets/video_testimonies_container.dart';
-
-import 'package:provider/provider.dart';
 
 @immutable
 class VideoTestimoniesCarouselConfig {
@@ -24,24 +23,12 @@ class VideoTestimoniesCarouselConfig {
   });
 }
 
-class VideoTestimoniesCarouselViewModel extends ChangeNotifier {
+class VideoTestimoniesCarouselViewModel {
   final VideoTestimoniesCarouselConfig config;
-  final PageController pageController;
-  int _currentPage = 0;
-  double _pageValue = 0;
 
   VideoTestimoniesCarouselViewModel({
     this.config = const VideoTestimoniesCarouselConfig(),
-  }) : pageController = PageController(viewportFraction: config.baseViewportFraction) {
-    pageController.addListener(() {
-      _currentPage = pageController.page?.round() ?? 0;
-      _pageValue = pageController.page ?? 0;
-      notifyListeners();
-    });
-  }
-
-  int get currentPage => _currentPage;
-  double get pageValue => _pageValue;
+  });
 
   double getContainerHeight(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
@@ -69,53 +56,73 @@ class VideoTestimoniesCarouselViewModel extends ChangeNotifier {
   double getScaleFactor(int index) {
     return 1.0;
   }
-
-  @override
-  void dispose() {
-    pageController.dispose();
-    super.dispose();
-  }
 }
 
-class VideoTestimoniesCarousel extends StatelessWidget {
+class VideoTestimoniesCarousel extends StatefulWidget {
   const VideoTestimoniesCarousel({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => VideoTestimoniesCarouselViewModel(),
-      child: Consumer<VideoTestimoniesCarouselViewModel>(
-        builder: (context, viewModel, _) {
-          return LayoutBuilder(
-            builder: (context, constraints) {
-              return SizedBox(
-                height: viewModel.getContainerHeight(context),
-                child: PageView.builder(
-                  allowImplicitScrolling: true,
-                  controller: viewModel.pageController,
-                  itemCount: 5, 
-                  padEnds: false,
-                  itemBuilder: (context, index) {
-                    final isActive = index == viewModel.currentPage;
+  _VideoTestimoniesCarouselState createState() => _VideoTestimoniesCarouselState();
+}
 
-                    return AnimatedBuilder(
-                      animation: viewModel.pageController,
-                      builder: (context, child) {
-                        return Container(
-                          margin: viewModel.getMargin(context, isActive, index),
-                          child: VideoTestimonyContainer1(
-                            videoId: index + 1,
-                          ),
-                        );
-                      },
-                    );
-                  },
-                ),
+class _VideoTestimoniesCarouselState extends State<VideoTestimoniesCarousel> {
+  late final PageController _pageController;
+  int _currentPage = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    final viewModel = GetIt.I<VideoTestimoniesCarouselViewModel>();
+    _pageController = PageController(viewportFraction: viewModel.config.baseViewportFraction);
+    _pageController.addListener(() {
+      setState(() {
+        _currentPage = _pageController.page?.round() ?? 0;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (!GetIt.I.isRegistered<VideoTestimoniesCarouselViewModel>()) {
+      print('Error: VideoTestimoniesCarouselViewModel not registered in GetIt');
+      return const Center(child: Text('Error: ViewModel not registered'));
+    }
+
+    final viewModel = GetIt.I<VideoTestimoniesCarouselViewModel>();
+
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return SizedBox(
+          height: viewModel.getContainerHeight(context),
+          child: PageView.builder(
+            allowImplicitScrolling: true,
+            controller: _pageController,
+            itemCount: 5,
+            padEnds: false,
+            itemBuilder: (context, index) {
+              final isActive = index == _currentPage;
+
+              return AnimatedBuilder(
+                animation: _pageController,
+                builder: (context, child) {
+                  return Container(
+                    margin: viewModel.getMargin(context, isActive, index),
+                    child: VideoTestimonyContainer1(
+                      videoId: index + 1,
+                    ),
+                  );
+                },
               );
             },
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 }

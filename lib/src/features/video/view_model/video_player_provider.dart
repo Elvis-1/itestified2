@@ -1,9 +1,34 @@
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get_it/get_it.dart';
 import 'package:video_player/video_player.dart';
 import 'dart:async';
 
-class VideoViewModel with ChangeNotifier {
+abstract class VideoService {
+  Future<void> initializeController(String videoUrl);
+  Future<void> setVideoUrl(String videoUrl);
+  void togglePlayPause();
+  void toggleControls();
+  void seekTo(Duration position);
+  Future<void> setQuality(String quality, String newVideoUrl);
+  void setPlaybackSpeed(double speed);
+  void toggleFullScreen();
+  Future<void> retry(String videoUrl);
+  void dispose();
+
+  VideoPlayerController? get controller;
+  bool get isPlaying;
+  Duration get position;
+  Duration get duration;
+  String get selectedQuality;
+  double get playbackSpeed;
+  bool get isFullScreen;
+  bool get isInitialized;
+  bool get isBuffering;
+  String? get errorMessage;
+  bool get showControls;
+}
+
+class VideoServiceImpl implements VideoService {
   VideoPlayerController? _controller;
   bool _isPlaying = false;
   Duration _position = Duration.zero;
@@ -20,20 +45,34 @@ class VideoViewModel with ChangeNotifier {
   String? _currentVideoUrl;
   bool _isMounted = true;
 
+  @override
   VideoPlayerController? get controller => _controller;
+  @override
   bool get isPlaying => _isPlaying;
+  @override
   Duration get position => _position;
+  @override
   Duration get duration => _duration;
+  @override
   String get selectedQuality => _selectedQuality;
+  @override
   double get playbackSpeed => _playbackSpeed;
+  @override
   bool get isFullScreen => _isFullScreen;
+  @override
   bool get isInitialized => _isInitialized;
+  @override
   bool get isBuffering => _isBuffering;
+  @override
   String? get errorMessage => _errorMessage;
+  @override
   bool get showControls => _showControls;
 
-  VideoViewModel();
+  VideoServiceImpl() {
+    print('VideoServiceImpl initialized');
+  }
 
+  @override
   Future<void> setVideoUrl(String videoUrl) async {
     if (_isDisposed || !_isMounted || videoUrl == _currentVideoUrl) {
       print(
@@ -42,10 +81,11 @@ class VideoViewModel with ChangeNotifier {
     }
     _currentVideoUrl = videoUrl;
     print('Setting video URL: $videoUrl');
-    await _initializeController(videoUrl);
+    await initializeController(videoUrl);
   }
 
-  Future<void> _initializeController(String videoUrl) async {
+  @override
+  Future<void> initializeController(String videoUrl) async {
     if (_isDisposed || !_isMounted) return;
     try {
       if (_controller != null) {
@@ -59,7 +99,6 @@ class VideoViewModel with ChangeNotifier {
       _position = Duration.zero;
       _duration = Duration.zero;
       _showControls = true;
-      if (_isMounted) notifyListeners();
 
       _controller = VideoPlayerController.networkUrl(Uri.parse(videoUrl))
         ..addListener(_updatePosition)
@@ -71,12 +110,10 @@ class VideoViewModel with ChangeNotifier {
       _errorMessage = null;
       print(
           'Controller initialized: ${_controller.hashCode}, duration: $_duration');
-      if (_isMounted) notifyListeners();
     } catch (error) {
       _isInitialized = false;
       _errorMessage = 'Failed to load video: $error';
       print('Initialization error: $error');
-      if (_isMounted) notifyListeners();
     }
   }
 
@@ -88,39 +125,32 @@ class VideoViewModel with ChangeNotifier {
 
     _position = newPosition;
 
-    bool shouldNotify = false;
+    bool shouldUpdate = false;
 
     if (_isPlaying != newIsPlaying) {
       _isPlaying = newIsPlaying;
-      shouldNotify = true;
+      shouldUpdate = true;
     }
 
-    // Only notify if buffering status changes
     if (_isBuffering != newIsBuffering) {
       _isBuffering = newIsBuffering;
-      shouldNotify = true;
+      shouldUpdate = true;
     }
 
     print(
         'Position updated: $_position, playing: $_isPlaying, buffering: $_isBuffering, showControls: $_showControls');
 
-    // Check for errors
     if (_controller?.value.hasError ?? false) {
       _errorMessage = 'Playback error: ${_controller!.value.errorDescription}';
       print('Playback error: ${_controller!.value.errorDescription}');
       _isPlaying = false;
       _isBuffering = false;
-      if (_isMounted) notifyListeners();
       return;
     }
 
-    // Manage controls visibility
     if (_isPlaying && _showControls) {
       _startHideControlsTimer();
     }
-
-    // Always notify when position updates (needed for progress bar)
-    if (_isMounted) notifyListeners();
   }
 
   void _startHideControlsTimer() {
@@ -134,11 +164,11 @@ class VideoViewModel with ChangeNotifier {
       if (_isPlaying && !_isDisposed && _isMounted) {
         print('Hiding controls');
         _showControls = false;
-        if (_isMounted) notifyListeners();
       }
     });
   }
 
+  @override
   void togglePlayPause() {
     if (!_isInitialized || _isDisposed || !_isMounted) {
       print(
@@ -149,7 +179,6 @@ class VideoViewModel with ChangeNotifier {
       _controller?.pause().catchError((error) {
         _errorMessage = 'Failed to pause video: $error';
         print('Pause error: $error');
-        if (_isMounted) notifyListeners();
       });
       _isPlaying = false;
       _hideControlsTimer?.cancel();
@@ -160,7 +189,6 @@ class VideoViewModel with ChangeNotifier {
       _controller?.play().catchError((error) {
         _errorMessage = 'Failed to play video: $error';
         print('Play error: $error');
-        if (_isMounted) notifyListeners();
       });
       _isPlaying = true;
       _showControls = true;
@@ -168,9 +196,9 @@ class VideoViewModel with ChangeNotifier {
       print(
           'Playing video, isPlaying: $_isPlaying, showControls: $_showControls');
     }
-    if (_isMounted) notifyListeners();
   }
 
+  @override
   void toggleControls() {
     if (!_isMounted) return;
     _showControls = !_showControls;
@@ -180,18 +208,18 @@ class VideoViewModel with ChangeNotifier {
     } else {
       _hideControlsTimer?.cancel();
     }
-    if (_isMounted) notifyListeners();
   }
 
+  @override
   void seekTo(Duration position) {
     if (!_isInitialized || _isDisposed || !_isMounted) return;
     _controller?.seekTo(position);
     _showControls = true;
     _startHideControlsTimer();
     print('Seeking to $position, showControls: $_showControls');
-    if (_isMounted) notifyListeners();
   }
 
+  @override
   Future<void> setQuality(String quality, String newVideoUrl) async {
     if (_isDisposed || !_isMounted) return;
     try {
@@ -199,7 +227,7 @@ class VideoViewModel with ChangeNotifier {
       final wasPlaying = _isPlaying;
       _selectedQuality = quality;
       print('Switching quality to $quality with URL: $newVideoUrl');
-      await _initializeController(newVideoUrl);
+      await initializeController(newVideoUrl);
       if (_isInitialized && _isMounted) {
         await _controller?.seekTo(currentPosition);
         if (wasPlaying) {
@@ -212,10 +240,10 @@ class VideoViewModel with ChangeNotifier {
     } catch (error) {
       _errorMessage = 'Failed to switch quality: $error';
       print('Quality switch error: $error');
-      if (_isMounted) notifyListeners();
     }
   }
 
+  @override
   void setPlaybackSpeed(double speed) {
     if (!_isInitialized || _isDisposed || !_isMounted) return;
     _playbackSpeed = speed;
@@ -223,9 +251,9 @@ class VideoViewModel with ChangeNotifier {
     _showControls = true;
     _startHideControlsTimer();
     print('Set playback speed to $speed, showControls: $_showControls');
-    if (_isMounted) notifyListeners();
   }
 
+  @override
   void toggleFullScreen() {
     if (!_isMounted) return;
     _isFullScreen = !_isFullScreen;
@@ -242,22 +270,21 @@ class VideoViewModel with ChangeNotifier {
     _showControls = true;
     _startHideControlsTimer();
     print('Toggled full screen: $_isFullScreen, showControls: $_showControls');
-    if (_isMounted) notifyListeners();
   }
 
+  @override
   Future<void> retry(String videoUrl) async {
     if (_isDisposed || !_isMounted) return;
     const maxRetries = 3;
     for (int i = 0; i < maxRetries; i++) {
       print('Retry attempt ${i + 1} for URL: $videoUrl');
       try {
-        await _initializeController(videoUrl);
+        await initializeController(videoUrl);
         if (_isInitialized) return;
       } catch (_) {
         if (i == maxRetries - 1) {
           _errorMessage = 'Failed to load video after $maxRetries attempts';
           print('Retry failed: $_errorMessage');
-          if (_isMounted) notifyListeners();
         }
       }
     }
@@ -277,7 +304,36 @@ class VideoViewModel with ChangeNotifier {
     _controller = null;
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
-    print('VideoViewModel disposed');
-    super.dispose();
+    print('VideoServiceImpl disposed');
   }
+}
+
+class VideoViewModel {
+  final VideoService _videoService;
+
+  VideoViewModel({VideoService? videoService})
+      : _videoService = videoService ?? GetIt.I<VideoService>();
+
+  VideoPlayerController? get controller => _videoService.controller;
+  bool get isPlaying => _videoService.isPlaying;
+  Duration get position => _videoService.position;
+  Duration get duration => _videoService.duration;
+  String get selectedQuality => _videoService.selectedQuality;
+  double get playbackSpeed => _videoService.playbackSpeed;
+  bool get isFullScreen => _videoService.isFullScreen;
+  bool get isInitialized => _videoService.isInitialized;
+  bool get isBuffering => _videoService.isBuffering;
+  String? get errorMessage => _videoService.errorMessage;
+  bool get showControls => _videoService.showControls;
+
+  Future<void> setVideoUrl(String videoUrl) => _videoService.setVideoUrl(videoUrl);
+  void togglePlayPause() => _videoService.togglePlayPause();
+  void toggleControls() => _videoService.toggleControls();
+  void seekTo(Duration position) => _videoService.seekTo(position);
+  Future<void> setQuality(String quality, String newVideoUrl) =>
+      _videoService.setQuality(quality, newVideoUrl);
+  void setPlaybackSpeed(double speed) => _videoService.setPlaybackSpeed(speed);
+  void toggleFullScreen() => _videoService.toggleFullScreen();
+  Future<void> retry(String videoUrl) => _videoService.retry(videoUrl);
+  void dispose() => _videoService.dispose();
 }
