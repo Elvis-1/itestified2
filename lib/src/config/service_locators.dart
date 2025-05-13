@@ -7,11 +7,11 @@ import 'package:itestified/src/features/auth/domain/service/auth_service.dart';
 import 'package:itestified/src/features/auth/presentation/viewmodel/auth_viewmodel.dart';
 import 'package:itestified/src/features/category/presentation/screens/video_written_test_screen.dart';
 import 'package:itestified/src/features/favorites/presentation/screens/favorite_icon_view_model.dart';
+import 'package:itestified/src/features/home/presentation/home_screen_viewmodel.dart';
 import 'package:itestified/src/features/nav/navbar.dart';
 import 'package:itestified/src/features/profile/data/profile_api.dart';
 import 'package:itestified/src/features/profile/domain/donation_service.dart';
 import 'package:itestified/src/features/profile/presentation/viewmodel/donation_viewmodel.dart';
-import 'package:itestified/src/features/video/utiils/constants.dart';
 import 'package:itestified/src/features/written_testimonies.dart/presentation/screens/video_testimony_viewmodel.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
@@ -43,6 +43,7 @@ void _registerViewModels() {
     ..registerFactory(() => VideoViewModel())
     ..registerFactory(() => NavProvider())
      ..registerFactory(() => FavoritesViewModel())
+     ..registerFactory(() => HomeScreenViewModel()) 
     ..registerFactory(() => VideoWrittenTestimoniesViewModel())
     ..registerFactoryParam<VideoTestimonyViewModel, int, void>(
       (videoId, _) => VideoTestimonyViewModel(videoId: videoId),

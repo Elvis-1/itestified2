@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:get_it/get_it.dart';
 import 'package:itestified/src/config/theme/app_color.dart';
 import 'package:itestified/src/core/utils/app_const/app_icons.dart';
 import 'package:itestified/src/core/widgets/appbar2.dart';
@@ -8,7 +8,6 @@ import 'package:itestified/src/features/animations/fade_in_trans.dart';
 import 'package:itestified/src/features/app_theme/theme_viewmodel.dart';
 import 'package:itestified/src/features/auth/presentation/viewmodel/auth_viewmodel.dart';
 import 'package:itestified/src/features/category/presentation/widgets/text_testimony_container.dart';
-
 import 'package:itestified/src/features/home/widget/quotes_container.dart';
 import 'package:itestified/src/features/home/widget/video_testimoies_carousal.dart';
 import 'package:provider/provider.dart';
@@ -22,35 +21,28 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => HomeScreenViewModel(),
-      child: Consumer<HomeScreenViewModel>(
-        builder: (context, viewModel, _) {
-          final themeProvider = Provider.of<ThemeViewmodel>(context);
-          final authProvider = Provider.of<AuthViewModel>(context);
-          final isGuest = authProvider.isGuest;
+    final viewModel = GetIt.I<HomeScreenViewModel>();
+    final themeProvider = Provider.of<ThemeViewmodel>(context);
+    final authProvider = Provider.of<AuthViewModel>(context);
+    final isGuest = authProvider.isGuest;
 
-          return Scaffold(
-            appBar: generalAppBar2(context),
-            backgroundColor: themeProvider.themeData.colorScheme.surface,
-            body: SafeArea(
-              child: LayoutBuilder(
-                builder: (context, constraints) {
-                  final margin = viewModel.getMargin(context);
-                  final isLargeScreen = viewModel.isLargeScreen(context);
+    return Scaffold(
+      appBar: generalAppBar2(context),
+      backgroundColor: themeProvider.themeData.colorScheme.surface,
+      body: SafeArea(
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            final margin = viewModel.getMargin(context);
+            final isLargeScreen = viewModel.isLargeScreen(context);
 
-                  return Container(
-                    margin:
-                        EdgeInsets.symmetric(horizontal: margin, vertical: 5),
-                    child: isLargeScreen
-                        ? _buildLargeScreenLayout(context, viewModel)
-                        : _buildSmallScreenLayout(context, viewModel),
-                  );
-                },
-              ),
-            ),
-          );
-        },
+            return Container(
+              margin: EdgeInsets.symmetric(horizontal: margin, vertical: 5),
+              child: isLargeScreen
+                  ? _buildLargeScreenLayout(context, viewModel)
+                  : _buildSmallScreenLayout(context, viewModel),
+            );
+          },
+        ),
       ),
     );
   }
@@ -258,7 +250,7 @@ class HomeScreen extends StatelessWidget {
                 child: SingleChildScrollView(
                   child: TextWidgets.textWidget12(
                     context,
-                    '\"For I know the thoughts that I think towards you, saith the Lord, thoughts of peace and not of evil, to give you an expected end\"',
+                    '"For I know the thoughts that I think towards you, saith the Lord, thoughts of peace and not of evil, to give you an expected end"',
                     color: AppColors.white,
                     fontWeight: FontWeight.w400,
                     textAlign: TextAlign.left,

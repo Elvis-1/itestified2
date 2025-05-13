@@ -11,7 +11,7 @@ import 'package:itestified/src/features/video/presentation/screens/video_screen.
 import 'package:itestified/src/features/written_testimonies.dart/presentation/screens/written_testimonies.dart';
 import 'package:provider/provider.dart';
 
-class HomeScreenViewModel extends ChangeNotifier {
+class HomeScreenViewModel {
   final HomeScreenConfig config;
 
   HomeScreenViewModel({this.config = const HomeScreenConfig()});

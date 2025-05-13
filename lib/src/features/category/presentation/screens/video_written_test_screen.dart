@@ -9,83 +9,85 @@ import 'package:itestified/src/features/category/presentation/widgets/text_testi
 import 'package:itestified/src/features/category/presentation/widgets/video_testimonies_container.dart';
 import 'package:itestified/src/features/profile/presentation/screens/my_testimonies_details.dart';
 import 'package:itestified/src/features/video/presentation/screens/video_screen.dart';
-
 import 'package:material_symbols_icons/symbols.dart';
 import 'package:provider/provider.dart';
-class VideoAndWrittenTestimonieScreen extends StatelessWidget {
+
+class VideoAndWrittenTestimonieScreen extends StatefulWidget {
   const VideoAndWrittenTestimonieScreen({super.key});
   static const routeName = '/vid-written-testimonies';
 
   @override
+  _VideoAndWrittenTestimonieScreenState createState() =>
+      _VideoAndWrittenTestimonieScreenState();
+}
+
+class _VideoAndWrittenTestimonieScreenState
+    extends State<VideoAndWrittenTestimonieScreen> {
+  bool _isVideoMode = true;
+
+  @override
   Widget build(BuildContext context) {
-   
     final viewModel = GetIt.I<VideoWrittenTestimoniesViewModel>();
-    
-    return ChangeNotifierProvider.value( 
-      value: viewModel,
-      child: Consumer<VideoWrittenTestimoniesViewModel>(
-        builder: (context, viewModel, _) {
-          final themeProvider = Provider.of<ThemeViewmodel>(context);
-          return Scaffold(
-            appBar: generalAppbar('Healing Testimonies', context),
-            backgroundColor: themeProvider.themeData.colorScheme.surface,
-            body: LayoutBuilder(
-              builder: (context, constraints) {
-                final isLargeScreen = constraints.maxWidth > viewModel.config.mobileBreakpoint;
-                final margin = viewModel.getMargin(context);
-                final horizontalPadding = viewModel.getHorizontalPadding(context);
-                final textSize = viewModel.getTextSize(context);
-                final iconSize = viewModel.getIconSize(context);
+    final themeProvider = Provider.of<ThemeViewmodel>(context);
 
-           
+    return Scaffold(
+      appBar: generalAppbar('Healing Testimonies', context),
+      backgroundColor: themeProvider.themeData.colorScheme.surface,
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          final isLargeScreen =
+              constraints.maxWidth > viewModel.config.mobileBreakpoint;
+          final margin = viewModel.getMargin(context);
+          final horizontalPadding = viewModel.getHorizontalPadding(context);
+          final iconSize = viewModel.getIconSize(context);
 
-                return FadeInTransitionWidget(
-                  child: Column(
+          return FadeInTransitionWidget(
+            child: Column(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    border: Border(
+                      bottom: BorderSide(color: AppColors.opaqueBlack),
+                    ),
+                  ),
+                  padding: EdgeInsets.symmetric(
+                      vertical: viewModel.getPadding(context)),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          border: Border(
-                            bottom: BorderSide(color: AppColors.opaqueBlack),
-                          ),
-                        ),
-                        padding: EdgeInsets.symmetric(vertical: viewModel.getPadding(context)),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            GestureDetector(
-                              onTap: () => viewModel.setVideoMode(true),
-                              child: iconAndText(
-                                "Videos",
-                                Icon(Symbols.slideshow, size: iconSize),
-                                viewModel.isVideoMode
-                                    ? AppColors.primaryColor
-                                    : themeProvider.themeData.colorScheme.surface,
-                                context,
-                              ),
-                            ),
-                            GestureDetector(
-                              onTap: () => viewModel.setVideoMode(false),
-                              child: iconAndText(
-                                "Text",
-                                Icon(Symbols.article, size: iconSize),
-                                !viewModel.isVideoMode
-                                    ? AppColors.primaryColor
-                                    : themeProvider.themeData.colorScheme.surface,
-                                context,
-                              ),
-                            ),
-                          ],
+                      GestureDetector(
+                        onTap: () => setState(() => _isVideoMode = true),
+                        child: iconAndText(
+                          "Videos",
+                          Icon(Symbols.slideshow, size: iconSize),
+                          _isVideoMode
+                              ? AppColors.primaryColor
+                              : themeProvider.themeData.colorScheme.surface,
+                          context,
                         ),
                       ),
-                      Expanded(
-                        child: isLargeScreen
-                            ? _buildLargeScreenGrid(context, viewModel, constraints)
-                            : _buildSmallScreenList(context, viewModel, constraints),
+                      GestureDetector(
+                        onTap: () => setState(() => _isVideoMode = false),
+                        child: iconAndText(
+                          "Text",
+                          Icon(Symbols.article, size: iconSize),
+                          !_isVideoMode
+                              ? AppColors.primaryColor
+                              : themeProvider.themeData.colorScheme.surface,
+                          context,
+                        ),
                       ),
                     ],
                   ),
-                );
-              },
+                ),
+                Expanded(
+                  child: isLargeScreen
+                      ? _buildLargeScreenGrid(
+                          context, viewModel, constraints, _isVideoMode)
+                      : _buildSmallScreenList(
+                          context, viewModel, constraints, _isVideoMode),
+                ),
+              ],
             ),
           );
         },
@@ -93,50 +95,66 @@ class VideoAndWrittenTestimonieScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildLargeScreenGrid(BuildContext context, VideoWrittenTestimoniesViewModel viewModel, BoxConstraints constraints) {
+  Widget _buildLargeScreenGrid(
+      BuildContext context,
+      VideoWrittenTestimoniesViewModel viewModel,
+      BoxConstraints constraints,
+      bool isVideoMode) {
     final margin = viewModel.getMargin(context);
     final horizontalPadding = viewModel.getHorizontalPadding(context);
     return GridView.builder(
-      padding: EdgeInsets.symmetric(horizontal: horizontalPadding, vertical: margin / 2),
+      padding: EdgeInsets.symmetric(
+          horizontal: horizontalPadding, vertical: margin / 2),
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: viewModel.getGridCrossAxisCount(context),
         crossAxisSpacing: margin,
         mainAxisSpacing: margin,
-        childAspectRatio: viewModel.getContainerWidth(context) / viewModel.getContainerHeight(context),
+        childAspectRatio: viewModel.getContainerWidth(context) /
+            viewModel.getContainerHeight(context, isVideoMode),
       ),
       itemCount: 10,
       itemBuilder: (context, index) {
-        return _buildContainer(context, viewModel, index);
+        return _buildContainer(context, viewModel, index, isVideoMode);
       },
     );
   }
 
-  Widget _buildSmallScreenList(BuildContext context, VideoWrittenTestimoniesViewModel viewModel, BoxConstraints constraints) {
+  Widget _buildSmallScreenList(
+      BuildContext context,
+      VideoWrittenTestimoniesViewModel viewModel,
+      BoxConstraints constraints,
+      bool isVideoMode) {
     final margin = viewModel.getMargin(context);
     final horizontalPadding = viewModel.getHorizontalPadding(context);
     return ListView.builder(
-      padding: EdgeInsets.symmetric(horizontal: horizontalPadding, vertical: margin / 2),
+      padding: EdgeInsets.symmetric(
+          horizontal: horizontalPadding, vertical: margin / 2),
       itemCount: 10,
       itemBuilder: (context, index) {
         return Padding(
           padding: EdgeInsets.only(bottom: margin),
-          child: _buildContainer(context, viewModel, index),
+          child: _buildContainer(context, viewModel, index, isVideoMode),
         );
       },
     );
   }
 
-  Widget _buildContainer(BuildContext context, VideoWrittenTestimoniesViewModel viewModel, int index) {
+  Widget _buildContainer(
+      BuildContext context,
+      VideoWrittenTestimoniesViewModel viewModel,
+      int index,
+      bool isVideoMode) {
     final width = viewModel.getContainerWidth(context);
-    final height = viewModel.getContainerHeight(context);
+    final height = viewModel.getContainerHeight(context, isVideoMode);
     final borderRadius = viewModel.getBorderRadius(context);
 
     return ClipRect(
       child: GestureDetector(
-        onTap: () => viewModel.navigateToScreen(context, index + 1),
+        onTap: () =>
+            viewModel.navigateToScreen(context, index + 1, isVideoMode),
         child: Container(
           constraints: BoxConstraints.tightFor(width: width, height: height),
-          child: viewModel.isVideoMode
+          child: isVideoMode
               ? VideoTestimonyContainer2(
                   videoId: index + 1,
                   containerWidth: width,
@@ -156,18 +174,10 @@ class VideoAndWrittenTestimonieScreen extends StatelessWidget {
   }
 }
 
-class VideoWrittenTestimoniesViewModel extends ChangeNotifier {
+class VideoWrittenTestimoniesViewModel {
   final VideoWrittenTestimoniesConfig config;
-  bool _isVideoMode = true;
 
   VideoWrittenTestimoniesViewModel({this.config = const VideoWrittenTestimoniesConfig()});
-
-  bool get isVideoMode => _isVideoMode;
-
-  void setVideoMode(bool isVideo) {
-    _isVideoMode = isVideo;
-    notifyListeners();
-  }
 
   double getContainerWidth(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
@@ -176,9 +186,9 @@ class VideoWrittenTestimoniesViewModel extends ChangeNotifier {
     return config.baseContainerWidth;
   }
 
-  double getContainerHeight(BuildContext context) {
+  double getContainerHeight(BuildContext context, bool isVideoMode) {
     final width = MediaQuery.of(context).size.width;
-    final baseHeight = _isVideoMode ? config.baseVideoContainerHeight : config.baseTextContainerHeight;
+    final baseHeight = isVideoMode ? config.baseVideoContainerHeight : config.baseTextContainerHeight;
     if (width >= config.desktopBreakpoint) return baseHeight * 1.5;
     if (width >= config.tabletBreakpoint) return baseHeight * 1.2;
     return baseHeight;
@@ -241,10 +251,10 @@ class VideoWrittenTestimoniesViewModel extends ChangeNotifier {
     return width >= config.desktopBreakpoint ? 3 : 2;
   }
 
-  void navigateToScreen(BuildContext context, int heroIndex) {
+  void navigateToScreen(BuildContext context, int heroIndex, bool isVideoMode) {
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => _isVideoMode
+        builder: (context) => isVideoMode
             ? VideoScreen(heroIndex: heroIndex)
             : const MyTestimoniesDetailsScreen(),
       ),
@@ -258,8 +268,8 @@ class VideoWrittenTestimoniesConfig {
   final double tabletBreakpoint;
   final double desktopBreakpoint;
   final double baseContainerWidth;
-  final double baseTextContainerHeight; 
-  final double baseVideoContainerHeight; 
+  final double baseTextContainerHeight;
+  final double baseVideoContainerHeight;
   final double baseVideoImageHeight;
   final double baseBorderRadius;
   final double baseMargin;
@@ -273,9 +283,9 @@ class VideoWrittenTestimoniesConfig {
     this.tabletBreakpoint = 800,
     this.desktopBreakpoint = 1200,
     this.baseContainerWidth = 345.0,
-    this.baseTextContainerHeight = 162.0, 
+    this.baseTextContainerHeight = 162.0,
     this.baseVideoContainerHeight = 280.0,
-    this.baseVideoImageHeight = 220.0, 
+    this.baseVideoImageHeight = 220.0,
     this.baseBorderRadius = 16.0,
     this.baseMargin = 8.0,
     this.baseHorizontalPadding = 10.0,

@@ -2,16 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:itestified/src/core/widgets/dialog.dart';
 import 'package:itestified/src/features/auth/presentation/viewmodel/auth_viewmodel.dart';
 import 'package:itestified/src/features/written_testimonies.dart/presentation/screens/video_testimony_config.dart';
+import 'package:get_it/get_it.dart';
 
-import 'package:provider/provider.dart';
+final sl = GetIt.instance;
 
-class VideoTestimonyViewModel extends ChangeNotifier {
+class VideoTestimonyViewModel {
   final VideoTestimonyConfig config;
   final int videoId;
 
   VideoTestimonyViewModel({
     this.config = const VideoTestimonyConfig(),
-    this.videoId = 1,
+    required this.videoId,
   });
 
   double getContainerWidth(BuildContext context) {
@@ -101,8 +102,8 @@ class VideoTestimonyViewModel extends ChangeNotifier {
   }
 
   void handleVideoTestimonyTap(BuildContext context, {required int videoId}) {
-    var authProvider = Provider.of<AuthViewModel>(context, listen: false);
-    if (authProvider.isGuest) {
+    final authViewModel = sl<AuthViewModel>();
+    if (authViewModel.isGuest) {
       showJoinOurCommunityDialogOverlay(context, "Join Our Community");
     } else {
       Navigator.pushNamed(context, 'video-screen', arguments: videoId);

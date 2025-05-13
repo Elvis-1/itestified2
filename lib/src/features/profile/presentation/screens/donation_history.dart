@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
 import 'package:itestified/src/config/theme/app_color.dart';
 import 'package:itestified/src/core/utils/app_const/app_icons.dart';
@@ -11,180 +12,181 @@ import 'package:itestified/src/features/profile/presentation/screens/donation_de
 import 'package:itestified/src/features/profile/presentation/viewmodel/donation_viewmodel.dart';
 import 'package:provider/provider.dart';
 
-
-class DonationHistoryScreen extends StatelessWidget {
+class DonationHistoryScreen extends StatefulWidget {
   static const String routeName = '/donation-history';
 
   const DonationHistoryScreen({super.key});
 
   @override
+  _DonationHistoryScreenState createState() => _DonationHistoryScreenState();
+}
+
+class _DonationHistoryScreenState extends State<DonationHistoryScreen> {
+  String _selectedStatus = 'All';
+  DateTime? _startDate;
+  DateTime? _endDate;
+  bool _isRefreshing = false;
+
+
+
+  @override
   Widget build(BuildContext context) {
+    final viewModel = GetIt.I<DonationViewmodel>();
     final themeProvider = Provider.of<ThemeViewmodel>(context);
-    final donationHistoryProvider =
-        Provider.of<DonationViewmodel>(context);
     final themeData = themeProvider.themeData;
+
+    final filteredTransactions = viewModel.getFilteredTransactions(
+      selectedStatus: _selectedStatus,
+      startDate: _startDate,
+      endDate: _endDate,
+    );
 
     return Scaffold(
       backgroundColor: themeData.colorScheme.surface,
       appBar: generalAppbar("Donation History", context),
       body: CustomScrollView(
-          physics: const AlwaysScrollableScrollPhysics(),
-          slivers: [
-            CupertinoSliverRefreshControl(
-              onRefresh: () async {
-                donationHistoryProvider.setRefreshing(true);
-
-                await Future.delayed(const Duration(seconds: 2));
-
-                donationHistoryProvider.setRefreshing(false);
-              },
-              builder: (context, refreshState, pulledExtent,
-                  refreshTriggerPullDistance, refreshIndicatorExtent) {
-                return const SizedBox.shrink();
-              },
-            ),
-            SliverToBoxAdapter(
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(height: 20),
-                    Row(
-                 mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        GestureDetector(
-                          onTap: () => _showDateRangeBottomSheet(context),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              btnAndText(
-                                text: "Select Date Range",
-                                fontSize:
-                                    themeData.textTheme.bodyMedium?.fontSize,
-                                containerColor: Colors.transparent,
-                                containerWidth: 160,
-                                verticalPadding: 10,
-                                textColor: AppColors.primaryColor,
-                              ),
-                            ],
-                          ),
+        physics: const AlwaysScrollableScrollPhysics(),
+        slivers: [
+          CupertinoSliverRefreshControl(
+            onRefresh: () async {
+              setState(() => _isRefreshing = true);
+              await Future.delayed(const Duration(seconds: 2));
+              setState(() => _isRefreshing = false);
+            },
+            builder: (context, refreshState, pulledExtent,
+                refreshTriggerPullDistance, refreshIndicatorExtent) {
+              return const SizedBox.shrink();
+            },
+          ),
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 20),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      GestureDetector(
+                        onTap: () => _showDateRangeBottomSheet(context),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            btnAndText(
+                              text: "Select Date Range",
+                              fontSize: themeData.textTheme.bodyMedium?.fontSize,
+                              containerColor: Colors.transparent,
+                              containerWidth: 160,
+                              verticalPadding: 10,
+                              textColor: AppColors.primaryColor,
+                            ),
+                          ],
                         ),
-                        SizedBox(width: 24,),
-                        GestureDetector(
-                          onTap: () => _showStatusFilterBottomSheet(context),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              btnAndText(
-                                text: "Select Status",
-                                fontSize:
-                                    themeData.textTheme.bodyMedium?.fontSize,
-                                containerColor: Colors.transparent,
-                                containerWidth: 160,
-                                verticalPadding: 10,
-                                textColor: AppColors.primaryColor,
-                              ),
-                            ],
-                          ),
+                      ),
+                      const SizedBox(width: 24),
+                      GestureDetector(
+                        onTap: () => _showStatusFilterBottomSheet(context),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            btnAndText(
+                              text: "Select Status",
+                              fontSize: themeData.textTheme.bodyMedium?.fontSize,
+                              containerColor: Colors.transparent,
+                              containerWidth: 160,
+                              verticalPadding: 10,
+                              textColor: AppColors.primaryColor,
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                    const SizedBox(height: 20),
-                    Consumer<DonationViewmodel>(
-                      builder: (context, provider, _) {
-                        return provider.isRefreshing
-                            ? Container(
-                                width: double.infinity,
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 12),
-                                decoration: BoxDecoration(
-                                  color: themeData.colorScheme.outline,
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    const SizedBox(
-                                      width: 20,
-                                      height: 20,
-                                      child: CircularProgressIndicator(
-                                        strokeWidth: 2,
-                                      ),
-                                    ),
-                                    const SizedBox(width: 12),
-                                    Text(
-                                      'Loading...',
-                                      style: TextStyle(
-                                        fontSize: themeData
-                                            .textTheme.bodyMedium?.fontSize,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              )
-                            : const SizedBox.shrink();
-                      },
-                    ),
-                    const SizedBox(height: 12),
-                    textWidget(
-                      'April 2025',
-                      fontSize: themeData.textTheme.bodyMedium?.fontSize,
-                      fontWeight: FontWeight.w600,
-                      color: themeData.colorScheme.onSurface,
-                    ),
-                    const SizedBox(height: 20),
-                    ...donationHistoryProvider.filteredTransactions
-                        .map((transaction) {
-                      print('Transaction: $transaction'); // Debug log
-                      // Format date from 'yyyy-MM-dd' to 'dd/MM/yyyy'
-                      String formattedDate = 'N/A';
-                      try {
-                        if (transaction['date'] != null) {
-                          final date = DateTime.parse(transaction['date']);
-                          formattedDate = DateFormat('dd/MM/yyyy').format(date);
-                        }
-                      } catch (e) {
-                        print('Error formatting date: $e');
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+                  if (_isRefreshing)
+                    Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.symmetric(vertical: 12),
+                      decoration: BoxDecoration(
+                        color: themeData.colorScheme.outline,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const SizedBox(
+                            width: 20,
+                            height: 20,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2,
+                            ),
+                          ),
+                          const SizedBox(width: 12),
+                          Text(
+                            'Loading...',
+                            style: TextStyle(
+                              fontSize: themeData.textTheme.bodyMedium?.fontSize,
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
+                  else
+                    const SizedBox.shrink(),
+                  const SizedBox(height: 12),
+                  textWidget(
+                    'April 2025',
+                    fontSize: themeData.textTheme.bodyMedium?.fontSize,
+                    fontWeight: FontWeight.w600,
+                    color: themeData.colorScheme.onSurface,
+                  ),
+                  const SizedBox(height: 20),
+                  ...filteredTransactions.map((transaction) {
+                    print('Transaction: $transaction');
+                    String formattedDate = 'N/A';
+                    try {
+                      if (transaction['date'] != null) {
+                        final date = DateTime.parse(transaction['date']);
+                        formattedDate = DateFormat('dd/MM/yyyy').format(date);
                       }
+                    } catch (e) {
+                      print('Error formatting date: $e');
+                    }
 
-                      return Padding(
-                        padding: const EdgeInsets.only(bottom: 12),
-                        child: GestureDetector(
-                          onTap: () {
-                            Navigator.pushNamed(
-                              context,
-                              DonationDetailsScreen.routeName,
-                              arguments: transaction,
-                            );
-                          },
-                          child: _buildTransactionContainer(
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 12),
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(
                             context,
-                            amount: transaction['amount']?.toString() ?? 'N/A',
-                            email: transaction['email']?.toString() ?? 'N/A',
-                            status:
-                                transaction['status']?.toString() ?? 'Unknown',
-                            statusColor: transaction['statusColor'] as Color? ??
-                                AppColors.grey50,
-                            date: formattedDate,
-                          ),
+                            DonationDetailsScreen.routeName,
+                            arguments: transaction,
+                          );
+                        },
+                        child: _buildTransactionContainer(
+                          context,
+                          amount: transaction['amount']?.toString() ?? 'N/A',
+                          email: transaction['email']?.toString() ?? 'N/A',
+                          status: transaction['status']?.toString() ?? 'Unknown',
+                          statusColor:
+                              transaction['statusColor'] as Color? ?? AppColors.grey50,
+                          date: formattedDate,
                         ),
-                      );
-                    }).toList(),
-                  ],
-                ),
+                      ),
+                    );
+                  }).toList(),
+                ],
               ),
             ),
-          ]),
+          ),
+        ],
+      ),
     );
   }
 
   void _showStatusFilterBottomSheet(BuildContext context) {
-    final themeData =
-        Provider.of<ThemeViewmodel>(context, listen: false).themeData;
-    final donationHistoryProvider =
-        Provider.of<DonationViewmodel>(context, listen: false);
+    final themeData = Provider.of<ThemeViewmodel>(context, listen: false).themeData;
 
     showModalBottomSheet(
       context: context,
@@ -213,7 +215,7 @@ class DonationHistoryScreen extends StatelessWidget {
                     ),
                     GestureDetector(
                       onTap: () {
-                        donationHistoryProvider.setStatusFilter('All');
+                        setState(() => _selectedStatus = 'All');
                         Navigator.pop(context);
                       },
                       child: const Icon(
@@ -225,11 +227,10 @@ class DonationHistoryScreen extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 12),
-                _buildFilterOption(context, 'All', donationHistoryProvider),
-                _buildFilterOption(context, 'Pending', donationHistoryProvider),
-                _buildFilterOption(
-                    context, 'Verified', donationHistoryProvider),
-                _buildFilterOption(context, 'Failed', donationHistoryProvider),
+                _buildFilterOption(context, 'All'),
+                _buildFilterOption(context, 'Pending'),
+                _buildFilterOption(context, 'Verified'),
+                _buildFilterOption(context, 'Failed'),
               ],
             ),
           ),
@@ -239,13 +240,9 @@ class DonationHistoryScreen extends StatelessWidget {
   }
 
   void _showDateRangeBottomSheet(BuildContext context) {
-    final themeData =
-        Provider.of<ThemeViewmodel>(context, listen: false).themeData;
-    final donationHistoryProvider =
-        Provider.of<DonationViewmodel>(context, listen: false);
-
-    DateTime? localStartDate = donationHistoryProvider.startDate;
-    DateTime? localEndDate = donationHistoryProvider.endDate;
+    final themeData = Provider.of<ThemeViewmodel>(context, listen: false).themeData;
+    DateTime? localStartDate = _startDate;
+    DateTime? localEndDate = _endDate;
 
     showModalBottomSheet(
       context: context,
@@ -276,7 +273,14 @@ class DonationHistoryScreen extends StatelessWidget {
                         ),
                         GestureDetector(
                           onTap: () {
-                            donationHistoryProvider.clearDateRange();
+                            setState(() {
+                              localStartDate = null;
+                              localEndDate = null;
+                            });
+                            this.setState(() {
+                              _startDate = null;
+                              _endDate = null;
+                            });
                             Navigator.pop(context);
                           },
                           child: const Icon(
@@ -298,11 +302,8 @@ class DonationHistoryScreen extends StatelessWidget {
                     _DatePickerContainer(
                       initialDate: localStartDate,
                       onDateSelected: (date) {
-                        setState(() {
-                          localStartDate = date;
-                        });
+                        setState(() => localStartDate = date);
                       },
-                      provider: donationHistoryProvider,
                     ),
                     const SizedBox(height: 12),
                     textWidget(
@@ -315,20 +316,17 @@ class DonationHistoryScreen extends StatelessWidget {
                     _DatePickerContainer(
                       initialDate: localEndDate,
                       onDateSelected: (date) {
-                        setState(() {
-                          localEndDate = date;
-                        });
+                        setState(() => localEndDate = date);
                       },
-                      provider: donationHistoryProvider,
                     ),
                     const SizedBox(height: 16),
                     Center(
                       child: GestureDetector(
                         onTap: () {
-                          donationHistoryProvider.setDateRange(
-                            localStartDate,
-                            localEndDate,
-                          );
+                          setState(() {
+                            _startDate = localStartDate;
+                            _endDate = localEndDate;
+                          });
                           Navigator.pop(context);
                         },
                         child: btnAndText(
@@ -349,14 +347,13 @@ class DonationHistoryScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildFilterOption(
-      BuildContext context, String status, DonationViewmodel provider) {
+  Widget _buildFilterOption(BuildContext context, String status) {
     final themeData = Provider.of<ThemeViewmodel>(context).themeData;
-    final isSelected = provider.selectedStatus == status;
+    final isSelected = _selectedStatus == status;
 
     return GestureDetector(
       onTap: () {
-        provider.setStatusFilter(status);
+        setState(() => _selectedStatus = status);
         Navigator.pop(context);
       },
       child: Container(
@@ -458,8 +455,7 @@ class DonationHistoryScreen extends StatelessWidget {
               SizedBox(
                 width: 80,
                 child: Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
                     border: Border.all(color: statusColor, width: 1),
                     borderRadius: BorderRadius.circular(8),
@@ -490,12 +486,10 @@ class DonationHistoryScreen extends StatelessWidget {
 class _DatePickerContainer extends StatefulWidget {
   final DateTime? initialDate;
   final Function(DateTime?) onDateSelected;
-  final DonationViewmodel provider;
 
   const _DatePickerContainer({
     required this.initialDate,
     required this.onDateSelected,
-    required this.provider,
   });
 
   @override
@@ -544,11 +538,6 @@ class _DatePickerContainerState extends State<_DatePickerContainer> {
             _displayText = dateFormat.format(selectedDate);
           });
           widget.onDateSelected(selectedDate);
-
-          if (widget.provider.startDate != null &&
-              widget.provider.endDate != null) {
-            Navigator.pop(context);
-          }
         }
       },
       child: Container(
