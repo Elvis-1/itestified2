@@ -28,9 +28,9 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     return Scaffold(
       backgroundColor: themeProvider.themeData.colorScheme.surface,
       body: LayoutBuilder(builder: (context, constraints) {
-        bool isTablet = constraints.maxWidth > 600; // Define tablet breakpoint
+        bool isTablet = constraints.maxWidth > 600;
         double contentWidth =
-            isTablet ? 500 : double.infinity; // Limit width for tablets
+            isTablet ? 500 : double.infinity; 
         EdgeInsets padding = isTablet
             ? const EdgeInsets.only(right: 32.0, left: 32, bottom: 10)
             : const EdgeInsets.only(right: 24.0, left: 24, bottom: 5);

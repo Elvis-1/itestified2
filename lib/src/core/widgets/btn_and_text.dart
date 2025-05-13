@@ -3,7 +3,8 @@ import 'package:itestified/src/config/theme/app_color.dart';
 import 'package:itestified/src/core/widgets/text_widget.dart';
 
 Widget btnAndText({
-  double containerWidth = 200,
+  double containerWidth = 345,
+  double? containerHeight,  
   double horizontalPadding = 10,
   double verticalPadding = 5,
   Color containerColor = AppColors.btnColor,
@@ -12,10 +13,11 @@ Widget btnAndText({
   Color textColor = AppColors.white,
   double? fontSize = 17,
   Widget container = const SizedBox.shrink(),
-  bool isLoading = false, 
+  bool isLoading = false,
 }) {
   return Container(
     width: containerWidth,
+    height: containerHeight,  
     padding: EdgeInsets.symmetric(
       horizontal: horizontalPadding,
       vertical: verticalPadding,
@@ -28,27 +30,24 @@ Widget btnAndText({
     child: Stack(
       alignment: Alignment.center,
       children: [
-       
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             container,
-            if (isLoading) 
-          Container(
-            width: 20,
-            height: 20,
-            decoration: const BoxDecoration(
-              shape: BoxShape.circle,
-              color: AppColors.grey50,
-            ),
-            child: const CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-              strokeWidth: 1.5,
-              backgroundColor: Colors.transparent,
-              strokeCap: StrokeCap.round,
-            ),
-          ),
-          const SizedBox(width: 4,),
+            if (isLoading)
+              const Padding(
+                padding: EdgeInsets.only(right: 4),
+                child: SizedBox(
+                  width: 20,
+                  height: 20,
+                  child: CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                    strokeWidth: 1.5,
+                    backgroundColor: Colors.transparent,
+                    strokeCap: StrokeCap.round,
+                  ),
+                ),
+              ),
             textWidget(
               text,
               color: textColor,
@@ -56,8 +55,6 @@ Widget btnAndText({
             ),
           ],
         ),
-
-        
       ],
     ),
   );

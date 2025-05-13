@@ -20,8 +20,10 @@ import 'package:itestified/src/features/video/presentation/screens/video_list_sc
 import 'package:itestified/src/features/video/presentation/screens/video_screen.dart';
 import 'package:itestified/src/features/written_testimonies.dart/presentation/screens/written_testimonies.dart';
 
+import '../../features/notifications/presentation/screens/no_notifications_screen.dart';
 import '../../features/profile/presentation/screens/donation_details.dart';
 import '../../features/profile/presentation/screens/donation_history.dart';
+import '../../features/search/presentation/screens/search_screen.dart';
 
 Route onGenerateRoute(RouteSettings settings) {
   return switch (settings.name) {
@@ -60,6 +62,16 @@ Route onGenerateRoute(RouteSettings settings) {
     HomeScreen.routeName => MaterialPageRoute(
         builder: (_) => const HomeScreen(),
         settings: const RouteSettings(name: HomeScreen.routeName),
+      ),
+    // NOTIFICATIONS SCREEN
+    NoNotificationsScreen.routeName => MaterialPageRoute(
+        builder: (_) => const NoNotificationsScreen(),
+        settings: const RouteSettings(name: NoNotificationsScreen.routeName),
+      ),
+    // SEARCH SCREEN
+    SearchScreen.routeName => MaterialPageRoute(
+        builder: (_) => const SearchScreen(),
+        settings: const RouteSettings(name: SearchScreen.routeName),
       ),
     // VIDEO SCREEN
     VideoScreen.routeName => MaterialPageRoute(

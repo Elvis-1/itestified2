@@ -132,7 +132,7 @@ class myTestimonyContainer extends StatelessWidget {
                 onPressed: () {
                   showModalBottomSheet(
                     context: context,
-                    builder: (context) => const editDeleteShareModal(),
+                    builder: (context) => const EditDeleteShareModal(),
                   );
                 },
                 icon: const Icon(Icons.more_horiz_sharp),

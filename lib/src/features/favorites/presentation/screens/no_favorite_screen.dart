@@ -4,10 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:itestified/src/config/theme/app_color.dart';
 import 'package:itestified/src/core/utils/app_const/app_icons.dart';
-import 'package:itestified/src/core/widgets/appbar2.dart';
-import 'package:itestified/src/core/widgets/btn_and_text.dart';
 import 'package:itestified/src/core/widgets/normal_text_style.dart';
-import 'package:itestified/src/core/widgets/text_widget.dart';
 
 class NoFavoriteScreen extends StatelessWidget {
   const NoFavoriteScreen({super.key});
