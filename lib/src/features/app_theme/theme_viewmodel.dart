@@ -27,7 +27,7 @@ class ThemeViewmodel extends ChangeNotifier with WidgetsBindingObserver {
     } else {
       _themeData = AppThemes.lightTheme;
     }
-    notifyListeners(); // Notify listeners of the theme change
+    notifyListeners();
   }
 
   void toggleTheme() {

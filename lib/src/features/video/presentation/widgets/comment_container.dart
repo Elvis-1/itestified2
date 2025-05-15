@@ -16,7 +16,7 @@ class CommentContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var themeProvider = Provider.of<ThemeViewmodel>(context);
-    backgroundColor = themeProvider.themeData.colorScheme.background;
+    backgroundColor = themeProvider.themeData.colorScheme.surface;
     return Container(
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15), color: backgroundColor),
@@ -101,7 +101,7 @@ class CommentAndResponse extends StatelessWidget {
             left: 20,
           ),
           child: CommentContainer(
-            backgroundColor: themeProvider.themeData.colorScheme.background,
+            backgroundColor: themeProvider.themeData.colorScheme.surface,
           ),
         ),
       ],

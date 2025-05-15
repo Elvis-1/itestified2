@@ -48,7 +48,7 @@ class textWidget2 extends StatelessWidget {
   textWidget2(
     this.text, {
     super.key,
-    this.color,
+    this.mainColor,
     this.fontSize = 28,
     this.maxLines,
     this.overflow,
@@ -62,7 +62,7 @@ class textWidget2 extends StatelessWidget {
   TextAlign? textAlign;
   TextOverflow? overflow;
   int? maxLines;
-  Color? color;
+  Color? mainColor;
   FontWeight? fontWeight = FontWeight.w600;
   double? fontSize = 28;
   double? lineHeight = 19.07 / 14;
@@ -70,7 +70,7 @@ class textWidget2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    color = color ??
+    var color = mainColor ??
         Provider.of<ThemeViewmodel>(context).themeData.colorScheme.tertiary;
     return Text(text ?? '',
         textAlign: textAlign,

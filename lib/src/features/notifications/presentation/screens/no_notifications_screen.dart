@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 
 class NoNotificationsScreen extends StatelessWidget {
   const NoNotificationsScreen({super.key});
+  static const String routeName = '/no-notifications';
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +15,7 @@ class NoNotificationsScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: generalAppbar("Notifications", context),
-      backgroundColor: themeProvider.themeData.colorScheme.background,
+      backgroundColor: themeProvider.themeData.colorScheme.surface,
       body: Center(
         child: SingleChildScrollView(
           child: Padding(

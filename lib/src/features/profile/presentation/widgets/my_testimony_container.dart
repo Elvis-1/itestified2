@@ -15,13 +15,13 @@ class myTestimonyContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var themeProvider = Provider.of<ThemeViewmodel>(context);
+        var themeProvider = Provider.of<ThemeViewmodel>(context);
 
     return Container(
       padding: const EdgeInsets.all(10),
       margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       decoration: BoxDecoration(
-          color: themeProvider.themeData.colorScheme.onBackground,
+          color: themeProvider.themeData.colorScheme.outline,
           borderRadius: BorderRadius.circular(10)),
       child: Column(
         children: [
@@ -132,7 +132,7 @@ class myTestimonyContainer extends StatelessWidget {
                 onPressed: () {
                   showModalBottomSheet(
                     context: context,
-                    builder: (context) => const editDeleteShareModal(),
+                    builder: (context) => const EditDeleteShareModal(),
                   );
                 },
                 icon: const Icon(Icons.more_horiz_sharp),

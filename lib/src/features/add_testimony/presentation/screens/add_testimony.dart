@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:itestified/src/config/theme/app_color.dart';
 import 'package:itestified/src/core/utils/app_const/enum.dart';
 import 'package:itestified/src/core/widgets/appbar2.dart';
 import 'package:itestified/src/core/widgets/btn_and_text.dart';
@@ -29,7 +28,7 @@ class AddTestimonyScreen extends StatelessWidget {
       backgroundColor: themeProvider.themeData.colorScheme.background,
       body: Center(
         child: ConstrainedBox(
-          constraints: BoxConstraints(maxWidth: 800), // Limit form width
+          constraints: BoxConstraints(maxWidth: 800), 
           child: SingleChildScrollView(
             reverse: true,
             child: Padding(
@@ -66,7 +65,7 @@ class AddTestimonyScreen extends StatelessWidget {
                         fontWeight: FontWeight.w600,
                       ),
                       const SizedBox(height: 10),
-                      const multilineTextField(),
+                      const MultilineTextField(),
                       const SizedBox(height: 40),
                       GestureDetector(
                         onTap: () {
@@ -112,7 +111,7 @@ class AddTestimonyScreen extends StatelessWidget {
         ),
         const SizedBox(height: 10),
         customTextField(
-          borderColor: AppColors.lightBlack,
+     
           hintText: "Enter your title",
         ),
       ],

@@ -40,7 +40,7 @@ class givingContainer extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 10),
-          lineWidget(width: double.infinity, color: AppColors.darkPurple),
+          lineWidget(width: double.infinity, color: AppColors.primaryColor),
           Column(children: rows),
         ],
       ),

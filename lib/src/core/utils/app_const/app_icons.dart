@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:material_symbols_icons/symbols.dart';
 
 class AppIcons {
   //////////
@@ -50,8 +51,19 @@ class AppIcons {
   static String rateIcon = "assets/icons/rate.png";
   static String helpIcon = "assets/icons/help.png";
   static String browseFilesIcon = "assets/icons/browse.png";
+  static String donationIcon = "assets/icons/gift.png";
+  static String donationHistory = "assets/icons/history.png";
+  static String recipt = "assets/icons/recipt.png";
+  static String reciptbig = "assets/icons/reciptbig.png";
+  static String follow = "assets/icons/follow.png";
 
-  static String profileIcon = "assets/icons/profile.png";
+  static String guestIconDark = "assets/icons/guest.png";
+  static String favouritef = "assets/icons/heartf.png";
+  static String homefilled = "assets/icons/homef.png";
+  static String categoryiconfilled = "assets/icons/cfilled.png";
+  static String guestIconLight = "assets/icons/guestlight.png";
+  static String profileFilled = "assets/icons/filledp.png";
+  static String guestIcon = "assets/icons/guest.png";
   static String catIcon = "assets/icons/category.png";
   static String homeIcon = "assets/icons/home.png";
   static String videoQualityIcon = "assets/icons/video_quality.png";
@@ -69,4 +81,6 @@ class AppImages {
   static String favoriteImage = "assets/images/favorite_image.png";
   static String quotesImage = "assets/images/quote.png";
   static String scriptureImage = "assets/images/scripture_frame.png";
+  static String togetherImage = "assets/images/together.png";
+    static String babyImage = "assets/images/baby.png";
 }

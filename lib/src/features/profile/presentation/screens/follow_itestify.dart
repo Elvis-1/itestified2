@@ -17,7 +17,7 @@ class FollowItestify extends StatelessWidget {
 
     return Scaffold(
       appBar: generalAppbar("Follow iTestified", context),
-      backgroundColor: themeProvider.themeData.colorScheme.background,
+      backgroundColor: themeProvider.themeData.colorScheme.surface,
       body: Container(
         margin: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(

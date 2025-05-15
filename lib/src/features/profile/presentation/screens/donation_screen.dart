@@ -22,7 +22,7 @@ class DonationScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: generalAppbar("Donations", context),
-      backgroundColor: themeProvider.themeData.colorScheme.background,
+      backgroundColor: themeProvider.themeData.colorScheme.surface,
       body: Column(
         children: [
           Container(

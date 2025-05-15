@@ -1,10 +1,5 @@
-import 'dart:ui';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:itestified/src/config/theme/app_color.dart';
-import 'package:itestified/src/core/widgets/animated_quotes_modal.dart';
 import 'package:itestified/src/core/widgets/appbar2.dart';
 import 'package:itestified/src/features/app_theme/theme_viewmodel.dart';
 import 'package:itestified/src/features/profile/presentation/screens/my_testimonies_details.dart';
@@ -21,7 +16,7 @@ class MyTestimoniesScreen extends StatelessWidget {
 
     return Scaffold(
         appBar: generalAppbar("My Testimonies", context),
-        backgroundColor: themeProvider.themeData.colorScheme.background,
+        backgroundColor: themeProvider.themeData.colorScheme.surface,
         body: LayoutBuilder(
           builder: (context, constraints) {
             bool isLargeScreen = constraints.maxWidth > 600;

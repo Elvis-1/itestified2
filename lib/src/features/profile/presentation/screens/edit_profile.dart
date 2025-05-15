@@ -16,13 +16,14 @@ class EditProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var themeProvider = Provider.of<ThemeViewmodel>(context);
+
     return Scaffold(
       appBar: generalAppbar("Edit Profile", context),
-      //   backgroundColor: AppColors.backgroundColor,
       backgroundColor: themeProvider.themeData.scaffoldBackgroundColor,
       body: Container(
         margin: const EdgeInsets.only(right: 15, left: 15, bottom: 10),
         child: Column(
+
           children: [
             Expanded(
               child: ListView(
@@ -46,92 +47,113 @@ class EditProfileScreen extends StatelessWidget {
                           ),
                         ),
                         Positioned(
-                            top: 75,
-                            right: 130,
-                            child: Image.asset(AppIcons.camIcon)),
+                          top: 75,
+                          right: 130,
+                          child: Image.asset(AppIcons.camIcon),
+                        ),
                       ],
                     ),
                   ),
                   Align(
                     alignment: Alignment.centerLeft,
-                    child: textWidget("Full Name",
-                        fontSize: 18,
-                        color: themeProvider.themeData.colorScheme.tertiary),
+                    child: textWidget(
+                      "Full Name",
+                      fontSize: 18,
+                      color: themeProvider.themeData.colorScheme.tertiary,
+                    ),
                   ),
-                  const SizedBox(
-                    height: 10,
-                  ),
+                  const SizedBox(height: 10),
                   customTextField(
-                      prefixIc: Icon(
-                        Icons.person_outline,
-                      ),
-                      borderColor: AppColors.lightBlack),
-                  const SizedBox(
-                    height: 25,
+                    prefixIc: const Icon(Icons.person_outline),
+                    borderColor: themeProvider.themeData.colorScheme.outline,
                   ),
+                  const SizedBox(height: 25),
                   Align(
                     alignment: Alignment.centerLeft,
-                    child: textWidget("Email Address",
-                        fontSize: 18,
-                        color: themeProvider.themeData.colorScheme.tertiary),
+                    child: textWidget(
+                      "Email Address",
+                      fontSize: 18,
+                      color: themeProvider.themeData.colorScheme.tertiary,
+                    ),
                   ),
-                  const SizedBox(
-                    height: 10,
-                  ),
+                  const SizedBox(height: 10),
                   customTextField(
-                      prefixIc: Icon(
-                        Icons.email_outlined,
-                      ),
-                      borderColor: AppColors.lightBlack),
-                  const SizedBox(
-                    height: 25,
+                    prefixIc: const Icon(Icons.email_outlined),
+                    borderColor: themeProvider.themeData.colorScheme.outline,
                   ),
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: textWidget("Phone Number",
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
-                        color: themeProvider.themeData.colorScheme.tertiary),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  customTextField(
-                      prefixIc: const Icon(
-                        Icons.phone_outlined,
-                      ),
-                      borderColor: AppColors.lightBlack),
-                  const SizedBox(
-                    height: 200,
-                  ),
-                  // GestureDetector(
-                  //   onTap: () {},
-                  //   child: Align(
-                  //       alignment: Alignment.center,
-                  //       child: btnAndText(
-                  //           fontSize: 18.sp,
-                  //           verticalPadding: 12.h,
-                  //           containerWidth: double.infinity,
-                  //           text: "Save Changes")),
-                  // )
+        
+                 
+                  const SizedBox(height: 200),
                 ],
               ),
-            )
+            ),
           ],
         ),
       ),
-
       floatingActionButton: Container(
-          alignment: Alignment.bottomCenter,
-          margin: const EdgeInsets.only(right: 20, left: 20, bottom: 10),
-
-          //   padding: EdgeInsets.only(bottom: ),
-          height: 50,
+        alignment: Alignment.bottomCenter,
+        margin: const EdgeInsets.only(right: 20, left: 20, bottom: 10),
+        height: 50,
+        child: GestureDetector(
+          onTap: () {
+       
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                behavior: SnackBarBehavior.floating,
+                backgroundColor: Colors.transparent,
+                elevation: 0,
+                content: Container(
+                  width: 345,
+                  height: 48,
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  decoration: BoxDecoration(
+                    color: themeProvider.themeData.colorScheme.surface,
+                    borderRadius: BorderRadius.circular(12),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.2),
+                        blurRadius: 4,
+                        offset: const Offset(0, 2),
+                      ),
+                    ],
+                  ),
+                  child: Row(
+                    children: [
+                      CircleAvatar(
+                        radius: 16.94,
+                        backgroundColor:
+                            themeProvider.themeData.colorScheme.primary,
+                        child: const Icon(
+                          Icons.check,
+                          color: Colors.white,
+                          size: 20,
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: textWidget(
+                          "You have successfully changed your password",
+                          fontSize: themeProvider
+                              .themeData.textTheme.bodyLarge?.fontSize,
+                          fontWeight: FontWeight.w400,
+                          color: themeProvider.themeData.colorScheme.tertiary,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                duration: const Duration(seconds: 3),
+              ),
+            );
+          },
           child: btnAndText(
             borderColor: AppColors.transparent,
             text: 'Save Changes',
             containerWidth: double.infinity,
-          )),
+            fontSize: themeProvider.themeData.textTheme.bodyLarge?.fontSize,
+          ),
+        ),
+      ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
