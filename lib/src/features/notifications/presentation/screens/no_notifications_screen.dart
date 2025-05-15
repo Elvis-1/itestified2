@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 
 class NoNotificationsScreen extends StatelessWidget {
   const NoNotificationsScreen({super.key});
+  static const String routeName = '/no-notifications';
 
   @override
   Widget build(BuildContext context) {

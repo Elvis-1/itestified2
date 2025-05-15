@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:itestified/src/core/utils/app_const/enum.dart';
@@ -29,6 +28,9 @@ class AuthViewModel with ChangeNotifier {
       List.generate(4, (index) => TextEditingController());
   List<FocusNode> focusNodes = List.generate(4, (index) => FocusNode());
 
+  bool _isGuest = false;
+  bool get isGuest => _isGuest;
+
   bool hasErrors = false;
   String? emailError;
   String? nameError;
@@ -38,6 +40,11 @@ class AuthViewModel with ChangeNotifier {
   int seconddsRemainingForResetPass = 300;
 
   Timer? _timer;
+
+  void setGuestMode(bool isGuest) {
+    _isGuest = isGuest;
+    notifyListeners();
+  }
 
   validateFields(String? name, String? email, String pass, String confirmP,
       {UseType useType = UseType.SignUP, bool isForgotPasswordScreen = false}) {
@@ -195,6 +202,8 @@ class AuthViewModel with ChangeNotifier {
       email: email,
       password: password,
     );
+
+    setGuestMode(false);
 
     CommonPopup.showLoading(context);
     var response = await authService.loginUser(userRequest);

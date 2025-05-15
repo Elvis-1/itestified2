@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:itestified/src/config/authprovider.dart';
+
 import 'package:itestified/src/core/utils/app_const/app_icons.dart';
 import 'package:itestified/src/core/widgets/btn_and_text.dart';
 import 'package:itestified/src/core/widgets/text_widget.dart';
 import 'package:itestified/src/core/widgets/textwidget.dart';
 import 'package:itestified/src/features/app_theme/theme_viewmodel.dart';
 import 'package:itestified/src/features/auth/presentation/screens/signup_screen.dart';
+import 'package:itestified/src/features/auth/presentation/viewmodel/auth_viewmodel.dart';
 import 'package:itestified/src/features/search/presentation/screens/search_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -38,7 +39,7 @@ PreferredSizeWidget generalAppbar(String title, BuildContext context) {
 
 PreferredSizeWidget generalAppBar2(BuildContext context) {
   final themeProvider = Provider.of<ThemeViewmodel>(context);
-  final authProvider = Provider.of<AuthProvider>(context);
+  final authProvider = Provider.of<AuthViewModel>(context);
   final isGuest = authProvider.isGuest;
   final screenWidth = MediaQuery.of(context).size.width;
 
@@ -309,7 +310,7 @@ PreferredSizeWidget appBar(BuildContext context, String title) {
   return AppBar(
     automaticallyImplyLeading: false,
     centerTitle: true,
-    backgroundColor: themeProvider.themeData.colorScheme.background,
+    backgroundColor: themeProvider.themeData.colorScheme.surface,
     title: textWidget(
       title,
       fontWeight: FontWeight.w600,

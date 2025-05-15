@@ -148,7 +148,6 @@ class _customTextFieldState extends State<customTextField> {
     );
   }
 }
-
 // Widget customTextField(
 //   BuildContext context, {
 //   String hintText = "Enter your full name",
@@ -184,3 +183,125 @@ class _customTextFieldState extends State<customTextField> {
 //     ),
 //   );
 // }
+
+
+class customTextField2 extends StatefulWidget {
+  customTextField2({
+    super.key,
+    this.prefixIc,
+    this.suffixIcon = const SizedBox.shrink(),
+    this.hintText = "Enter your full name",
+    this.validate,
+    this.controller,
+    this.authViewModel,
+    this.errorText,
+    this.onChange,
+    this.isLast = false,
+    this.obscureText = false,
+    this.suffixIconEnabled = false,
+  });
+
+  final String hintText;
+  final Widget? prefixIc;
+  final Widget suffixIcon;
+  final String? Function(String? value)? validate;
+  final TextEditingController? controller;
+  final AuthViewModel? authViewModel;
+  final bool? isLast;
+  final bool obscureText;
+  final bool suffixIconEnabled;
+  final String? errorText;
+  final String? Function(String? value)? onChange;
+
+  @override
+  State<customTextField2> createState() => _customTextField2State();
+}
+
+class _customTextField2State extends State<customTextField2> {
+  bool _isObscured = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _isObscured = widget.obscureText;
+
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    var themeProvider = Provider.of<ThemeViewmodel>(context);
+    TextInputAction checkLast =
+        widget.isLast == true ? TextInputAction.done : TextInputAction.next;
+
+    Widget effectiveSuffixIcon = widget.suffixIconEnabled
+        ? IconButton(
+            icon: Icon(
+              _isObscured ? Symbols.visibility_off : Symbols.visibility,
+              color: themeProvider.themeData.colorScheme.onTertiary,
+            ),
+            onPressed: () {
+              setState(() {
+                _isObscured = !_isObscured;
+                print('Toggled visibility: isObscured=$_isObscured');
+              });
+            },
+          )
+        : widget.suffixIcon;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          decoration: BoxDecoration(
+            color: themeProvider.themeData.colorScheme.outline,
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Semantics(
+            label: widget.hintText,
+            child: TextFormField(
+              obscureText:
+                  widget.suffixIconEnabled ? _isObscured : widget.obscureText,
+              textInputAction: checkLast,
+              controller: widget.controller,
+              validator: widget.validate,
+              onChanged: widget.onChange,
+              style: normalTextStyle(
+                fontSize: Theme.of(context).textTheme.bodyLarge?.fontSize,
+                textColor: themeProvider.themeData.colorScheme.tertiary,
+              ),
+              decoration: InputDecoration(
+                border: InputBorder.none,
+                enabledBorder: InputBorder.none,
+                focusedBorder: InputBorder.none,
+                focusedErrorBorder: InputBorder.none,
+                suffixIcon: effectiveSuffixIcon,
+                prefixIcon: widget.prefixIc,
+                contentPadding:
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 13),
+                hintText: widget.hintText,
+                hintStyle: normalTextStyle(
+                  textColor: themeProvider.themeData.colorScheme.onTertiary,
+                  fontSize: Theme.of(context).textTheme.bodyLarge?.fontSize,
+                ),
+                errorStyle: const TextStyle(height: 0, fontSize: 0),
+              ),
+            ),
+          ),
+        ),
+        if (widget.errorText != null) ...[
+          const SizedBox(height: 5),
+          Row(
+            children: [
+              const Icon(Icons.error_outline, color: Colors.red, size: 18),
+              const SizedBox(width: 5),
+              Text(
+                widget.errorText ?? '',
+                style: const TextStyle(color: Colors.red, fontSize: 14),
+              ),
+            ],
+          ),
+        ],
+      ],
+    );
+  }
+}

@@ -15,6 +15,7 @@ import 'package:itestified/src/features/auth/presentation/screens/forgot_pass_sc
 import 'package:itestified/src/features/auth/presentation/screens/signup_screen.dart';
 import 'package:itestified/src/features/auth/presentation/viewmodel/auth_viewmodel.dart';
 import 'package:itestified/src/features/auth/presentation/widgets/text_fields.dart';
+import 'package:material_symbols_icons/symbols.dart';
 import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -40,7 +41,32 @@ class _LoginScreenState extends State<LoginScreen> {
         fontSize: 20);
     return Scaffold(
       backgroundColor: themeProvider.themeData.colorScheme.background,
-      appBar: appBar(context, 'Welcome Back'),
+     appBar: AppBar(
+        automaticallyImplyLeading: false,
+        centerTitle: true,
+        backgroundColor: themeProvider.themeData.colorScheme.surface,
+        title: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            GestureDetector(
+              onTap: () {},
+              child: Icon(
+                Symbols.close,
+                color: themeProvider.themeData.colorScheme.onTertiary,
+                size: 24,
+              ),
+            ),
+            const SizedBox(width: 15),
+            textWidget(
+              "Welcome Back",
+              fontWeight: FontWeight.w500,
+              color: themeProvider.themeData.colorScheme.onTertiary,
+            ),
+          ],
+        ),
+      ),
       body: LayoutBuilder(builder: (context, constraints) {
         bool isTablet = constraints.maxWidth > 600; // Define tablet breakpoint
         double contentWidth =

@@ -27,7 +27,7 @@ class _OTPScreenState extends State<OTPScreen> {
   @override
   void initState() {
     super.initState();
-    // Start the timer when screen loads
+ 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final authVM = Provider.of<AuthViewModel>(context, listen: false);
       authVM.initializeTimer();
