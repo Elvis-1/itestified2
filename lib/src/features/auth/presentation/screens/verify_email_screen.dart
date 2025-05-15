@@ -8,18 +8,19 @@ import 'package:itestified/src/features/app_theme/theme_viewmodel.dart';
 import 'package:itestified/src/features/auth/presentation/viewmodel/auth_viewmodel.dart';
 import 'package:provider/provider.dart';
 
-// class Arguments {
-//   String email;
-//   Arguments({required this.email});
-// }
+class Arguments {
+  String email;
+  Arguments({required this.email});
+}
 
 class VerifyEmailScreen extends StatefulWidget {
   const VerifyEmailScreen({
     super.key,
+    required this.args,
   });
   static const routeName = '/verify-email-screen';
 
-  //final Arguments args;
+  final Arguments args;
 
   @override
   State<VerifyEmailScreen> createState() => _VerifyEmailScreenState();
@@ -72,7 +73,7 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
                               textColor: themeProvider
                                   .themeData.colorScheme.tertiary)),
                       TextSpan(
-                          text: 'widget.args.email',
+                          text: widget.args.email,
                           style: normalTextStyle(
                               fontSize: Theme.of(context)
                                   .textTheme
@@ -99,6 +100,7 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
                   children: [
                     ...List.generate(4, (index) {
                       return numberTextField(
+                        key: ValueKey('otpField_$index'),
                         containerHeight: 70,
                         containerWidth: 80,
                         avm.otpControllers[index],
@@ -134,7 +136,12 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
                     width: 5,
                   ),
                   GestureDetector(
-                    onTap: () async {},
+                    onTap: () async {
+                      avm.emailController.text = widget.args.email;
+
+                      await avm.resendEmail(context, avm.emailController.text);
+                      avm.resetTimer();
+                    },
                     child: avm.seconddsRemainingForResetPass == 0
                         ? textWidget(
                             "Resend mail",

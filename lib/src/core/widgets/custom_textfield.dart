@@ -7,7 +7,7 @@ import 'package:material_symbols_icons/material_symbols_icons.dart';
 import 'package:provider/provider.dart';
 
 class customTextField extends StatefulWidget {
-  customTextField({
+  const customTextField({
     super.key,
     this.prefixIc,
     this.borderColor = AppColors.lightBlack,
@@ -22,6 +22,7 @@ class customTextField extends StatefulWidget {
     this.isLast = false,
     this.obscureText = false,
     this.suffixIconEnabled = false,
+    this.keyboardType = TextInputType.text,
   });
 
   final String hintText;
@@ -37,6 +38,7 @@ class customTextField extends StatefulWidget {
   final bool suffixIconEnabled;
   final String? errorText;
   final String? Function(String? value)? onChange;
+  final TextInputType? keyboardType;
 
   @override
   State<customTextField> createState() => _customTextFieldState();
@@ -76,6 +78,7 @@ class _customTextFieldState extends State<customTextField> {
         TextFormField(
           obscureText:
               widget.suffixIconEnabled ? _isObscured : widget.obscureText,
+          keyboardType: widget.keyboardType,
           textInputAction: checkLast,
           controller: widget.controller,
           validator: widget.validate,

@@ -141,6 +141,7 @@ Widget emailTile(TextStyle style, AuthViewModel authViewModel,
       ),
       customTextField(
           controller: authViewModel.emailController,
+          keyboardType: TextInputType.emailAddress,
           errorText: authViewModel.emailError,
           authViewModel: authViewModel,
           onChange: (value) => authViewModel.validateFields(

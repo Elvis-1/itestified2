@@ -9,9 +9,12 @@ import 'package:itestified/src/core/widgets/custom_snack.dart';
 import 'package:itestified/src/features/auth/domain/requests/otp_request.dart';
 import 'package:itestified/src/features/auth/domain/requests/register_user_request.dart';
 import 'package:itestified/src/features/auth/domain/service/auth_service.dart';
+import 'package:itestified/src/features/auth/presentation/screens/login_screen.dart';
 import 'package:itestified/src/features/auth/presentation/screens/new_password.dart';
-import 'package:itestified/src/features/auth/presentation/screens/verify_email_screen.dart';
-import 'package:itestified/src/features/auth/presentation/screens/otp_screen.dart';
+import 'package:itestified/src/features/auth/presentation/screens/verify_email_screen.dart'
+    as verify_email;
+import 'package:itestified/src/features/auth/presentation/screens/otp_screen.dart'
+    as otp_screen;
 import 'package:itestified/src/features/nav/navbar.dart';
 
 class AuthViewModel with ChangeNotifier {
@@ -143,10 +146,9 @@ class AuthViewModel with ChangeNotifier {
       _clearFields();
 
       if (context.mounted) {
-        //I commented this line so that the user can verify their email
-        //Navigator.pushNamed(context, NavBar.routeName);
-        Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => const VerifyEmailScreen()));
+        customSnack(context, success.message ?? '');
+        Navigator.pushNamed(context, verify_email.VerifyEmailScreen.routeName,
+            arguments: verify_email.Arguments(email: email));
       }
     });
   }
@@ -224,13 +226,89 @@ class AuthViewModel with ChangeNotifier {
 
     response.fold((failure) {
       _showSnackBar(context, failure.message, Colors.red);
+      print("****** failure: $failure");
     }, (success) async {
       customSnack(context, success.message ?? "");
+      Navigator.pushNamed(context, otp_screen.OTPScreen.routeName,
+          arguments: otp_screen.Arguments(email: email));
+      if (context.mounted) {
+        Navigator.pushNamed(context, otp_screen.OTPScreen.routeName,
+            arguments: otp_screen.Arguments(email: email));
+      }
+    });
+  }
+
+//this method Verify email supplied by the user by sending the otp to the email
+  Future<void> verifyEmail(BuildContext context, String userEmail) async {
+    var email = userEmail;
+
+    String otp = otpControllers.map((controller) => controller.text).join();
+    if (otp.isEmpty || otp.length < otpControllers.length) {
+      _showSnackBar(context, 'OTP can\'t  be empty', Colors.red);
+      return;
+    }
+    if (hasErrors) return;
+
+    print('This is otp $otp');
+
+    OTPRequest otpRequest = OTPRequest(email: email, otp: otp);
+
+    CommonPopup.showLoading(context);
+    var response = await authService.verifyEmail(otpRequest);
+    if (context.mounted) {
+      CommonPopup.closeLoading(context);
+    }
+
+    response.fold((failure) {
+      _showSnackBar(context, failure.message, Colors.red);
+    }, (success) async {
       _clearFields();
+      customSnack(context, success.message ?? '');
 
       if (context.mounted) {
-        Navigator.pushNamed(context, OTPScreen.routeName,
-            arguments: Arguments(email: email));
+        Navigator.pushNamed(
+          context, NavBar.routeName,
+          // arguments: NavBarArguments(
+          //     index: 0, email: email, isFromVerifyEmail: true)
+        );
+      }
+    });
+  }
+
+  //this method resend otp to the email supplied
+  Future<void> resendEmail(BuildContext context, String userEmail) async {
+    var email = userEmail;
+
+    // String otp = otpControllers.map((controller) => controller.text).join();
+    // if (otp.isEmpty || otp.length < otpControllers.length) {
+    //   _showSnackBar(context, 'OTP can\'t  be empty', Colors.red);
+    //   return;
+    // }
+    // if (hasErrors) return;
+
+    // print('This is otp $otp');
+
+    OTPRequest otpRequest = OTPRequest(
+      email: email,
+    );
+
+    CommonPopup.showLoading(context);
+    var response = await authService.resendEmail(otpRequest);
+    if (context.mounted) {
+      CommonPopup.closeLoading(context);
+    }
+
+    response.fold((failure) {
+      _showSnackBar(context, failure.message, Colors.red);
+    }, (success) async {
+      _clearFields();
+      customSnack(context, success.message ?? '');
+
+      if (context.mounted) {
+        Navigator.pushNamed(
+          context,
+          LoginScreen.routeName,
+        );
       }
     });
   }
@@ -261,7 +339,7 @@ class AuthViewModel with ChangeNotifier {
 
       if (context.mounted) {
         Navigator.pushNamed(context, NewPasswordScreen.routeName,
-            arguments: Arguments(email: email));
+            arguments: otp_screen.Arguments(email: email));
       }
     });
   }

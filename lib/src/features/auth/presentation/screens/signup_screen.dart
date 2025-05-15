@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:itestified/src/config/theme/app_theme.dart';
 import 'package:itestified/src/core/utils/app_const/app_icons.dart';
-import 'package:itestified/src/core/utils/input_validator.dart';
 import 'package:itestified/src/core/widgets/btn_and_text.dart';
-import 'package:itestified/src/core/widgets/custom_textfield.dart';
 import 'package:itestified/src/core/widgets/line_widget.dart';
 import 'package:itestified/src/core/widgets/normal_text_style.dart';
 import 'package:itestified/src/core/widgets/text_widget.dart';

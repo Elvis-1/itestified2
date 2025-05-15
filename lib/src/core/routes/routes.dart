@@ -3,8 +3,10 @@ import 'package:itestified/src/core/utils/app_const/enum.dart';
 import 'package:itestified/src/features/add_testimony/presentation/screens/add_testimony.dart';
 import 'package:itestified/src/features/auth/presentation/screens/login_screen.dart';
 import 'package:itestified/src/features/auth/presentation/screens/new_password.dart';
-import 'package:itestified/src/features/auth/presentation/screens/otp_screen.dart';
+import 'package:itestified/src/features/auth/presentation/screens/otp_screen.dart'
+    as otp_screen;
 import 'package:itestified/src/features/auth/presentation/screens/signup_screen.dart';
+import 'package:itestified/src/features/auth/presentation/screens/verify_email_screen.dart';
 import 'package:itestified/src/features/category/presentation/screens/categories_screen.dart';
 import 'package:itestified/src/features/category/presentation/screens/video_written_test_screen.dart';
 import 'package:itestified/src/features/home/presentation/home_screen.dart';
@@ -40,11 +42,17 @@ Route onGenerateRoute(RouteSettings settings) {
         builder: (_) => const LoginScreen(),
         settings: const RouteSettings(name: LoginScreen.routeName),
       ),
-    OTPScreen.routeName => MaterialPageRoute(
-        builder: (_) => OTPScreen(
+    otp_screen.OTPScreen.routeName => MaterialPageRoute(
+        builder: (_) => otp_screen.OTPScreen(
+          args: settings.arguments as otp_screen.Arguments,
+        ),
+        settings: const RouteSettings(name: otp_screen.OTPScreen.routeName),
+      ),
+    VerifyEmailScreen.routeName => MaterialPageRoute(
+        builder: (_) => VerifyEmailScreen(
           args: settings.arguments as Arguments,
         ),
-        settings: const RouteSettings(name: OTPScreen.routeName),
+        settings: const RouteSettings(name: VerifyEmailScreen.routeName),
       ),
     SignUpScreen.routeName => MaterialPageRoute(
         builder: (_) => const SignUpScreen(),
@@ -52,7 +60,7 @@ Route onGenerateRoute(RouteSettings settings) {
       ),
     NewPasswordScreen.routeName => MaterialPageRoute(
         builder: (_) => NewPasswordScreen(
-          args: settings.arguments as Arguments,
+          args: settings.arguments as otp_screen.Arguments,
         ),
         settings: const RouteSettings(name: NewPasswordScreen.routeName),
       ),

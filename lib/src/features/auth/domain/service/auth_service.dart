@@ -15,6 +15,10 @@ abstract class AuthService {
       RegisterUserRequest registerUserRequest);
   Future<Either<Failure, AccountCreationResponse>> verifyOTP(
       OTPRequest otpRequest);
+  Future<Either<Failure, AccountCreationResponse>> verifyEmail(
+      OTPRequest otpRequest);
+  Future<Either<Failure, AccountCreationResponse>> resendEmail(
+      OTPRequest otpRequest);
   Future<Either<Failure, AccountCreationResponse>> setNewPassword(
       RegisterUserRequest registerUserRequest);
 }
@@ -51,5 +55,17 @@ class AuthServiceImpl implements AuthService {
   Future<Either<Failure, AccountCreationResponse>> verifyOTP(
       OTPRequest otpRequest) {
     return authApi.verifyOTP(otpRequest);
+  }
+
+  @override
+  Future<Either<Failure, AccountCreationResponse>> verifyEmail(
+      OTPRequest otpRequest) {
+    return authApi.verifyEmail(otpRequest);
+  }
+
+  @override
+  Future<Either<Failure, AccountCreationResponse>> resendEmail(
+      OTPRequest otpRequest) {
+    return authApi.resendEmail(otpRequest);
   }
 }
