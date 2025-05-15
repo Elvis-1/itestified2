@@ -184,9 +184,8 @@ class _customTextFieldState extends State<customTextField> {
 //   );
 // }
 
-
 class customTextField2 extends StatefulWidget {
-  customTextField2({
+  const customTextField2({
     super.key,
     this.prefixIc,
     this.suffixIcon = const SizedBox.shrink(),
@@ -199,6 +198,7 @@ class customTextField2 extends StatefulWidget {
     this.isLast = false,
     this.obscureText = false,
     this.suffixIconEnabled = false,
+    this.keyboardType = TextInputType.text,
   });
 
   final String hintText;
@@ -212,6 +212,7 @@ class customTextField2 extends StatefulWidget {
   final bool suffixIconEnabled;
   final String? errorText;
   final String? Function(String? value)? onChange;
+  final TextInputType? keyboardType;
 
   @override
   State<customTextField2> createState() => _customTextField2State();
@@ -224,7 +225,6 @@ class _customTextField2State extends State<customTextField2> {
   void initState() {
     super.initState();
     _isObscured = widget.obscureText;
-
   }
 
   @override
@@ -261,6 +261,7 @@ class _customTextField2State extends State<customTextField2> {
             child: TextFormField(
               obscureText:
                   widget.suffixIconEnabled ? _isObscured : widget.obscureText,
+              keyboardType: widget.keyboardType,
               textInputAction: checkLast,
               controller: widget.controller,
               validator: widget.validate,
