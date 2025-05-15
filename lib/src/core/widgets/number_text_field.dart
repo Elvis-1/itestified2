@@ -9,7 +9,7 @@ class numberTextField extends StatelessWidget {
   numberTextField(this.controller,
       {super.key,
       this.readOnly = false,
-      this.borderWidth = 1,
+      this.borderWidth = 1.5,
       this.containerWidth = 40,
       this.containerHeight = 35,
       required this.focusNode,
@@ -18,7 +18,8 @@ class numberTextField extends StatelessWidget {
   TextEditingController controller;
   bool readOnly;
   double borderWidth;
-  Color borderColor = AppColors.borderColor;
+
+  Color borderColor = AppColors.primaryColor;
 
   double containerWidth = 40;
   double containerHeight = 35;
@@ -28,13 +29,14 @@ class numberTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var themeProvider = Provider.of<ThemeViewmodel>(context);
-    borderColor = themeProvider.themeData.colorScheme.outline;
+
+    borderColor = AppColors.primaryColor;
     return Container(
         width: containerWidth,
         height: containerHeight,
         //  margin: EdgeInsets.only(bottom: screenHeight / 40),
         decoration: BoxDecoration(
-          color: themeProvider.themeData.colorScheme.background,
+          color: themeProvider.themeData.colorScheme.surface,
           border: Border.all(width: borderWidth, color: borderColor),
           // Color(0xFFC4C4C4),
           borderRadius: const BorderRadius.all(
@@ -48,7 +50,10 @@ class numberTextField extends StatelessWidget {
             child: TextFormField(
               // textInputAction: TextInputAction.next,
               style: TextStyle(
-                  color: themeProvider.themeData.colorScheme.onTertiary),
+                color: themeProvider.themeData.colorScheme.onTertiary,
+                fontSize: 24, // Larger font size
+                fontWeight: FontWeight.bold, // Bolder text
+              ),
               onChanged: (value) {
                 onEdit(value);
               },
@@ -91,13 +96,13 @@ Widget numberTextFieldWithoutS() {
   return Container(
       width: 40,
       //  margin: EdgeInsets.only(bottom: screenHeight / 40),
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
           color: AppColors.lightGrayColor,
           // Color(0xFFC4C4C4),
           borderRadius: BorderRadius.all(
             Radius.circular(12),
           ),
-          boxShadow: const [
+          boxShadow: [
             BoxShadow(
                 //   blurRadius: 5,
                 color: Colors.black26,
@@ -125,8 +130,8 @@ Widget numberTextFieldWithoutS() {
               hintStyle: GoogleFonts.getFont('Mulish',
                   fontWeight: FontWeight.w300,
                   fontSize: 14,
-                  color: Color(0x80000000)),
-              contentPadding: EdgeInsets.symmetric(vertical: 15),
+                  color: const Color(0x80000000)),
+              contentPadding: const EdgeInsets.symmetric(vertical: 15),
               border: InputBorder.none),
           maxLines: 1,
         ),
