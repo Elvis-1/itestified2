@@ -60,7 +60,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final scriptureHeight = viewModel.getScriptureContainerHeight(context);
 
     return SizedBox(
-      height: MediaQuery.of(context).size.height, 
+      height: MediaQuery.of(context).size.height,
       child: ListView(
         children: [
           Align(
@@ -91,7 +91,7 @@ class _HomeScreenState extends State<HomeScreen> {
           _buildSectionHeader(
             context,
             viewModel,
-            "Trending Text testimonies",
+            "Written testimonies",
             viewModel.gotoWrittenTestimonies,
             textScale,
           ),
@@ -99,7 +99,19 @@ class _HomeScreenState extends State<HomeScreen> {
           SizedBox(
             height: viewModel.config.textTestimonyHeight,
             child: _buildHorizontalList(
-              const FadeInTransitionWidget(child: TextTestimonyContainer()),
+              const FadeInTransitionWidget(
+                  child: TextTestimonyContainer(
+                containerWidth: 282,
+                containerHeight: 149,
+                borderRadius: 16,
+                padding: 12,
+                spacing: 12,
+                titleFontSize: 10,
+                textFontSize: 10,
+                categoryFontSize: 9,
+                userIconSize: 20,
+                isHomeScreen: true,
+              )),
             ),
           ),
           const SizedBox(height: 15),
@@ -148,8 +160,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 const SizedBox(height: 20),
-                _buildScriptureContainer(
-                    context, viewModel, scriptureWidth, scriptureHeight, padding),
+                _buildScriptureContainer(context, viewModel, scriptureWidth,
+                    scriptureHeight, padding),
                 const SizedBox(height: 15),
                 _buildSectionHeader(
                   context,
@@ -162,7 +174,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 SizedBox(
                   height: viewModel.config.textTestimonyHeight * 1.2,
                   child: _buildHorizontalList(
-                    const FadeInTransitionWidget(child: TextTestimonyContainer()),
+                    const FadeInTransitionWidget(
+                        child: TextTestimonyContainer()),
                   ),
                 ),
                 const SizedBox(height: 15),
@@ -311,7 +324,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _buildHorizontalList(Widget child) {
     return SizedBox(
-      width: double.infinity, 
+      width: double.infinity,
       child: ListView.builder(
         shrinkWrap: true,
         physics: const BouncingScrollPhysics(),
