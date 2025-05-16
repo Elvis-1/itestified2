@@ -294,7 +294,8 @@ class appbar2 extends StatelessWidget {
                 color: themeProvider.themeData.colorScheme.onTertiary,
               )),
           textWidget(title,
-              fontSize: 20,
+              fontSize: 28,
+              fontWeight: FontWeight.w600,
               color: themeProvider.themeData.colorScheme.onTertiary),
           Container()
         ],

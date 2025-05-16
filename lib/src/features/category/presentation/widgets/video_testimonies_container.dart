@@ -8,6 +8,8 @@ import 'package:itestified/src/core/widgets/textwidget.dart';
 import 'package:itestified/src/features/app_theme/theme_viewmodel.dart';
 import 'package:itestified/src/features/category/presentation/screens/video_written_test_screen.dart';
 import 'package:itestified/src/features/favorites/presentation/screens/favorite_icon_view_model.dart';
+
+import 'package:itestified/src/features/favorites/presentation/widgets/favourite_icon.dart';
 import 'package:itestified/src/features/written_testimonies.dart/presentation/screens/video_testimony_viewmodel.dart';
 import 'package:provider/provider.dart';
 
@@ -21,6 +23,16 @@ class VideoTestimonyContainer1 extends StatelessWidget {
     final themeProvider = Provider.of<ThemeViewmodel>(context);
     final favoritesViewModel = GetIt.I<FavoritesViewModel>();
     final config = viewModel.config;
+
+    final favoritedItem = FavoritedItem(
+      id: videoId,
+      type: 'video',
+      title: 'Prophetic Prayer for open doors',
+      church: 'Redeemed Christian Church of God',
+      views: '504',
+      date: '18/6/2024',
+      imagePath: AppImages.togetherImage,
+    );
 
     return InkWell(
       onTap: () => viewModel.handleVideoTestimonyTap(context, videoId: videoId),
@@ -42,77 +54,49 @@ class VideoTestimonyContainer1 extends StatelessWidget {
                     fit: BoxFit.cover,
                   ),
                 ),
-                child: Stack(
-                  clipBehavior: Clip.hardEdge,
-                  children: [
-                    const Center(
-                      child: Icon(
-                        Icons.play_arrow,
-                        color: AppColors.white,
-                        size: 40,
-                      ),
-                    ),
-                    Positioned(
-                      top: viewModel.getPadding(context) * 0.5,
-                      right: viewModel.getPadding(context) * 0.5,
-                      child: ValueListenableBuilder<List<FavoritedItem>>(
-                        valueListenable: GetIt.I<ValueListenable<List<FavoritedItem>>>(),
-                        builder: (context, favorites, child) {
-                          final isFavorited = favoritesViewModel.isFavorited(videoId, 'video');
-                          print('VideoTestimonyContainer1: Building favorite icon, videoId=$videoId, isFavorited=$isFavorited');
-                          return GestureDetector(
-                            onTap: () {
-                              print('VideoTestimonyContainer1: Favorite clicked, videoId=$videoId, currentState=$isFavorited');
-                              final item = FavoritedItem(
-                                id: videoId,
-                                type: 'video',
-                                title: 'Prophetic Prayer for open doors',
-                                church: 'Redeemed Christian Church of God',
-                                views: '504',
-                                date: '18/6/2024',
-                                imagePath: AppImages.togetherImage,
-                              );
-                              if (isFavorited) {
-                                favoritesViewModel.removeFavorite(videoId, 'video');
-                              } else {
-                                favoritesViewModel.addFavorite(item);
-                              }
-                            },
-                            child: CircleAvatar(
-                              radius: viewModel.getFavoriteIconSize(context) / 2,
-                              backgroundColor: themeProvider
-                                  .themeData.searchBarTheme.backgroundColor!
-                                  .resolve({}),
-                              child: Icon(
-                                isFavorited ? Icons.favorite : Icons.favorite_border,
-                                size: viewModel.getFavoriteIconSize(context) * 0.8,
-                                color: themeProvider.themeData.colorScheme.onTertiary,
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                    Positioned(
-                      bottom: viewModel.getPadding(context) * 0.5,
-                      right: viewModel.getPadding(context) * 0.5,
-                      child: Container(
-                        padding:
-                            EdgeInsets.all(viewModel.getPadding(context) * 0.25),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(3),
-                          color: AppColors.blackColor,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Stack(
+                    clipBehavior: Clip.hardEdge,
+                    children: [
+                      const Center(
+                        child: Icon(
+                          Icons.play_arrow,
+                          color: AppColors.white,
+                          size: 40,
                         ),
-                        child: Text(
-                          "09:30",
-                          style: normalTextStyle(
-                            textColor: AppColors.textColor,
-                            fontSize: viewModel.getTimeTextSize(context),
+                      ),
+                      Positioned(
+                        top: viewModel.getPadding(context) * 0.5,
+                        right: viewModel.getPadding(context) * 0.5,
+                        child: FavoriteIcon(
+                          item: favoritedItem,
+                          radius: viewModel.getFavoriteIconSize(context) / 2,
+                          iconSize:
+                              viewModel.getFavoriteIconSize(context) * 0.8,
+                        ),
+                      ),
+                      Positioned(
+                        bottom: viewModel.getPadding(context) * 0.5,
+                        right: viewModel.getPadding(context) * 0.5,
+                        child: Container(
+                          padding: EdgeInsets.all(
+                              viewModel.getPadding(context) * 0.25),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(3),
+                            color: AppColors.blackColor,
+                          ),
+                          child: Text(
+                            "09:30",
+                            style: normalTextStyle(
+                              textColor: AppColors.textColor,
+                              fontSize: viewModel.getTimeTextSize(context),
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -212,8 +196,6 @@ class VideoTestimonyContainer1 extends StatelessWidget {
     );
   }
 }
-
-
 
 class VideoTestimonyContainer2 extends StatelessWidget {
   const VideoTestimonyContainer2({
@@ -315,13 +297,17 @@ class VideoTestimonyContainer2 extends StatelessWidget {
                         top: padding * 2,
                         right: padding * 2,
                         child: ValueListenableBuilder<List<FavoritedItem>>(
-                          valueListenable: GetIt.I<ValueListenable<List<FavoritedItem>>>(),
+                          valueListenable:
+                              GetIt.I<ValueListenable<List<FavoritedItem>>>(),
                           builder: (context, favorites, child) {
-                            final isFavorited = favoritesViewModel.isFavorited(videoId, 'video');
-                            print('VideoTestimonyContainer2: Building favorite icon, videoId=$videoId, isFavorited=$isFavorited');
+                            final isFavorited = favoritesViewModel.isFavorited(
+                                videoId, 'video');
+                            print(
+                                'VideoTestimonyContainer2: Building favorite icon, videoId=$videoId, isFavorited=$isFavorited');
                             return GestureDetector(
                               onTap: () {
-                                print('VideoTestimonyContainer2: Favorite clicked, videoId=$videoId, currentState=$isFavorited');
+                                print(
+                                    'VideoTestimonyContainer2: Favorite clicked, videoId=$videoId, currentState=$isFavorited');
                                 final item = FavoritedItem(
                                   id: videoId,
                                   type: 'video',
@@ -332,7 +318,8 @@ class VideoTestimonyContainer2 extends StatelessWidget {
                                   imagePath: getImageForVideo(),
                                 );
                                 if (isFavorited) {
-                                  favoritesViewModel.removeFavorite(videoId, 'video');
+                                  favoritesViewModel.removeFavorite(
+                                      videoId, 'video');
                                 } else {
                                   favoritesViewModel.addFavorite(item);
                                 }
@@ -342,7 +329,9 @@ class VideoTestimonyContainer2 extends StatelessWidget {
                                 backgroundColor:
                                     themeProvider.themeData.colorScheme.outline,
                                 child: Icon(
-                                  isFavorited ? Icons.favorite : Icons.favorite_border,
+                                  isFavorited
+                                      ? Icons.favorite
+                                      : Icons.favorite_border,
                                   color: AppColors.primaryColor,
                                   size: iconSize,
                                 ),
@@ -366,7 +355,8 @@ class VideoTestimonyContainer2 extends StatelessWidget {
                           child: Text(
                             "09:30",
                             style: normalTextStyle(
-                              textColor: themeProvider.themeData.colorScheme.tertiary,
+                              textColor:
+                                  themeProvider.themeData.colorScheme.tertiary,
                               fontSize: fontSizeMeta,
                             ),
                           ),
@@ -400,7 +390,8 @@ class VideoTestimonyContainer2 extends StatelessWidget {
                               fontSize: fontSizeTitle,
                               fontWeight: FontWeight.w600,
                               height: 1.0,
-                              color: themeProvider.themeData.colorScheme.tertiary,
+                              color:
+                                  themeProvider.themeData.colorScheme.tertiary,
                             ),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
@@ -411,7 +402,8 @@ class VideoTestimonyContainer2 extends StatelessWidget {
                             style: TextStyle(
                               fontSize: fontSizeSubtitle,
                               height: 1.0,
-                              color: themeProvider.themeData.colorScheme.tertiary,
+                              color:
+                                  themeProvider.themeData.colorScheme.tertiary,
                             ),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
@@ -422,7 +414,8 @@ class VideoTestimonyContainer2 extends StatelessWidget {
                             child: Row(
                               children: [
                                 ConstrainedBox(
-                                  constraints: const BoxConstraints(minWidth: 40),
+                                  constraints:
+                                      const BoxConstraints(minWidth: 40),
                                   child: Text(
                                     textData.tag,
                                     style: TextStyle(
@@ -439,7 +432,8 @@ class VideoTestimonyContainer2 extends StatelessWidget {
                                 _buildDot(themeProvider, dotSize),
                                 SizedBox(width: spacing),
                                 ConstrainedBox(
-                                  constraints: const BoxConstraints(minWidth: 30),
+                                  constraints:
+                                      const BoxConstraints(minWidth: 30),
                                   child: Text(
                                     "${textData.views} Views",
                                     style: TextStyle(
@@ -456,7 +450,8 @@ class VideoTestimonyContainer2 extends StatelessWidget {
                                 _buildDot(themeProvider, dotSize),
                                 SizedBox(width: spacing),
                                 ConstrainedBox(
-                                  constraints: const BoxConstraints(minWidth: 40),
+                                  constraints:
+                                      const BoxConstraints(minWidth: 40),
                                   child: Text(
                                     textData.date,
                                     style: TextStyle(

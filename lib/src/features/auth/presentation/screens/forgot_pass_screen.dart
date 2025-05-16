@@ -43,7 +43,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  appbar2('Forgot Password'),
+                  const appbar2('Forgot Password'),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -100,24 +100,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                         const SizedBox(
                           height: 15,
                         ),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
-                          child: Align(
-                              alignment: Alignment.center,
-                              child: btnAndText2(
-                                  container: const Icon(
-                                    Icons.chevron_left,
-                                    color: AppColors.primaryColor,
-                                  ),
-                                  fontSize: 18,
-                                  textColor: AppColors.primaryColor,
-                                  containerColor: AppColors.transparent,
-                                  verticalPadding: 14,
-                                  containerWidth: double.infinity,
-                                  text: "Back to login")),
-                        ),
+                        
                       ],
                     ),
                   ),

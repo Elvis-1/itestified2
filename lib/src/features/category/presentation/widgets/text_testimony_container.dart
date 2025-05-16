@@ -7,6 +7,7 @@ import 'package:itestified/src/core/widgets/normal_text_style.dart';
 import 'package:itestified/src/core/widgets/textwidget.dart';
 import 'package:itestified/src/features/app_theme/theme_viewmodel.dart';
 import 'package:itestified/src/features/favorites/presentation/screens/favorite_icon_view_model.dart';
+import 'package:itestified/src/features/favorites/presentation/widgets/favourite_icon.dart';
 import 'package:itestified/src/features/profile/presentation/screens/my_testimonies_details.dart';
 import 'package:itestified/src/features/shared/widgets/read_more.dart';
 import 'package:provider/provider.dart';
@@ -53,7 +54,7 @@ class TextTestimonyContainer extends StatelessWidget {
           final double scaledHeight = isLargeScreen ? containerHeight * 1.2 : containerHeight;
           final double scaledBorderRadius = isLargeScreen ? borderRadius * 1.2 : borderRadius;
           final double padding = isLargeScreen ? 16 : 12;
-          final double avatarRadius = isLargeScreen ? 16 : 14;
+      
           final double iconSize = isLargeScreen ? 16 : 14;
           final double spacing = isLargeScreen ? 12 : 10;
           final double dotSize = isLargeScreen ? 6 : 5;
@@ -87,31 +88,10 @@ class TextTestimonyContainer extends StatelessWidget {
                         ),
                       ),
                     ),
-                    ValueListenableBuilder<List<FavoritedItem>>(
-                      valueListenable: GetIt.I<ValueListenable<List<FavoritedItem>>>(),
-                      builder: (context, favorites, child) {
-                        final isFavorited = favoritesViewModel.isFavorited(testimonyId, 'post');
-                        print('TextTestimonyContainer: Building favorite icon, testimonyId=$testimonyId, isFavorited=$isFavorited');
-                        return GestureDetector(
-                          onTap: () {
-                            print('TextTestimonyContainer: Favorite clicked, testimonyId=$testimonyId, currentState=$isFavorited');
-                            if (isFavorited) {
-                              favoritesViewModel.removeFavorite(testimonyId, 'post');
-                            } else {
-                              favoritesViewModel.addFavorite(favoritedItem);
-                            }
-                          },
-                          child: CircleAvatar(
-                            radius: avatarRadius,
-                            backgroundColor: AppColors.opaqueBlack,
-                            child: Icon(
-                              isFavorited ? Icons.favorite : Icons.favorite_border,
-                              size: iconSize,
-                              color: AppColors.primaryColor,
-                            ),
-                          ),
-                        );
-                      },
+                 FavoriteIcon(
+                      item: favoritedItem,
+              
+                      iconSize: iconSize,
                     ),
                   ],
                 ),
@@ -120,7 +100,7 @@ class TextTestimonyContainer extends StatelessWidget {
                   child: RichText(
                     text: TextSpan(
                       text: addReadMoreToText(
-                        'For years, I lived with the pain and limitations of having the sickle cell genotype...',
+                        'For years, I lived with the pain and limitations of having the sickle cell genotype. Countless hospital visits and painful crises became a part of my life. My faith in... see more',
                       ),
                       style: normalTextStyle(
                         fontSize: 10 * (isLargeScreen ? 1.2 : 1.0),

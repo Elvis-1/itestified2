@@ -10,6 +10,8 @@ import 'package:provider/provider.dart';
 class MyTestimoniesScreen extends StatelessWidget {
   const MyTestimoniesScreen({super.key});
 
+  static const routeName = '/my-testimonies';
+
   @override
   Widget build(BuildContext context) {
     var themeProvider = Provider.of<ThemeViewmodel>(context);
@@ -24,24 +26,20 @@ class MyTestimoniesScreen extends StatelessWidget {
             return !isLargeScreen
                 ? smallScreenListView(GestureDetector(
                     onTap: () {
-                      Navigator.of(context)
-                          .push(MaterialPageRoute(builder: (context) {
-                        return const MyTestimoniesDetailsScreen(
-                          isFromProfile: true,
-                        );
-                      }));
+                      Navigator.of(context).pushNamed(
+                        MyTestimoniesDetailsScreen.routeName,
+                        arguments: {'isFromProfile': true},
+                      );
                     },
                     child: const myTestimonyContainer()))
                 : largeScreenGrid(
                     context,
                     GestureDetector(
                         onTap: () {
-                          Navigator.of(context)
-                              .push(MaterialPageRoute(builder: (context) {
-                            return const MyTestimoniesDetailsScreen(
-                              isFromProfile: true,
-                            );
-                          }));
+                          Navigator.of(context).pushNamed(
+                            MyTestimoniesDetailsScreen.routeName,
+                            arguments: {'isFromProfile': true},
+                          );
                         },
                         child: const myTestimonyContainer()));
           },

@@ -7,6 +7,7 @@ import 'package:itestified/src/core/widgets/animated_quotes_modal.dart';
 import 'package:itestified/src/core/widgets/text_widget.dart';
 import 'package:itestified/src/features/app_theme/theme_viewmodel.dart';
 import 'package:itestified/src/features/favorites/presentation/screens/favorite_icon_view_model.dart';
+import 'package:itestified/src/features/favorites/presentation/widgets/favourite_icon.dart';
 import 'package:provider/provider.dart';
 
 class quoteContainer extends StatelessWidget {
@@ -72,31 +73,10 @@ class quoteContainer extends StatelessWidget {
                   Positioned(
                     top: 8,
                     right: 8,
-                    child: ValueListenableBuilder<List<FavoritedItem>>(
-                      valueListenable: GetIt.I<ValueListenable<List<FavoritedItem>>>(),
-                      builder: (context, favorites, child) {
-                        final isFavorited = favoritesViewModel.isFavorited(quoteId, 'inspiration');
-                        print('quoteContainer: Building favorite icon, quoteId=$quoteId, isFavorited=$isFavorited');
-                        return GestureDetector(
-                          onTap: () {
-                            print('quoteContainer: Favorite clicked, quoteId=$quoteId, currentState=$isFavorited');
-                            if (isFavorited) {
-                              favoritesViewModel.removeFavorite(quoteId, 'inspiration');
-                            } else {
-                              favoritesViewModel.addFavorite(favoritedItem);
-                            }
-                          },
-                          child: CircleAvatar(
-                            radius: 15,
-                            backgroundColor: Colors.white,
-                            child: Icon(
-                              isFavorited ? Icons.favorite : Icons.favorite_border,
-                              size: 15,
-                              color: AppColors.blackColor,
-                            ),
-                          ),
-                        );
-                      },
+                    child:FavoriteIcon(
+                      item: favoritedItem,
+              
+                
                     ),
                   ),
                 ],
