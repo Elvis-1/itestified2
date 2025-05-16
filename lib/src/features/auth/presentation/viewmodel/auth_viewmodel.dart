@@ -27,6 +27,9 @@ class AuthViewModel with ChangeNotifier {
 
   bool _isGuest = false;
   bool get isGuest => _isGuest;
+    bool _passwordCreatedSuccessfully = false;
+  bool get passwordCreatedSuccessfully => _passwordCreatedSuccessfully;
+
 
   bool hasErrors = false;
   String? emailError;
@@ -42,6 +45,11 @@ class AuthViewModel with ChangeNotifier {
     _isGuest = isGuest;
     notifyListeners();
   }
+   void setPasswordCreatedSuccessfully(bool value) {
+    _passwordCreatedSuccessfully = value;
+    notifyListeners();
+  }
+
 
   validateFields(String? name, String? email, String pass, String confirmP,
       {UseType useType = UseType.SignUP, bool isForgotPasswordScreen = false}) {
@@ -158,7 +166,7 @@ class AuthViewModel with ChangeNotifier {
     });
   }
 
-  Future<void> setNewPassword(BuildContext context, String userEmail) async {
+ Future<void> setNewPassword(BuildContext context, String userEmail, {bool showSuccessMessage = false}) async {
     var email = userEmail;
 
     var password = passwordController.text.trim();
@@ -179,8 +187,18 @@ class AuthViewModel with ChangeNotifier {
     response.fold((failure) {
       _showSnackBar(context, failure.message, Colors.red);
     }, (success) async {
+      // Set success state if requested
+      if (showSuccessMessage) {
+        setPasswordCreatedSuccessfully(true);
+      }
+      
       _clearFields();
       customSnack(context, success.message ?? '');
+
+      // Delay navigation to allow users to see the success message
+      if (showSuccessMessage) {
+        await Future.delayed(const Duration(seconds: 3));
+      }
 
       if (context.mounted) {
         Navigator.pushNamed(context, NavBar.routeName);
