@@ -3,6 +3,7 @@ import 'package:get_it/get_it.dart';
 import 'package:itestified/src/config/theme/app_color.dart';
 import 'package:itestified/src/core/widgets/appbar2.dart';
 import 'package:itestified/src/core/widgets/icon_and_text.dart';
+import 'package:itestified/src/core/widgets/line_widget.dart';
 import 'package:itestified/src/features/animations/fade_in_trans.dart';
 import 'package:itestified/src/features/app_theme/theme_viewmodel.dart';
 import 'package:itestified/src/features/category/presentation/widgets/text_testimony_container.dart';
@@ -52,31 +53,39 @@ class _VideoAndWrittenTestimonieScreenState
                   ),
                   padding: EdgeInsets.symmetric(
                       vertical: viewModel.getPadding(context)),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  child: Column(
                     children: [
-                      GestureDetector(
-                        onTap: () => setState(() => _isVideoMode = true),
-                        child: iconAndText(
-                          "Videos",
-                          Icon(Symbols.slideshow, size: iconSize),
-                          _isVideoMode
-                              ? AppColors.primaryColor
-                              : themeProvider.themeData.colorScheme.surface,
-                          context,
-                        ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          GestureDetector(
+                            onTap: () => setState(() => _isVideoMode = true),
+                            child: iconAndText(
+                              "Videos",
+                              Icon(Symbols.slideshow, size: iconSize),
+                              _isVideoMode
+                                  ? AppColors.primaryColor
+                                  : themeProvider.themeData.colorScheme.surface,
+                              context,
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: () => setState(() => _isVideoMode = false),
+                            child: iconAndText(
+                              "Text",
+                              Icon(Symbols.article, size: iconSize),
+                              !_isVideoMode
+                                  ? AppColors.primaryColor
+                                  : themeProvider.themeData.colorScheme.surface,
+                              context,
+                            ),
+                          ),
+                        ],
                       ),
-                      GestureDetector(
-                        onTap: () => setState(() => _isVideoMode = false),
-                        child: iconAndText(
-                          "Text",
-                          Icon(Symbols.article, size: iconSize),
-                          !_isVideoMode
-                              ? AppColors.primaryColor
-                              : themeProvider.themeData.colorScheme.surface,
-                          context,
-                        ),
-                      ),
+                      lineWidget(
+                          width: double.infinity,
+                          color: themeProvider.themeData.colorScheme.tertiary,
+                          height: 0.5)
                     ],
                   ),
                 ),
@@ -139,11 +148,8 @@ class _VideoAndWrittenTestimonieScreenState
     );
   }
 
-  Widget _buildContainer(
-      BuildContext context,
-      VideoWrittenTestimoniesViewModel viewModel,
-      int index,
-      bool isVideoMode) {
+  Widget _buildContainer(BuildContext context,
+      VideoWrittenTestimoniesViewModel viewModel, int index, bool isVideoMode) {
     final width = viewModel.getContainerWidth(context);
     final height = viewModel.getContainerHeight(context, isVideoMode);
     final borderRadius = viewModel.getBorderRadius(context);
@@ -152,22 +158,19 @@ class _VideoAndWrittenTestimonieScreenState
       child: GestureDetector(
         onTap: () =>
             viewModel.navigateToScreen(context, index + 1, isVideoMode),
-        child: Container(
-          constraints: BoxConstraints.tightFor(width: width, height: height),
-          child: isVideoMode
-              ? VideoTestimonyContainer2(
-                  videoId: index + 1,
-                  containerWidth: width,
-                  containerHeight: height,
-                  borderRadius: borderRadius,
-                  imageHeightRatio: 0.55,
-                )
-              : TextTestimonyContainer(
-                  containerWidth: width,
-                  containerHeight: height,
-                  borderRadius: borderRadius,
-                  index: index,
-                ),
+        child: Align(
+          child: Container(
+            child: isVideoMode
+                ? VideoTestimonyContainer3(
+                    videoId: index + 1,
+                  )
+                : TextTestimonyContainer(
+                    containerWidth: width,
+                    containerHeight: height,
+                    borderRadius: borderRadius,
+                    index: index,
+                  ),
+          ),
         ),
       ),
     );
@@ -177,18 +180,23 @@ class _VideoAndWrittenTestimonieScreenState
 class VideoWrittenTestimoniesViewModel {
   final VideoWrittenTestimoniesConfig config;
 
-  VideoWrittenTestimoniesViewModel({this.config = const VideoWrittenTestimoniesConfig()});
+  VideoWrittenTestimoniesViewModel(
+      {this.config = const VideoWrittenTestimoniesConfig()});
 
   double getContainerWidth(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
-    if (width >= config.desktopBreakpoint) return config.baseContainerWidth * 1.5;
-    if (width >= config.tabletBreakpoint) return config.baseContainerWidth * 1.2;
+    if (width >= config.desktopBreakpoint)
+      return config.baseContainerWidth * 1.5;
+    if (width >= config.tabletBreakpoint)
+      return config.baseContainerWidth * 1.2;
     return config.baseContainerWidth;
   }
 
   double getContainerHeight(BuildContext context, bool isVideoMode) {
     final width = MediaQuery.of(context).size.width;
-    final baseHeight = isVideoMode ? config.baseVideoContainerHeight : config.baseTextContainerHeight;
+    final baseHeight = isVideoMode
+        ? config.baseVideoContainerHeight
+        : config.baseTextContainerHeight;
     if (width >= config.desktopBreakpoint) return baseHeight * 1.5;
     if (width >= config.tabletBreakpoint) return baseHeight * 1.2;
     return baseHeight;
@@ -215,8 +223,10 @@ class VideoWrittenTestimoniesViewModel {
 
   double getHorizontalPadding(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
-    if (width >= config.desktopBreakpoint) return config.baseHorizontalPadding * 1.2;
-    if (width >= config.tabletBreakpoint) return config.baseHorizontalPadding * 1.1;
+    if (width >= config.desktopBreakpoint)
+      return config.baseHorizontalPadding * 1.2;
+    if (width >= config.tabletBreakpoint)
+      return config.baseHorizontalPadding * 1.1;
     return config.baseHorizontalPadding;
   }
 
@@ -236,8 +246,11 @@ class VideoWrittenTestimoniesViewModel {
 
   double getTextSize(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
-    final textScaleFactor = MediaQuery.of(context).textScaleFactor.clamp(0.8, 1.2);
-    final baseSize = width < config.mobileBreakpoint ? config.baseTextSize * 0.9 : config.baseTextSize;
+    final textScaleFactor =
+        MediaQuery.of(context).textScaleFactor.clamp(0.8, 1.2);
+    final baseSize = width < config.mobileBreakpoint
+        ? config.baseTextSize * 0.9
+        : config.baseTextSize;
     final scaledSize = width >= config.desktopBreakpoint
         ? baseSize * 1.2
         : width >= config.tabletBreakpoint

@@ -31,7 +31,7 @@ class MyTestimoniesScreen extends StatelessWidget {
                         arguments: {'isFromProfile': true},
                       );
                     },
-                    child: const myTestimonyContainer()))
+                    child: const MyTestimonyContainer()))
                 : largeScreenGrid(
                     context,
                     GestureDetector(
@@ -41,7 +41,7 @@ class MyTestimoniesScreen extends StatelessWidget {
                             arguments: {'isFromProfile': true},
                           );
                         },
-                        child: const myTestimonyContainer()));
+                        child: const MyTestimonyContainer()));
           },
         )
 

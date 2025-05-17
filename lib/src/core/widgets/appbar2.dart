@@ -43,55 +43,58 @@ PreferredSizeWidget generalAppBar2(BuildContext context) {
   final isGuest = authProvider.isGuest;
   final screenWidth = MediaQuery.of(context).size.width;
 
-  return AppBar(
-    automaticallyImplyLeading: false,
-    backgroundColor: themeProvider.themeData.colorScheme.surface,
-    title: Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-      child: isGuest
-          ? LayoutBuilder(
-              builder: (context, constraints) {
-                if (constraints.maxWidth < 600) {
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              TextWidgets.textWidget14(
-                                context,
-                                "Guest Mode",
-                                fontWeight: FontWeight.w600,
-                              ),
-                              const SizedBox(height: 4),
-                              TextWidgets.textWidget10(
-                                context,
-                                "You are currently browsing as a guest",
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ],
-                          ),
-                          if (screenWidth > 350)
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.pushNamed(
-                                    context, SignUpScreen.routeName);
-                              },
-                              child: btnAndText(
-                                text: "Create Account",
-                                containerWidth: 110,
-                                verticalPadding: 8,
-                                fontSize: 12,
+  final double iconSize =
+      screenWidth < 400 ? 14 : (screenWidth < 600 ? 16 : 20);
+  final double avatarRadius =
+      screenWidth < 400 ? 16 : (screenWidth < 600 ? 18 : 20);
+  final double horizontalPadding =
+      screenWidth < 400 ? 4 : (screenWidth < 600 ? 8 : 16);
+  final double verticalPadding = screenWidth < 400 ? 4 : 8;
+  final double buttonFontSize = screenWidth < 400 ? 10 : 12;
+
+  final double appBarHeight = isGuest && screenWidth <= 350 ? 100 : 60;
+
+  return PreferredSize(
+    preferredSize: Size.fromHeight(appBarHeight),
+    child: AppBar(
+      automaticallyImplyLeading: false,
+      backgroundColor: themeProvider.themeData.colorScheme.surface,
+      title: Padding(
+        padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
+        child: isGuest
+            ? LayoutBuilder(
+                builder: (context, constraints) {
+                  if (screenWidth < 350) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Flexible(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  TextWidgets.textWidget14(
+                                    context,
+                                    "Guest Mode",
+                                    fontWeight: FontWeight.w600,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                  SizedBox(height: verticalPadding / 2),
+                                  TextWidgets.textWidget10(
+                                    context,
+                                    "You are currently browsing as a guest",
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ],
                               ),
                             ),
-                        ],
-                      ),
-                      if (screenWidth <= 350)
+                          ],
+                        ),
                         Padding(
-                          padding: const EdgeInsets.only(top: 8.0),
+                          padding: EdgeInsets.only(top: verticalPadding),
                           child: GestureDetector(
                             onTap: () {
                               Navigator.pushNamed(
@@ -100,75 +103,262 @@ PreferredSizeWidget generalAppBar2(BuildContext context) {
                             child: btnAndText(
                               text: "Create Account",
                               containerWidth: double.infinity,
-                              verticalPadding: 8,
-                              fontSize: 12,
+                              verticalPadding: 6,
+                              fontSize: buttonFontSize,
                             ),
                           ),
                         ),
-                    ],
-                  );
-                }
-
-                return Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      ],
+                    );
+                  } else if (screenWidth < 600) {
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        TextWidgets.textWidget14(
-                          context,
-                          "Guest Mode",
-                          fontWeight: FontWeight.w600,
+                        Flexible(
+                          flex: 3,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              TextWidgets.textWidget14(
+                                context,
+                                "Guest Mode",
+                                fontWeight: FontWeight.w600,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                              SizedBox(height: verticalPadding / 2),
+                              TextWidgets.textWidget10(
+                                context,
+                                "You are currently browsing as a guest",
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ],
+                          ),
                         ),
-                        const SizedBox(height: 4),
-                        TextWidgets.textWidget10(
-                          context,
-                          "You are currently browsing as a guest",
-                          fontWeight: FontWeight.w400,
+                        Flexible(
+                          flex: 2,
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.pushNamed(
+                                  context, SignUpScreen.routeName);
+                            },
+                            child: btnAndText(
+                              text: "Create Account",
+                              containerWidth: screenWidth < 450 ? 100 : 110,
+                              verticalPadding: 8,
+                              fontSize: buttonFontSize,
+                            ),
+                          ),
                         ),
                       ],
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.pushNamed(context, SignUpScreen.routeName);
-                      },
-                      child: btnAndText(
-                        text: "Create an Account",
-                        containerWidth: 119,
-                        verticalPadding: 8,
-                        fontSize: 12,
-                      ),
-                    ),
-                  ],
-                );
-              },
-            )
-          : LayoutBuilder(
-              builder: (context, constraints) {
-                if (constraints.maxWidth < 600) {
+                    );
+                  }
+      
                   return Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Flexible(
-                        child: Row(
+                        flex: 3,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
                           children: [
-                            Image.asset(AppIcons.userIcon,
-                                width: 24, height: 24),
-                            const SizedBox(width: 8),
-                            Flexible(
-                              child: TextWidgets.textWidget14(
-                                context,
-                                "Welcome, Amaka",
-                                fontWeight: FontWeight.w600,
-                                overflow: TextOverflow.ellipsis,
-                              ),
+                            TextWidgets.textWidget14(
+                              context,
+                              "Guest Mode",
+                              fontWeight: FontWeight.w600,
+                            ),
+                            SizedBox(height: verticalPadding / 2),
+                            TextWidgets.textWidget10(
+                              context,
+                              "You are currently browsing as a guest",
+                              fontWeight: FontWeight.w400,
                             ),
                           ],
                         ),
                       ),
+                      Flexible(
+                        flex: 2,
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.pushNamed(
+                                context, SignUpScreen.routeName);
+                          },
+                          child: btnAndText(
+                            text: screenWidth < 800
+                                ? "Create Account"
+                                : "Create an Account",
+                            containerWidth: screenWidth < 800 ? 110 : 130,
+                            verticalPadding: 8,
+                            fontSize: buttonFontSize,
+                          ),
+                        ),
+                      ),
+                    ],
+                  );
+                },
+              )
+            : LayoutBuilder(
+                builder: (context, constraints) {
+                  // Extra small devices
+                  if (screenWidth < 400) {
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Flexible(
+                          flex: 3,
+                          child: Row(
+                            children: [
+                              Image.asset(AppIcons.userIcon,
+                                  width: 20, height: 20),
+                              SizedBox(width: horizontalPadding / 2),
+                              Flexible(
+                                child: TextWidgets.textWidget14(
+                                  context,
+                                  "Welcome, Amaka",
+                                  fontWeight: FontWeight.w600,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Flexible(
+                          flex: 2,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const SearchScreen()),
+                                  );
+                                },
+                                child: CircleAvatar(
+                                  radius: avatarRadius,
+                                  backgroundColor: themeProvider
+                                      .themeData.searchBarTheme.backgroundColor!
+                                      .resolve({}),
+                                  child: Icon(
+                                    size: iconSize,
+                                    Icons.search,
+                                    color: themeProvider
+                                        .themeData.colorScheme.onTertiary,
+                                  ),
+                                ),
+                              ),
+                              SizedBox(width: horizontalPadding / 2),
+                              GestureDetector(
+                                onTap: () {},
+                                child: CircleAvatar(
+                                  radius: avatarRadius,
+                                  backgroundColor: themeProvider
+                                      .themeData.searchBarTheme.backgroundColor!
+                                      .resolve({}),
+                                  child: Icon(
+                                    size: iconSize,
+                                    Icons.notifications_outlined,
+                                    color: themeProvider
+                                        .themeData.colorScheme.onTertiary,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    );
+                  } else if (screenWidth < 600) {
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Flexible(
+                          flex: 3,
+                          child: Row(
+                            children: [
+                              Image.asset(AppIcons.userIcon,
+                                  width: 24, height: 24),
+                              SizedBox(width: horizontalPadding),
+                              Flexible(
+                                child: TextWidgets.textWidget14(
+                                  context,
+                                  "Welcome, Amaka",
+                                  fontWeight: FontWeight.w600,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Flexible(
+                          flex: 2,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const SearchScreen()),
+                                  );
+                                },
+                                child: CircleAvatar(
+                                  radius: avatarRadius,
+                                  backgroundColor: themeProvider
+                                      .themeData.searchBarTheme.backgroundColor!
+                                      .resolve({}),
+                                  child: Icon(
+                                    size: iconSize,
+                                    Icons.search,
+                                    color: themeProvider
+                                        .themeData.colorScheme.onTertiary,
+                                  ),
+                                ),
+                              ),
+                              SizedBox(width: horizontalPadding),
+                              GestureDetector(
+                                onTap: () {},
+                                child: CircleAvatar(
+                                  radius: avatarRadius,
+                                  backgroundColor: themeProvider
+                                      .themeData.searchBarTheme.backgroundColor!
+                                      .resolve({}),
+                                  child: Icon(
+                                    size: iconSize,
+                                    Icons.notifications_outlined,
+                                    color: themeProvider
+                                        .themeData.colorScheme.onTertiary,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    );
+                  }
+
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
                       Row(
                         children: [
-                          const SizedBox(width: 8),
+                          Image.asset(AppIcons.userIcon),
+                          SizedBox(width: horizontalPadding),
+                          TextWidgets.textWidget14(
+                            context,
+                            "Welcome, Amaka",
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
                           GestureDetector(
                             onTap: () {
                               Navigator.push(
@@ -178,28 +368,28 @@ PreferredSizeWidget generalAppBar2(BuildContext context) {
                               );
                             },
                             child: CircleAvatar(
-                              radius: 18,
+                              radius: avatarRadius,
                               backgroundColor: themeProvider
                                   .themeData.searchBarTheme.backgroundColor!
                                   .resolve({}),
                               child: Icon(
-                                size: 16,
+                                size: iconSize,
                                 Icons.search,
                                 color: themeProvider
                                     .themeData.colorScheme.onTertiary,
                               ),
                             ),
                           ),
-                          const SizedBox(width: 8),
+                          SizedBox(width: horizontalPadding),
                           GestureDetector(
                             onTap: () {},
                             child: CircleAvatar(
-                              radius: 18,
+                              radius: avatarRadius,
                               backgroundColor: themeProvider
                                   .themeData.searchBarTheme.backgroundColor!
                                   .resolve({}),
                               child: Icon(
-                                size: 16,
+                                size: iconSize,
                                 Icons.notifications_outlined,
                                 color: themeProvider
                                     .themeData.colorScheme.onTertiary,
@@ -210,61 +400,9 @@ PreferredSizeWidget generalAppBar2(BuildContext context) {
                       ),
                     ],
                   );
-                }
-
-                return Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        Image.asset(AppIcons.userIcon),
-                        const SizedBox(width: 10),
-                        TextWidgets.textWidget14(
-                          context,
-                          "Welcome, Amaka",
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        GestureDetector(
-                          onTap: () {},
-                          child: CircleAvatar(
-                            radius: 20,
-                            backgroundColor: themeProvider
-                                .themeData.searchBarTheme.backgroundColor!
-                                .resolve({}),
-                            child: Icon(
-                              size: 16,
-                              Icons.search,
-                              color: themeProvider
-                                  .themeData.colorScheme.onTertiary,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(width: 10),
-                        GestureDetector(
-                          onTap: () {},
-                          child: CircleAvatar(
-                            radius: 20,
-                            backgroundColor: themeProvider
-                                .themeData.searchBarTheme.backgroundColor!
-                                .resolve({}),
-                            child: Icon(
-                              size: 16,
-                              Icons.notifications_outlined,
-                              color: themeProvider
-                                  .themeData.colorScheme.onTertiary,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                );
-              },
-            ),
+                },
+              ),
+      ),
     ),
   );
 }
