@@ -211,7 +211,7 @@ PreferredSizeWidget generalAppBar2(BuildContext context) {
                             children: [
                               Image.asset(AppIcons.userIcon,
                                   width: 20, height: 20),
-                              SizedBox(width: horizontalPadding / 2),
+                              SizedBox(width: horizontalPadding / 0.5),
                               Flexible(
                                 child: TextWidgets.textWidget14(
                                   context,

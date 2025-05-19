@@ -18,6 +18,7 @@ class VideoListScreen extends StatelessWidget {
     final themeProvider = Provider.of<ThemeViewmodel>(context);
 
     return Scaffold(
+      backgroundColor:   themeProvider.themeData.colorScheme.surface,
       appBar: generalAppbar('Video Testimonies', context),
       body: Container(
         color: themeProvider.themeData.colorScheme.surface,
