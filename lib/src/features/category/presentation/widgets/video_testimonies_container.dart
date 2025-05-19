@@ -601,136 +601,138 @@ class VideoTestimonyContainer3 extends StatelessWidget {
     return InkWell(
       onTap: () => viewModel.handleVideoTestimonyTap(context, videoId: videoId),
       borderRadius: BorderRadius.circular(16 * scale),
-      child: Container(
-        width: width,
-        height: imageHeight + subContainerHeight + spacing,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              height: imageHeight,
-              width: width,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(16 * scale),
-                image: DecorationImage(
-                  image: AssetImage(AppImages.togetherImage),
-                  fit: BoxFit.cover,
+      child: Align(
+        child: Container(
+          width: width,
+          height: imageHeight + subContainerHeight + spacing,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                height: imageHeight,
+                width: width,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(16 * scale),
+                  image: DecorationImage(
+                    image: AssetImage(AppImages.togetherImage),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                child: Stack(
+                  clipBehavior: Clip.none,
+                  children: [
+                    Center(
+                      child: Icon(
+                        Icons.play_arrow,
+                        color: AppColors.white,
+                        size: 40 * scale,
+                      ),
+                    ),
+                    Positioned(
+                      top: padding,
+                      right: padding,
+                      child: FavoriteIcon(
+                        item: favoritedItem,
+                        radius: 12 * scale,
+                        iconSize: 14 * scale,
+                      ),
+                    ),
+                    Positioned(
+                      bottom: padding,
+                      right: padding,
+                      child: Container(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: padding / 2,
+                          vertical: padding / 4,
+                        ),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(4 * scale),
+                          color: AppColors.blackColor.withOpacity(0.8),
+                        ),
+                        child: Text(
+                          "09:30",
+                          style: normalTextStyle(
+                            textColor: AppColors.white,
+                            fontSize: metadataFontSize,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              child: Stack(
-                clipBehavior: Clip.none,
-                children: [
-                  Center(
-                    child: Icon(
-                      Icons.play_arrow,
-                      color: AppColors.white,
-                      size: 40 * scale,
-                    ),
-                  ),
-                  Positioned(
-                    top: padding,
-                    right: padding,
-                    child: FavoriteIcon(
-                      item: favoritedItem,
-                      radius: 12 * scale,
-                      iconSize: 14 * scale,
-                    ),
-                  ),
-                  Positioned(
-                    bottom: padding,
-                    right: padding,
-                    child: Container(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: padding / 2,
-                        vertical: padding / 4,
-                      ),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(4 * scale),
-                        color: AppColors.blackColor.withOpacity(0.8),
-                      ),
-                      child: Text(
-                        "09:30",
-                        style: normalTextStyle(
-                          textColor: AppColors.white,
-                          fontSize: metadataFontSize,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(height: spacing),
-            Container(
-              height: subContainerHeight,
-              padding: EdgeInsets.symmetric(vertical: spacing),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    width: iconSize,
-                    height: iconSize,
-                    margin: EdgeInsets.only(right: spacing * 2),
-                    child: Image.asset(
-                      AppIcons.itestifyIcon,
+              SizedBox(height: spacing),
+              Container(
+                height: subContainerHeight,
+                padding: EdgeInsets.symmetric(vertical: spacing),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
                       width: iconSize,
                       height: iconSize,
+                      margin: EdgeInsets.only(right: spacing * 2),
+                      child: Image.asset(
+                        AppIcons.itestifyIcon,
+                        width: iconSize,
+                        height: iconSize,
+                      ),
                     ),
-                  ),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "Triplets after 25 years of waiting!",
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            fontFamily: 'Open Sans',
-                            fontWeight: FontWeight.w600,
-                            fontSize: titleFontSize,
-                            height: 1.0,
-                            color:
-                                themeProvider.themeData.colorScheme.onTertiary,
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Triplets after 25 years of waiting!",
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              fontFamily: 'Open Sans',
+                              fontWeight: FontWeight.w600,
+                              fontSize: titleFontSize,
+                              height: 1.0,
+                              color:
+                                  themeProvider.themeData.colorScheme.onTertiary,
+                            ),
                           ),
-                        ),
-                        SizedBox(height: spacing / 2),
-                        Text(
-                          "Redeemed Christian Church of God",
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            fontFamily: 'Open Sans',
-                            fontSize: subtitleFontSize,
-                            height: 1.0,
-                            color: themeProvider.themeData.colorScheme.tertiary,
+                          SizedBox(height: spacing / 2),
+                          Text(
+                            "Redeemed Christian Church of God",
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              fontFamily: 'Open Sans',
+                              fontSize: subtitleFontSize,
+                              height: 1.0,
+                              color: themeProvider.themeData.colorScheme.tertiary,
+                            ),
                           ),
-                        ),
-                        SizedBox(height: spacing / 2),
-                        Row(
-                          children: [
-                            _buildMetadataText(context, "Child Birth",
-                                metadataFontSize, themeProvider),
-                            SizedBox(width: spacing),
-                            _buildDot(themeProvider, dotSize),
-                            SizedBox(width: spacing),
-                            _buildMetadataText(context, "504 Views",
-                                metadataFontSize, themeProvider),
-                            SizedBox(width: spacing),
-                            _buildDot(themeProvider, dotSize),
-                            SizedBox(width: spacing),
-                            _buildMetadataText(context, "18/6/2024",
-                                metadataFontSize, themeProvider),
-                          ],
-                        ),
-                      ],
+                          SizedBox(height: spacing / 2),
+                          Row(
+                            children: [
+                              _buildMetadataText(context, "Child Birth",
+                                  metadataFontSize, themeProvider),
+                              SizedBox(width: spacing),
+                              _buildDot(themeProvider, dotSize),
+                              SizedBox(width: spacing),
+                              _buildMetadataText(context, "504 Views",
+                                  metadataFontSize, themeProvider),
+                              SizedBox(width: spacing),
+                              _buildDot(themeProvider, dotSize),
+                              SizedBox(width: spacing),
+                              _buildMetadataText(context, "18/6/2024",
+                                  metadataFontSize, themeProvider),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
