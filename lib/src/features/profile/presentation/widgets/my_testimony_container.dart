@@ -1,126 +1,164 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:itestified/src/config/theme/app_color.dart';
 import 'package:itestified/src/core/utils/app_const/app_icons.dart';
 import 'package:itestified/src/core/widgets/modals.dart';
 import 'package:itestified/src/core/widgets/normal_text_style.dart';
-import 'package:itestified/src/core/widgets/text_widget.dart';
 import 'package:itestified/src/features/app_theme/theme_viewmodel.dart';
-import 'package:itestified/src/features/shared/widgets/read_more.dart';
 import 'package:provider/provider.dart';
 
-class myTestimonyContainer extends StatelessWidget {
-  const myTestimonyContainer({super.key});
+class MyTestimonyContainer extends StatefulWidget {
+  const MyTestimonyContainer({Key? key}) : super(key: key);
+
+  @override
+  State<MyTestimonyContainer> createState() => _MyTestimonyContainerState();
+}
+
+class _MyTestimonyContainerState extends State<MyTestimonyContainer> {
+  bool _isExpanded = false;
 
   @override
   Widget build(BuildContext context) {
-        var themeProvider = Provider.of<ThemeViewmodel>(context);
+    var themeProvider = Provider.of<ThemeViewmodel>(context);
+    final screenWidth = MediaQuery.of(context).size.width;
+
+    final horizontalPadding = screenWidth * 0.03;
+    final verticalPadding = screenWidth * 0.02;
 
     return Container(
-      padding: const EdgeInsets.all(10),
-      margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+      padding: EdgeInsets.all(horizontalPadding),
+      margin: EdgeInsets.symmetric(
+          horizontal: horizontalPadding, vertical: verticalPadding),
       decoration: BoxDecoration(
-          color: themeProvider.themeData.colorScheme.outline,
-          borderRadius: BorderRadius.circular(10)),
+        color: themeProvider.themeData.colorScheme.outline,
+        borderRadius: BorderRadius.circular(10),
+      ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Expanded(
-                child: textWidget(
-                  maxLines: 1,
+                child: Text(
+                  "Jesus Changed my Genotype!",
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: themeProvider.themeData.colorScheme.onSurface,
+                    fontWeight: FontWeight.w500,
+                  ),
                   overflow: TextOverflow.ellipsis,
-                  "Jesus Changed my Genotype",
-                  fontSize: Theme.of(context).textTheme.titleMedium?.fontSize,
+                  maxLines: 1,
                 ),
               ),
-              Flexible(
-                child: Container(
-                  width: 100,
-                  padding: const EdgeInsets.only(
-                      left: 10, right: 10, top: 3, bottom: 3),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      border: Border.all(color: AppColors.pendingColor)),
-                  child: Center(
-                    child: Text(
-                      'Pending',
-                      style: normalTextStyle(textColor: AppColors.pendingColor),
-                    ),
+              Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(color: AppColors.pendingColor),
+                ),
+                child: Text(
+                  'Pending',
+                  style: normalTextStyle(
+                    fontSize: 10,
+                    textColor: AppColors.pendingColor,
                   ),
                 ),
               )
             ],
           ),
-          const SizedBox(
-            height: 10,
-          ),
-
-          RichText(
-              text: TextSpan(
-                  text: addReadMoreToText(
-                      'For years, I lived with the pain and limitations of having the sickle cell genotype. Countless hospitals visits and painful crises became a part of my life in'),
+          SizedBox(height: verticalPadding),
+          GestureDetector(
+            onTap: () {
+              setState(() {
+                _isExpanded = !_isExpanded;
+              });
+            },
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'For years, I lived with the pain and limitations of having the sickle cell genotype. Countless hospitals visits and painful crises became a part of my life in',
                   style: normalTextStyle(
-                      textColor: themeProvider.themeData.colorScheme.tertiary),
-                  children: [
-                TextSpan(
-                    text: ' ... See more',
-                    style: normalTextStyle(textColor: AppColors.primaryColor)),
-              ])),
-          const SizedBox(
-            height: 10,
+                    fontSize: 12,
+                    textColor: themeProvider.themeData.colorScheme.tertiary,
+                  ),
+                  maxLines: _isExpanded ? null : 3,
+                  overflow: _isExpanded
+                      ? TextOverflow.visible
+                      : TextOverflow.ellipsis,
+                ),
+                if (!_isExpanded)
+                  Text(
+                    'See more',
+                    style: normalTextStyle(
+                      fontSize: 12,
+                      textColor: AppColors.primaryColor,
+                    ),
+                  ),
+              ],
+            ),
           ),
-          // image and text
+          SizedBox(height: verticalPadding),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Expanded(
                 child: Row(
                   children: [
-                    Image.asset(AppIcons.userIcon),
-                    const SizedBox(width: 10),
+                    Image.asset(
+                      AppIcons.userIcon,
+                      width: screenWidth * 0.08,
+                      height: screenWidth * 0.08,
+                    ),
+                    SizedBox(width: horizontalPadding),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
                         children: [
-                          textWidget(
+                          Text(
                             "Chika Amaka",
-                            fontSize: Theme.of(context)
-                                .textTheme
-                                .titleMedium
-                                ?.fontSize,
+                            style: TextStyle(
+                              fontSize: 13,
+                              fontWeight: FontWeight.w500,
+                              color:
+                                  themeProvider.themeData.colorScheme.onSurface,
+                            ),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),
-                          Row(
-                            children: [
-                              Expanded(
-                                child: textWidget(
-                                  "Healing ppp ooooo mmmm hhhhh",
-                                  fontSize: 10,
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
+                          FittedBox(
+                            fit: BoxFit.scaleDown,
+                            alignment: Alignment.centerLeft,
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  "Healing",
+                                  style: TextStyle(
+                                    fontSize: 10,
+                                    color: themeProvider
+                                        .themeData.colorScheme.tertiary,
+                                  ),
                                 ),
-                              ),
-                              const SizedBox(width: 5),
-                              Container(
-                                height: 5,
-                                width: 5,
-                                color: themeProvider
-                                    .themeData.colorScheme.tertiary,
-                              ),
-                              const SizedBox(width: 5),
-                              Expanded(
-                                child: textWidget(
+                                const SizedBox(width: 5),
+                                Container(
+                                  height: 5,
+                                  width: 5,
+                                  color: themeProvider
+                                      .themeData.colorScheme.tertiary,
+                                ),
+                                const SizedBox(width: 5),
+                                Text(
                                   "30 minutes ago",
-                                  fontSize: 10,
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                    fontSize: 10,
+                                    color: themeProvider
+                                        .themeData.colorScheme.tertiary,
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ],
                       ),
@@ -135,117 +173,20 @@ class myTestimonyContainer extends StatelessWidget {
                     builder: (context) => const EditDeleteShareModal(),
                   );
                 },
-                icon: const Icon(Icons.more_horiz_sharp),
+                icon: Icon(
+                  Icons.more_horiz_sharp,
+                  color: themeProvider.themeData.colorScheme.onSurface,
+                ),
+                constraints: BoxConstraints(
+                  maxWidth: screenWidth * 0.1,
+                  maxHeight: screenWidth * 0.1,
+                ),
+                padding: EdgeInsets.zero,
               ),
             ],
-          ),
-
-          const SizedBox(
-            height: 5,
           ),
         ],
       ),
     );
   }
 }
-
-// Widget myTestimonyContainer(BuildContext context) {
-  
-  
-//   return Container(
-//     padding: const EdgeInsets.all(10),
-//     margin: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
-//     decoration: BoxDecoration(
-//         color: AppColors.opaqueBlack2, borderRadius: BorderRadius.circular(10)),
-//     child: Column(
-//       children: [
-//         Row(
-//           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//           children: [
-//             textWidget("Jesus Changed my Genotype", fontSize: 15.sp),
-//             Container(
-//               padding: EdgeInsets.only(left: 10, right: 10, top: 3, bottom: 3),
-//               decoration: BoxDecoration(
-//                   borderRadius: BorderRadius.circular(8),
-//                   border: Border.all(color: AppColors.pendingColor)),
-//               child: Text(
-//                 'Pending',
-//                 style: normalTextStyle(textColor: AppColors.pendingColor),
-//               ),
-//             )
-//           ],
-//         ),
-//         SizedBox(
-//           height: 10.h,
-//         ),
-
-//         RichText(
-//             text: TextSpan(
-//                 text:
-//                     'For years, I lived with the pain and limitations of having the sickle cell genotype. Countless hospitals visits and painful crises became a part of my life in',
-//                 style: normalTextStyle(textColor: AppColors.textColor),
-//                 children: [
-//               TextSpan(
-//                   text: ' ... See more',
-//                   style: normalTextStyle(textColor: AppColors.primaryColor)),
-//             ])),
-//         SizedBox(
-//           height: 10.h,
-//         ),
-//         // image and text
-//         Row(
-//           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//           children: [
-//             Row(
-//               children: [
-//                 Image.asset(AppIcons.userIcon),
-//                 SizedBox(
-//                   width: 10.w,
-//                 ),
-//                 Column(
-//                   crossAxisAlignment: CrossAxisAlignment.start,
-//                   children: [
-//                     textWidget("Chika Amaka", fontSize: 13),
-//                     Row(
-//                       children: [
-//                         textWidget("Healing ",
-//                             fontSize: 10.sp, color: AppColors.textColor),
-//                         SizedBox(
-//                           width: 5.w,
-//                         ),
-//                         Container(
-//                           height: 5,
-//                           width: 5,
-//                           color: AppColors.textColor,
-//                         ),
-//                         SizedBox(
-//                           width: 5.w,
-//                         ),
-//                         textWidget(" 30 minutes ago",
-//                             fontSize: 10.sp, color: AppColors.textColor),
-//                       ],
-//                     ),
-//                   ],
-//                 ),
-//               ],
-//             ),
-//             IconButton(
-//                 onPressed: () {
-//                   showModalBottomSheet(
-//                       context: context,
-//                       builder: (context) {
-//                         return editDeleteShareModal(context);
-//                       });
-//                 },
-//                 icon: const Icon(Icons.more_horiz_sharp)),
-//           ],
-//         ),
-//         SizedBox(
-//           height: 5.h,
-//         ),
-//       ],
-//     ),
-//   );
-
-
-// }

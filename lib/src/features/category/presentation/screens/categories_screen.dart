@@ -25,7 +25,7 @@ class CategoriesListScreen extends StatelessWidget {
             "Categories",
             fontSize: 20,
             mainColor: themeProvider.themeData.colorScheme
-                .onTertiary, //Theme.of(context).textTheme.titleLarge?.fontSize,
+                .onTertiary, 
           ),
         ),
         backgroundColor: themeProvider.themeData.colorScheme.surface,

@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:itestified/src/config/theme/app_color.dart';
@@ -74,6 +73,8 @@ class quoteContainer extends StatelessWidget {
                     top: 8,
                     right: 8,
                     child:FavoriteIcon(
+                      iconSize: 12,
+                      radius: 12,
                       item: favoritedItem,
               
                 

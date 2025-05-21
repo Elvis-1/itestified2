@@ -18,6 +18,7 @@ class VideoListScreen extends StatelessWidget {
     final themeProvider = Provider.of<ThemeViewmodel>(context);
 
     return Scaffold(
+      backgroundColor:   themeProvider.themeData.colorScheme.surface,
       appBar: generalAppbar('Video Testimonies', context),
       body: Container(
         color: themeProvider.themeData.colorScheme.surface,
@@ -51,7 +52,7 @@ class VideoListScreen extends StatelessWidget {
         crossAxisSpacing: margin,
         mainAxisSpacing: margin,
         childAspectRatio: viewModel.getContainerWidth(context) /
-            viewModel.getContainerHeight(context, true), // isVideoMode = true
+            viewModel.getContainerHeight(context, true),
       ),
       itemCount: itemCount,
       itemBuilder: (context, index) {
@@ -83,12 +84,11 @@ class VideoListScreen extends StatelessWidget {
 
   Widget _buildTestimonyItem(
       BuildContext context, VideoWrittenTestimoniesViewModel viewModel, int index) {
-    return VideoTestimonyContainer2(
+    return VideoTestimonyContainer3(
       videoId: index + 1,
       containerWidth: viewModel.getContainerWidth(context),
-      containerHeight: viewModel.getContainerHeight(context, true), // isVideoMode = true
-      borderRadius: viewModel.getBorderRadius(context),
-      imageHeightRatio: 0.55,
+      containerHeight: viewModel.getContainerHeight(context, true), 
+   
     );
   }
 }
