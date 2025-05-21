@@ -30,9 +30,8 @@ class AuthViewModel with ChangeNotifier {
 
   bool _isGuest = false;
   bool get isGuest => _isGuest;
-    bool _passwordCreatedSuccessfully = false;
+  bool _passwordCreatedSuccessfully = false;
   bool get passwordCreatedSuccessfully => _passwordCreatedSuccessfully;
-
 
   bool hasErrors = false;
   String? emailError;
@@ -48,11 +47,11 @@ class AuthViewModel with ChangeNotifier {
     _isGuest = isGuest;
     notifyListeners();
   }
-   void setPasswordCreatedSuccessfully(bool value) {
+
+  void setPasswordCreatedSuccessfully(bool value) {
     _passwordCreatedSuccessfully = value;
     notifyListeners();
   }
-
 
   validateFields(String? name, String? email, String pass, String confirmP,
       {UseType useType = UseType.SignUP, bool isForgotPasswordScreen = false}) {
@@ -149,7 +148,7 @@ class AuthViewModel with ChangeNotifier {
         password2: passwordConfirm);
 
     print(
-        '${userRequest.email}${userRequest.fullName} ${userRequest.password}${userRequest.email}');
+        '${userRequest.email},${userRequest.fullName}, ${userRequest.password},${userRequest.email}');
 
     CommonPopup.showLoading(context);
     var response = await authService.registerUser(userRequest);
@@ -168,7 +167,8 @@ class AuthViewModel with ChangeNotifier {
     });
   }
 
- Future<void> setNewPassword(BuildContext context, String userEmail, {bool showSuccessMessage = false}) async {
+  Future<void> setNewPassword(BuildContext context, String userEmail,
+      {bool showSuccessMessage = false}) async {
     var email = userEmail;
 
     var password = passwordController.text.trim();
@@ -193,7 +193,7 @@ class AuthViewModel with ChangeNotifier {
       if (showSuccessMessage) {
         setPasswordCreatedSuccessfully(true);
       }
-      
+
       _clearFields();
       customSnack(context, success.message ?? '');
 
@@ -220,6 +220,7 @@ class AuthViewModel with ChangeNotifier {
       email: email,
       password: password,
     );
+    print('User Request: ${userRequest.email}, ${userRequest.password}');
 
     setGuestMode(false);
 

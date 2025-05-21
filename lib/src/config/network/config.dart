@@ -6,7 +6,7 @@ enum Environment { dev, prod, mock }
 class AppConfig {
   //https://itestify-mobile-backend.onrender.com/auth/register
   AppConfig._();
-  static const baseUrl = 'https://itestify-backend-nxel.onrender.com/mobile';
+  static const baseUrl = 'https://itestify-backend-nxel.onrender.com';
   static Environment environment = Environment.prod;
 
   // init dependencies needed during the runApp process
