@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:itestified/src/config/service_locators.dart';
+import 'package:itestified/src/config/utils/local/auth_local_source.dart';
 import 'package:itestified/src/core/utils/app_const/enum.dart';
 import 'package:itestified/src/core/utils/input_validator.dart';
 import 'package:itestified/src/core/widgets/common_popup.dart';
@@ -18,6 +20,8 @@ import 'package:itestified/src/features/nav/navbar.dart';
 
 class AuthViewModel with ChangeNotifier {
   AuthService authService;
+  final AuthLocalSource _authLocalSource = sl<AuthLocalSource>();
+
   AuthViewModel(this.authService);
 
   TextEditingController emailController = TextEditingController();
@@ -228,15 +232,43 @@ class AuthViewModel with ChangeNotifier {
     var response = await authService.loginUser(userRequest);
     CommonPopup.closeLoading(context);
 
-    response.fold((failure) {
-      _showSnackBar(context, failure.message, Colors.red);
-    }, (success) async {
-      _clearFields();
+    response.fold(
+      (failure) {
+        _showSnackBar(context, failure.message, Colors.red);
+      },
+      (success) async {
+        try {
+          // Log LoginResponse for debugging
+          print(
+              'LoginResponse: success=${success.success}, message=${success.message}');
 
-      if (context.mounted) {
-        Navigator.pushNamed(context, NavBar.routeName);
-      }
-    });
+          // Extract tokens from success.data.token
+          final accessToken = success.data.token.access;
+          final refreshToken = success.data.token.refresh;
+
+          if (accessToken == null || refreshToken == null) {
+            throw Exception('Access or refresh token is null');
+          }
+
+          print('Access Token: $accessToken');
+          print('Refresh Token: $refreshToken');
+
+          // Save tokens
+          await _authLocalSource.storeAccesskey(accessToken);
+          await _authLocalSource.saveString('refresh_token', refreshToken);
+
+          _clearFields();
+
+          if (context.mounted) {
+            Navigator.pushNamed(context, NavBar.routeName);
+          }
+        } catch (e) {
+          print('Error processing LoginResponse: $e');
+          _showSnackBar(
+              context, 'Error processing login response: $e', Colors.red);
+        }
+      },
+    );
   }
 
   Future<void> forgotPassword(BuildContext context) async {

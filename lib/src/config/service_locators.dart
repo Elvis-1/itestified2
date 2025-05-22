@@ -14,7 +14,9 @@ import 'package:itestified/src/features/home/widget/video_testimoies_carousal.da
 import 'package:itestified/src/features/nav/navbar.dart';
 import 'package:itestified/src/features/profile/data/profile_api.dart';
 import 'package:itestified/src/features/profile/domain/donation_service.dart';
+import 'package:itestified/src/features/profile/domain/review_service.dart';
 import 'package:itestified/src/features/profile/presentation/viewmodel/donation_viewmodel.dart';
+import 'package:itestified/src/features/profile/presentation/viewmodel/review_viewmodel.dart';
 import 'package:itestified/src/features/written_testimonies.dart/presentation/screens/video_testimony_viewmodel.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
@@ -47,6 +49,7 @@ void _registerViewModels() {
     ..registerFactory(() => NavProvider())
     ..registerFactory(() => FavoritesViewModel())
     ..registerFactory(() => HomeScreenViewModel())
+    ..registerFactory(() => ReviewViewModel())
     ..registerFactory(() => FavoriteIconViewModel())
     ..registerFactory(() => VideoWrittenTestimoniesViewModel())
     ..registerFactory(() => VideoTestimoniesCarouselViewModel())
@@ -69,5 +72,6 @@ void _registerServices() {
     ..registerLazySingleton<DonationService>(() => DonationServicesImp(sl()))
     ..registerLazySingleton<FavoritesService>(() => FavoritesServiceImpl(sl()))
     ..registerSingleton<ValueListenable<List<FavoritedItem>>>(FavoritesServiceImpl(sl()))
-    ..registerLazySingleton<VideoService>(() => VideoServiceImpl());
+    ..registerLazySingleton<VideoService>(() => VideoServiceImpl())
+    ..registerLazySingleton<ReviewService>(() => ReviewServiceImpl());
 }

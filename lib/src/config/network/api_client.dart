@@ -5,8 +5,6 @@ import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:itestified/src/config/network/config.dart';
 import 'package:itestified/src/config/service_locators.dart';
-import 'package:itestified/src/core/widgets/internet_ch.dart';
-
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../utils/exceptions.dart';
@@ -21,23 +19,16 @@ class ApiClient {
 
   static String baseUrl = AppConfig.baseUrl;
 
-  Future<void> setAuthCookieAndToken(Map<String, String> headers) async {
-    final token = await getToken();
-    if (token != null) {
-      headers['Authorization'] = 'Bearer $token';
-    }
-  }
-
-  Future<Map<String, String>> initializeHeaders() async {
-    // final token = await getToken();
-    final token = sl<AuthLocalSource>().retrieveAccessToken();
-    print("Access token printed $token");
-    final presetHeaders = {
-      'Accept': '*/*',
-      if (token != null) 'Authorization': 'Bearer $token',
-    };
-    return presetHeaders;
-  }
+  // Future<Map<String, String>> initializeHeaders() async {
+  //   // final token = await getToken();
+  //   final token = sl<AuthLocalSource>().retrieveAccessToken();
+  //   print("Access token printed $token");
+  //   final presetHeaders = {
+  //     'Accept': '*/*',
+  //     if (token != null) 'Authorization': 'Bearer $token',
+  //   };
+  //   return presetHeaders;
+  // }
 
   Future<http.Response> get(
     String uri, {
@@ -69,6 +60,31 @@ class ApiClient {
       return response;
     } catch (e) {
       throw ApiException.getException(e);
+    }
+  }
+
+  Future<Map<String, String>> initializeHeaders() async {
+    final token = await authLocalSource.retrieveAccessToken();
+    print('ApiClient: Retrieved token in initializeHeaders: $token');
+    final presetHeaders = {
+      'Accept': '*/*',
+      'Content-Type': 'application/json', // Ensure Content-Type is set
+    };
+    if (token != null && token.isNotEmpty) {
+      presetHeaders['Authorization'] = 'Bearer $token';
+    } else {
+      print('ApiClient: No token found or token is empty');
+    }
+    return presetHeaders;
+  }
+
+  Future<void> setAuthCookieAndToken(Map<String, String> headers) async {
+    final token = await authLocalSource.retrieveAccessToken();
+    print('ApiClient: Retrieved token in setAuthCookieAndToken: $token');
+    if (token != null && token.isNotEmpty) {
+      headers['Authorization'] = 'Bearer $token';
+    } else {
+      print('ApiClient: No token found ');
     }
   }
 
