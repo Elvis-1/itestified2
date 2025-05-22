@@ -53,10 +53,10 @@ class rate extends StatelessWidget {
 
     return AlertDialog(
       elevation: 0,
-      backgroundColor: themeProvider.themeData.colorScheme.onBackground,
+      backgroundColor: themeProvider.themeData.colorScheme.outline,
       content: SingleChildScrollView(
         child: Container(
-          color: themeProvider.themeData.colorScheme.onBackground,
+          color: themeProvider.themeData.colorScheme.outline,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,

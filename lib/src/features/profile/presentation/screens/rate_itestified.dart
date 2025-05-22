@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:itestified/src/config/theme/app_color.dart';
 import 'package:itestified/src/core/utils/app_const/app_icons.dart';
 import 'package:itestified/src/core/widgets/appbar2.dart';
@@ -7,6 +8,8 @@ import 'package:itestified/src/core/widgets/dialog.dart';
 import 'package:itestified/src/core/widgets/multiline_textfield.dart';
 import 'package:itestified/src/core/widgets/textwidget.dart';
 import 'package:itestified/src/features/app_theme/theme_viewmodel.dart';
+import 'package:itestified/src/features/profile/presentation/viewmodel/review_viewmodel.dart';
+
 import 'package:provider/provider.dart';
 
 class RateItestified extends StatefulWidget {
@@ -17,7 +20,7 @@ class RateItestified extends StatefulWidget {
 }
 
 class _RateItestifiedState extends State<RateItestified> {
-  int _selectedRating = 0;
+  final ReviewViewModel _viewModel = GetIt.I<ReviewViewModel>();
   final TextEditingController _reviewController = TextEditingController();
 
   @override
@@ -65,13 +68,16 @@ class _RateItestifiedState extends State<RateItestified> {
                           children: List.generate(
                             5,
                             (index) => GestureDetector(
-                              onTap: () =>
-                                  setState(() => _selectedRating = index + 1),
+                              onTap: () {
+                                setState(() {
+                                  _viewModel.setRating(index + 1);
+                                });
+                              },
                               child: Image.asset(
                                 AppIcons.ratingIcon,
                                 width: starSize,
                                 height: starSize,
-                                color: index < _selectedRating
+                                color: index < _viewModel.selectedRating
                                     ? AppColors.darkPurple
                                     : AppColors.primaryColor.withOpacity(0.5),
                               ),
@@ -86,10 +92,22 @@ class _RateItestifiedState extends State<RateItestified> {
                         textAlign: TextAlign.left,
                       ),
                       const SizedBox(height: 12),
-                      const MultilineTextField(
+                      MultilineTextField(
                         hintText: "Enter your review here...",
-                        // controller: _reviewController,
+                
+                        onChanged: (value) {
+                          setState(() {
+                            _viewModel.setReviewText(value);
+                          });
+                        },
                       ),
+                      if (_viewModel.errorMessage != null) ...[
+                        const SizedBox(height: 12),
+                        Text(
+                          _viewModel.errorMessage!,
+                          style: const TextStyle(color: Colors.red),
+                        ),
+                      ],
                       const Spacer(),
                       SafeArea(
                         top: false,
@@ -99,19 +117,30 @@ class _RateItestifiedState extends State<RateItestified> {
                             bottom: isSmallScreen ? 10 : 20,
                           ),
                           child: GestureDetector(
-                            onTap: _selectedRating > 0
+                            onTap: _viewModel.selectedRating > 0 && !_viewModel.isLoading
                                 ? () async {
-                                    await showRateSubmittedDialogOverlay(
-                                      context,
-                                      "Rating submitted successfully",
-                                    );
+                                    setState(() {
+                                      _viewModel.submitReview().then((success) {
+                                        setState(() {
+                                          if (success) {
+                                            _reviewController.clear();
+                                            _viewModel.clear();
+                                            showRateSubmittedDialogOverlay(
+                                              context,
+                                              "Rating submitted successfully",
+                                            );
+                                          }
+                                        });
+                                      });
+                                    });
                                   }
                                 : null,
                             child: btnAndText(
                               containerWidth: double.infinity,
                               containerHeight: buttonHeight,
                               borderColor: AppColors.transparent,
-                              text: 'Submit',
+                              text: _viewModel.isLoading ? 'Submitting...' : 'Submit',
+                              isLoading: _viewModel.isLoading,
                             ),
                           ),
                         ),
@@ -127,6 +156,136 @@ class _RateItestifiedState extends State<RateItestified> {
     );
   }
 }
+
+// import 'package:flutter/material.dart';
+// import 'package:itestified/src/config/theme/app_color.dart';
+// import 'package:itestified/src/core/utils/app_const/app_icons.dart';
+// import 'package:itestified/src/core/widgets/appbar2.dart';
+// import 'package:itestified/src/core/widgets/btn_and_text.dart';
+// import 'package:itestified/src/core/widgets/dialog.dart';
+// import 'package:itestified/src/core/widgets/multiline_textfield.dart';
+// import 'package:itestified/src/core/widgets/textwidget.dart';
+// import 'package:itestified/src/features/app_theme/theme_viewmodel.dart';
+// import 'package:provider/provider.dart';
+
+// class RateItestified extends StatefulWidget {
+//   const RateItestified({super.key});
+
+//   @override
+//   _RateItestifiedState createState() => _RateItestifiedState();
+// }
+
+// class _RateItestifiedState extends State<RateItestified> {
+//   int _selectedRating = 0;
+//   final TextEditingController _reviewController = TextEditingController();
+
+//   @override
+//   void dispose() {
+//     _reviewController.dispose();
+//     super.dispose();
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     final themeProvider = Provider.of<ThemeViewmodel>(context);
+//     final screenWidth = MediaQuery.of(context).size.width;
+//     final isSmallScreen = screenWidth < 600;
+
+//     return Scaffold(
+//       appBar: generalAppbar("Rate iTestified", context),
+//       backgroundColor: themeProvider.themeData.colorScheme.surface,
+//       body: LayoutBuilder(
+//         builder: (context, constraints) {
+//           final horizontalPadding = isSmallScreen ? 20.0 : screenWidth * 0.1;
+//           final starSize = isSmallScreen ? 40.0 : 50.0;
+//           final buttonHeight = isSmallScreen ? 48.0 : 54.0;
+
+//           return SingleChildScrollView(
+//             padding: const EdgeInsets.symmetric(vertical: 20),
+//             child: ConstrainedBox(
+//               constraints: BoxConstraints(
+//                 minHeight: constraints.maxHeight - 40,
+//               ),
+//               child: IntrinsicHeight(
+//                 child: Container(
+//                   margin: EdgeInsets.symmetric(horizontal: horizontalPadding),
+//                   child: Column(
+//                     crossAxisAlignment: CrossAxisAlignment.start,
+//                     children: [
+//                       TextWidgets.textWidget16(
+//                         context,
+//                         "Tap the stars below to rate your experience with iTestified",
+//                         textAlign: TextAlign.center,
+//                       ),
+//                       const SizedBox(height: 24),
+//                       Center(
+//                         child: Wrap(
+//                           spacing: isSmallScreen ? 8.0 : 12.0,
+//                           children: List.generate(
+//                             5,
+//                             (index) => GestureDetector(
+//                               onTap: () =>
+//                                   setState(() => _selectedRating = index + 1),
+//                               child: Image.asset(
+//                                 AppIcons.ratingIcon,
+//                                 width: starSize,
+//                                 height: starSize,
+//                                 color: index < _selectedRating
+//                                     ? AppColors.darkPurple
+//                                     : AppColors.primaryColor.withOpacity(0.5),
+//                               ),
+//                             ),
+//                           ),
+//                         ),
+//                       ),
+//                       const SizedBox(height: 32),
+//                       TextWidgets.textWidget16(
+//                         context,
+//                         "Review (optional)",
+//                         textAlign: TextAlign.left,
+//                       ),
+//                       const SizedBox(height: 12),
+//                       const MultilineTextField(
+//                         hintText: "Enter your review here...",
+//                         // controller: _reviewController,
+//                       ),
+//                       const Spacer(),
+//                       SafeArea(
+//                         top: false,
+//                         child: Padding(
+//                           padding: EdgeInsets.only(
+//                             top: 20,
+//                             bottom: isSmallScreen ? 10 : 20,
+//                           ),
+//                           child: GestureDetector(
+//                             onTap: _selectedRating > 0
+//                                 ? () async {
+//                                     await showRateSubmittedDialogOverlay(
+//                                       context,
+//                                       "Rating submitted successfully",
+//                                     );
+//                                   }
+//                                 : null,
+//                             child: btnAndText(
+//                               containerWidth: double.infinity,
+//                               containerHeight: buttonHeight,
+//                               borderColor: AppColors.transparent,
+//                               text: 'Submit',
+//                             ),
+//                           ),
+//                         ),
+//                       ),
+//                     ],
+//                   ),
+//                 ),
+//               ),
+//             ),
+//           );
+//         },
+//       ),
+//     );
+//   }
+// }
 
 
 // class RateItestified extends StatefulWidget {
