@@ -2,83 +2,65 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:itestified/src/features/profile/domain/review_service.dart';
 
-class ReviewState {
-  final int rating;
-  final String text;
-  final bool isLoading;
-  final String? errorMessage;
+class ReviewViewModel extends ChangeNotifier {
+  int _selectedRating = 0;
+  String _reviewText = '';
+  bool _isLoading = false;
+  String? _errorMessage;
 
-  ReviewState({
-    this.rating = 0,
-    this.text = '',
-    this.isLoading = false,
-    this.errorMessage,
-  });
-
-  ReviewState copyWith({
-    int? rating,
-    String? text,
-    bool? isLoading,
-    String? errorMessage,
-  }) {
-    return ReviewState(
-      rating: rating ?? this.rating,
-      text: text ?? this.text,
-      isLoading: isLoading ?? this.isLoading,
-      errorMessage: errorMessage ?? this.errorMessage,
-    );
-  }
-}
-
-class ReviewViewModel extends ValueNotifier<ReviewState> {
   final ReviewService _reviewService;
 
   ReviewViewModel({ReviewService? reviewService})
-      : _reviewService = reviewService ?? GetIt.I<ReviewService>(),
-        super(ReviewState());
+      : _reviewService = reviewService ?? GetIt.I<ReviewService>();
 
-  int get selectedRating => value.rating;
-  String get reviewText => value.text;
-  bool get isLoading => value.isLoading;
-  String? get errorMessage => value.errorMessage;
+  int get selectedRating => _selectedRating;
+  String get reviewText => _reviewText;
+  bool get isLoading => _isLoading;
+  String? get errorMessage => _errorMessage;
 
   void setRating(int rating) {
     print('ReviewViewModel: Setting rating to $rating');
-    value = value.copyWith(rating: rating);
+    _selectedRating = rating;
+    notifyListeners();
   }
 
   void setReviewText(String text) {
     print('ReviewViewModel: Setting review text to $text');
-    value = value.copyWith(text: text);
+    _reviewText = text;
+    notifyListeners();
   }
 
   Future<bool> submitReview() async {
-    if (value.rating == 0) return false;
+    if (_selectedRating == 0) return false;
 
     print(
-        'ReviewViewModel: Submitting review: rating=${value.rating}, text=${value.text}');
-    value = value.copyWith(isLoading: true, errorMessage: null);
+        'ReviewViewModel: Submitting review: rating=$_selectedRating, text=$_reviewText');
+    _isLoading = true;
+    _errorMessage = null;
+    notifyListeners();
 
     try {
       final success =
-          await _reviewService.submitReview(value.rating, value.text);
-      value = value.copyWith(
-        isLoading: false,
-        errorMessage: success ? null : 'Failed to submit review',
-      );
+          await _reviewService.submitReview(_selectedRating, _reviewText);
+      _isLoading = false;
+      _errorMessage = success ? null : 'Failed to submit review';
+      notifyListeners();
       return success;
     } catch (e) {
       print('ReviewViewModel: Error submitting review: $e');
-      value = value.copyWith(
-        isLoading: false,
-        errorMessage: 'Error: $e',
-      );
+      _isLoading = false;
+      _errorMessage = 'Error: $e';
+      notifyListeners();
       return false;
     }
   }
 
   void clear() {
     print('ReviewViewModel: Clearing state');
-    value = ReviewState();
+    _selectedRating = 0;
+    _reviewText = '';
+    _isLoading = false;
+    _errorMessage = null;
+    notifyListeners();
   }
 }

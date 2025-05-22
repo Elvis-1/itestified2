@@ -1,4 +1,3 @@
-
 import 'package:itestified/src/config/network/api_client.dart';
 import 'package:itestified/src/config/network/api_endpoints.dart';
 import 'package:itestified/src/config/service_locators.dart';
@@ -32,4 +31,3 @@ class ReviewServiceImpl implements ReviewService {
     }
   }
 }
-
