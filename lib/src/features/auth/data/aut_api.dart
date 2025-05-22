@@ -22,6 +22,12 @@ abstract class AuthApi {
   Future<Either<Failure, AccountCreationResponse>> verifyOTP(
     OTPRequest otpRequest,
   );
+  Future<Either<Failure, AccountCreationResponse>> verifyEmail(
+    OTPRequest otpRequest,
+  );
+  Future<Either<Failure, AccountCreationResponse>> resendEmail(
+    OTPRequest otpRequest,
+  );
   Future<Either<Failure, AccountCreationResponse>> setNewPassword(
     RegisterUserRequest registerUserRequest,
   );
@@ -104,6 +110,46 @@ class AuthApiImpl implements AuthApi {
           AccountCreationResponse.fromJson(json.decode(response.body)));
     } on ApiException catch (err) {
       print('This is the error auth api $err');
+      return Left(ApiFailure(message: err.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, AccountCreationResponse>> verifyEmail(
+    OTPRequest otpRequest,
+  ) async {
+    try {
+      final response = await apiClient.postData(authEndpoints.verifyEmail,
+          data: otpRequest.toJson(),
+          extraHeaders: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          });
+
+      return Right(
+          AccountCreationResponse.fromJson(json.decode(response.body)));
+    } on ApiException catch (err) {
+      print('This is the error in auth_api $err');
+      return Left(ApiFailure(message: err.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, AccountCreationResponse>> resendEmail(
+    OTPRequest otpRequest,
+  ) async {
+    try {
+      final response = await apiClient.postData(authEndpoints.resendEmail,
+          data: otpRequest.toJson(),
+          extraHeaders: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          });
+
+      return Right(
+          AccountCreationResponse.fromJson(json.decode(response.body)));
+    } on ApiException catch (err) {
+      print('This is the error in auth_api $err');
       return Left(ApiFailure(message: err.toString()));
     }
   }

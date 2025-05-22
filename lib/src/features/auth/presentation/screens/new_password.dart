@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:itestified/src/config/theme/app_color.dart';
@@ -72,7 +71,7 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
                     double contentWidth = isLargeScreen ? 500 : double.infinity;
 
                     return Center(
-                      child: Container(
+                      child: SizedBox(
                         width: contentWidth,
                         child: Form(
                           key: _formKey,
@@ -104,8 +103,8 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
                                   "Password must be at least 8 characters",
                                   fontWeight: FontWeight.w300,
                                   fontSize: 14,
-                                  color:
-                                      themeProvider.themeData.colorScheme.tertiary,
+                                  color: themeProvider
+                                      .themeData.colorScheme.tertiary,
                                 ),
                               ),
                               SizedBox(
@@ -134,7 +133,8 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
                               Selector<AuthViewModel, bool>(
                                 selector: (_, provider) =>
                                     provider.passwordCreatedSuccessfully,
-                                builder: (context, passwordCreatedSuccessfully, child) {
+                                builder: (context, passwordCreatedSuccessfully,
+                                    child) {
                                   return passwordCreatedSuccessfully
                                       ? Padding(
                                           padding: const EdgeInsets.only(
