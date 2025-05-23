@@ -19,16 +19,16 @@ class CategoriesListScreen extends StatelessWidget {
 
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: themeProvider.themeData.colorScheme.background,
+          backgroundColor: themeProvider.themeData.colorScheme.surface,
           centerTitle: true,
           title: textWidget2(
             "Categories",
             fontSize: 20,
-            color: themeProvider.themeData.colorScheme
-                .onTertiary, //Theme.of(context).textTheme.titleLarge?.fontSize,
+            mainColor: themeProvider.themeData.colorScheme
+                .onTertiary, 
           ),
         ),
-        backgroundColor: themeProvider.themeData.colorScheme.background,
+        backgroundColor: themeProvider.themeData.colorScheme.surface,
         body: LayoutBuilder(
           builder: (context, constraints) {
             bool isLargeScreen = constraints.maxWidth > 600;

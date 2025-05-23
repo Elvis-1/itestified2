@@ -5,10 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:itestified/src/config/network/config.dart';
 import 'package:itestified/src/config/service_locators.dart';
-
 import 'package:shared_preferences/shared_preferences.dart';
-
-import 'package:http_parser/http_parser.dart';
 
 import '../utils/exceptions.dart';
 import '../utils/local/auth_local_source.dart';
@@ -22,23 +19,16 @@ class ApiClient {
 
   static String baseUrl = AppConfig.baseUrl;
 
-  Future<void> setAuthCookieAndToken(Map<String, String> headers) async {
-    final token = await getToken();
-    if (token != null) {
-      headers['Authorization'] = 'Bearer $token';
-    }
-  }
-
-  Future<Map<String, String>> initializeHeaders() async {
-    // final token = await getToken();
-    final token = sl<AuthLocalSource>().retrieveAccessToken();
-    print("Access token printed $token");
-    final presetHeaders = {
-      'Accept': '*/*',
-      if (token != null) 'Authorization': 'Bearer $token',
-    };
-    return presetHeaders;
-  }
+  // Future<Map<String, String>> initializeHeaders() async {
+  //   // final token = await getToken();
+  //   final token = sl<AuthLocalSource>().retrieveAccessToken();
+  //   print("Access token printed $token");
+  //   final presetHeaders = {
+  //     'Accept': '*/*',
+  //     if (token != null) 'Authorization': 'Bearer $token',
+  //   };
+  //   return presetHeaders;
+  // }
 
   Future<http.Response> get(
     String uri, {
@@ -70,6 +60,31 @@ class ApiClient {
       return response;
     } catch (e) {
       throw ApiException.getException(e);
+    }
+  }
+
+  Future<Map<String, String>> initializeHeaders() async {
+    final token = await authLocalSource.retrieveAccessToken();
+    print('ApiClient: Retrieved token in initializeHeaders: $token');
+    final presetHeaders = {
+      'Accept': '*/*',
+      'Content-Type': 'application/json', // Ensure Content-Type is set
+    };
+    if (token != null && token.isNotEmpty) {
+      presetHeaders['Authorization'] = 'Bearer $token';
+    } else {
+      print('ApiClient: No token found or token is empty');
+    }
+    return presetHeaders;
+  }
+
+  Future<void> setAuthCookieAndToken(Map<String, String> headers) async {
+    final token = await authLocalSource.retrieveAccessToken();
+    print('ApiClient: Retrieved token in setAuthCookieAndToken: $token');
+    if (token != null && token.isNotEmpty) {
+      headers['Authorization'] = 'Bearer $token';
+    } else {
+      print('ApiClient: No token found ');
     }
   }
 
@@ -136,7 +151,7 @@ class ApiClient {
       final response = await http.post(
         Uri.parse(url),
         headers: {
-          'Authorization': 'Bearer $token',
+          //  'Authorization': 'Bearer $token',
           'Content-Type': 'application/json',
           'Accept': 'application/json'
         },
@@ -312,49 +327,49 @@ class ApiClient {
     }
   }
 
-  Future<http.Response> upload(
-    String uri, {
-    List<FormUploadDocument>? files,
-    Map<String, String>? body,
-    Map<String, dynamic>? extraHeaders,
-  }) async {
-    try {
-      final headers = await initializeHeaders();
-      await setAuthCookieAndToken(headers);
+  // Future<http.Response> upload(
+  //   String uri, {
+  //   List<FormUploadDocument>? files,
+  //   Map<String, String>? body,
+  //   Map<String, dynamic>? extraHeaders,
+  // }) async {
+  //   try {
+  //     final headers = await initializeHeaders();
+  //     await setAuthCookieAndToken(headers);
 
-      late List<http.MultipartFile> multipartFiles;
+  //     late List<http.MultipartFile> multipartFiles;
 
-      if (files != null && files.isNotEmpty) {
-        multipartFiles = files.map((uploadDocument) {
-          return http.MultipartFile(
-            uploadDocument.field,
-            http.ByteStream.fromBytes(uploadDocument.file.readAsBytesSync()),
-            uploadDocument.file.lengthSync(),
-            filename: uploadDocument.name,
-            contentType: MediaType.parse(
-              getMimeType(uploadDocument.file.path),
-            ),
-          );
-        }).toList();
-      } else {
-        multipartFiles = [];
-      }
+  //     if (files != null && files.isNotEmpty) {
+  //       multipartFiles = files.map((uploadDocument) {
+  //         return http.MultipartFile(
+  //           uploadDocument.field,
+  //           http.ByteStream.fromBytes(uploadDocument.file.readAsBytesSync()),
+  //           uploadDocument.file.lengthSync(),
+  //           filename: uploadDocument.name,
+  //           contentType: MediaType.parse(
+  //             getMimeType(uploadDocument.file.path),
+  //           ),
+  //         );
+  //       }).toList();
+  //     } else {
+  //       multipartFiles = [];
+  //     }
 
-      final request = http.MultipartRequest(
-        'POST',
-        Uri.parse(uri),
-      )
-        ..headers.addAll(headers)
-        ..fields.addAll(body ?? {})
-        ..files.addAll(multipartFiles);
+  //     final request = http.MultipartRequest(
+  //       'POST',
+  //       Uri.parse(uri),
+  //     )
+  //       ..headers.addAll(headers)
+  //       ..fields.addAll(body ?? {})
+  //       ..files.addAll(multipartFiles);
 
-      final response = await request.send();
+  //     final response = await request.send();
 
-      return http.Response.fromStream(response);
-    } catch (e) {
-      throw ApiException.getException(e);
-    }
-  }
+  //     return http.Response.fromStream(response);
+  //   } catch (e) {
+  //     throw ApiException.getException(e);
+  //   }
+  // }
 
   Future<String?> getToken() async {
     final prefs = await SharedPreferences.getInstance();

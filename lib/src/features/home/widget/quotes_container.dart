@@ -1,98 +1,117 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:get_it/get_it.dart';
+import 'package:itestified/src/config/theme/app_color.dart';
 import 'package:itestified/src/core/utils/app_const/app_icons.dart';
 import 'package:itestified/src/core/widgets/animated_quotes_modal.dart';
 import 'package:itestified/src/core/widgets/text_widget.dart';
 import 'package:itestified/src/features/app_theme/theme_viewmodel.dart';
+import 'package:itestified/src/features/favorites/presentation/screens/favorite_icon_view_model.dart';
+import 'package:itestified/src/features/favorites/presentation/widgets/favourite_icon.dart';
 import 'package:provider/provider.dart';
 
 class quoteContainer extends StatelessWidget {
-  const quoteContainer(
-      {super.key,
-      this.rightPadding = 15,
-      this.imageWidth = 270,
-      this.containerHeight = 170,
-      this.textSize = 12,
-      this.inbetweenHeight = 1});
-  final double rightPadding;
-  final double imageWidth;
-  final double containerHeight;
-  final double inbetweenHeight;
+  const quoteContainer({
+    super.key,
+    this.margin = const EdgeInsets.symmetric(horizontal: 15),
+    this.width = 223,
+    this.height = 150,
+    this.textSize = 12,
+    this.index,
+  });
+
+  final EdgeInsets margin;
+  final double width;
+  final double height;
   final double textSize;
+  final int? index;
+
   @override
   Widget build(BuildContext context) {
-    var themeProvider = Provider.of<ThemeViewmodel>(context);
+    final themeProvider = Provider.of<ThemeViewmodel>(context);
+    final favoritesViewModel = GetIt.I<FavoritesViewModel>();
+    final quoteId = index ?? 1;
+
+    final favoritedItem = FavoritedItem(
+      id: quoteId,
+      type: 'inspiration',
+      title: 'Inspirational Quote',
+      church: 'Southern Living',
+      views: '100',
+      date: '09/05/2025',
+      imagePath: AppImages.quotesImage,
+    );
 
     return Container(
-        margin: EdgeInsets.only(
-            right: rightPadding, left: rightPadding, bottom: 10),
-        width: 250,
-        height: 200,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // quotes container
-            GestureDetector(
-              onTap: () async {
-                await showModalBottomSheet(
-                    context: context,
-                    builder: (context) {
-                      return AnimatedQuotesModal();
-                    });
-              },
-              child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 5),
-                height: containerHeight,
-                width: imageWidth,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    image: DecorationImage(
-                        image: AssetImage(AppImages.quotesImage),
-                        fit: BoxFit.cover)),
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        const Spacer(),
-                        CircleAvatar(
-                            radius: 15,
-                            backgroundColor:
-                                //AppColors.opaqueBlack,
-                                themeProvider
-                                    .themeData.searchBarTheme.backgroundColor!
-                                    .resolve({}),
-                            child: Icon(
-                              size: 15,
-                              Icons.favorite_outline,
-                              color: themeProvider
-                                  .themeData.colorScheme.onTertiary,
-                            ))
-                      ],
-                    ),
-                  ],
+      margin: margin,
+      width: width,
+      height: height,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          GestureDetector(
+            onTap: () => _showModalBottomSheet(context),
+            child: Container(
+              height: height * 0.7,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                image: DecorationImage(
+                  image: AssetImage(AppImages.quotesImage),
+                  fit: BoxFit.cover,
                 ),
               ),
-            ),
-            // SizedBox(
-            //   height: inbetweenHeight,
-            // ),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              child: Stack(
                 children: [
-                  Expanded(
-                    child: textWidget(
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      "Source: Redeemed Christian Church of God, Source: Redeemed Christian Church of God, Source: Redeemed Christian Church of God",
-                      fontSize: textSize,
+                  const Align(
+                    alignment: Alignment.center,
+                    child: Icon(
+                      Icons.play_arrow,
+                      color: AppColors.white,
+                      size: 30,
+                    ),
+                  ),
+                  Positioned(
+                    top: 8,
+                    right: 8,
+                    child:FavoriteIcon(
+                      iconSize: 12,
+                      radius: 12,
+                      item: favoritedItem,
+              
+                
                     ),
                   ),
                 ],
               ),
             ),
-          ],
-        ));
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 8),
+            child: textWidget(
+              'Source: Southern Living',
+              fontSize: textSize,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              color: themeProvider.themeData.colorScheme.onSurface,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<void> _showModalBottomSheet(BuildContext context) async {
+    await showModalBottomSheet(
+      context: context,
+      builder: (context) => AnimatedQuotesModal(),
+      backgroundColor: Colors.transparent,
+      isScrollControlled: true,
+      enableDrag: true,
+      constraints: BoxConstraints(
+        maxHeight: MediaQuery.of(context).size.height * 0.60,
+      ),
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+    );
   }
 }

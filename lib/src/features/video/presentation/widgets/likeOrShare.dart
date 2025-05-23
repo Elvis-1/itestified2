@@ -8,7 +8,7 @@ class likeOrShare extends StatelessWidget {
       {super.key, this.containerColor, this.width = 3});
   Color? containerColor;
   final double width;
-  final String icon;
+  final  icon;
   String text;
 
   @override
@@ -16,24 +16,20 @@ class likeOrShare extends StatelessWidget {
     var themeProvider = Provider.of<ThemeViewmodel>(context);
 
     containerColor =
-        containerColor ?? themeProvider.themeData.colorScheme.tertiary;
+        containerColor ?? themeProvider.themeData.colorScheme.surface;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10), color: containerColor),
       child: Row(
         children: [
-          Image.asset(
-            icon,
-            fit: BoxFit.cover,
-            color: themeProvider.themeData.colorScheme.onTertiary,
-          ),
+          Icon(icon,color: themeProvider.themeData.colorScheme.onTertiary,size: 16,),
           SizedBox(
             width: width,
           ),
           textWidget(
             text,
-            fontSize: 15,
+            fontSize: 15,color: themeProvider.themeData.colorScheme.onTertiary,
           )
         ],
       ),

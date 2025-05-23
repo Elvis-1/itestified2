@@ -53,10 +53,10 @@ class rate extends StatelessWidget {
 
     return AlertDialog(
       elevation: 0,
-      backgroundColor: themeProvider.themeData.colorScheme.onBackground,
+      backgroundColor: themeProvider.themeData.colorScheme.outline,
       content: SingleChildScrollView(
         child: Container(
-          color: themeProvider.themeData.colorScheme.onBackground,
+          color: themeProvider.themeData.colorScheme.outline,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -252,67 +252,67 @@ class joinCommunity extends StatelessWidget {
 
     return AlertDialog(
       elevation: 0,
-      backgroundColor: themeProvider.themeData.colorScheme.onBackground,
-      content: SingleChildScrollView(
-        child: Container(
-          color: themeProvider.themeData.colorScheme.onBackground,
-          // height: 200.h,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              InkWell(
-                onTap: () {
-                  Navigator.pop(context);
-                },
-                child: const Align(
-                  alignment: Alignment.topRight,
-                  child: Icon(
-                    Icons.clear,
-                    color: AppColors.primaryColor,
-                  ),
+      backgroundColor: themeProvider.themeData.colorScheme.surface,
+      
+      content: Container(
+        color: themeProvider.themeData.colorScheme.surface,
+         height: 240,
+         width: 310,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            InkWell(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child:  Align(
+                alignment: Alignment.topRight,
+                child: Icon(
+                  Icons.clear,
+                  color:  themeProvider.themeData.colorScheme.tertiary,
                 ),
               ),
-              const SizedBox(
-                height: 10,
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Text(
+              "Join Our Community",
+              style: GoogleFonts.mulish(
+                  fontSize: Theme.of(context).textTheme.bodyLarge?.fontSize,
+                  fontWeight: FontWeight.w600,
+                  color: themeProvider.themeData.colorScheme.onTertiary),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Text(
+              "Create an account or log in to watch testimonies and access other features",
+              textAlign: TextAlign.center,
+              style: normalTextStyle(
+                textColor: themeProvider.themeData.colorScheme.tertiary,
               ),
-              Text(
-                "Join Our Community",
-                style: GoogleFonts.mulish(
-                    fontSize: Theme.of(context).textTheme.bodyLarge?.fontSize,
-                    fontWeight: FontWeight.w500,
-                    color: themeProvider.themeData.colorScheme.onTertiary),
+            ),
+            const SizedBox(
+              height: 40,
+            ),
+            InkWell(
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.of(context)
+                    .pushReplacementNamed(SignUpScreen.routeName);
+              },
+              child: btnAndText(
+                textColor: AppColors.white,
+                containerWidth: 271,
+                verticalPadding: 10,
+                containerColor: AppColors.primaryColor,
+                text: "Create an account or Log in",
+                //  horizontalPadding: 20
               ),
-              const SizedBox(
-                height: 10,
-              ),
-              Text(
-                "Create an account or log in to watch testimonies and access other features",
-                textAlign: TextAlign.center,
-                style: normalTextStyle(
-                  textColor: themeProvider.themeData.colorScheme.tertiary,
-                ),
-              ),
-              const SizedBox(
-                height: 40,
-              ),
-              InkWell(
-                onTap: () {
-                  Navigator.pop(context);
-                  Navigator.of(context)
-                      .pushReplacementNamed(SignUpScreen.routeName);
-                },
-                child: btnAndText(
-                  textColor: AppColors.white,
-                  containerWidth: 250,
-                  verticalPadding: 10,
-                  containerColor: AppColors.primaryColor,
-                  text: "Create an account",
-                  //  horizontalPadding: 20
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

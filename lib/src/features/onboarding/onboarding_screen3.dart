@@ -1,103 +1,148 @@
-import 'dart:async';
-
+import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:itestified/src/config/theme/app_color.dart';
 import 'package:itestified/src/core/utils/app_const/app_icons.dart';
 import 'package:itestified/src/core/widgets/btn_and_text.dart';
+import 'package:itestified/src/core/widgets/text_widget.dart';
 import 'package:itestified/src/features/animations/page_route_animation.dart';
+import 'package:itestified/src/features/auth/presentation/screens/login_screen.dart';
+import 'package:itestified/src/features/auth/presentation/screens/signup_screen.dart';
+import 'package:itestified/src/features/auth/presentation/viewmodel/auth_viewmodel.dart';
 import 'package:itestified/src/features/nav/navbar.dart';
 import 'package:itestified/src/features/onboarding/widgets/onboarding_text.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class OnboardingScreen1 extends StatefulWidget {
-  OnboardingScreen1(
-      {super.key, required this.index, required this.pageController});
-  int index;
-  PageController pageController = PageController();
+class OnboardingScreen3 extends StatefulWidget {
+  OnboardingScreen3({super.key, required this.index, required this.pageCount});
+  final int index;
+  final int pageCount;
 
   @override
-  State<OnboardingScreen1> createState() => _OnboardingScreen1State();
+  State<OnboardingScreen3> createState() => _OnboardingScreen3State();
 }
 
-class _OnboardingScreen1State extends State<OnboardingScreen1>
-    with SingleTickerProviderStateMixin {
-  late AnimationController controller;
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    controller = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 500),
-    );
-  }
-
+class _OnboardingScreen3State extends State<OnboardingScreen3> {
   @override
   Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isLargeScreen = screenWidth > 600;
+
     return Scaffold(
       body: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 25),
         width: double.infinity,
+        height: double.infinity,
         decoration: BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage(AppImages.onboardingImage1),
-                fit: BoxFit.cover)),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const Spacer(),
-            Text(
-              'Watch Inspiring Testimonies',
-              textAlign: TextAlign.center,
-              style: GoogleFonts.openSans(
-                color: AppColors.white,
-                fontWeight: FontWeight.w600,
-                fontSize: Theme.of(context).textTheme.headlineLarge?.fontSize,
+          image: DecorationImage(
+            image: AssetImage(AppImages.onboardingImage3),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: SafeArea(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const Spacer(flex: 3),
+              Text(
+                'Join a Community',
+                textAlign: TextAlign.center,
+                style: GoogleFonts.openSans(
+                  color: AppColors.white,
+                  fontWeight: FontWeight.w600,
+                  fontSize: isLargeScreen
+                      ? Theme.of(context).textTheme.headlineLarge?.fontSize
+                      : Theme.of(context).textTheme.headlineMedium?.fontSize,
+                ),
               ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            onboardingText(context),
-            const SizedBox(
-              height: 70,
-            ),
-            GestureDetector(
-                onTap: () {
-                  if (widget.index < 3) {
-                    widget.pageController.animateToPage(widget.index + 1,
-                        duration: const Duration(seconds: 1),
-                        curve: Curves.easeIn);
-                  }
-                },
-                child: btnAndText(
-                    containerWidth: double.infinity, verticalPadding: 15)),
-            const SizedBox(
-              height: 10,
-            ),
-            GestureDetector(
-              onTap: () {
-                Navigator.of(context).pushAndRemoveUntil(
-                  MyCustomRouteTransition(
-                    route: const NavBar(),
+              SizedBox(height: screenHeight * 0.015),
+              onboardingText(
+                context,
+                'Connect with believers and grow together in faith.',
+              ),
+              SizedBox(height: screenHeight * 0.015),
+              DotsIndicator(
+                position: double.parse(widget.index.toString()),
+                dotsCount: widget.pageCount,
+                mainAxisAlignment: MainAxisAlignment.center,
+                decorator: DotsDecorator(
+                  color: AppColors.white,
+                  size: const Size.square(8.0),
+                  activeColor: AppColors.primaryColor,
+                  activeSize: const Size(25.0, 8.0),
+                  activeShape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5.0),
                   ),
-                  (route) => false,
-                );
-
-                // Navigator.pushNamedAndRemoveUntil(
-                //                 context, NavBar.routeName, (route) => false);
-              },
-              child: btnAndText(
-                  text: "Skip",
-                  containerColor: Colors.transparent,
-                  containerWidth: double.infinity,
-                  verticalPadding: 15,
-                  textColor: AppColors.primaryColor),
-            ),
-            const SizedBox(
-              height: 20,
-            )
-          ],
+                ),
+              ),
+              SizedBox(height: screenHeight * 0.035),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.06),
+                child: InkWell(
+                  onTap: () {
+                    Navigator.of(context).pushAndRemoveUntil(
+                      MyCustomRouteTransition(route: const LoginScreen()),
+                      (route) => false,
+                    );
+                  },
+                  child: btnAndText(
+                    text: "Login",
+                    containerWidth: double.infinity,
+                    verticalPadding: 15,
+                  ),
+                ),
+              ),
+              SizedBox(height: screenHeight * 0.015),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.06),
+                child: InkWell(
+                  onTap: () {
+                    Navigator.pushNamedAndRemoveUntil(
+                      context,
+                      SignUpScreen.routeName,
+                      (route) => false,
+                    );
+                  },
+                  child: btnAndText(
+                    text: "Create Account",
+                    containerColor: Colors.transparent,
+                    containerWidth: double.infinity,
+                    verticalPadding: 15,
+                    textColor: AppColors.primaryColor,
+                  ),
+                ),
+              ),
+              SizedBox(height: screenHeight * 0.02),
+              InkWell(
+                onTap: () async {
+                  final prefs = await SharedPreferences.getInstance();
+                  await prefs.setBool('isOnboardingComplete', true);
+                  Provider.of<AuthViewModel>(context, listen: false)
+                      .setGuestMode(true);
+                  Navigator.of(context).pushAndRemoveUntil(
+                    MyCustomRouteTransition(route: const NavBar()),
+                    (route) => false,
+                  );
+                },
+                child: Container(
+                  decoration: const BoxDecoration(
+                    border: Border(
+                      bottom: BorderSide(color: Colors.white, width: 2),
+                    ),
+                  ),
+                  child: textWidget(
+                    'Continue as Guest',
+                    color: Colors.white,
+                    fontSize: isLargeScreen ? 14 : 12,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+              SizedBox(height: screenHeight * 0.03),
+            ],
+          ),
         ),
       ),
     );

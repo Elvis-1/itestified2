@@ -1,548 +1,767 @@
-import 'dart:core';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get_it/get_it.dart';
 import 'package:itestified/src/config/theme/app_color.dart';
 import 'package:itestified/src/core/utils/app_const/app_icons.dart';
 import 'package:itestified/src/core/widgets/normal_text_style.dart';
-import 'package:itestified/src/core/widgets/text_widget.dart';
 import 'package:itestified/src/features/app_theme/theme_viewmodel.dart';
-import 'package:itestified/src/features/video/presentation/screens/video_screen.dart';
+import 'package:itestified/src/features/favorites/presentation/screens/favorite_icon_view_model.dart';
+import 'package:itestified/src/features/favorites/presentation/widgets/favourite_icon.dart';
+import 'package:itestified/src/features/written_testimonies.dart/presentation/screens/video_testimony_viewmodel.dart';
 import 'package:provider/provider.dart';
 
-class videoTestimoniesContainer extends StatelessWidget {
-  videoTestimoniesContainer(
-      {super.key,
-      this.videoContainerHeight = 100,
-      this.videoContainerWidth = 300,
-      this.imageHeight = 100,
-      this.fix = BoxFit.cover});
-  final double videoContainerHeight;
-  double videoContainerWidth = 300;
-  double imageHeight = 100;
-  final BoxFit fix;
+class VideoTestimonyContainer1 extends StatelessWidget {
+  const VideoTestimonyContainer1({
+    super.key,
+    required this.videoId,
+    this.containerWidth,
+    this.containerHeight,
+  });
+
+  final int videoId;
+  final double? containerWidth;
+  final double? containerHeight;
 
   @override
   Widget build(BuildContext context) {
-    var themeProvider = Provider.of<ThemeViewmodel>(context);
+    final viewModel = GetIt.I<VideoTestimonyViewModel>(param1: videoId);
+    final themeProvider = Provider.of<ThemeViewmodel>(context);
+    final screenWidth = MediaQuery.of(context).size.width;
+
+
+    final isTablet = screenWidth >= 600;
+    final isDesktop = screenWidth >= 900;
+
+    const baseContainerWidth = 220.0;
+    const baseImageHeight = 133.0;
+    const baseSubContainerHeight = 52.0;
+    const baseIconSize = 20.0;
+    const baseTitleFontSize = 10.0;
+    const baseSubtitleFontSize = 9.0;
+    const baseMetadataFontSize = 9.0;
+
+    final scale = isDesktop ? 1.4 : (isTablet ? 1.2 : 1.0);
+
+    final width = containerWidth ?? (baseContainerWidth * scale);
+    final imageHeight = baseImageHeight * scale;
+    final subContainerHeight = baseSubContainerHeight * scale;
+    final iconSize = baseIconSize * scale;
+    final titleFontSize = baseTitleFontSize * scale;
+    final subtitleFontSize = baseSubtitleFontSize * scale;
+    final metadataFontSize = baseMetadataFontSize * scale;
+    final padding = 8.0 * scale;
+    final spacing = 4.0 * scale;
+    final dotSize = 4.0 * scale;
+
+    final favoritedItem = FavoritedItem(
+      id: videoId,
+      type: 'video',
+      title: 'Prophetic Prayer for open doors',
+      church: 'Redeemed Christian Church of God',
+      views: '504',
+      date: '18/6/2024',
+      imagePath: AppImages.togetherImage,
+    );
 
     return InkWell(
-      onTap: () {
-        Navigator.pushNamed(context, VideoScreen.routeName);
-      },
+      onTap: () => viewModel.handleVideoTestimonyTap(context, videoId: videoId),
+      borderRadius: BorderRadius.circular(16 * scale),
       child: Container(
-        height: videoContainerHeight.h,
-        width: videoContainerWidth.w,
-        //   margin: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
+        width: width,
+        height: imageHeight + subContainerHeight + spacing,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // video container
             Container(
-              height: 170, // imageHeight,
-              //  width: 270,
+              height: imageHeight,
+              width: width,
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                  image: DecorationImage(
-                      image: AssetImage(AppImages.recentTestimonyImage),
-                      fit: fix)),
-              child: Column(
+                borderRadius: BorderRadius.circular(16 * scale),
+                image: DecorationImage(
+                  image: AssetImage(AppImages.togetherImage),
+                  fit: BoxFit.cover,
+                ),
+              ),
+              child: Stack(
+                clipBehavior: Clip.none,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Container(
-                        color: Colors.black.withOpacity(0.5),
-                        child: CircleAvatar(
-                          radius: 10,
-                          backgroundColor: AppColors.opaqueBlack,
-                          child: Image.asset(
-                            width: 12,
-                            AppIcons.favoriteIcon,
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                  SizedBox(
-                    height: videoContainerHeight / 2,
-                  ),
-                  const Align(
-                    alignment: Alignment.center,
+                  Center(
                     child: Icon(
                       Icons.play_arrow,
                       color: AppColors.white,
+                      size: 40 * scale,
                     ),
                   ),
-
-                  // SizedBox(
-                  //   height: 40.h,
-                  // ),
-                  const Spacer(),
-                  Row(
-                    children: [
-                      const Spacer(),
-                      Container(
-                        padding: EdgeInsets.all(2.sp),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(3),
-                            color: AppColors.blackColor),
-                        child: textWidget(
-                          "09:30",
-                          fontSize: 12,
-                          color: AppColors.white,
+                  Positioned(
+                    top: padding,
+                    right: padding,
+                    child: FavoriteIcon(
+                      item: favoritedItem,
+                      radius: 12 * scale,
+                      iconSize: 14 * scale,
+                    ),
+                  ),
+                  Positioned(
+                    bottom: padding,
+                    right: padding,
+                    child: Container(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: padding / 2,
+                        vertical: padding / 4,
+                      ),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(4 * scale),
+                        color: AppColors.blackColor.withOpacity(0.8),
+                      ),
+                      child: Text(
+                        "09:30",
+                        style: normalTextStyle(
+                          textColor: AppColors.white,
+                          fontSize: metadataFontSize,
                         ),
                       ),
-                      SizedBox(
-                        width: 10.h,
-                      ),
-                    ],
-                  ),
-
-                  SizedBox(
-                    height: 10.h,
+                    ),
                   ),
                 ],
               ),
             ),
-
-            // itestify pic and text
-
-            Row(
-              children: [
-                Image.asset(
-                  AppIcons.itestifyIcon,
-                  width: 30,
-                ),
-                SizedBox(
-                  width: 10.w,
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    textWidget(
-                      "Prophetic Prayers for open doors",
-                      fontSize: 15.sp,
-                      fontWeight: FontWeight.w600,
-                      color: themeProvider.themeData.colorScheme.onTertiary,
+            SizedBox(height: spacing),
+            Container(
+              height: subContainerHeight,
+              padding: EdgeInsets.symmetric(vertical: spacing),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    width: iconSize,
+                    height: iconSize,
+                    margin: EdgeInsets.only(right: spacing * 2),
+                    child: Image.asset(
+                      AppIcons.itestifyIcon,
+                      width: iconSize,
+                      height: iconSize,
                     ),
-                    SizedBox(
-                      height: 5.h,
-                    ),
-                    textWidget(
-                      "Redeemed Christian Church of God",
-                      fontSize: 13.sp,
-                    ),
-                    SizedBox(
-                      height: 5.h,
-                    ),
-                    Row(
+                  ),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        textWidget(
-                          "Child Birth ",
-                          fontSize: 10.sp,
-                        ),
-                        SizedBox(
-                          width: 5.w,
-                        ),
-                        Container(
-                          height: 5,
-                          width: 5,
-                          color: themeProvider.themeData.colorScheme.tertiary,
-                        ),
-                        SizedBox(
-                          width: 5.w,
-                        ),
-                        textWidget(" 504 Views ",
-                            fontSize: 10.sp,
+                        Text(
+                          "Triplets after 25 years of waiting!",
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            fontFamily: 'Open Sans',
+                            fontWeight: FontWeight.w600,
+                            fontSize: titleFontSize,
+                            height: 1.0,
                             color:
-                                themeProvider.themeData.colorScheme.tertiary),
-                        SizedBox(
-                          width: 5.w,
+                                themeProvider.themeData.colorScheme.onTertiary,
+                          ),
                         ),
-                        Container(
-                          height: 5,
-                          width: 5,
-                          color: themeProvider.themeData.colorScheme.tertiary,
+                        SizedBox(height: spacing / 2),
+                        Text(
+                          "Redeemed Christian Church of God",
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            fontFamily: 'Open Sans',
+                            fontSize: subtitleFontSize,
+                            height: 1.0,
+                            color: themeProvider.themeData.colorScheme.tertiary,
+                          ),
                         ),
-                        SizedBox(
-                          width: 5.w,
+                        SizedBox(height: spacing / 2),
+                        Row(
+                          children: [
+                            _buildMetadataText(context, "Child Birth",
+                                metadataFontSize, themeProvider),
+                            SizedBox(width: spacing),
+                            _buildDot(themeProvider, dotSize),
+                            SizedBox(width: spacing),
+                            _buildMetadataText(context, "504 Views",
+                                metadataFontSize, themeProvider),
+                            SizedBox(width: spacing),
+                            _buildDot(themeProvider, dotSize),
+                            SizedBox(width: spacing),
+                            _buildMetadataText(context, "18/6/2024",
+                                metadataFontSize, themeProvider),
+                          ],
                         ),
-                        textWidget("14/4/2024",
-                            fontSize: 10.sp,
-                            color:
-                                themeProvider.themeData.colorScheme.tertiary),
                       ],
                     ),
-                  ],
-                ),
-              ],
-            )
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class videoTestimoniesContainer2 extends StatelessWidget {
-  const videoTestimoniesContainer2({
-    super.key,
-    this.videoContainerHeight = 100,
-    this.videoContainerWidth = 300,
-    this.playArrowLeftPosition = 180,
-    this.playArrowTopPosition = 80,
-    this.itestifyIconTopPosition = 185,
-    this.itestifyIconLeftPosition = 5,
-    this.fix = BoxFit.fill,
-    this.imageHeight = 100,
-    this.firstTextSize = 12,
-    this.secondTextSize = 10,
-  });
-
-  final double videoContainerHeight;
-  final double videoContainerWidth;
-  final double imageHeight;
-  final double playArrowLeftPosition;
-  final double playArrowTopPosition;
-  final double itestifyIconLeftPosition;
-  final double itestifyIconTopPosition;
-  final BoxFit fix;
-  final double? firstTextSize;
-  final double? secondTextSize;
-
-  // double fontSize = MediaQuery.textScalerOf(context).scale(10.0);
-
-  @override
-  Widget build(BuildContext context) {
-    var themeProvider = Provider.of<ThemeViewmodel>(context);
-
-    return InkWell(
-      onTap: () {
-        Navigator.pushNamed(context, VideoScreen.routeName, arguments: 1);
-      },
-      child: Container(
-        height: videoContainerHeight,
-        width: videoContainerWidth,
-        margin: const EdgeInsets.only(top: 15),
-        child: Column(
-          children: [
-            Stack(
-              alignment: Alignment.center,
-              children: [
-                // Video container
-                Container(
-                  height: imageHeight,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                    image: DecorationImage(
-                      image: AssetImage(AppImages.recentTestimonyImage),
-                      fit: fix,
-                    ),
                   ),
-                ),
-
-                Positioned(
-                  top: 5,
-                  right: 5,
-                  child: Row(
-                    children: [
-                      //  const Spacer(),
-                      Container(
-                          margin: const EdgeInsets.only(top: 10, right: 8),
-                          child: CircleAvatar(
-                              radius: 15,
-                              backgroundColor:
-                                  //AppColors.opaqueBlack,
-                                  themeProvider
-                                      .themeData.searchBarTheme.backgroundColor!
-                                      .resolve({}),
-                              child: Icon(
-                                size: 15,
-                                Icons.favorite_outline,
-                                color: themeProvider
-                                    .themeData.colorScheme.onTertiary,
-                              ))),
-                    ],
-                  ),
-                ),
-
-                Positioned(
-                  bottom: 1,
-                  right: 5,
-                  child: Row(
-                    children: [
-                      // const Spacer(),
-                      Container(
-                          padding: const EdgeInsets.all(2),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(3),
-                            color: AppColors.blackColor,
-                          ),
-                          child: Text(
-                            "09:30",
-                            style:
-                                normalTextStyle(textColor: AppColors.textColor),
-                          )),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                    ],
-                  ),
-                ),
-
-                const SizedBox(
-                  height: 10,
-                ),
-                //  Play arrow icon
-                const Center(
-                  child: Icon(
-                    Icons.play_arrow,
-                    color: AppColors.white,
-                  ),
-                ),
-                // itestify icon and text
-              ],
-            ),
-            Row(
-              children: [
-                Image.asset(AppIcons.itestifyIcon, width: 20),
-                const SizedBox(width: 4),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      textWidget2(
-                        color: themeProvider.themeData.colorScheme.onTertiary,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        "Prophetic Prayer for open doors",
-                        fontSize: firstTextSize,
-                        //firstTextSize,
-                        lineHeight: 13.62 / 10,
-                        //Theme.of(context).textTheme.titleMedium?.fontSize,
-                        fontWeight: FontWeight.w600, // Removed `.sp`
-                      ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      textWidget2(
-                        fontWeight: FontWeight.w400,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        "Redeemed Christian Church of God",
-                        lineHeight: 10.89 / 8,
-                        fontSize: secondTextSize,
-                        // Theme.of(context).textTheme.titleSmall?.fontSize,
-                      ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      Row(
-                        children: [
-                          textWidget2(
-                            "Child Birth ",
-                            fontWeight: FontWeight.w400,
-                            fontSize: secondTextSize,
-                            lineHeight: 10.89 / 8,
-                            // Theme.of(context)
-                            //     .textTheme
-                            //     .labelSmall
-                            //     ?.fontSize,
-                          ),
-                          const SizedBox(width: 5),
-                          Container(
-                            height: 5,
-                            width: 5,
-                            color: themeProvider.themeData.colorScheme.tertiary,
-                          ),
-                          const SizedBox(width: 5),
-                          textWidget2(
-                            " 504 Views ",
-                            fontWeight: FontWeight.w400,
-                            fontSize: 8,
-                            lineHeight: 10.89 / 8,
-                            // fontSize: Theme.of(context)
-                            //     .textTheme
-                            //     .labelSmall
-                            //     ?.fontSize,
-                          ),
-                          const SizedBox(width: 5),
-                          Container(
-                            height: 5,
-                            width: 5,
-                            color: themeProvider.themeData.colorScheme.tertiary,
-                          ),
-                          const SizedBox(width: 5),
-                          textWidget2(
-                            "14/4/2024",
-                            fontWeight: FontWeight.w400,
-                            fontSize: 8,
-                            lineHeight: 10.89 / 8,
-                            // fontSize: Theme.of(context)
-                            //     .textTheme
-                            //     .labelSmall
-                            //     ?.fontSize,
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
           ],
         ),
       ),
     );
   }
+
+  Widget _buildMetadataText(BuildContext context, String text, double fontSize,
+      ThemeViewmodel themeProvider) {
+    return Text(
+      text,
+      style: TextStyle(
+        fontFamily: 'Open Sans',
+        fontSize: fontSize,
+        fontWeight: FontWeight.w400,
+        height: 1.0,
+        color: themeProvider.themeData.colorScheme.tertiary,
+      ),
+      maxLines: 1,
+      overflow: TextOverflow.ellipsis,
+    );
+  }
+
+  Widget _buildDot(ThemeViewmodel themeProvider, double size) {
+    return Container(
+      width: size,
+      height: size,
+      decoration: BoxDecoration(
+        color: themeProvider.themeData.colorScheme.tertiary,
+        shape: BoxShape.circle,
+      ),
+    );
+  }
 }
 
+// class VideoTestimonyContainer2 extends StatelessWidget {
+//   const VideoTestimonyContainer2({
+//     super.key,
+//     required this.videoId,
+//     required this.containerWidth,
+//     required this.containerHeight,
+//     required this.borderRadius,
+//     this.imageHeightRatio = 0.55,
+//   });
 
+//   final int videoId;
+//   final double containerWidth;
+//   final double containerHeight;
+//   final double borderRadius;
+//   final double imageHeightRatio;
 
-// Widget videoTestimoniesContainer2(BuildContext context,
-//     {double videoContainerHeight = 100,
-//     double videoContainerWidth = 300,
-//     double imageHeight = 100,
-//     double playArrowLeftPosition = 180,
-//     double playArrowTopPosition = 80,
-//     double itestifyIconLeftPosition = 5,
-//     double itestifyIconTopPosition = 185,
-//     BoxFit fix = BoxFit.fill}) {
-//   return InkWell(
-//     onTap: () {
-//       Navigator.pushNamed(context, VideoScreen.routeName);
-//     },
-//     child: Container(
-//       height: videoContainerHeight.h,
-//       width: videoContainerWidth.w,
-//       margin: EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
-//       child: Stack(
-//         //  crossAxisAlignment: CrossAxisAlignment.start,
-//         children: [
-//           // video container
-//           Container(
-//             height: imageHeight,
-//             //  width: 270,
-//             decoration: BoxDecoration(
-//                 borderRadius: BorderRadius.circular(15),
-//                 image: DecorationImage(
-//                     image: AssetImage(AppImages.recentTestimonyImage),
-//                     fit: fix)),
-//             child: Column(
+//   static List<String> imageList = [
+//     AppImages.togetherImage,
+//     AppImages.babyImage,
+//     AppImages.popularPrayingVideoImage,
+//   ];
+
+//   static const List<VideoTextData> textDataList = [
+//     VideoTextData(
+//       title: "Triplets after 25 years of waiting!",
+//       church: "Redeemed Christians Church of God",
+//       tag: "Child Birth",
+//       views: "700",
+//       date: "04/11/2024",
+//     ),
+//     VideoTextData(
+//       title: "Jesus Changed my Genotype!",
+//       church: "Redeemed Christians Church of God",
+//       tag: "Genotype",
+//       views: "2000",
+//       date: "07/11/2024",
+//     ),
+//   ];
+
+//   String getImageForVideo() {
+//     final index = (videoId - 1) % imageList.length;
+//     return imageList[index];
+//   }
+
+//   VideoTextData getTextDataForVideo() {
+//     final index = (videoId - 1) % textDataList.length;
+//     return textDataList[index];
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     final viewModel = GetIt.I<VideoTestimonyViewModel>(param1: videoId);
+//     final themeProvider = Provider.of<ThemeViewmodel>(context);
+//     final favoritesViewModel = GetIt.I<FavoritesViewModel>();
+//     final viewModelProvider = GetIt.I<VideoWrittenTestimoniesViewModel>();
+//     final imageHeight = viewModelProvider.getVideoImageHeight(context);
+//     final textData = getTextDataForVideo();
+
+//     return InkWell(
+//       onTap: () => viewModel.handleVideoTestimonyTap(context, videoId: videoId),
+//       borderRadius: BorderRadius.circular(borderRadius),
+//       child: Container(
+//         width: containerWidth,
+//         height: containerHeight,
+//         padding: const EdgeInsets.all(6),
+//         decoration: BoxDecoration(
+//           borderRadius: BorderRadius.circular(borderRadius),
+//         ),
+//         child: LayoutBuilder(
+//           builder: (context, constraints) {
+//             bool isTablet = constraints.maxWidth >= 800;
+//             double padding = isTablet ? 8 : 6;
+//             double iconSize = isTablet ? 24 : 20;
+//             double avatarSize = isTablet ? 24 : 20;
+//             double dotSize = isTablet ? 5 : 4;
+//             double spacing = isTablet ? 6 : 4;
+//             double fontSizeTitle = isTablet ? 16 : 14;
+//             double fontSizeSubtitle = isTablet ? 14 : 12;
+//             double fontSizeMeta = isTablet ? 12 : 10;
+
+//             return Column(
+//               crossAxisAlignment: CrossAxisAlignment.start,
 //               children: [
-//                 Row(
-//                   children: [
-//                     const Spacer(),
-//                     Container(
-//                       margin: const EdgeInsets.only(top: 10, right: 8),
-//                       color: AppColors.opaqueBlack2,
-//                       child: CircleAvatar(
-//                           radius: 12.sp,
-//                           backgroundColor: AppColors.greyColor,
-//                           child: Icon(size: 15.sp, Icons.favorite_outline)),
-//                     )
-//                   ],
-//                 ),
-//                 const Spacer(),
-//                 Row(
-//                   children: [
-//                     const Spacer(),
-//                     Container(
-//                       padding: EdgeInsets.all(2.sp),
-//                       decoration: BoxDecoration(
-//                           borderRadius: BorderRadius.circular(3),
-//                           color: AppColors.blackColor),
-//                       child: textWidget(
-//                         "09:30",
-//                         fontSize: 12,
-//                         color,
-//                       ),
+//                 Container(
+//                   width: constraints.maxWidth,
+//                   height: imageHeight,
+//                   decoration: BoxDecoration(
+//                     borderRadius: BorderRadius.circular(16),
+//                     image: DecorationImage(
+//                       image: AssetImage(getImageForVideo()),
+//                       fit: BoxFit.cover,
 //                     ),
-//                     SizedBox(
-//                       width: 10.h,
-//                     ),
-//                   ],
-//                 ),
-//                 SizedBox(
-//                   height: 10.h,
-//                 ),
-//               ],
-//             ),
-//           ),
-
-//           Positioned(
-//             left: playArrowLeftPosition.w,
-//             top: playArrowTopPosition.h,
-//             child: const Icon(
-//               Icons.play_arrow,
-//               color: AppColors.white,
-//             ),
-//           ),
-//           // itestify pic and text
-
-//           Positioned(
-//               top: itestifyIconTopPosition.h,
-//               left: itestifyIconLeftPosition.w,
-//               child: Row(
-//                 children: [
-//                   Image.asset(
-//                     AppIcons.itestifyIcon,
-//                     width: 30.w,
 //                   ),
-//                   SizedBox(
-//                     width: 10.w,
-//                   ),
-//                   Column(
-//                     crossAxisAlignment: CrossAxisAlignment.start,
+//                   child: Stack(
+//                     alignment: Alignment.center,
 //                     children: [
-//                       textWidget(
-//                         "Prophetic Prayers for open doors",
-//                         fontSize: 14.sp,
+//                       Positioned(
+//                         top: padding * 2,
+//                         right: padding * 2,
+//                         child: ValueListenableBuilder<List<FavoritedItem>>(
+//                           valueListenable:
+//                               GetIt.I<ValueListenable<List<FavoritedItem>>>(),
+//                           builder: (context, favorites, child) {
+//                             final isFavorited = favoritesViewModel.isFavorited(
+//                                 videoId, 'video');
+//                             print(
+//                                 'VideoTestimonyContainer2: Building favorite icon, videoId=$videoId, isFavorited=$isFavorited');
+//                             return GestureDetector(
+//                               onTap: () {
+//                                 print(
+//                                     'VideoTestimonyContainer2: Favorite clicked, videoId=$videoId, currentState=$isFavorited');
+//                                 final item = FavoritedItem(
+//                                   id: videoId,
+//                                   type: 'video',
+//                                   title: textData.title,
+//                                   church: textData.church,
+//                                   views: textData.views,
+//                                   date: textData.date,
+//                                   imagePath: getImageForVideo(),
+//                                 );
+//                                 if (isFavorited) {
+//                                   favoritesViewModel.removeFavorite(
+//                                       videoId, 'video');
+//                                 } else {
+//                                   favoritesViewModel.addFavorite(item);
+//                                 }
+//                               },
+//                               child: CircleAvatar(
+//                                 radius: iconSize / 2,
+//                                 backgroundColor:
+//                                     themeProvider.themeData.colorScheme.outline,
+//                                 child: Icon(
+//                                   isFavorited
+//                                       ? Icons.favorite
+//                                       : Icons.favorite_border,
+//                                   color: AppColors.primaryColor,
+//                                   size: iconSize,
+//                                 ),
+//                               ),
+//                             );
+//                           },
+//                         ),
 //                       ),
-//                       textWidget("Redeemed Christian Church of God",
-//                           fontSize: 10.sp, color: AppColors.textColor),
-//                       Row(
-//                         children: [
-//                           textWidget("Child Birth ",
-//                               fontSize: 8.sp, color: AppColors.textColor),
-//                           SizedBox(
-//                             width: 5.w,
+//                       Positioned(
+//                         bottom: padding * 2,
+//                         right: padding * 2,
+//                         child: Container(
+//                           padding: EdgeInsets.symmetric(
+//                             horizontal: padding,
+//                             vertical: padding / 2,
 //                           ),
-//                           Container(
-//                             height: 5,
-//                             width: 5,
-//                             color: AppColors.textColor,
+//                           decoration: BoxDecoration(
+//                             borderRadius: BorderRadius.circular(4),
+//                             color: AppColors.blackColor.withOpacity(0.8),
 //                           ),
-//                           SizedBox(
-//                             width: 5.w,
+//                           child: Text(
+//                             "09:30",
+//                             style: normalTextStyle(
+//                               textColor:
+//                                   themeProvider.themeData.colorScheme.tertiary,
+//                               fontSize: fontSizeMeta,
+//                             ),
 //                           ),
-//                           textWidget(" 504 Views ",
-//                               fontSize: 8.sp, color: AppColors.textColor),
-//                           SizedBox(
-//                             width: 5.w,
-//                           ),
-//                           Container(
-//                             height: 5,
-//                             width: 5,
-//                             color: AppColors.textColor,
-//                           ),
-//                           SizedBox(
-//                             width: 5.w,
-//                           ),
-//                           textWidget("14/4/2024",
-//                               fontSize: 8.sp, color: AppColors.textColor),
-//                         ],
+//                         ),
+//                       ),
+//                       Icon(
+//                         Icons.play_arrow,
+//                         color: AppColors.white,
+//                         size: iconSize * 2,
 //                       ),
 //                     ],
 //                   ),
-//                 ],
-//               ))
-//         ],
+//                 ),
+//                 SizedBox(height: spacing),
+//                 Row(
+//                   crossAxisAlignment: CrossAxisAlignment.start,
+//                   children: [
+//                     Image.asset(
+//                       AppIcons.itestifyIcon,
+//                       width: avatarSize,
+//                       height: avatarSize,
+//                     ),
+//                     SizedBox(width: spacing * 2),
+//                     Expanded(
+//                       child: Column(
+//                         crossAxisAlignment: CrossAxisAlignment.start,
+//                         children: [
+//                           Text(
+//                             textData.title,
+//                             style: TextStyle(
+//                               fontSize: fontSizeTitle,
+//                               fontWeight: FontWeight.w600,
+//                               height: 1.0,
+//                               color:
+//                                   themeProvider.themeData.colorScheme.tertiary,
+//                             ),
+//                             maxLines: 1,
+//                             overflow: TextOverflow.ellipsis,
+//                           ),
+//                           SizedBox(height: spacing),
+//                           Text(
+//                             textData.church,
+//                             style: TextStyle(
+//                               fontSize: fontSizeSubtitle,
+//                               height: 1.0,
+//                               color:
+//                                   themeProvider.themeData.colorScheme.tertiary,
+//                             ),
+//                             maxLines: 1,
+//                             overflow: TextOverflow.ellipsis,
+//                           ),
+//                           SizedBox(height: spacing),
+//                           Container(
+//                             alignment: Alignment.centerLeft,
+//                             child: Row(
+//                               children: [
+//                                 ConstrainedBox(
+//                                   constraints:
+//                                       const BoxConstraints(minWidth: 40),
+//                                   child: Text(
+//                                     textData.tag,
+//                                     style: TextStyle(
+//                                       fontSize: fontSizeMeta,
+//                                       height: 1.0,
+//                                       color: themeProvider
+//                                           .themeData.colorScheme.tertiary,
+//                                     ),
+//                                     maxLines: 1,
+//                                     overflow: TextOverflow.ellipsis,
+//                                   ),
+//                                 ),
+//                                 SizedBox(width: spacing),
+//                                 _buildDot(themeProvider, dotSize),
+//                                 SizedBox(width: spacing),
+//                                 ConstrainedBox(
+//                                   constraints:
+//                                       const BoxConstraints(minWidth: 30),
+//                                   child: Text(
+//                                     "${textData.views} Views",
+//                                     style: TextStyle(
+//                                       fontSize: fontSizeMeta,
+//                                       height: 1.0,
+//                                       color: themeProvider
+//                                           .themeData.colorScheme.tertiary,
+//                                     ),
+//                                     maxLines: 1,
+//                                     overflow: TextOverflow.ellipsis,
+//                                   ),
+//                                 ),
+//                                 SizedBox(width: spacing),
+//                                 _buildDot(themeProvider, dotSize),
+//                                 SizedBox(width: spacing),
+//                                 ConstrainedBox(
+//                                   constraints:
+//                                       const BoxConstraints(minWidth: 40),
+//                                   child: Text(
+//                                     textData.date,
+//                                     style: TextStyle(
+//                                       fontSize: fontSizeMeta,
+//                                       height: 1.0,
+//                                       color: themeProvider
+//                                           .themeData.colorScheme.tertiary,
+//                                     ),
+//                                     maxLines: 1,
+//                                     overflow: TextOverflow.ellipsis,
+//                                   ),
+//                                 ),
+//                               ],
+//                             ),
+//                           ),
+//                         ],
+//                       ),
+//                     ),
+//                   ],
+//                 ),
+//               ],
+//             );
+//           },
+//         ),
 //       ),
-//     ),
-//   );
+//     );
+//   }
 
+//   Widget _buildDot(ThemeViewmodel themeProvider, double dotSize) {
+//     return Container(
+//       width: dotSize,
+//       height: dotSize,
+//       decoration: BoxDecoration(
+//         color: themeProvider.themeData.colorScheme.tertiary,
+//         shape: BoxShape.circle,
+//       ),
+//     );
+//   }
 // }
+
+// class VideoTextData {
+//   final String title;
+//   final String church;
+//   final String tag;
+//   final String views;
+//   final String date;
+
+//   const VideoTextData({
+//     required this.title,
+//     required this.church,
+//     required this.tag,
+//     required this.views,
+//     required this.date,
+//   });
+// }
+
+///
+///\
+///
+///
+
+
+class VideoTestimonyContainer3 extends StatelessWidget {
+  const VideoTestimonyContainer3({
+    super.key,
+    required this.videoId,
+    this.containerWidth,
+    this.containerHeight,
+  });
+
+  final int videoId;
+  final double? containerWidth;
+  final double? containerHeight;
+
+  @override
+  Widget build(BuildContext context) {
+    final viewModel = GetIt.I<VideoTestimonyViewModel>(param1: videoId);
+    final themeProvider = Provider.of<ThemeViewmodel>(context);
+    final screenWidth = MediaQuery.of(context).size.width;
+
+
+    final isTablet = screenWidth >= 600;
+    final isDesktop = screenWidth >= 900;
+
+    const baseContainerWidth = 345.0;
+    const baseImageHeight = 220.0;
+    const baseSubContainerHeight = 60.0;
+    const baseIconSize = 20.0;
+    const baseTitleFontSize = 14.0;
+    const baseSubtitleFontSize = 10.0;
+    const baseMetadataFontSize = 8.0;
+
+    final scale = isDesktop ? 1.4 : (isTablet ? 1.2 : 1.0);
+
+    final width = containerWidth ?? (baseContainerWidth * scale);
+    final imageHeight = baseImageHeight * scale;
+    final subContainerHeight = baseSubContainerHeight * scale;
+    final iconSize = baseIconSize * scale;
+    final titleFontSize = baseTitleFontSize * scale;
+    final subtitleFontSize = baseSubtitleFontSize * scale;
+    final metadataFontSize = baseMetadataFontSize * scale;
+    final padding = 8.0 * scale;
+    final spacing = 4.0 * scale;
+    final dotSize = 4.0 * scale;
+
+    final favoritedItem = FavoritedItem(
+      id: videoId,
+      type: 'video',
+      title: 'Triplets after 25 years of waiting!',
+      church: 'Redeemed Christian Church of God',
+      views: '504',
+      date: '18/6/2024',
+      imagePath: AppImages.togetherImage,
+    );
+
+    return InkWell(
+      onTap: () => viewModel.handleVideoTestimonyTap(context, videoId: videoId),
+      borderRadius: BorderRadius.circular(16 * scale),
+      child: Align(
+        child: Container(
+          width: width,
+          height: imageHeight + subContainerHeight + spacing,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                height: imageHeight,
+                width: width,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(16 * scale),
+                  image: DecorationImage(
+                    image: AssetImage(AppImages.togetherImage),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                child: Stack(
+                  clipBehavior: Clip.none,
+                  children: [
+                    Center(
+                      child: Icon(
+                        Icons.play_arrow,
+                        color: AppColors.white,
+                        size: 40 * scale,
+                      ),
+                    ),
+                    Positioned(
+                      top: padding,
+                      right: padding,
+                      child: FavoriteIcon(
+                        item: favoritedItem,
+                        radius: 12 * scale,
+                        iconSize: 14 * scale,
+                      ),
+                    ),
+                    Positioned(
+                      bottom: padding,
+                      right: padding,
+                      child: Container(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: padding / 2,
+                          vertical: padding / 4,
+                        ),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(4 * scale),
+                          color: AppColors.blackColor.withOpacity(0.8),
+                        ),
+                        child: Text(
+                          "09:30",
+                          style: normalTextStyle(
+                            textColor: AppColors.white,
+                            fontSize: metadataFontSize,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(height: spacing),
+              Container(
+                height: subContainerHeight,
+                padding: EdgeInsets.symmetric(vertical: spacing),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      width: iconSize,
+                      height: iconSize,
+                      margin: EdgeInsets.only(right: spacing * 2),
+                      child: Image.asset(
+                        AppIcons.itestifyIcon,
+                        width: iconSize,
+                        height: iconSize,
+                      ),
+                    ),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Triplets after 25 years of waiting!",
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              fontFamily: 'Open Sans',
+                              fontWeight: FontWeight.w600,
+                              fontSize: titleFontSize,
+                              height: 1.0,
+                              color:
+                                  themeProvider.themeData.colorScheme.onTertiary,
+                            ),
+                          ),
+                          SizedBox(height: spacing / 2),
+                          Text(
+                            "Redeemed Christian Church of God",
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              fontFamily: 'Open Sans',
+                              fontSize: subtitleFontSize,
+                              height: 1.0,
+                              color: themeProvider.themeData.colorScheme.tertiary,
+                            ),
+                          ),
+                          SizedBox(height: spacing / 2),
+                          Row(
+                            children: [
+                              _buildMetadataText(context, "Child Birth",
+                                  metadataFontSize, themeProvider),
+                              SizedBox(width: spacing),
+                              _buildDot(themeProvider, dotSize),
+                              SizedBox(width: spacing),
+                              _buildMetadataText(context, "504 Views",
+                                  metadataFontSize, themeProvider),
+                              SizedBox(width: spacing),
+                              _buildDot(themeProvider, dotSize),
+                              SizedBox(width: spacing),
+                              _buildMetadataText(context, "18/6/2024",
+                                  metadataFontSize, themeProvider),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildMetadataText(BuildContext context, String text, double fontSize,
+      ThemeViewmodel themeProvider) {
+    return Text(
+      text,
+      style: TextStyle(
+        fontFamily: 'Open Sans',
+        fontSize: fontSize,
+        fontWeight: FontWeight.w400,
+        height: 1.0,
+        color: themeProvider.themeData.colorScheme.tertiary,
+      ),
+      maxLines: 1,
+      overflow: TextOverflow.ellipsis,
+    );
+  }
+
+  Widget _buildDot(ThemeViewmodel themeProvider, double size) {
+    return Container(
+      width: size,
+      height: size,
+      decoration: BoxDecoration(
+        color: themeProvider.themeData.colorScheme.tertiary,
+        shape: BoxShape.circle,
+      ),
+    );
+  }
+}
