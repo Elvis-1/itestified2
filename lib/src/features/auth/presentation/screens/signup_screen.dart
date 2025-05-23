@@ -153,7 +153,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             lineWidget(
                               color:
                                   themeProvider.themeData.colorScheme.outline,
-                              width: 170,
+                              width: MediaQuery.of(context).size.width / 3.5,
                             ),
                             Text(
                               " OR ",
@@ -167,7 +167,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             lineWidget(
                               color:
                                   themeProvider.themeData.colorScheme.outline,
-                              width: 170,
+                              width: MediaQuery.of(context).size.width / 3.5,
                             ),
                           ],
                         ),

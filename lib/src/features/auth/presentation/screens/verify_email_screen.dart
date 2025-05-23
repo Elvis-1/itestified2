@@ -112,7 +112,11 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
                                   .requestFocus(avm.focusNodes[index + 1]);
                             } else {
                               avm.focusNodes[index].unfocus();
+                              avm.verifyEmail(context, widget.args.email);
                             }
+                          } else if (value.isEmpty && index > 0) {
+                            FocusScope.of(context)
+                                .requestFocus(avm.focusNodes[index - 1]);
                           }
                         },
                       );
