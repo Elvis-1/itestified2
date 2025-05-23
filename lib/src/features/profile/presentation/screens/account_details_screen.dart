@@ -121,10 +121,10 @@ class AccountDetailsScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 15),
                   DottedBorder(
-                    borderType: BorderType.RRect,
-                    radius: const Radius.circular(12),
-                    padding: const EdgeInsets.all(6),
-                    color: AppColors.primaryColor,
+                    // borderType: BorderType.RRect,
+                    // radius: const Radius.circular(12),
+                    // padding: const EdgeInsets.all(6),
+                    // color: AppColors.primaryColor,
                     child: Container(
                       padding: const EdgeInsets.all(10),
                       width: double.infinity,

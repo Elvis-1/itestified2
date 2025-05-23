@@ -32,7 +32,7 @@ if (keystorePropertiesFile.exists()) {
 
 android {
     namespace "com.itestified.ifnotgod"
-    compileSdk   34//flutter.compileSdkVersion
+    compileSdk   35//flutter.compileSdkVersion
     ndkVersion flutter.ndkVersion
 
     compileOptions {
