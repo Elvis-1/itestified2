@@ -142,17 +142,11 @@ class AuthViewModel with ChangeNotifier {
 
     if (hasErrors) return;
 
-    print(
-        'fullname $fullName and  email $email, password: $password and password confirm: $passwordConfirm');
-
     RegisterUserRequest userRequest = RegisterUserRequest(
         email: email,
         fullName: fullName,
         password: password,
         password2: passwordConfirm);
-
-    print(
-        '${userRequest.email},${userRequest.fullName}, ${userRequest.password},${userRequest.email}');
 
     CommonPopup.showLoading(context);
     var response = await authService.registerUser(userRequest);
@@ -165,8 +159,7 @@ class AuthViewModel with ChangeNotifier {
 
       if (context.mounted) {
         customSnack(context, success.message ?? '');
-        Navigator.pushNamed(context, verify_email.VerifyEmailScreen.routeName,
-            arguments: verify_email.Arguments(email: email));
+        Navigator.pushNamed(context, LoginScreen.routeName);
       }
     });
   }
@@ -327,8 +320,8 @@ class AuthViewModel with ChangeNotifier {
 
       if (context.mounted) {
         Navigator.pushNamed(
-          context, NavBar.routeName,
-          // arguments: NavBarArguments(
+          context, LoginScreen.routeName,
+          // arguments: LoginScreenArguments(
           //     index: 0, email: email, isFromVerifyEmail: true)
         );
       }
@@ -338,15 +331,6 @@ class AuthViewModel with ChangeNotifier {
   //this method resend otp to the email supplied
   Future<void> resendEmail(BuildContext context, String userEmail) async {
     var email = userEmail;
-
-    // String otp = otpControllers.map((controller) => controller.text).join();
-    // if (otp.isEmpty || otp.length < otpControllers.length) {
-    //   _showSnackBar(context, 'OTP can\'t  be empty', Colors.red);
-    //   return;
-    // }
-    // if (hasErrors) return;
-
-    // print('This is otp $otp');
 
     OTPRequest otpRequest = OTPRequest(
       email: email,
@@ -363,13 +347,6 @@ class AuthViewModel with ChangeNotifier {
     }, (success) async {
       _clearFields();
       customSnack(context, success.message ?? '');
-
-      if (context.mounted) {
-        Navigator.pushNamed(
-          context,
-          LoginScreen.routeName,
-        );
-      }
     });
   }
 

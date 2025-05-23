@@ -41,7 +41,7 @@ class _LoginScreenState extends State<LoginScreen> {
         fontSize: 20);
     return Scaffold(
       backgroundColor: themeProvider.themeData.colorScheme.background,
-     appBar: AppBar(
+      appBar: AppBar(
         automaticallyImplyLeading: false,
         centerTitle: true,
         backgroundColor: themeProvider.themeData.colorScheme.surface,
@@ -155,7 +155,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           child: lineWidget(
                               color:
                                   themeProvider.themeData.colorScheme.outline,
-                              width: 170),
+                              width: MediaQuery.of(context).size.width / 3.5),
                         ),
                         Text(
                           " OR ",
@@ -171,7 +171,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           child: lineWidget(
                               color:
                                   themeProvider.themeData.colorScheme.outline,
-                              width: 170),
+                              width: MediaQuery.of(context).size.width / 3.5),
                         ),
                       ],
                     ),
