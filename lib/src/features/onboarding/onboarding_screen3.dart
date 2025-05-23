@@ -64,7 +64,7 @@ class _OnboardingScreen3State extends State<OnboardingScreen3> {
               ),
               SizedBox(height: screenHeight * 0.015),
               DotsIndicator(
-                position: widget.index,
+                position: double.parse(widget.index.toString()),
                 dotsCount: widget.pageCount,
                 mainAxisAlignment: MainAxisAlignment.center,
                 decorator: DotsDecorator(
