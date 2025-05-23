@@ -62,7 +62,7 @@ class _OnboardingScreen1State extends State<OnboardingScreen1> {
                   'Witness real-life stories of healing, breakthroughs,  divine intervention and many more. '),
               SizedBox(height: screenHeight * 0.015),
               DotsIndicator(
-                position: widget.index,
+                position: double.parse(widget.index.toString()),
                 dotsCount: widget.pageCount,
                 mainAxisAlignment: MainAxisAlignment.center,
                 decorator: DotsDecorator(
