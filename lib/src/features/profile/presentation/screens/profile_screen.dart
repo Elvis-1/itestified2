@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-
 import 'package:itestified/src/config/theme/app_color.dart';
 import 'package:itestified/src/core/utils/app_const/app_icons.dart';
 import 'package:itestified/src/core/widgets/btn_and_text.dart';
 import 'package:itestified/src/core/widgets/dialog.dart';
 import 'package:itestified/src/core/widgets/line_widget.dart';
 import 'package:itestified/src/core/widgets/text_widget.dart';
-import 'package:itestified/src/features/animations/fade_in_trans.dart';
 import 'package:itestified/src/features/app_theme/theme_viewmodel.dart';
 import 'package:itestified/src/features/auth/presentation/viewmodel/auth_viewmodel.dart';
 import 'package:itestified/src/features/notifications/presentation/screens/notifications_screen.dart';
@@ -50,7 +48,7 @@ class ProfileScreen extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10),
         child: SingleChildScrollView(
-          child: FadeInTransitionWidget(
+   
             child: Column(
               children: [
                 const SizedBox(height: 10),
@@ -256,7 +254,7 @@ class ProfileScreen extends StatelessWidget {
             ),
           ),
         ),
-      ),
+      
     );
   }
 }

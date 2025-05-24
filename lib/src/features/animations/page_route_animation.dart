@@ -8,7 +8,7 @@ class MyCustomRouteTransition extends PageRouteBuilder {
           pageBuilder: (context, animation, secondaryAnimation) {
             return route;
           },
-          transitionDuration: const Duration(milliseconds: 1500),
+          transitionDuration: const Duration(milliseconds: 1000),
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             // final tween = Tween(
             //   begin: const Offset(-1, -1),

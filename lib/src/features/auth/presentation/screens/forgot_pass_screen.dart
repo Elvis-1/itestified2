@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:itestified/src/config/theme/app_color.dart';
 import 'package:itestified/src/core/utils/app_const/enum.dart';
 import 'package:itestified/src/core/widgets/appbar2.dart';
 import 'package:itestified/src/core/widgets/btn_and_text.dart';
@@ -21,95 +19,73 @@ class ForgotPasswordScreen extends StatefulWidget {
 
 class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   final _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
-    var themeProvider = Provider.of<ThemeViewmodel>(context);
-    var authProvider = Provider.of<AuthViewModel>(context, listen: false);
+    final themeProvider = Provider.of<ThemeViewmodel>(context);
+    final authProvider = Provider.of<AuthViewModel>(context, listen: false);
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isMobile = screenWidth < 600;
+    final isTablet = screenWidth >= 600;
+
+    final horizontalMargin = screenWidth * 0.05;
+    final contentSpacing = 16.0;
+    final fontSizeTitle = isTablet ? 22.0 : 20.0;
+    final fontSizeBody = isTablet ? 16.0 : 14.0;
+    final buttonWidth = isMobile ? double.infinity : screenWidth * 0.4;
+
+    TextStyle style = normalTextStyle(
+      textColor: themeProvider.themeData.colorScheme.onTertiary,
+      fontSize: fontSizeTitle,
+    );
+
     return Scaffold(
       backgroundColor: themeProvider.themeData.colorScheme.surface,
-      body: LayoutBuilder(builder: (context, constraints) {
-        bool isTablet = constraints.maxWidth > 600;
-        double contentWidth =
-            isTablet ? 500 : double.infinity; 
-        EdgeInsets padding = isTablet
-            ? const EdgeInsets.only(right: 32.0, left: 32, bottom: 10)
-            : const EdgeInsets.only(right: 24.0, left: 24, bottom: 5);
-        return SafeArea(
-          child: Center(
-            child: Container(
-              width: contentWidth,
-              padding: padding,
-              //  margin: const EdgeInsets.symmetric(horizontal: 15),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const appbar2('Forgot Password'),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const SizedBox(
-                          height: 30,
-                        ),
-                        textWidget(
-                            "Enter your email below and we will send you instrutions on how to reset your password",
-                            fontWeight: FontWeight.w100,
-                            fontSize: 15,
-                            textAlign: TextAlign.center),
-                        const SizedBox(
-                          height: 35,
-                        ),
-                        // Text(
-                        //   "Email Address",
-                        //   style: normalTextStyle(
-                        //       textColor:
-                        //           themeProvider.themeData.colorScheme.onTertiary,
-                        //       fontSize: 20),
-                        // ),
-
-                        Form(
-                          key: _formKey,
-                          child: emailTile(
-                              normalTextStyle(fontSize: 18), authProvider,
-                              useType: UseType.ForgotPassword),
-                        )
-                      ],
+      body: SafeArea(
+        child: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: Container(
+            margin: EdgeInsets.symmetric(horizontal: horizontalMargin),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const appbar2('Forgot Password'),
+                SizedBox(height: contentSpacing),
+                textWidget(
+                  "Enter your email below, and we will send you a one-time password (OTP) to reset your password.",
+                  fontWeight: FontWeight.w100,
+                  fontSize: fontSizeBody,
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(height: contentSpacing * 2),
+                Form(
+                  key: _formKey,
+                  child: emailTile(style, authProvider,
+                      useType: UseType.ForgotPassword),
+                ),
+                SizedBox(height: contentSpacing * 2),
+                Align(
+                  alignment: Alignment.center,
+                  child: GestureDetector(
+                    onTap: () {
+                      if (_formKey.currentState!.validate()) {
+                        authProvider.forgotPassword(context);
+                      }
+                    },
+                    child: btnAndText(
+                      fontSize: fontSizeBody,
+                      verticalPadding: isTablet ? 16.0 : 14.0,
+                      containerWidth: buttonWidth,
+                      text: "Reset Password",
                     ),
                   ),
-
-                  // login account btn
-
-                  Container(
-                    margin: const EdgeInsets.only(bottom: 10),
-                    child: Column(
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            if (_formKey.currentState!.validate()) {
-                              authProvider.forgotPassword(context);
-                            }
-                          },
-                          child: Align(
-                              alignment: Alignment.center,
-                              child: btnAndText(
-                                  fontSize: 18,
-                                  verticalPadding: 14,
-                                  containerWidth: double.infinity,
-                                  text: "Reset Password")),
-                        ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        
-                      ],
-                    ),
-                  ),
-                ],
-              ),
+                ),
+                SizedBox(height: contentSpacing),
+              ],
             ),
           ),
-        );
-      }),
+        ),
+      ),
     );
   }
 }

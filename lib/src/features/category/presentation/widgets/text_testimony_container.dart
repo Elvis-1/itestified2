@@ -11,7 +11,6 @@ import 'package:provider/provider.dart';
 class TextTestimonyContainer extends StatelessWidget {
   const TextTestimonyContainer({
     super.key,
-    this.containerWidth = 345.0,
     this.containerHeight = 162.0,
     this.borderRadius = 16.0,
     this.titleFontSize = 14.0,
@@ -23,9 +22,10 @@ class TextTestimonyContainer extends StatelessWidget {
     this.spacing = 10.0,
     this.isHomeScreen = false,
     this.index,
+    this.containerWidth,
   });
 
-  final double containerWidth;
+  final double? containerWidth;
   final double containerHeight;
   final double borderRadius;
   final double titleFontSize;
@@ -44,6 +44,9 @@ class TextTestimonyContainer extends StatelessWidget {
     final favoritesViewModel = GetIt.I<FavoritesViewModel>();
     final double screenWidth = MediaQuery.of(context).size.width;
 
+    // Use provided containerWidth or dynamic width (screenWidth * 0.94)
+    final double effectiveWidth = containerWidth ?? (screenWidth * 0.94);
+
     final testimonyId = index ?? 1;
     final favoritedItem = FavoritedItem(
       id: testimonyId,
@@ -55,15 +58,18 @@ class TextTestimonyContainer extends StatelessWidget {
       imagePath: AppIcons.userIcon,
     );
 
+    print('TextTestimonyContainer: Building with width=$effectiveWidth, index=$testimonyId');
+
     return InkWell(
       onTap: () {
+        print('TextTestimonyContainer: Tapped, navigating to MyTestimoniesDetailsScreen, index=$testimonyId');
         Navigator.pushNamed(context, MyTestimoniesDetailsScreen.routeName);
       },
       child: LayoutBuilder(
         builder: (context, constraints) {
           final bool isLargeScreen = constraints.maxWidth > 800;
 
-          final double scaledWidth = containerWidth;
+          final double scaledWidth = effectiveWidth;
           final double scaledHeight = containerHeight;
           final double scaledBorderRadius = borderRadius;
           final double actualPadding = padding;
@@ -89,26 +95,22 @@ class TextTestimonyContainer extends StatelessWidget {
               ),
               borderRadius: BorderRadius.circular(scaledBorderRadius),
             ),
-            margin: EdgeInsets.symmetric(horizontal: screenWidth * 0.02),
+            // Remove margin, rely on FavoritesScreen's layout
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.stretch, // Stretch to full width
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Expanded(
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          'Jesus Changed my Genotype',
-                          style: TextStyle(
-                            fontSize: actualTitleFontSize,
-                            fontWeight: FontWeight.w600,
-                            color:
-                                themeProvider.themeData.colorScheme.onSurface,
-                          ),
-                          overflow: TextOverflow.ellipsis,
+                      child: Text(
+                        'Jesus Changed my Genotype',
+                        style: TextStyle(
+                          fontSize: actualTitleFontSize,
+                          fontWeight: FontWeight.w600,
+                          color: themeProvider.themeData.colorScheme.onSurface,
                         ),
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ),
                     FavoriteIcon(
@@ -143,8 +145,7 @@ class TextTestimonyContainer extends StatelessWidget {
                             style: TextStyle(
                               fontSize: actualNameFontSize,
                               fontWeight: FontWeight.w600,
-                              color:
-                                  themeProvider.themeData.colorScheme.onSurface,
+                              color: themeProvider.themeData.colorScheme.onSurface,
                             ),
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -201,7 +202,7 @@ class TextTestimonyContainer extends StatelessWidget {
       ),
     );
   }
-// MORE ROBUST HANDLING FOR WHEN  SEEMORE APPEARS 
+
   Widget _buildTestimonyText(
     BuildContext context,
     ThemeViewmodel themeProvider,
@@ -223,7 +224,7 @@ class TextTestimonyContainer extends StatelessWidget {
           color: AppColors.primaryColor,
         );
 
-        // THIS CXALULATES BASED ON AVAILABLE HEIGHT
+        // Calculate based on available height
         final estimatedLineHeight = fontSize * 1.2;
         final maxLines = (constraints.maxHeight / estimatedLineHeight).floor();
         final effectiveMaxLines = maxLines > 0 ? maxLines : 3;
@@ -242,6 +243,8 @@ class TextTestimonyContainer extends StatelessWidget {
           textDirection: TextDirection.ltr,
         );
         textPainter.layout(maxWidth: constraints.maxWidth);
+
+        print('TextTestimonyContainer: Text layout maxWidth=${constraints.maxWidth}, maxLines=$effectiveMaxLines, didExceed=${textPainter.didExceedMaxLines}');
 
         if (!textPainter.didExceedMaxLines) {
           return Text(

@@ -42,8 +42,8 @@ class _VideoAndWrittenTestimonieScreenState
           final horizontalPadding = viewModel.getHorizontalPadding(context);
           final iconSize = viewModel.getIconSize(context);
 
-          return FadeInTransitionWidget(
-            child: Column(
+          return
+            Column(
               children: [
                 Container(
                   decoration: BoxDecoration(
@@ -97,11 +97,9 @@ class _VideoAndWrittenTestimonieScreenState
                           context, viewModel, constraints, _isVideoMode),
                 ),
               ],
-            ),
-          );
-        },
-      ),
-    );
+            );
+        }
+    ));
   }
 
   Widget _buildLargeScreenGrid(

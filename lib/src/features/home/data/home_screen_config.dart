@@ -25,7 +25,7 @@ class HomeScreenConfig {
     this.mobileBreakpoint = 600,
     this.tabletBreakpoint = 800,
     this.desktopBreakpoint = 1200,
-    this.baseMargin = 24.0,
+    this.baseMargin = 20.0,
     this.basePadding = 10.0,
     this.baseTextScale = 1.0,
     this.scriptureContainerWidthMobile = 345.0, 

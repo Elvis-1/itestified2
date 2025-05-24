@@ -12,34 +12,35 @@ import 'package:provider/provider.dart';
 class quoteContainer extends StatelessWidget {
   const quoteContainer({
     super.key,
-    this.margin = const EdgeInsets.symmetric(horizontal: 15),
-    this.width = 223,
-    this.height = 150,
+    this.margin = const EdgeInsets.symmetric(horizontal: 12),
+    this.height = 162.0, 
     this.textSize = 12,
-    this.index,
+    required this.index, 
   });
 
   final EdgeInsets margin;
-  final double width;
   final double height;
   final double textSize;
-  final int? index;
+  final int index;
 
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeViewmodel>(context);
     final favoritesViewModel = GetIt.I<FavoritesViewModel>();
-    final quoteId = index ?? 1;
+    final screenWidth = MediaQuery.of(context).size.width;
+    final width = screenWidth * 0.50; 
 
     final favoritedItem = FavoritedItem(
-      id: quoteId,
+      id: index,
       type: 'inspiration',
-      title: 'Inspirational Quote',
+      title: 'Inspirational Quote $index', 
       church: 'Southern Living',
       views: '100',
       date: '09/05/2025',
       imagePath: AppImages.quotesImage,
     );
+
+    print('quoteContainer: Building index=$index, width=$width, height=$height');
 
     return Container(
       margin: margin,
@@ -49,7 +50,10 @@ class quoteContainer extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           GestureDetector(
-            onTap: () => _showModalBottomSheet(context),
+            onTap: () {
+              print('quoteContainer: Tapped index=$index, opening modal');
+              _showModalBottomSheet(context);
+            },
             child: Container(
               height: height * 0.7,
               decoration: BoxDecoration(
@@ -72,12 +76,15 @@ class quoteContainer extends StatelessWidget {
                   Positioned(
                     top: 8,
                     right: 8,
-                    child:FavoriteIcon(
-                      iconSize: 12,
-                      radius: 12,
-                      item: favoritedItem,
-              
-                
+                    child: GestureDetector(
+                      onTap: () {
+                      
+                      },
+                      child: FavoriteIcon(
+                        iconSize: 12,
+                        radius: 12,
+                        item: favoritedItem,
+                      ),
                     ),
                   ),
                 ],

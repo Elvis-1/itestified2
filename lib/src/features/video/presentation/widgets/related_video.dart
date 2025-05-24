@@ -42,11 +42,11 @@ Widget relatedVideosSection(BuildContext context) {
             return Container(
               width: isMediumScreen ? screenWidth * 0.58 : screenWidth * 0.4,
               margin: const EdgeInsets.only(right: 10),
-              child: FadeInTransitionWidget(
+          
                 child: VideoTestimonyContainer1(
                   videoId: relatedVideos[index]['id'] as int, 
                 ),
-              ),
+              
             );
           },
         ),

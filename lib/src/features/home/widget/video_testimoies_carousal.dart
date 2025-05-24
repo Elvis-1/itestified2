@@ -16,7 +16,7 @@ class VideoTestimoniesCarouselConfig {
     this.mobileBreakpoint = 600,
     this.tabletBreakpoint = 800,
     this.baseContainerHeight = 215.0, // 185 (container) + 15 (margin) + 15 (buffer)
-    this.baseMarginHorizontal = 4.0,
+    this.baseMarginHorizontal = 5.0,
     this.baseViewportFraction = 0.6,
     this.scaleFactorActive = 1.0,
     this.scaleFactorInactive = 1.0,

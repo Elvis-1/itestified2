@@ -12,7 +12,6 @@ class InspirationalQuotes extends StatelessWidget {
     final isLargeScreen = MediaQuery.of(context).size.width > 600;
 
     return Scaffold(
-     
       backgroundColor: themeProvider.themeData.colorScheme.surface,
       body: SafeArea(
         child: LayoutBuilder(
@@ -40,7 +39,6 @@ class InspirationalQuotes extends StatelessWidget {
       itemCount: 10,
       itemBuilder: (context, index) {
         return quoteContainer(
-          width: double.infinity,
           height: 200,
           textSize: 14,
           index: index + 1,
@@ -56,10 +54,9 @@ class InspirationalQuotes extends StatelessWidget {
       separatorBuilder: (context, index) => const SizedBox(height: 16),
       itemBuilder: (context, index) {
         return quoteContainer(
-          width: double.infinity,
           height: 180,
           textSize: 14,
-          margin: EdgeInsets.zero,
+      
           index: index + 1,
         );
       },

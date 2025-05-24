@@ -57,12 +57,21 @@ class AuthViewModel with ChangeNotifier {
     notifyListeners();
   }
 
-  validateFields(String? name, String? email, String pass, String confirmP,
-      {UseType useType = UseType.SignUP, bool isForgotPasswordScreen = false}) {
-    nameError = Validators.validateName(name);
-    emailError = Validators.validateEmail(email);
-    passwordErr = Validators.validatePassword(pass);
-    confirmPassErr = Validators.validateConfirmPassword(pass, confirmP);
+validateFields(
+    String? name,
+    String? email,
+    String pass,
+    String confirmP, {
+    UseType useType = UseType.SignUP,
+    bool isForgotPasswordScreen = false,
+    bool showErrors = true,
+  }) {
+    nameError = showErrors ? Validators.validateName(name) : null;
+    emailError = showErrors ? Validators.validateEmail(email) : null;
+    passwordErr = showErrors ? Validators.validatePassword(pass, useType: useType) : null;
+    confirmPassErr = showErrors
+        ? Validators.validateConfirmPassword(pass, confirmP)
+        : null;
 
     hasErrors = getType(useType);
     notifyListeners();

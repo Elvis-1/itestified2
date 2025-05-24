@@ -43,6 +43,7 @@ class AppIcons {
   static String likeIcon = "assets/icons/like.png";
   static String likeIcon2 = "assets/icons/like2.png";
   static String shareIcon = "assets/icons/share.png";
+  static String ratingiconfilled = "assets/icons/ratingfilled.png";
   static String articleIcon = "assets/icons/article.png";
   static String displayIcon = "assets/icons/display.png";
   static String givingIcon = "assets/icons/giving.png";
@@ -82,5 +83,5 @@ class AppImages {
   static String quotesImage = "assets/images/quote.png";
   static String scriptureImage = "assets/images/scripture_frame.png";
   static String togetherImage = "assets/images/together.png";
-    static String babyImage = "assets/images/baby.png";
+  static String babyImage = "assets/images/baby.png";
 }

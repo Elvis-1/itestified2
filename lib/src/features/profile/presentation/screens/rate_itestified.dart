@@ -56,12 +56,11 @@ class RateItestified extends StatelessWidget {
                             (index) => GestureDetector(
                               onTap: () => viewModel.setRating(index + 1),
                               child: Image.asset(
-                                AppIcons.ratingIcon,
+                                index < viewModel.selectedRating
+                                    ? AppIcons.ratingiconfilled
+                                    : AppIcons.ratingIcon,
                                 width: starSize,
                                 height: starSize,
-                                color: index < viewModel.selectedRating
-                                    ? AppColors.darkPurple
-                                    : AppColors.primaryColor.withOpacity(0.5),
                               ),
                             ),
                           ),
