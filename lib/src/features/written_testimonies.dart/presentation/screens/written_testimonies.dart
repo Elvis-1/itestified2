@@ -23,10 +23,10 @@ class WrittenTestimonies extends StatelessWidget {
           bool isLargeScreen = contraints.maxWidth > 600;
           return isLargeScreen
               ? largeScreenGrid(context,
-                  const FadeInTransitionWidget(child: TextTestimonyContainer()),
+                  TextTestimonyContainer(),
                   gridNumber: 3)
               : smallScreenListView(
-                  const FadeInTransitionWidget(child: TextTestimonyContainer()),
+                  TextTestimonyContainer(),
                 );
         },
       )),

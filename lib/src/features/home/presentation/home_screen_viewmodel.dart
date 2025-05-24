@@ -18,7 +18,6 @@ class HomeScreenViewModel {
 
   double getMargin(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
-    if (width >= config.desktopBreakpoint) return config.baseMargin * 2;
     if (width >= config.tabletBreakpoint) return config.baseMargin * 1.5;
     return config.baseMargin;
   }
@@ -38,9 +37,7 @@ class HomeScreenViewModel {
 
   double getScriptureContainerWidth(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
-    if (width >= config.desktopBreakpoint) {
-      return config.scriptureContainerWidthDesktop;
-    }
+
     if (width >= config.tabletBreakpoint) {
       return config.scriptureContainerWidthTablet;
     }
@@ -64,9 +61,7 @@ class HomeScreenViewModel {
 
   double getVideoCarouselHeight(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
-    if (width >= config.desktopBreakpoint) {
-      return config.videoCarouselHeightDesktop;
-    }
+
     if (width >= config.tabletBreakpoint) {
       return config.videoCarouselHeightTablet;
     }
@@ -105,9 +100,7 @@ class HomeScreenViewModel {
   void gotoInspirationalQuotes(BuildContext context) {
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => const FadeInTransitionWidget(
-          child: InspirationalQuotes(),
-        ),
+        builder: (context) => InspirationalQuotes(),
       ),
     );
   }

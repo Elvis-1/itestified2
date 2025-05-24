@@ -56,9 +56,9 @@ class VideoListScreen extends StatelessWidget {
       ),
       itemCount: itemCount,
       itemBuilder: (context, index) {
-        return FadeInTransitionWidget(
-          child: _buildTestimonyItem(context, viewModel, index),
-        );
+        return 
+     _buildTestimonyItem(context, viewModel, index);
+        
       },
     );
   }
@@ -74,9 +74,9 @@ class VideoListScreen extends StatelessWidget {
       itemBuilder: (context, index) {
         return Padding(
           padding: EdgeInsets.only(bottom: margin),
-          child: FadeInTransitionWidget(
+          
             child: _buildTestimonyItem(context, viewModel, index),
-          ),
+          
         );
       },
     );

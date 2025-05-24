@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:itestified/src/config/theme/app_color.dart';
 import 'package:itestified/src/core/utils/app_const/enum.dart';
 import 'package:itestified/src/core/widgets/appbar2.dart';
@@ -60,7 +59,7 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
                       child: textWidget(
                         "Create a secure password for your account",
                         fontWeight: FontWeight.w300,
-                        fontSize: 16,
+                        fontSize: 1,
                         textAlign: TextAlign.center,
                       ),
                     ),

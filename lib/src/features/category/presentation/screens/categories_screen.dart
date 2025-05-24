@@ -44,11 +44,11 @@ class CategoriesListScreen extends StatelessWidget {
                             return const VideoAndWrittenTestimonieScreen();
                           }));
                         },
-                        child: FadeInTransitionWidget(
+                       
                           child: Container(
                               margin: const EdgeInsets.only(right: 1),
                               child: const CategoryContainer()),
-                        )))
+                        ))
                 : smallScreenListView(GestureDetector(
                     onTap: () {
                       Navigator.of(context)
@@ -56,8 +56,8 @@ class CategoriesListScreen extends StatelessWidget {
                         return const VideoAndWrittenTestimonieScreen();
                       }));
                     },
-                    child: const FadeInTransitionWidget(
-                        child: CategoryContainer())));
+                  
+                        child: CategoryContainer()));
           },
         )
 

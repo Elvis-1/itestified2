@@ -268,7 +268,7 @@ class _customTextField2State extends State<customTextField2> {
               onChanged: widget.onChange,
               style: normalTextStyle(
                 fontSize: Theme.of(context).textTheme.bodyLarge?.fontSize,
-                textColor: themeProvider.themeData.colorScheme.tertiary,
+                textColor: themeProvider.themeData.colorScheme.onTertiary,
               ),
               decoration: InputDecoration(
                 border: InputBorder.none,

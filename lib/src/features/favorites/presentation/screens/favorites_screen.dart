@@ -7,7 +7,8 @@ import 'package:itestified/src/core/widgets/normal_text_style.dart';
 import 'package:itestified/src/core/widgets/text_widget.dart';
 import 'package:itestified/src/features/app_theme/theme_viewmodel.dart';
 import 'package:itestified/src/features/favorites/presentation/screens/favorite_icon_view_model.dart';
-import 'package:itestified/src/features/inspirational_qoutes.dart/presentation/screens/inspirational_quotes.dart';
+import 'package:itestified/src/features/favorites/presentation/widgets/favourite_icon.dart';
+import 'package:itestified/src/features/home/widget/quotes_container.dart';
 import 'package:itestified/src/features/category/presentation/widgets/text_testimony_container.dart';
 import 'package:provider/provider.dart';
 
@@ -46,7 +47,8 @@ class FavoritesScreen extends StatelessWidget {
                       style: normalTextStyle(
                         fontSize: isLargeScreen ? 32 : 20,
                         fontWeight: FontWeight.w600,
-                        textColor: themeProvider.themeData.colorScheme.onTertiary,
+                        textColor:
+                            themeProvider.themeData.colorScheme.onTertiary,
                       ),
                     ),
                     SizedBox(height: screenHeight * 0.01),
@@ -67,26 +69,34 @@ class FavoritesScreen extends StatelessWidget {
               itemCount: favoritedItems.length,
               itemBuilder: (context, index) {
                 final item = favoritedItems[index];
-                return Center(child: _buildFavoritedItem(context, viewModel, item, index));
+                return Center(
+                    child:
+                        _buildFavoritedItem(context, viewModel, item, index));
               },
             ),
     );
   }
 
-  Widget _buildFavoritedItem(
-      BuildContext context, FavoritesViewModel viewModel, FavoritedItem item, int index) {
-    final dimensions = _getItemDimensions(item.type);
+  Widget _buildFavoritedItem(BuildContext context, FavoritesViewModel viewModel,
+      FavoritedItem item, int index) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final dimensions = _getItemDimensions(item.type, screenWidth);
 
     return Container(
       margin: EdgeInsets.only(
           bottom: index == viewModel.favoritedItems.length - 1 ? 0 : 12),
-      width: dimensions['width'],
+      width: screenWidth * 0.94, // Uniform width for all items
       height: dimensions['height'],
       child: item.type == 'inspiration'
-          ? const InspirationalQuotes()
+          ? quoteContainer(
+              height: dimensions['height']!,
+              textSize: 14,
+              index: item.id,
+              margin: EdgeInsets.zero, // Remove internal margin
+            )
           : item.type == 'post'
               ? TextTestimonyContainer(
-                  containerWidth: dimensions['width']!,
+                  containerWidth: screenWidth * 0.94, // Enforce uniform width
                   containerHeight: dimensions['height']!,
                   borderRadius: 16.0,
                   index: item.id,
@@ -95,16 +105,17 @@ class FavoritesScreen extends StatelessWidget {
     );
   }
 
-  Map<String, double> _getItemDimensions(String type) {
+  Map<String, double> _getItemDimensions(String type, double screenWidth) {
+    final uniformWidth = screenWidth * 0.94;
     switch (type) {
       case 'video':
-        return {'width': 345.0, 'height': 280.0};
+        return {'width': uniformWidth, 'height': 280.0};
       case 'post':
-        return {'width': 345.0, 'height': 162.0};
+        return {'width': uniformWidth, 'height': 162.0};
       case 'inspiration':
-        return {'width': 345.0, 'height': 222.0};
+        return {'width': uniformWidth, 'height': 222.0};
       default:
-        return {'width': 345.0, 'height': 162.0};
+        return {'width': uniformWidth, 'height': 162.0};
     }
   }
 
@@ -127,6 +138,7 @@ class FavoritesScreen extends StatelessWidget {
     final fontSizeMeta = isTablet ? 12.0 : 10.0;
 
     return Container(
+      width: dimensions['width'], // Enforce uniform width
       decoration: BoxDecoration(borderRadius: BorderRadius.circular(16)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -150,16 +162,12 @@ class FavoritesScreen extends StatelessWidget {
                     top: padding * 2,
                     right: padding * 2,
                     child: GestureDetector(
-                      onTap: () => viewModel.removeFavorite(item.id, item.type),
-                      child: CircleAvatar(
-                        radius: iconSize / 2,
-                        backgroundColor:
-                            themeProvider.themeData.colorScheme.outline,
-                        child: Icon(
-                          Icons.favorite,
-                          color: themeProvider.themeData.colorScheme.onTertiary,
-                          size: iconSize,
-                        ),
+                      onTap: () {
+                        viewModel.removeFavorite(item.id, item.type);
+                      },
+                      child: FavoriteIcon(
+                        item: item,
+                        iconSize: iconSize,
                       ),
                     ),
                   ),

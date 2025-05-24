@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:itestified/src/core/utils/app_const/enum.dart';
 
 class Validators {
   static String? validatePhoneNumber(String? value) {
@@ -28,22 +29,15 @@ class Validators {
     return null;
   }
 
-  static String? validatePassword(String? value) {
+static String? validatePassword(String? value, {UseType useType = UseType.SignUP}) {
     if (value == null || value.isEmpty) {
       return 'Please enter a password';
     }
-    if (value.length < 6) {
-      return 'Password must be at least 6 characters long';
+    if (useType != UseType.LogIn && value.length < 8) {
+      return 'Password must be at least 8 characters long';
     }
-    // if (!RegExp(r'[A-Z]').hasMatch(value)) {
-    //   return 'Password must contain at least one uppercase letter';
-    // }
-    // if (!RegExp(r'[!@#$%^&*(),.?":{}|<>]').hasMatch(value)) {
-    //   return 'Password must contain at least one special character';
-    // }
     return null;
   }
-
   static String? validateConfirmPassword(String? value, String password) {
     if (value == null || value.isEmpty) {
       return 'Please confirm your password';

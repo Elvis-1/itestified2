@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:itestified/src/config/theme/app_color.dart';
+import 'package:itestified/src/core/utils/app_const/enum.dart';
 import 'package:itestified/src/core/widgets/dialog.dart';
+import 'package:itestified/src/features/add_testimony/presentation/screens/add_testimony.dart';
 import 'package:itestified/src/features/app_theme/theme_viewmodel.dart';
+import 'package:itestified/src/features/auth/presentation/viewmodel/auth_viewmodel.dart';
 import 'package:itestified/src/features/category/presentation/screens/categories_screen.dart';
 import 'package:itestified/src/features/favorites/presentation/screens/favorites_screen.dart';
 import 'package:itestified/src/features/home/presentation/home_screen.dart';
@@ -199,11 +202,6 @@ class _NavBarState extends State<NavBar> {
                 child: Container(
                   height: 80,
                   decoration: BoxDecoration(
-                    border: Border(
-                      top: BorderSide(
-                        color: themeProvider.themeData.colorScheme.outline,
-                      ),
-                    ),
                     borderRadius: BorderRadius.circular(15),
                     color: themeProvider.themeData.colorScheme.surface,
                   ),
@@ -233,8 +231,17 @@ class _NavBarState extends State<NavBar> {
                       ),
                       GestureDetector(
                         onTap: () async {
-                          await showJoinOurCommunityDialogOverlay(
-                              context, 'Join');
+                          final authViewModel = Provider.of<AuthViewModel>(
+                              context,
+                              listen: false);
+                          if (authViewModel.isGuest) {
+                            await showJoinOurCommunityDialogOverlay(
+                                context, 'Join');
+                          } else {
+                            Navigator.pushNamed(
+                                context, AddTestimonyScreen.routeName,
+                                arguments: TestimonyAction.Create);
+                          }
                         },
                         child: Container(
                           height: 50,

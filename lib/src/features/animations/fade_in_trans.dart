@@ -19,7 +19,7 @@ class _FadeInTransitionWidgetState extends State<FadeInTransitionWidget>
     // TODO: implement initState
     super.initState();
     controller = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 1500));
+        vsync: this, duration: const Duration(milliseconds: 500));
     opacity = Tween<double>(begin: 0, end: 1)
         .animate(CurvedAnimation(parent: controller, curve: Curves.easeInOut));
 

@@ -10,7 +10,6 @@ import 'package:itestified/src/features/auth/presentation/screens/login_screen.d
 import 'package:itestified/src/features/auth/presentation/viewmodel/auth_viewmodel.dart';
 import 'package:itestified/src/features/auth/presentation/widgets/text_fields.dart';
 import 'package:loader_overlay/loader_overlay.dart';
-import 'package:material_symbols_icons/material_symbols_icons.dart';
 import 'package:provider/provider.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -26,10 +25,24 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var themeProvider = Provider.of<ThemeViewmodel>(context, listen: false);
+    final themeProvider = Provider.of<ThemeViewmodel>(context, listen: false);
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isMobile = screenWidth < 600;
+    final isTablet = screenWidth >= 600;
+
+    final horizontalMargin = screenWidth * 0.05;
+    final contentSpacing = 16.0;
+    final headerSpacing = 8.0;
+       final headertitle = 18.0;
+    final fontSizeTitle = isTablet ? 28.0 : 28.0;
+    final fontSizeBody = isTablet ? 16.0 : 16.0;
+    final buttonWidth = isMobile ? double.infinity : screenWidth * 0.4;
+    final iconSize = isTablet ? 56.0 : 46.0;
+    final lineWidth = screenWidth * 0.4;
+
     TextStyle style = normalTextStyle(
       textColor: themeProvider.themeData.colorScheme.onTertiary,
-      fontSize: 20,
+      fontSize: headertitle,
     );
 
     return Scaffold(
@@ -38,92 +51,38 @@ class _SignUpScreenState extends State<SignUpScreen> {
         automaticallyImplyLeading: false,
         centerTitle: true,
         backgroundColor: themeProvider.themeData.colorScheme.surface,
-        title: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            GestureDetector(
-              onTap: () {},
-              child: Icon(
-                Symbols.close,
-                color: themeProvider.themeData.colorScheme.onTertiary,
-                size: 24,
-              ),
-            ),
-            const SizedBox(width: 15),
-            textWidget(
-              "Create an account",
-              fontWeight: FontWeight.w500,
-              color: themeProvider.themeData.colorScheme.onTertiary,
-            ),
-          ],
+        title: textWidget(
+          "Create an account",
+          fontWeight: FontWeight.w500,
+          color: themeProvider.themeData.colorScheme.onTertiary,
+          fontSize: fontSizeTitle,
         ),
       ),
       body: Consumer<AuthViewModel>(
         builder: (context, av, child) {
           return LoaderOverlay(
             child: Container(
-              margin: const EdgeInsets.symmetric(horizontal: 15),
+              margin: EdgeInsets.symmetric(horizontal: horizontalMargin),
               child: SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),
                 child: Column(
                   children: [
-                    LayoutBuilder(
-                      builder: (context, constraints) {
-                        bool isLargeScreen = constraints.maxWidth > 600;
-                        return isLargeScreen
-                            ? Form(
-                                key: _formKey,
-                                child: Column(
-                                  children: [
-                                    Row(
-                                      children: [
-                                        Expanded(child: nameTile(style, av)),
-                                        const SizedBox(width: 20),
-                                        Expanded(child: emailTile(style, av)),
-                                      ],
-                                    ),
-                                    const SizedBox(height: 20),
-                                    Row(
-                                      children: [
-                                        Expanded(
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              passwordTile(style, av),
-                                            ],
-                                          ),
-                                        ),
-                                        const SizedBox(width: 20),
-                                        Expanded(
-                                          child: confirmPasswordTile(style, av),
-                                        ),
-                                      ],
-                                    ),
-                                    const SizedBox(height: 20),
-                                  ],
-                                ),
-                              )
-                            : Form(
-                                key: _formKey,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const SizedBox(height: 30),
-                                    nameTile(style, av),
-                                    const SizedBox(height: 20),
-                                    emailTile(style, av),
-                                    const SizedBox(height: 20),
-                                    passwordTile(style, av),
-                                    const SizedBox(height: 20),
-                                    confirmPasswordTile(style, av),
-                                    const SizedBox(height: 50),
-                                  ],
-                                ),
-                              );
-                      },
+                    Form(
+                      key: _formKey,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(height: contentSpacing),
+                          nameTile(style, av),
+                          SizedBox(height: contentSpacing),
+                          emailTile(style, av),
+                          SizedBox(height: contentSpacing),
+                          passwordTile(style, av),
+                          SizedBox(height: contentSpacing),
+                          confirmPasswordTile(style, av),
+                          SizedBox(height: contentSpacing * 2),
+                        ],
+                      ),
                     ),
                     Column(
                       children: [
@@ -136,29 +95,27 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               }
                             },
                             child: btnAndText(
-                              fontSize: Theme.of(context)
-                                  .textTheme
-                                  .bodyLarge
-                                  ?.fontSize,
-                              verticalPadding: 14,
-                              containerWidth: double.infinity,
+                              fontSize: fontSizeBody,
+                              verticalPadding: isTablet ? 16.0 : 14.0,
+                              containerWidth: buttonWidth,
                               text: "Create Account",
                             ),
                           ),
                         ),
-                        const SizedBox(height: 20),
+                        SizedBox(height: contentSpacing),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             lineWidget(
                               color:
-                                  themeProvider.themeData.colorScheme.outline,
-                              width: 170,
+                                  themeProvider.themeData.colorScheme.tertiary,
+                              height: 0.4,
+                              width: lineWidth,
                             ),
                             Text(
                               " OR ",
                               style: normalTextStyle(
-                                fontSize: 18,
+                                fontSize: fontSizeBody,
                                 fontWeight: FontWeight.w300,
                                 textColor: themeProvider
                                     .themeData.colorScheme.tertiary,
@@ -166,57 +123,54 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             ),
                             lineWidget(
                               color:
-                                  themeProvider.themeData.colorScheme.outline,
-                              width: 170,
+                                  themeProvider.themeData.colorScheme.tertiary,
+                              height: 0.4,
+                              width: lineWidth,
                             ),
                           ],
                         ),
-                        const SizedBox(height: 20),
+                        SizedBox(height: contentSpacing),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             themeProvider.themeData == AppThemes.darkTheme
-                                ? Image.asset(AppIcons.googleIcon)
-                                : Image.asset(AppIcons.googleLightIcon),
-                            const SizedBox(width: 25),
+                                ? Image.asset(AppIcons.googleIcon,
+                                    width: iconSize, height: iconSize)
+                                : Image.asset(AppIcons.googleLightIcon,
+                                    width: iconSize, height: iconSize),
+                            SizedBox(width: headerSpacing * 2),
                             themeProvider.themeData == AppThemes.darkTheme
-                                ? Image.asset(AppIcons.appleIcon)
-                                : Image.asset(AppIcons.appleLightIcon),
+                                ? Image.asset(AppIcons.appleIcon,
+                                    width: iconSize, height: iconSize)
+                                : Image.asset(AppIcons.appleLightIcon,
+                                    width: iconSize, height: iconSize),
                           ],
                         ),
-                        const SizedBox(height: 30),
+                        SizedBox(height: contentSpacing * 2),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             textWidget(
                               "Already have an account?",
-                              fontSize: Theme.of(context)
-                                  .textTheme
-                                  .bodyLarge
-                                  ?.fontSize,
+                              fontSize: fontSizeBody,
                               color: themeProvider
                                   .themeData.colorScheme.onTertiary,
                             ),
                             GestureDetector(
                               onTap: () {
-                                Navigator.of(context).pushReplacement(
-                                  MaterialPageRoute(builder: (context) {
-                                    return const LoginScreen();
-                                  }),
-                                );
+                                Navigator.pushReplacementNamed(
+                                    context, LoginScreen.routeName);
                               },
                               child: textWidget(
                                 " Log in",
-                                fontSize: Theme.of(context)
-                                    .textTheme
-                                    .titleMedium
-                                    ?.fontSize,
+                                fontSize: fontSizeBody,
                                 fontWeight: FontWeight.w600,
                                 color: themeProvider.themeData.primaryColor,
                               ),
                             ),
                           ],
                         ),
+                        SizedBox(height: contentSpacing),
                       ],
                     ),
                   ],
